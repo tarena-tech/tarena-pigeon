@@ -15,10 +15,20 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.mnmp.commons.utils;
 
 import com.tarena.mnmp.commons.protocol.BusinessException;
 
-public interface NoticeService {
-    <T extends NoticeTargetEvent> void send(NoticeDTO notice) throws BusinessException;
+public class Asserts {
+    public static void isTrue(boolean expression, BusinessException errorSupport) throws BusinessException {
+        if (expression) {
+            throw errorSupport;
+        }
+    }
+
+    public static void illegalArgument(boolean expression, String message) {
+        if (expression) {
+            throw new IllegalArgumentException(message);
+        }
+    }
 }

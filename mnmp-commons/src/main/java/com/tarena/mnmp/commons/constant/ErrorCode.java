@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.mnmp.commons.constant;
 
-import com.tarena.mnmp.commons.protocol.BusinessException;
+public class ErrorCode {
 
-public interface NoticeService {
-    <T extends NoticeTargetEvent> void send(NoticeDTO notice) throws BusinessException;
+    public static final String SYSTEM_ERROR = "00000";
+
 }

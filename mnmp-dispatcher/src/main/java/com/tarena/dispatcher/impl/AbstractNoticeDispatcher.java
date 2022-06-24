@@ -15,10 +15,17 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.dispatcher.impl;
 
-import com.tarena.mnmp.commons.protocol.BusinessException;
+import com.tarena.dispatcher.NoticeDispatcher;
+import com.tarena.mnmp.api.NoticeTargetEvent;
+import org.springframework.beans.factory.InitializingBean;
 
-public interface NoticeService {
-    <T extends NoticeTargetEvent> void send(NoticeDTO notice) throws BusinessException;
+public abstract class AbstractNoticeDispatcher<T extends NoticeTargetEvent> implements NoticeDispatcher<T>, InitializingBean {
+    private DispatcherRegistry dispatcherRegistry = DispatcherRegistry.getInstance();
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        this.dispatcherRegistry.put(this);
+    }
 }

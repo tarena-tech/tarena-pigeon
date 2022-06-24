@@ -15,10 +15,37 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.mnmp.commons.enums;
 
-import com.tarena.mnmp.commons.protocol.BusinessException;
+public enum NoticeType {
+    SMS(1, "Short Messaging Service"),
+    EMAIL(2, "email"),
+    WECHAT(3, " enterprise wechat");
 
-public interface NoticeService {
-    <T extends NoticeTargetEvent> void send(NoticeDTO notice) throws BusinessException;
+    private int type;
+    private String description;
+
+    NoticeType(int type, String description) {
+        this.type = type;
+        this.description = description;
+    }
+
+    public static NoticeType getEnum(int type) {
+        NoticeType[] noticeTypeEnums = values();
+        for (NoticeType noticeTypeEnum : noticeTypeEnums) {
+            if (noticeTypeEnum.type() == type) {
+                return noticeTypeEnum;
+            }
+        }
+        return null;
+    }
+
+    public int type() {
+        return type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
 }

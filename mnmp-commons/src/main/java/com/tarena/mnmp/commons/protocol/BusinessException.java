@@ -15,10 +15,26 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.mnmp.commons.protocol;
 
-import com.tarena.mnmp.commons.protocol.BusinessException;
+public class BusinessException extends Exception {
+    public BusinessException(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+    private String code;
+    private String msg;
 
-public interface NoticeService {
-    <T extends NoticeTargetEvent> void send(NoticeDTO notice) throws BusinessException;
+    public String getCode() {
+        return code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return super.fillInStackTrace();
+    }
 }

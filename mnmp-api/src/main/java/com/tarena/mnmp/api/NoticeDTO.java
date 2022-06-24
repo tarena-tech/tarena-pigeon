@@ -17,8 +17,8 @@
 
 package com.tarena.mnmp.api;
 
-import com.terena.mnmp.commons.enums.NoticeType;
-import com.terena.mnmp.commons.enums.SendType;
+import com.tarena.mnmp.commons.enums.NoticeType;
+import com.tarena.mnmp.commons.enums.SendType;
 
 public class NoticeDTO {
     private SendType sendType;

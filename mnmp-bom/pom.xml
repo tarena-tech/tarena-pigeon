@@ -63,7 +63,7 @@
         <developer>
             <name>open-source@tedu.cn</name>
             <email>open-source@tedu.cn</email>
-            <organization>terena</organization>
+            <organization>tarena</organization>
             <organizationUrl>http://bjs.tedu.cn</organizationUrl>
         </developer>
     </developers>
@@ -71,18 +71,18 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.terena.mnmp</groupId>
+                <groupId>com.tarena.mnmp</groupId>
                 <artifactId>mnmp-commons</artifactId>
                 <version>${mnmp_commons_version}</version>
             </dependency>
             <dependency>
                     <artifactId>mnmp-api</artifactId>
-                    <groupId>com.terena.mnmp</groupId>
+                    <groupId>com.tarena.mnmp</groupId>
                     <version>${mnmp_api_version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.terena.mnmp</groupId>
+                <groupId>com.tarena.mnmp</groupId>
                 <artifactId>mnmp-dispatcher</artifactId>
                 <version>${mnmp_dispacher_version}</version>
             </dependency>

@@ -15,10 +15,22 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.dispatcher.impl;
 
-import com.tarena.mnmp.commons.protocol.BusinessException;
+import com.tarena.dispatcher.EmailNoticeTarget;
+import com.tarena.mnmp.commons.enums.NoticeType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public interface NoticeService {
-    <T extends NoticeTargetEvent> void send(NoticeDTO notice) throws BusinessException;
+public class EmailAliNoticeDispatcher extends AbstractNoticeDispatcher<EmailNoticeTarget> {
+    private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
+
+    public String getNoticeType() {
+        return NoticeType.EMAIL.name().toLowerCase() + "Ali";
+    }
+
+    @Override
+    public void dispatcher(EmailNoticeTarget notice) {
+        logger.info("email-ali dispatcher");
+    }
 }
