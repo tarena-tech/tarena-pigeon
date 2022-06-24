@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.terena.mnmp.commons.enums;
+package com.tarena.mnmp.commons.enums;
 
 public enum TaskStatus {
     TASK_NO_OPEN(0, "PREPARING"),
