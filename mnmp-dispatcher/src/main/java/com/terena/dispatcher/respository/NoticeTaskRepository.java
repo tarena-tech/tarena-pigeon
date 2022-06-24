@@ -17,11 +17,11 @@
 
 package com.terena.dispatcher.respository;
 
-import com.terena.mnmp.api.NoticeDTO;
+import com.tarena.mnmp.api.NoticeDTO;
 import com.terena.mnmp.commons.enums.TaskStatus;
 
 public interface NoticeTaskRepository {
-    Integer modifyTaskStatus(Integer taskId, TaskStatus taskStatus,String reason);
+    Integer modifyTaskStatus(Integer taskId, TaskStatus taskStatus, String reason);
 
     void saveTask(NoticeDTO notice);
 }

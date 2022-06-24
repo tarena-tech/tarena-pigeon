@@ -17,21 +17,21 @@
 
 package com.terena.dispatcher.respository;
 
-import com.terena.dispatcher.EmailNoticeTarget;
-import com.terena.dispatcher.SmsNoticeTarget;
+import com.tarena.dispatcher.EmailNoticeTarget;
+import com.tarena.dispatcher.SmsNoticeTarget;
 import com.terena.mnmp.commons.enums.TargetStatus;
 
 public interface TargetLogRepository {
 
-    TargetStatus getSmsStatus(Integer taskId,String target);
+    TargetStatus getSmsStatus(Integer taskId, String target);
 
-    TargetStatus getEmailStatus(Integer taskId,String target);
+    TargetStatus getEmailStatus(Integer taskId, String target);
 
-    TargetStatus getWechatStatus(Integer taskId,String target);
+    TargetStatus getWechatStatus(Integer taskId, String target);
 
-    Integer modifySmsStatus(Integer taskId,String target, TargetStatus targetStatus);
+    Integer modifySmsStatus(Integer taskId, String target, TargetStatus targetStatus);
 
-    Integer modifyEmailStatus(Integer taskId,String target, TargetStatus targetStatus);
+    Integer modifyEmailStatus(Integer taskId, String target, TargetStatus targetStatus);
 
     Integer modifyWechatStatus(Integer taskId, String target, TargetStatus targetStatus);
 
