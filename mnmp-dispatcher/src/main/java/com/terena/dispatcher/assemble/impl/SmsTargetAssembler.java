@@ -20,16 +20,27 @@ package com.terena.dispatcher.assemble.impl;
 import com.terena.dispatcher.SmsNoticeTarget;
 import com.terena.mnmp.api.NoticeDTO;
 import com.terena.mnmp.commons.enums.NoticeType;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeTarget> {
     @Override
     public String getNoticeType() {
-        return NoticeType.EMAIL.toString();
+        return NoticeType.SMS.toString();
     }
 
     @Override
     public List<SmsNoticeTarget> assemble(NoticeDTO notice) {
-        return null;
+        List<SmsNoticeTarget> smsNoticeTargets = new ArrayList<>();
+        String targets = notice.getTargets();
+        String[] targetArray = targets.split(",");
+        for (String target : targetArray) {
+            SmsNoticeTarget noticeTarget = new SmsNoticeTarget();
+            noticeTarget.setTarget(target);
+            noticeTarget.setNoticeType(this.getNoticeType());
+            noticeTarget.setProviderCode("Ali");
+            smsNoticeTargets.add(noticeTarget);
+        }
+        return smsNoticeTargets;
     }
 }

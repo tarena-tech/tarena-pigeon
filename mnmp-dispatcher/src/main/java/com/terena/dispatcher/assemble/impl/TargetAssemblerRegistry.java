@@ -45,6 +45,6 @@ public class TargetAssemblerRegistry {
     }
 
     public <T extends NoticeTargetEvent> List<T> assemble(NoticeDTO notice) throws BusinessException {
-        return targetAssemblerContainer.get(notice.getNoticeType()).assemble(notice);
+        return targetAssemblerContainer.get(notice.getNoticeType().name()).assemble(notice);
     }
 }

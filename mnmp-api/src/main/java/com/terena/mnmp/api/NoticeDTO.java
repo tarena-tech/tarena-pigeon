@@ -29,7 +29,6 @@ public class NoticeDTO {
     private String targets;
     private String signCode;
     private String signName;
-    private Long sendTimeAt;
 
     public SendType getSendType() {
         return sendType;
@@ -93,13 +92,5 @@ public class NoticeDTO {
 
     public void setSignName(String signName) {
         this.signName = signName;
-    }
-
-    public Long getSendTimeAt() {
-        return sendTimeAt;
-    }
-
-    public void setSendTimeAt(Long sendTimeAt) {
-        this.sendTimeAt = sendTimeAt;
     }
 }

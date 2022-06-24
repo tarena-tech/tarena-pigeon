@@ -19,15 +19,18 @@ package com.terena.dispatcher.impl;
 
 import com.terena.dispatcher.EmailNoticeTarget;
 import com.terena.mnmp.commons.enums.NoticeType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EmailAliNoticeDispatcher extends AbstractNoticeDispatcher<EmailNoticeTarget> {
+    private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
+
     public String getNoticeType() {
         return NoticeType.EMAIL.name().toLowerCase() + "Ali";
     }
 
     @Override
     public void dispatcher(EmailNoticeTarget notice) {
-        System.out.printf("email-ali dispatcher");
+        logger.info("email-ali dispatcher");
     }
-
 }

@@ -19,14 +19,18 @@ package com.terena.dispatcher.impl;
 
 import com.terena.dispatcher.BaseNoticeTarget;
 import com.terena.mnmp.commons.enums.NoticeType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<BaseNoticeTarget> {
+    private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
+
     public String getNoticeType() {
         return NoticeType.SMS.name().toLowerCase() + "Ali";
     }
 
     @Override
     public void dispatcher(BaseNoticeTarget notice) {
-        System.out.printf("sms-ali dispacher");
+        logger.info("sms-ali dispatcher");
     }
 }

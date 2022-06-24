@@ -20,6 +20,7 @@ package com.terena.dispatcher.assemble.impl;
 import com.terena.dispatcher.EmailNoticeTarget;
 import com.terena.mnmp.api.NoticeDTO;
 import com.terena.mnmp.commons.enums.NoticeType;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmailTargetAssembler extends AbstractTargetAssembler<EmailNoticeTarget> {
@@ -30,6 +31,16 @@ public class EmailTargetAssembler extends AbstractTargetAssembler<EmailNoticeTar
 
     @Override
     public List<EmailNoticeTarget> assemble(NoticeDTO notice) {
-        return null;
+        List<EmailNoticeTarget> emailNoticeTargets = new ArrayList<>();
+        String targets = notice.getTargets();
+        String[] targetArray = targets.split(",");
+        for (String target : targetArray) {
+            EmailNoticeTarget noticeTarget = new EmailNoticeTarget();
+            noticeTarget.setTarget(target);
+            noticeTarget.setNoticeType(this.getNoticeType());
+            noticeTarget.setProviderCode("Ali");
+            emailNoticeTargets.add(noticeTarget);
+        }
+        return emailNoticeTargets;
     }
 }

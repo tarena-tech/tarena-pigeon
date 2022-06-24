@@ -44,16 +44,16 @@ public class DispatcherRegistry {
         this.noticeDispatcherContainer.put(noticeType, noticeDispatcher);
     }
 
-    public <T extends NoticeTargetEvent> void dispatcher(T notice) throws BusinessException {
-
-        NoticeDispatcher noticeDispatcher = this.noticeDispatcherContainer.get(notice.getNoticeType().toLowerCase() + notice.getProvider());
+    public <T extends NoticeTargetEvent> void dispatcher(T target) throws BusinessException {
+        NoticeDispatcher noticeDispatcher = this.noticeDispatcherContainer.get(target.getNoticeType().toLowerCase() + target.getProvider());
         if (noticeDispatcher == null) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "Notice Dispatcher not found. notice type=" + notice.getNoticeType() + "provider =" + notice.getProvider());
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "Notice Dispatcher not found. notice type=" + target.getNoticeType() + "provider =" + target.getProvider());
         }
+        noticeDispatcher.dispatcher(target);
     }
 
-    public <T extends NoticeTargetEvent> void dispatcher(List<T> notices) throws BusinessException {
-        for (NoticeTargetEvent noticeEvent : notices) {
+    public <T extends NoticeTargetEvent> void dispatcher(List<T> targets) throws BusinessException {
+        for (NoticeTargetEvent noticeEvent : targets) {
             this.dispatcher(noticeEvent);
         }
     }
