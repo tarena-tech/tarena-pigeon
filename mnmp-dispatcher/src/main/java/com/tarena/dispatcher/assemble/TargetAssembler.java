@@ -22,7 +22,18 @@ import com.tarena.mnmp.api.NoticeTargetEvent;
 import java.util.List;
 
 public interface TargetAssembler<T extends NoticeTargetEvent> {
+    /**
+     * 获取当前通知类型
+     *
+     * @return
+     */
     String getNoticeType();
 
+    /**
+     * 组装通知目标
+     *
+     * @param notice
+     * @return
+     */
     List<T> assemble(NoticeDTO notice);
 }
