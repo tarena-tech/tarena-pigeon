@@ -18,6 +18,6 @@
         <module>mnmp-api</module>
         <module>mnmp-commons</module>
         <module>mnmp-consumer</module>
-        <module>monitor</module>
+        <module>mnmp-monitor</module>
     </modules>
 </project>
