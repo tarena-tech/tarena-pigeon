@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
-package com.terena.mnmp.api;
+package com.terena.dispatcher.respository;
 
-import com.terena.mnmp.commons.protocol.BusinessException;
+import com.terena.mnmp.api.NoticeDTO;
+import com.terena.mnmp.commons.enums.TaskStatus;
 
-public interface NoticeService {
-    <T extends NoticeTargetEvent> void send(NoticeDTO notice) throws BusinessException;
+public interface NoticeTaskRepository {
+    Integer modifyTaskStatus(Integer taskId, TaskStatus taskStatus,String reason);
+
+    void saveTask(NoticeDTO notice);
 }

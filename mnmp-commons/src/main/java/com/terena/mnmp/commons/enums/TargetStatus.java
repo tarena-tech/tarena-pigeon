@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-package com.terena.mnmp.api;
+package com.terena.mnmp.commons.enums;
 
-public interface Monitor {
-    void noticeRequest(NoticeDTO notice);
-    void schedule();
+public enum TargetStatus {
+    SENT_TO_PROVIDER,
+    SENT_TO_TARGET,
+    SENT_FAIL
 }

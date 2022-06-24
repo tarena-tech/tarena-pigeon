@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.terena.mnmp.api;
+package com.tarena.mnmp.api;
 
 import com.terena.mnmp.commons.enums.NoticeType;
 import com.terena.mnmp.commons.enums.SendType;

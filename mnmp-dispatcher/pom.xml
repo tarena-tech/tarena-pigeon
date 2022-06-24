@@ -32,8 +32,8 @@
             <version>${spring.framework.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.tarena.mnmp</groupId>
             <artifactId>mnmp-commons</artifactId>
-            <groupId>com.terena.mnmp</groupId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -41,5 +41,6 @@
             <groupId>com.terena.mnmp</groupId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+
     </dependencies>
 </project>

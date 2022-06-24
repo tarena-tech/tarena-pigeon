@@ -13,7 +13,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.terena.mnmp</groupId>
+            <groupId>com.tarena.mnmp</groupId>
             <artifactId>mnmp-commons</artifactId>
             <version>${mnmp_commons_version}</version>
         </dependency>

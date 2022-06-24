@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.terena.mnmp.api;
+package com.tarena.mnmp.api;
 
 public interface NoticeTargetEvent {
     String getNoticeType();
