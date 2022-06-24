@@ -17,7 +17,6 @@
 
 package com.terena.dispatcher.test;
 
-import com.terena.dispatcher.BaseNoticeTarget;
 import com.terena.dispatcher.SmsNoticeTarget;
 import com.terena.dispatcher.assemble.impl.EmailTargetAssembler;
 import com.terena.dispatcher.assemble.impl.SmsTargetAssembler;
@@ -26,7 +25,6 @@ import com.terena.dispatcher.impl.DispatcherRegistry;
 import com.terena.dispatcher.impl.EmailAliNoticeDispatcher;
 import com.terena.dispatcher.impl.SmsAliNoticeDispatcher;
 import com.terena.mnmp.api.NoticeDTO;
-import com.terena.mnmp.api.NoticeTargetEvent;
 import com.terena.mnmp.commons.enums.NoticeType;
 import java.util.List;
 import org.junit.Assert;
