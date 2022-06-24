@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.mnmp.monitor;
 
+import com.tarena.mnmp.api.NoticeDTO;
 import com.terena.mnmp.commons.enums.TargetStatus;
 
 public interface Monitor {
