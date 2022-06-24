@@ -50,24 +50,6 @@
     </properties>
 
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
-
-    <scm>
-        <url>https://github.com/sparrowzoo/sparrow.git</url>
-        <connection>scm:git:https://github.com/sparrowzoo/sparrow.git</connection>
-        <developerConnection>scm:git:https://github.com/sparrowzoo/sparrow.git</developerConnection>
-        <tag>sparrow-1.0</tag>
-    </scm>
 
     <licenses>
         <license>
@@ -79,23 +61,20 @@
 
     <developers>
         <developer>
-            <name>harry</name>
-            <email>zh_harry@163.com</email>
-            <organization>sparrowzoo</organization>
-            <organizationUrl>http://www.sparrowzoo.com</organizationUrl>
+            <name>open-source@tedu.cn</name>
+            <email>open-source@tedu.cn</email>
+            <organization>terena</organization>
+            <organizationUrl>http://bjs.tedu.cn</organizationUrl>
         </developer>
     </developers>
 
     <dependencyManagement>
-
         <dependencies>
-
             <dependency>
                 <groupId>com.terena.mnmp</groupId>
                 <artifactId>mnmp-commons</artifactId>
                 <version>${mnmp_commons_version}</version>
             </dependency>
-
             <dependency>
                     <artifactId>mnmp-api</artifactId>
                     <groupId>com.terena.mnmp</groupId>
@@ -283,7 +262,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 </project>
