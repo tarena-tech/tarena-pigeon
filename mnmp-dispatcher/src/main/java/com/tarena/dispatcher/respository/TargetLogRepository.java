@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.terena.dispatcher.respository;
+package com.tarena.dispatcher.respository;
 
 import com.tarena.dispatcher.EmailNoticeTarget;
 import com.tarena.dispatcher.SmsNoticeTarget;

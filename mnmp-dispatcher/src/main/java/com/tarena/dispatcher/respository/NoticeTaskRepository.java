@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.terena.dispatcher.respository;
+package com.tarena.dispatcher.respository;
 
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.commons.enums.TaskStatus;
