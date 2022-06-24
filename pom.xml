@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.terena.mnmp</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <artifactId>terena-pigeon</artifactId>
+    <modules>
+        <module>mnmp-admin</module>
+        <module>mnmp-schedule</module>
+        <module>mnmp-dispatcher</module>
+        <module>mnmp-dispatcher-repository</module>
+        <module>mnmp-provider</module>
+        <module>mnmp-bom</module>
+        <module>mnmp-api</module>
+        <module>mnmp-commons</module>
+        <module>mnmp-consumer</module>
+    </modules>
+</project>
