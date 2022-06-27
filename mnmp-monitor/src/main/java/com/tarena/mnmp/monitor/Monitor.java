@@ -21,9 +21,22 @@ import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.commons.enums.TargetStatus;
 
 public interface Monitor {
+    /**
+     * 监控前端请求
+     *
+     * @param notice
+     */
     void noticeRequest(NoticeDTO notice);
 
+    /**
+     * 监控通知目标
+     *
+     * @param status
+     */
     void noticeStatus(TargetStatus status);
 
+    /**
+     * 监控schedule 调度
+     */
     void schedule();
 }
