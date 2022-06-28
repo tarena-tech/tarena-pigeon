@@ -29,7 +29,7 @@ public interface Monitor {
     void noticeRequest(NoticeDTO notice);
 
     /**
-     * 监控通知目标
+     * 监控通知目标状态
      *
      * @param status
      */

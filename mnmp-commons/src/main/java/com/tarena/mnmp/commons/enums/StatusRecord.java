@@ -15,16 +15,20 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.mnmp.commons.enums;
 
-public interface NoticeTargetEvent<T> {
-    Long getTaskId();
-
-    String getTriggerTime();
-
-    String getNoticeType();
-
-    String getProvider();
-
-
+/**
+ * 记录状态
+ *
+ * @version 1.0
+ */
+public enum StatusRecord {
+    /**
+     * 被屏蔽(0)
+     */
+    DISABLE,
+    /**
+     * 可用(1)
+     */
+    ENABLE
 }

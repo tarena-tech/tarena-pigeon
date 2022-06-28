@@ -15,16 +15,19 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.mnmp.admin.app;
 
-public interface NoticeTargetEvent<T> {
-    Long getTaskId();
+import com.tarena.mnmp.commons.enums.StatusRecord;
+import java.util.List;
 
-    String getTriggerTime();
+public interface AppDao {
+    Integer save(App app);
 
-    String getNoticeType();
+    List<App> queryAllApps(StatusRecord status);
 
-    String getProvider();
+    App findById(Integer appId);
 
+    void disable(Integer appId);
 
+    void enable(Integer appId);
 }

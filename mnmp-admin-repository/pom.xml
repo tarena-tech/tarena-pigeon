@@ -6,21 +6,13 @@
         <artifactId>mnmp-bom</artifactId>
         <groupId>com.tarena.mnmp</groupId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../mnmp-bom</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>mnmp-schedule</artifactId>
-
+    <artifactId>mnmp-admin-repository</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.tarena.mnmp</groupId>
-            <artifactId>mnmp-commons</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tarena.mnmp</groupId>
-            <artifactId>mnmp-dispatcher</artifactId>
+            <artifactId>mnmp-admin-domain</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

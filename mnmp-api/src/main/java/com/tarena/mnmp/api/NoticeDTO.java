@@ -21,6 +21,8 @@ import com.tarena.mnmp.commons.enums.NoticeType;
 import com.tarena.mnmp.commons.enums.SendType;
 
 public class NoticeDTO {
+    private Long taskId;
+    private String triggerTime;
     private SendType sendType;
     private NoticeType noticeType;
     private String appCode;
@@ -92,5 +94,21 @@ public class NoticeDTO {
 
     public void setSignName(String signName) {
         this.signName = signName;
+    }
+
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getTriggerTime() {
+        return triggerTime;
+    }
+
+    public void setTriggerTime(String triggerTime) {
+        this.triggerTime = triggerTime;
     }
 }

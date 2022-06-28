@@ -15,16 +15,13 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.dispatcher.serialization;
 
-public interface NoticeTargetEvent<T> {
-    Long getTaskId();
+import com.tarena.mnmp.api.NoticeTargetEvent;
+import java.util.List;
 
-    String getTriggerTime();
+public interface Serialization {
+    <T extends NoticeTargetEvent> String serialize(List<T> targets);
 
-    String getNoticeType();
-
-    String getProvider();
-
-
+    <T extends NoticeTargetEvent> List<T> deserialize(String targets, Class clazz);
 }

@@ -15,16 +15,18 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.dispatcher.serialization;
 
-public interface NoticeTargetEvent<T> {
-    Long getTaskId();
+import com.alibaba.fastjson2.JSON;
+import com.tarena.mnmp.api.NoticeTargetEvent;
+import java.util.List;
 
-    String getTriggerTime();
+public class JsonSerialization implements Serialization {
+    @Override public <T extends NoticeTargetEvent> String serialize(List<T> targets) {
+        return JSON.toJSONString(targets);
+    }
 
-    String getNoticeType();
-
-    String getProvider();
-
-
+    @Override public <T extends NoticeTargetEvent> List<T> deserialize(String targets, Class clazz) {
+        return JSON.parseArray(targets, clazz);
+    }
 }

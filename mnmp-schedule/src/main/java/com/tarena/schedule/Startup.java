@@ -15,51 +15,68 @@
  * limitations under the License.
  */
 
-package com.tarena.dispatcher.test;
+package com.tarena.schedule;
 
-import com.tarena.dispatcher.SmsNoticeTarget;
 import com.tarena.dispatcher.assemble.impl.EmailTargetAssembler;
 import com.tarena.dispatcher.assemble.impl.SmsTargetAssembler;
-import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
-import com.tarena.dispatcher.impl.DispatcherRegistry;
 import com.tarena.dispatcher.impl.EmailAliNoticeDispatcher;
 import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
 import com.tarena.dispatcher.serialization.SerializationProvider;
-import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.commons.enums.NoticeType;
+import com.tarena.mnmp.api.NoticeTargetEvent;
+import com.tarena.mnmp.commons.enums.CycleLevel;
+import com.tarena.schedule.utils.NoticeTaskTrigger;
+import java.util.ArrayList;
 import java.util.List;
-import org.junit.Assert;
-import org.junit.Test;
 
-public class DispatcherTest {
+public class Startup extends AbstractScheduler {
+    public static void main(String[] args) throws Exception {
 
-    private static List<SmsNoticeTarget> assemble() throws Exception {
         EmailTargetAssembler emailTargetAssembler = new EmailTargetAssembler();
         emailTargetAssembler.afterPropertiesSet();
         SmsTargetAssembler smsTargetAssembler = new SmsTargetAssembler();
         smsTargetAssembler.afterPropertiesSet();
 
-        NoticeDTO notice = new NoticeDTO();
-        notice.setNoticeType(NoticeType.SMS);
-        notice.setTemplateParam("t1");
-        notice.setTargets("1,2,3,4,5");
-        String json = SerializationProvider.get().serialize(TargetAssemblerRegistry.getInstance().assemble(notice));
-        List<SmsNoticeTarget> targetList = SerializationProvider.get().deserialize(json, SmsNoticeTarget.class);
-        Assert.assertEquals(5, targetList.size());
-        return targetList;
-    }
 
-    @Test
-    public void assembler() throws Exception {
-        assemble();
-    }
-
-    public static void main(String[] args) throws Exception {
         EmailAliNoticeDispatcher emailAliNoticeDispatcher = new EmailAliNoticeDispatcher();
         emailAliNoticeDispatcher.afterPropertiesSet();
         SmsAliNoticeDispatcher smsAliNoticeDispatcher = new SmsAliNoticeDispatcher();
         smsAliNoticeDispatcher.afterPropertiesSet();
-        List<SmsNoticeTarget> smsNoticeTargets = assemble();
-        DispatcherRegistry.getInstance().dispatcher(smsNoticeTargets);
+
+        Startup startup = new Startup();
+        startup.schedule();
+    }
+
+    @Override List<NoticeTaskTrigger> queryTriggers() {
+        List<NoticeTaskTrigger> triggers = new ArrayList<>();
+        NoticeTaskTrigger trigger = new NoticeTaskTrigger();
+        trigger.setCycleLevel(CycleLevel.HOUR.getLevel());
+        triggers.add(trigger);
+        return triggers;
+    }
+
+    @Override boolean stop() {
+        return false;
+    }
+
+    @Override void finishTask(NoticeTaskTrigger noticeTaskTrigger) {
+
+    }
+
+    @Override void updateNextTriggerTime(NoticeTaskTrigger noticeTaskTrigger) {
+
+    }
+
+    @Override List<List<String>> getTargets(NoticeTaskTrigger noticeTaskTrigger) {
+        List<List<String>> targetsList = new ArrayList<>();
+        List<String> targets = new ArrayList<>();
+        targets.add("135");
+        targets.add("136");
+        targets.add("137");
+        targetsList.add(targets);
+        return targetsList;
+    }
+
+    @Override <T extends NoticeTargetEvent> void send(List<T> events) {
+        SerializationProvider.get().serialize(events);
     }
 }

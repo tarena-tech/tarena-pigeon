@@ -17,12 +17,12 @@
 
 package com.tarena.dispatcher.impl;
 
-import com.tarena.dispatcher.BaseNoticeTarget;
+import com.tarena.dispatcher.SmsNoticeTarget;
 import com.tarena.mnmp.commons.enums.NoticeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<BaseNoticeTarget> {
+public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeTarget> {
     private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
 
     public String getNoticeType() {
@@ -30,7 +30,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<BaseNoticeT
     }
 
     @Override
-    public void dispatcher(BaseNoticeTarget notice) {
+    public void dispatcher(SmsNoticeTarget notice) {
         logger.info("sms-ali dispatcher");
     }
 }

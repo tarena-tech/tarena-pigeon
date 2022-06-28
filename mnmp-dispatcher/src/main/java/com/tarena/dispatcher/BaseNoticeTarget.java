@@ -20,6 +20,8 @@ package com.tarena.dispatcher;
 import com.tarena.mnmp.api.NoticeTargetEvent;
 
 public class BaseNoticeTarget implements NoticeTargetEvent {
+    private String taskId;
+    private String triggerTime;
     private String appCode;
     private String noticeType;
     private Long templateId;
@@ -159,5 +161,21 @@ public class BaseNoticeTarget implements NoticeTargetEvent {
 
     public void setSendTimeAt(Long sendTimeAt) {
         this.sendTimeAt = sendTimeAt;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getTriggerTime() {
+        return triggerTime;
+    }
+
+    public void setTriggerTime(String triggerTime) {
+        this.triggerTime = triggerTime;
     }
 }

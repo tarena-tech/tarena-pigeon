@@ -15,16 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.mnmp.admin.app;
 
-public interface NoticeTargetEvent<T> {
-    Long getTaskId();
-
-    String getTriggerTime();
-
-    String getNoticeType();
-
-    String getProvider();
-
-
+public class AppController {
 }

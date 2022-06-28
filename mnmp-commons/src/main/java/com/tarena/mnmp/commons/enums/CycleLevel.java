@@ -15,16 +15,40 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.mnmp.commons.enums;
 
-public interface NoticeTargetEvent<T> {
-    Long getTaskId();
+public enum CycleLevel {
 
-    String getTriggerTime();
+    MINUTE(0, "分钟"),
+    HOUR(1, "小时"),
+    DAY(2, "日"),
+    WEEK(3, "周"),
+    MONTH(4, "月"),
+    YEAR(5, "年");
 
-    String getNoticeType();
+    public static CycleLevel getInstance(int level) {
+        CycleLevel[] cycleLevels = values();
+        for (CycleLevel cycleLevel : cycleLevels) {
+            if (cycleLevel.getLevel() == level) {
+                return cycleLevel;
+            }
+        }
+        return HOUR;
+    }
 
-    String getProvider();
+    private String description;
+    private Integer level;
 
+    CycleLevel(Integer level, String description) {
+        this.description = description;
+        this.level = level;
+    }
 
+    public String getDescription() {
+        return this.description;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
 }
