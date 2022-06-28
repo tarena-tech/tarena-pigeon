@@ -40,11 +40,11 @@ public class DispatcherTest {
         smsTargetAssembler.afterPropertiesSet();
 
         NoticeDTO notice = new NoticeDTO();
-        notice.setNoticeType(NoticeType.WECHAT);
-        notice.setTemplateParam("t1");
-        notice.setTargets("1,2,3,4,5");
+        notice.setNoticeType(NoticeType.SMS);
+        notice.setTemplateParam("1234");
+        notice.setTargets("18510273063");
         List<BaseNoticeTarget> targetList = TargetAssemblerRegistry.getInstance().assemble(notice);
-        Assert.assertEquals(5, targetList.size());
+        Assert.assertEquals(1, targetList.size());
         return targetList;
     }
 

@@ -36,6 +36,9 @@ public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeTarget>
         String[] targetArray = targets.split(",");
         for (String target : targetArray) {
             SmsNoticeTarget noticeTarget = new SmsNoticeTarget();
+            noticeTarget.setSignName("阿里云短信测试");
+            noticeTarget.setTemplateCode("SMS_154950909");
+            noticeTarget.setTemplateParam("{\"code\":\""+notice.getTemplateParam()+"\"}");
             noticeTarget.setTarget(target);
             noticeTarget.setNoticeType(this.getNoticeType());
             noticeTarget.setProviderCode("Ali");

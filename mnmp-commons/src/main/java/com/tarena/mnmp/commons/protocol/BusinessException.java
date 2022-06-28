@@ -16,7 +16,6 @@
  */
 
 package com.tarena.mnmp.commons.protocol;
-
 public class BusinessException extends Exception {
     public BusinessException(String code, String msg) {
         this.code = code;
