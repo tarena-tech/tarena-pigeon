@@ -17,6 +17,7 @@
 
 package com.tarena.dispatcher.test;
 
+import com.tarena.dispatcher.BaseNoticeTarget;
 import com.tarena.dispatcher.SmsNoticeTarget;
 import com.tarena.dispatcher.assemble.impl.EmailTargetAssembler;
 import com.tarena.dispatcher.assemble.impl.SmsTargetAssembler;
@@ -33,16 +34,17 @@ import org.junit.Test;
 
 public class DispatcherTest {
 
-    private static List<SmsNoticeTarget> assemble() throws Exception {
+    private static List<BaseNoticeTarget> assemble() throws Exception {
         EmailTargetAssembler emailTargetAssembler = new EmailTargetAssembler();
         emailTargetAssembler.afterPropertiesSet();
         SmsTargetAssembler smsTargetAssembler = new SmsTargetAssembler();
         smsTargetAssembler.afterPropertiesSet();
 
         NoticeDTO notice = new NoticeDTO();
-        notice.setNoticeType(NoticeType.SMS);
+        notice.setNoticeType(NoticeType.WECHAT);
         notice.setTemplateParam("t1");
         notice.setTargets("1,2,3,4,5");
+        List<BaseNoticeTarget> targetList = TargetAssemblerRegistry.getInstance().assemble(notice);
         String json = SerializationProvider.get().serialize(TargetAssemblerRegistry.getInstance().assemble(notice));
         List<SmsNoticeTarget> targetList = SerializationProvider.get().deserialize(json, SmsNoticeTarget.class);
         Assert.assertEquals(5, targetList.size());
@@ -59,7 +61,8 @@ public class DispatcherTest {
         emailAliNoticeDispatcher.afterPropertiesSet();
         SmsAliNoticeDispatcher smsAliNoticeDispatcher = new SmsAliNoticeDispatcher();
         smsAliNoticeDispatcher.afterPropertiesSet();
-        List<SmsNoticeTarget> smsNoticeTargets = assemble();
-        DispatcherRegistry.getInstance().dispatcher(smsNoticeTargets);
+        List<BaseNoticeTarget> baseNoticeTargets = assemble();
+        DispatcherRegistry.getInstance().dispatcher(baseNoticeTargets);
+
     }
 }

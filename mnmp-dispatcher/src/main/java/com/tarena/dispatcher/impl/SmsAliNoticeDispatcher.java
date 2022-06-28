@@ -17,6 +17,8 @@
 
 package com.tarena.dispatcher.impl;
 
+import com.tarena.dispatcher.BaseNoticeTarget;
+import com.tarena.dispatcher.SmsNoticeTarget;
 import com.tarena.dispatcher.SmsNoticeTarget;
 import com.tarena.mnmp.commons.enums.NoticeType;
 import org.slf4j.Logger;
