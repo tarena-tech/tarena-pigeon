@@ -15,13 +15,8 @@
  * limitations under the License.
  */
 
-package com.tarena.dispatcher.serialization;
+package com.tarena.dispatcher;
 
-import com.tarena.mnmp.api.NoticeTargetEvent;
-import java.util.List;
-
-public interface Serialization {
-    <T extends NoticeTargetEvent> String serialize(List<T> targets);
-
-    <T extends NoticeTargetEvent> List<T> deserialize(String targets, Class clazz);
+public interface NoticeEventGetter {
+    NoticeEvent getNoticeEvent();
 }

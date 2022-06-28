@@ -17,15 +17,16 @@
 
 package com.tarena.schedule;
 
+import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.EmailTargetAssembler;
 import com.tarena.dispatcher.assemble.impl.SmsTargetAssembler;
 import com.tarena.dispatcher.impl.EmailAliNoticeDispatcher;
 import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
-import com.tarena.dispatcher.serialization.SerializationProvider;
-import com.tarena.mnmp.api.NoticeTargetEvent;
 import com.tarena.mnmp.commons.enums.CycleLevel;
+import com.tarena.mnmp.commons.enums.SendType;
 import com.tarena.schedule.utils.NoticeTaskTrigger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Startup extends AbstractScheduler {
@@ -35,7 +36,6 @@ public class Startup extends AbstractScheduler {
         emailTargetAssembler.afterPropertiesSet();
         SmsTargetAssembler smsTargetAssembler = new SmsTargetAssembler();
         smsTargetAssembler.afterPropertiesSet();
-
 
         EmailAliNoticeDispatcher emailAliNoticeDispatcher = new EmailAliNoticeDispatcher();
         emailAliNoticeDispatcher.afterPropertiesSet();
@@ -50,6 +50,10 @@ public class Startup extends AbstractScheduler {
         List<NoticeTaskTrigger> triggers = new ArrayList<>();
         NoticeTaskTrigger trigger = new NoticeTaskTrigger();
         trigger.setCycleLevel(CycleLevel.HOUR.getLevel());
+        trigger.setNextTriggerTime(new Date());
+        trigger.setTriggerEndTime(new Date());
+        trigger.setSendType(SendType.DELAY);
+        trigger.setCycleNum(1);
         triggers.add(trigger);
         return triggers;
     }
@@ -76,7 +80,7 @@ public class Startup extends AbstractScheduler {
         return targetsList;
     }
 
-    @Override <T extends NoticeTargetEvent> void send(List<T> events) {
-        SerializationProvider.get().serialize(events);
+    @Override <T extends NoticeEventGetter> void send(T event) {
+       
     }
 }

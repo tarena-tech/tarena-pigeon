@@ -15,18 +15,32 @@
  * limitations under the License.
  */
 
-package com.tarena.dispatcher.serialization;
+package com.tarena.dispatcher.event;
 
-import com.alibaba.fastjson2.JSON;
-import com.tarena.mnmp.api.NoticeTargetEvent;
+import com.tarena.dispatcher.DefaultNoticeEvent;
+import com.tarena.dispatcher.EmailTarget;
+import com.tarena.dispatcher.NoticeEvent;
+import com.tarena.dispatcher.NoticeEventGetter;
 import java.util.List;
 
-public class JsonSerialization implements Serialization {
-    @Override public <T extends NoticeTargetEvent> String serialize(List<T> targets) {
-        return JSON.toJSONString(targets);
+public class EmailNoticeEvent implements NoticeEventGetter {
+    private DefaultNoticeEvent noticeEvent;
+
+    private List<EmailTarget> targets;
+
+    public void setNoticeEvent(DefaultNoticeEvent noticeEvent) {
+        this.noticeEvent = noticeEvent;
     }
 
-    @Override public <T extends NoticeTargetEvent> List<T> deserialize(String targets, Class clazz) {
-        return JSON.parseArray(targets, clazz);
+    public List<EmailTarget> getTargets() {
+        return targets;
+    }
+
+    public void setTargets(List<EmailTarget> targets) {
+        this.targets = targets;
+    }
+
+    @Override public NoticeEvent getNoticeEvent() {
+        return noticeEvent;
     }
 }

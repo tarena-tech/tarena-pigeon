@@ -17,5 +17,5 @@
 
 package com.tarena.dispatcher;
 
-public class EmailNoticeTarget extends BaseNoticeTarget {
+public class EmailTarget extends BaseNoticeTarget {
 }

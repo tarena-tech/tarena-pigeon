@@ -19,6 +19,7 @@ package com.tarena.mnmp.api;
 
 import com.tarena.mnmp.commons.enums.NoticeType;
 import com.tarena.mnmp.commons.enums.SendType;
+import java.util.List;
 
 public class NoticeDTO {
     private Long taskId;
@@ -28,7 +29,7 @@ public class NoticeDTO {
     private String appCode;
     private String templateCode;
     private String templateParam;
-    private String targets;
+    private List<String> targets;
     private String signCode;
     private String signName;
 
@@ -72,11 +73,11 @@ public class NoticeDTO {
         this.templateParam = templateParam;
     }
 
-    public String getTargets() {
+    public List<String> getTargets() {
         return targets;
     }
 
-    public void setTargets(String targets) {
+    public void setTargets(List<String> targets) {
         this.targets = targets;
     }
 

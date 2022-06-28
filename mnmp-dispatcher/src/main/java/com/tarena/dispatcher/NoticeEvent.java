@@ -15,10 +15,17 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.dispatcher;
 
-import com.tarena.mnmp.commons.protocol.BusinessException;
+import com.tarena.mnmp.commons.enums.NoticeType;
 
-public interface NoticeService {
-    void send(NoticeDTO notice) throws BusinessException;
+public interface NoticeEvent {
+
+    Long getTaskId();
+
+    String getTriggerTime();
+
+    NoticeType getNoticeType();
+
+    String getProvider();
 }

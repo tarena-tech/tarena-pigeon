@@ -18,11 +18,11 @@
 package com.tarena.dispatcher.impl;
 
 import com.tarena.dispatcher.NoticeDispatcher;
-import com.tarena.mnmp.api.NoticeTargetEvent;
+import com.tarena.dispatcher.NoticeEvent;
+import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.mnmp.commons.constant.ErrorCode;
 import com.tarena.mnmp.commons.protocol.BusinessException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DispatcherRegistry {
@@ -44,17 +44,12 @@ public class DispatcherRegistry {
         this.noticeDispatcherContainer.put(noticeType, noticeDispatcher);
     }
 
-    public <T extends NoticeTargetEvent> void dispatcher(T target) throws BusinessException {
-        NoticeDispatcher noticeDispatcher = this.noticeDispatcherContainer.get(target.getNoticeType().toLowerCase() + target.getProvider());
+    public <T extends NoticeEventGetter> void dispatcher(T noticeEventWrap) throws BusinessException {
+        NoticeEvent noticeEvent = noticeEventWrap.getNoticeEvent();
+        NoticeDispatcher noticeDispatcher = this.noticeDispatcherContainer.get(noticeEvent.getNoticeType().name().toLowerCase() + noticeEvent.getProvider());
         if (noticeDispatcher == null) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "Notice Dispatcher not found. notice type=" + target.getNoticeType() + "provider =" + target.getProvider());
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "Notice Dispatcher not found. notice type=" + noticeEvent.getNoticeType().name() + "provider =" + noticeEvent.getProvider());
         }
-        noticeDispatcher.dispatcher(target);
-    }
-
-    public <T extends NoticeTargetEvent> void dispatcher(List<T> targets) throws BusinessException {
-        for (NoticeTargetEvent noticeEvent : targets) {
-            this.dispatcher(noticeEvent);
-        }
+        noticeDispatcher.dispatcher(noticeEventWrap);
     }
 }

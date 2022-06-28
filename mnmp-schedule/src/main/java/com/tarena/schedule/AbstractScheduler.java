@@ -17,10 +17,9 @@
 
 package com.tarena.schedule;
 
-import com.tarena.dispatcher.SmsNoticeTarget;
+import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
 import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.api.NoticeTargetEvent;
 import com.tarena.mnmp.commons.enums.NoticeType;
 import com.tarena.schedule.utils.NoticeTaskTrigger;
 import java.util.ArrayList;
@@ -44,38 +43,41 @@ public abstract class AbstractScheduler {
 
     abstract List<List<String>> getTargets(NoticeTaskTrigger noticeTaskTrigger);
 
-    abstract <T extends NoticeTargetEvent> void send(List<T> events);
+    abstract <T extends NoticeEventGetter> void send(T noticeEvent);
 
     private List<NoticeDTO> assemble(NoticeTaskTrigger noticeTaskTrigger, List<List<String>> targets) {
-        NoticeDTO notice = new NoticeDTO();
-        notice.setNoticeType(NoticeType.SMS);
-        //todo assemble notice
         List<NoticeDTO> notices = new ArrayList<>();
-        notices.add(notice);
+        for (List<String> targetList : targets) {
+            NoticeDTO notice = new NoticeDTO();
+            notice.setNoticeType(NoticeType.SMS);
+            notice.setTargets(targetList);
+            //todo assemble notice
+            notices.add(notice);
+        }
         return notices;
     }
 
     public void schedule() {
-        while (!stop()) {
-            try {
-                List<NoticeTaskTrigger> triggers = this.queryTriggers();
-                for (NoticeTaskTrigger trigger : triggers) {
-                    List<List<String>> targetsList = this.getTargets(trigger);
-                    List<NoticeDTO> notices = this.assemble(trigger, targetsList);
-                    for (NoticeDTO notice : notices) {
-                        this.send(TargetAssemblerRegistry.getInstance().assemble(notice));
-                    }
-                    Date nextTriggerTime = trigger.generateNextTriggerTime();
-                    if (trigger.isFinish(nextTriggerTime)) {
-                        this.finishTask(trigger);
-                    }
+        //while (!stop()) {
+        try {
+            List<NoticeTaskTrigger> triggers = this.queryTriggers();
+            for (NoticeTaskTrigger trigger : triggers) {
+                List<List<String>> targetsList = this.getTargets(trigger);
+                List<NoticeDTO> notices = this.assemble(trigger, targetsList);
+                for (NoticeDTO notice : notices) {
+                    this.send(TargetAssemblerRegistry.getInstance().assemble(notice));
                 }
-                if (CollectionUtils.isEmpty(triggers)) {
-                    Thread.sleep(1000L);
+                Date nextTriggerTime = trigger.generateNextTriggerTime();
+                if (trigger.isFinish(nextTriggerTime)) {
+                    this.finishTask(trigger);
                 }
-            } catch (Throwable e) {
-                logger.error("schedule error ", e);
             }
+            if (CollectionUtils.isEmpty(triggers)) {
+                Thread.sleep(1000L);
+            }
+        } catch (Throwable e) {
+            logger.error("schedule error ", e);
         }
+        //}
     }
 }

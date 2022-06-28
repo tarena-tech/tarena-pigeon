@@ -17,5 +17,34 @@
 
 package com.tarena.dispatcher;
 
-public class SmsNoticeTarget extends BaseNoticeTarget {
+import com.tarena.mnmp.commons.enums.NoticeType;
+
+public class DefaultNoticeEvent implements NoticeEvent {
+    private Long taskId;
+    private String triggerTime;
+    private NoticeType noticeType;
+    private String provider;
+
+    public DefaultNoticeEvent(Long taskId, String triggerTime, NoticeType noticeType, String provider) {
+        this.taskId = taskId;
+        this.triggerTime = triggerTime;
+        this.noticeType = noticeType;
+        this.provider = provider;
+    }
+
+    @Override public Long getTaskId() {
+        return this.taskId;
+    }
+
+    @Override public String getTriggerTime() {
+        return this.triggerTime;
+    }
+
+    @Override public NoticeType getNoticeType() {
+        return this.noticeType;
+    }
+
+    @Override public String getProvider() {
+        return this.provider;
+    }
 }
