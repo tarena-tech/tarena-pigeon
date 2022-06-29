@@ -20,6 +20,9 @@ package com.tarena.dispatcher;
 import com.tarena.mnmp.commons.enums.NoticeType;
 
 public interface NoticeEvent {
+    Integer batchIndex();
+
+    Integer getSize();
 
     Long getTaskId();
 
