@@ -17,19 +17,16 @@
 
 package com.tarena.mnmp.provider;
 
+import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
 import com.tarena.dispatcher.impl.DispatcherRegistry;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.NoticeService;
-import com.tarena.mnmp.api.NoticeTargetEvent;
 import com.tarena.mnmp.commons.protocol.BusinessException;
-import java.util.List;
 
 public class DefaultNoticeService implements NoticeService {
-
-    @Override
-    public <T extends NoticeTargetEvent> void send(NoticeDTO notice) throws BusinessException {
-        List<T> targets = TargetAssemblerRegistry.getInstance().assemble(notice);
-        DispatcherRegistry.getInstance().dispatcher(targets);
+    @Override public void send(NoticeDTO notice) throws BusinessException {
+        NoticeEventGetter noticeEvent = TargetAssemblerRegistry.getInstance().assemble(notice);
+        DispatcherRegistry.getInstance().dispatcher(noticeEvent);
     }
 }

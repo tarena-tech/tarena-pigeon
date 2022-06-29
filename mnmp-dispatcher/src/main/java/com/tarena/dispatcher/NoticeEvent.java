@@ -17,5 +17,18 @@
 
 package com.tarena.dispatcher;
 
-public class EmailNoticeTarget extends BaseNoticeTarget {
+import com.tarena.mnmp.commons.enums.NoticeType;
+
+public interface NoticeEvent {
+    Integer batchIndex();
+
+    Integer getSize();
+
+    Long getTaskId();
+
+    String getTriggerTime();
+
+    NoticeType getNoticeType();
+
+    String getProvider();
 }

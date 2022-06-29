@@ -17,12 +17,12 @@
 
 package com.tarena.dispatcher.impl;
 
-import com.tarena.dispatcher.EmailNoticeTarget;
+import com.tarena.dispatcher.event.EmailNoticeEvent;
 import com.tarena.mnmp.commons.enums.NoticeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EmailAliNoticeDispatcher extends AbstractNoticeDispatcher<EmailNoticeTarget> {
+public class EmailAliNoticeDispatcher extends AbstractNoticeDispatcher<EmailNoticeEvent> {
     private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
 
     public String getNoticeType() {
@@ -30,7 +30,7 @@ public class EmailAliNoticeDispatcher extends AbstractNoticeDispatcher<EmailNoti
     }
 
     @Override
-    public void dispatcher(EmailNoticeTarget notice) {
+    public void dispatcher(EmailNoticeEvent notice) {
         logger.info("email-ali dispatcher");
     }
 }

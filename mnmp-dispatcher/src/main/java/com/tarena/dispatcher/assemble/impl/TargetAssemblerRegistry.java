@@ -17,12 +17,10 @@
 
 package com.tarena.dispatcher.assemble.impl;
 
+import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.TargetAssembler;
 import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.api.NoticeTargetEvent;
-import com.tarena.mnmp.commons.protocol.BusinessException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TargetAssemblerRegistry {
@@ -44,7 +42,11 @@ public class TargetAssemblerRegistry {
         this.targetAssemblerContainer.put(noticeType, targetAssembler);
     }
 
-    public <T extends NoticeTargetEvent> List<T> assemble(NoticeDTO notice) throws BusinessException {
-        return targetAssemblerContainer.get(notice.getNoticeType().name()).assemble(notice);
+    public <T extends NoticeEventGetter> T assemble(NoticeDTO notice) {
+        return (T) targetAssemblerContainer.get(notice.getNoticeType().name()).assemble(notice, 0);
+    }
+
+    public <T extends NoticeEventGetter> T assemble(NoticeDTO notice, Integer batchIndex) {
+        return (T) targetAssemblerContainer.get(notice.getNoticeType().name()).assemble(notice, batchIndex);
     }
 }

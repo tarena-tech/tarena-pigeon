@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.dispatcher;
+package com.tarena.mnmp.admin.app;
 
-public class SmsNoticeTarget extends BaseNoticeTarget {
+public class AppController {
 }

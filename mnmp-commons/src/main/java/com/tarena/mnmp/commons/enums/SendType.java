@@ -26,7 +26,7 @@ public enum SendType {
     private String name;
     private Integer type;
 
-    private SendType(String name, Integer type) {
+    SendType(String name, Integer type) {
         this.name = name;
         this.type = type;
     }

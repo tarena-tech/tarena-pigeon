@@ -17,30 +17,33 @@
 
 package com.tarena.dispatcher.assemble.impl;
 
-import com.tarena.dispatcher.EmailNoticeTarget;
+import com.tarena.dispatcher.DefaultNoticeEvent;
+import com.tarena.dispatcher.EmailTarget;
+import com.tarena.dispatcher.event.EmailNoticeEvent;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.commons.enums.NoticeType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmailTargetAssembler extends AbstractTargetAssembler<EmailNoticeTarget> {
+public class EmailTargetAssembler extends AbstractTargetAssembler<EmailNoticeEvent> {
     @Override
     public String getNoticeType() {
         return NoticeType.EMAIL.toString();
     }
 
     @Override
-    public List<EmailNoticeTarget> assemble(NoticeDTO notice) {
-        List<EmailNoticeTarget> emailNoticeTargets = new ArrayList<>();
-        String targets = notice.getTargets();
-        String[] targetArray = targets.split(",");
-        for (String target : targetArray) {
-            EmailNoticeTarget noticeTarget = new EmailNoticeTarget();
-            noticeTarget.setTarget(target);
-            noticeTarget.setNoticeType(this.getNoticeType());
-            noticeTarget.setProviderCode("Ali");
-            emailNoticeTargets.add(noticeTarget);
+    public EmailNoticeEvent assemble(NoticeDTO notice, Integer batchIndex) {
+        EmailNoticeEvent emailNoticeWap = new EmailNoticeEvent();
+        DefaultNoticeEvent noticeEvent = new DefaultNoticeEvent(notice.getTaskId(), notice.getTriggerTime(), notice.getNoticeType(), "Ali", batchIndex, notice.getTargets().size());
+        emailNoticeWap.setNoticeEvent(noticeEvent);
+        List<String> targets = notice.getTargets();
+        List<EmailTarget> targetList = new ArrayList<>();
+        for (String target : targets) {
+            EmailTarget emailTarget = new EmailTarget();
+            emailTarget.setTarget(target);
+            targetList.add(emailTarget);
         }
-        return emailNoticeTargets;
+        emailNoticeWap.setTargets(targetList);
+        return emailNoticeWap;
     }
 }

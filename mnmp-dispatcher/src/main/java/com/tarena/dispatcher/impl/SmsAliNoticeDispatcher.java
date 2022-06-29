@@ -17,13 +17,15 @@
 
 package com.tarena.dispatcher.impl;
 
-import com.tarena.dispatcher.BaseNoticeTarget;
-import com.tarena.dispatcher.SmsNoticeTarget;
+import com.alibaba.fastjson2.JSON;
+import com.tarena.dispatcher.SmsTarget;
+import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.mnmp.commons.enums.NoticeType;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeTarget> {
+public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEvent> {
     private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
 
     public String getNoticeType() {
@@ -31,7 +33,10 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeTa
     }
 
     @Override
-    public void dispatcher(SmsNoticeTarget notice) {
-        logger.info("sms-ali dispatcher");
+    public void dispatcher(SmsNoticeEvent notice) {
+        List<SmsTarget> targets = notice.getTargets();
+        for (SmsTarget smsTarget : targets) {
+            logger.info("sms-ali dispatcher " + JSON.toJSONString(smsTarget));
+        }
     }
 }
