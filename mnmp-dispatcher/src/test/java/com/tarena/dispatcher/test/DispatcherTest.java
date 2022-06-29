@@ -41,7 +41,7 @@ public class DispatcherTest {
         smsTargetAssembler.afterPropertiesSet();
 
         NoticeDTO notice = new NoticeDTO();
-        notice.setNoticeType(NoticeType.WECHAT);
+        notice.setNoticeType(NoticeType.SMS);
         notice.setTemplateParam("t1");
         notice.setTargets("1,2,3,4,5");
         List<BaseNoticeTarget> targetList = TargetAssemblerRegistry.getInstance().assemble(notice);
