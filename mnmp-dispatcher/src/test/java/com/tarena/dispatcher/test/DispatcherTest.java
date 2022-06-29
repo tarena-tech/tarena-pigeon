@@ -41,7 +41,7 @@ public class DispatcherTest {
         notice.setNoticeType(NoticeType.SMS);
         notice.setTemplateParam("t1");
         notice.setTargets(Arrays.asList("1", "2", "3", "4"));
-        SmsNoticeEvent targetList = TargetAssemblerRegistry.getInstance().assemble(notice);
+        SmsNoticeEvent targetList = TargetAssemblerRegistry.getInstance().assemble(notice, 1);
         //String json = SerializationProvider.get().serialize(TargetAssemblerRegistry.getInstance().assemble(notice));
         //List<SmsTarget> targetList = SerializationProvider.get().deserialize(json, SmsTarget.class);
         //Assert.assertEquals(5, targetList.size());
