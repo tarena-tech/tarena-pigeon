@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.app.model;
+package com.tarena.mnmp.app;
 
 import java.util.Date;
 

@@ -14,8 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.protocol;
 
+package com.tarena.mnmp.protocol;
 public class BusinessException extends Exception {
     public BusinessException(String code, String msg) {
         this.code = code;

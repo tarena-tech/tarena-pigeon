@@ -25,7 +25,7 @@ import com.tarena.dispatcher.impl.DispatcherRegistry;
 import com.tarena.dispatcher.impl.EmailAliNoticeDispatcher;
 import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
 import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.commons.enums.NoticeType;
+import com.tarena.mnmp.enums.NoticeType;
 import java.util.Arrays;
 import org.junit.Test;
 
