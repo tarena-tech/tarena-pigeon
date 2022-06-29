@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.tarena.mnmp</groupId>
-            <artifactId>mnmp-commons</artifactId>
+            <artifactId>mnmp-protocol</artifactId>
             <version>${mnmp_commons_version}</version>
         </dependency>
     </dependencies>

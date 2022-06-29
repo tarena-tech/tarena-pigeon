@@ -15,10 +15,40 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.commons.constant;
+package com.tarena.mnmp.enums;
 
-public class ErrorCode {
+public enum CycleLevel {
 
-    public static final String SYSTEM_ERROR = "00000";
+    MINUTE(0, "分钟"),
+    HOUR(1, "小时"),
+    DAY(2, "日"),
+    WEEK(3, "周"),
+    MONTH(4, "月"),
+    YEAR(5, "年");
 
+    public static CycleLevel getInstance(int level) {
+        CycleLevel[] cycleLevels = values();
+        for (CycleLevel cycleLevel : cycleLevels) {
+            if (cycleLevel.getLevel() == level) {
+                return cycleLevel;
+            }
+        }
+        return HOUR;
+    }
+
+    private String description;
+    private Integer level;
+
+    CycleLevel(Integer level, String description) {
+        this.description = description;
+        this.level = level;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
 }

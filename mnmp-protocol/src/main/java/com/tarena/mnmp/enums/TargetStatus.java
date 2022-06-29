@@ -15,20 +15,10 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.commons.enums;
+package com.tarena.mnmp.enums;
 
-/**
- * 记录状态
- *
- * @version 1.0
- */
-public enum StatusRecord {
-    /**
-     * 被屏蔽(0)
-     */
-    DISABLE,
-    /**
-     * 可用(1)
-     */
-    ENABLE
+public enum TargetStatus {
+    SENT_TO_PROVIDER,
+    SENT_TO_TARGET,
+    SENT_FAIL
 }

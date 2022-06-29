@@ -17,7 +17,7 @@
 
 package com.tarena.dispatcher;
 
-import com.tarena.mnmp.commons.enums.NoticeType;
+import com.tarena.mnmp.enums.NoticeType;
 
 public interface NoticeEvent {
     Integer batchIndex();

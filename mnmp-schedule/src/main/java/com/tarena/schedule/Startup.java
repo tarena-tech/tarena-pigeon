@@ -17,19 +17,24 @@
 
 package com.tarena.schedule;
 
+import com.alibaba.fastjson2.JSON;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.EmailTargetAssembler;
 import com.tarena.dispatcher.assemble.impl.SmsTargetAssembler;
 import com.tarena.dispatcher.impl.EmailAliNoticeDispatcher;
 import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
-import com.tarena.mnmp.commons.enums.CycleLevel;
-import com.tarena.mnmp.commons.enums.SendType;
+import com.tarena.mnmp.enums.CycleLevel;
+import com.tarena.mnmp.enums.SendType;
 import com.tarena.schedule.utils.NoticeTaskTrigger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Startup extends AbstractScheduler {
+    private static Logger logger = LoggerFactory.getLogger(Startup.class);
+
     public static void main(String[] args) throws Exception {
 
         EmailTargetAssembler emailTargetAssembler = new EmailTargetAssembler();
@@ -81,6 +86,7 @@ public class Startup extends AbstractScheduler {
     }
 
     @Override <T extends NoticeEventGetter> void send(T event) {
-       
+        logger.info("send event:{}", JSON.toJSONString(event));
+        logger.info("send event class {}", event.getClass());
     }
 }

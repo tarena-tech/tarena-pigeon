@@ -19,7 +19,7 @@ package com.tarena.dispatcher.respository;
 
 import com.tarena.dispatcher.event.EmailNoticeEvent;
 import com.tarena.dispatcher.SmsTarget;
-import com.tarena.mnmp.commons.enums.TargetStatus;
+import com.tarena.mnmp.enums.TargetStatus;
 
 public interface TargetLogRepository {
 

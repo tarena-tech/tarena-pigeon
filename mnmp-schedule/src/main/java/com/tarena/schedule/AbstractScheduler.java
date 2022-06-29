@@ -20,7 +20,7 @@ package com.tarena.schedule;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
 import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.commons.enums.NoticeType;
+import com.tarena.mnmp.enums.NoticeType;
 import com.tarena.schedule.utils.NoticeTaskTrigger;
 import java.util.ArrayList;
 import java.util.Date;

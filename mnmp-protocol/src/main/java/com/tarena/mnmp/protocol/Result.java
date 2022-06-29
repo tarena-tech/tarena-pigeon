@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.commons.protocol;
+package com.tarena.mnmp.protocol;
 
-import com.tarena.mnmp.commons.constant.Constant;
+import com.tarena.mnmp.constant.Constant;
 import java.io.Serializable;
 
 public class Result<T> implements Serializable {

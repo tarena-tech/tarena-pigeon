@@ -18,7 +18,7 @@
 package com.tarena.mnmp.monitor;
 
 import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.commons.enums.TargetStatus;
+import com.tarena.mnmp.enums.TargetStatus;
 
 public interface Monitor {
     /**

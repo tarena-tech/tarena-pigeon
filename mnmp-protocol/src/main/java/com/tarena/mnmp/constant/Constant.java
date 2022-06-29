@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.commons.constant;
+package com.tarena.mnmp.constant;
 
 public class Constant {
     public static final String DEFAULT = "default";

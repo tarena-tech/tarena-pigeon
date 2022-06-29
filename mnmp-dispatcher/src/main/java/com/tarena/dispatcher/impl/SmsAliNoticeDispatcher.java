@@ -20,7 +20,7 @@ package com.tarena.dispatcher.impl;
 import com.alibaba.fastjson2.JSON;
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
-import com.tarena.mnmp.commons.enums.NoticeType;
+import com.tarena.mnmp.enums.NoticeType;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

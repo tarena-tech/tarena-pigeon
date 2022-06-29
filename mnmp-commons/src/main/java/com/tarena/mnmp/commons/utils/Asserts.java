@@ -17,7 +17,7 @@
 
 package com.tarena.mnmp.commons.utils;
 
-import com.tarena.mnmp.commons.protocol.BusinessException;
+import com.tarena.mnmp.protocol.BusinessException;
 
 public class Asserts {
     public static void isTrue(boolean expression, BusinessException errorSupport) throws BusinessException {
