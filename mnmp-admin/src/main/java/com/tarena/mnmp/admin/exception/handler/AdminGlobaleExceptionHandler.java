@@ -18,8 +18,7 @@
 package com.tarena.mnmp.admin.exception.handler;
 
 import com.tarena.mnmp.admin.exception.AdminException;
-import com.tarena.mnmp.commons.protocol.BusinessException;
-import com.tarena.mnmp.commons.protocol.Result;
+import com.tarena.mnmp.protocol.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;

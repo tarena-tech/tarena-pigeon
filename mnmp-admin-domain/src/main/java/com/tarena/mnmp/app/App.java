@@ -15,37 +15,26 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.app.dto;
+package com.tarena.mnmp.app;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tarena.mnmp.commons.regex.admin.AppRegexExpression;
-import java.io.Serializable;
+import java.util.Date;
 
-public class AppStandardDTO implements Serializable, AppRegexExpression {
-    private static final long serialVersionUID = 1L;
-    private static final String VALIDATE_MESSAGE_PREFIX = "应用编辑失败";
-    @JsonProperty("id")
-    private Long id;
-    @JsonProperty("code")
+public class App {
+    private Integer id;
     private String code;
-    @JsonProperty("name")
     private String name;
-    @JsonProperty("leader")
     private String leader;
-    @JsonProperty("teamMembers")
     private String teamMembers;
-    @JsonProperty("remark")
-    private String remark;
-    @JsonProperty("enabled")
-    private Integer enabled;
-    @JsonProperty("createTime")
-    private Long createTime;
+    private String remarks;
+    private Integer status;
+    private Date createTime;
+    private Date updateTime;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -81,27 +70,27 @@ public class AppStandardDTO implements Serializable, AppRegexExpression {
         this.teamMembers = teamMembers;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
-    public Integer getEnabled() {
-        return enabled;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public Long getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Long createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 }
