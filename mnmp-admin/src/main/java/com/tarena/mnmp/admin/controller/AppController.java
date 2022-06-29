@@ -15,7 +15,20 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.codegen.api.targets;
+package com.tarena.mnmp.admin.controller;
 
-public interface TargetApi {
+import com.tarena.mnmp.admin.codegen.api.app.AppApi;
+import com.tarena.mnmp.app.App;
+import com.tarena.mnmp.protocol.Result;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class AppController implements AppApi {
+    @Override public Result addApp(App app) {
+        return Result.success();
+    }
+
+    @Override public Result editApp(App app) {
+        return Result.success();
+    }
 }

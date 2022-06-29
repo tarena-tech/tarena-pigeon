@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.codegen.api.targets;
+package com.tarena.mnmp.admin.codegen.api.statistics;
 
-public interface TargetApi {
+import io.swagger.annotations.Api;
+import org.springframework.validation.annotation.Validated;
+
+@Validated
+@Api(
+    value = "统计信息"
+)
+public interface StatisticsApi {
 }

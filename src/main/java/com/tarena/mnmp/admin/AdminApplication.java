@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.codegen.api.targets;
+package com.tarena.mnmp.admin;
 
-public interface TargetApi {
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class AdminApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(AdminApplication.class,args);
+    }
 }

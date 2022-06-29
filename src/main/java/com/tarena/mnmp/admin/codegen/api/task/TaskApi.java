@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.codegen.api.targets;
+package com.tarena.mnmp.admin.codegen.api.task;
 
-public interface TargetApi {
+import io.swagger.annotations.Api;
+import org.springframework.validation.annotation.Validated;
+
+@Validated
+@Api(
+    value = "任务管理"
+)
+public interface TaskApi {
 }
