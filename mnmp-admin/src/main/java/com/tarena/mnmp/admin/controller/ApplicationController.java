@@ -3,7 +3,7 @@ package com.tarena.mnmp.admin.controller;
 import com.tarena.mnmp.admin.codegen.api.app.ApplicationApi;
 import com.tarena.mnmp.app.dto.AppAddDTO;
 import com.tarena.mnmp.app.dto.AppEditDTO;
-import com.tarena.mnmp.commons.protocol.Result;
+import com.tarena.mnmp.protocol.Result;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

@@ -3,10 +3,8 @@ package com.tarena.mnmp.app.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tarena.mnmp.commons.regex.admin.AppRegexExpression;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 @ApiModel(
     value = "应用新增"

@@ -2,7 +2,7 @@ package com.tarena.mnmp.admin.codegen.api.app;
 
 import com.tarena.mnmp.app.dto.AppAddDTO;
 import com.tarena.mnmp.app.dto.AppEditDTO;
-import com.tarena.mnmp.commons.protocol.Result;
+import com.tarena.mnmp.protocol.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -27,7 +27,7 @@ public interface ApplicationApi {
         value = {"/add"},
         consumes = {"application/json"}
     )
-    Result addApp(@ApiParam(value = "新增应用",required = true)@Valid @RequestBody AppAddDTO appAddDTO);
+    Result addApp(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody AppAddDTO appAddDTO);
 
     @ApiOperation(
         value = "编辑应用",
@@ -39,5 +39,5 @@ public interface ApplicationApi {
         value = {"/app/edit"},
         consumes = {"application/json"}
     )
-    Result editApp(@ApiParam(value = "编辑应用",required = true) @Valid @RequestBody AppEditDTO appEditDTO);
+    Result editApp(@ApiParam(value = "编辑应用", required = true) @Valid @RequestBody AppEditDTO appEditDTO);
 }
