@@ -32,7 +32,8 @@ public interface TargetAssembler<T extends NoticeEventGetter> {
      * 组装通知目标
      *
      * @param notice
+     * @param batchIndex 批次索引
      * @return
      */
-    T assemble(NoticeDTO notice);
+    T assemble(NoticeDTO notice, Integer batchIndex);
 }

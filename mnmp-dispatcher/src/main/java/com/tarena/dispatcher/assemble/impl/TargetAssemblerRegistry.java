@@ -43,6 +43,10 @@ public class TargetAssemblerRegistry {
     }
 
     public <T extends NoticeEventGetter> T assemble(NoticeDTO notice) {
-        return (T) targetAssemblerContainer.get(notice.getNoticeType().name()).assemble(notice);
+        return (T) targetAssemblerContainer.get(notice.getNoticeType().name()).assemble(notice, 0);
+    }
+
+    public <T extends NoticeEventGetter> T assemble(NoticeDTO notice, Integer batchIndex) {
+        return (T) targetAssemblerContainer.get(notice.getNoticeType().name()).assemble(notice, batchIndex);
     }
 }
