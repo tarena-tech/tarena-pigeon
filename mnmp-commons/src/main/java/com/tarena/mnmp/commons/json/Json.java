@@ -15,21 +15,24 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.controller;
+package com.tarena.mnmp.commons.json;
 
-import com.tarena.mnmp.admin.codegen.api.app.ApplicationApi;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
-import com.tarena.mnmp.app.App;
-import com.tarena.mnmp.protocol.Result;
-import org.springframework.web.bind.annotation.RestController;
+public interface Json {
 
-@RestController
-public class ApplicationController implements ApplicationApi {
-    @Override public Result addApp(App app) {
-        return Result.success();
-    }
+    String toString(Serializable model);
 
-    @Override public Result editApp(App app) {
-        return Result.success();
-    }
+    String toString(Map<String, Object> map);
+
+    <T> String toString(Collection<T> models);
+
+    <T> T parse(String json, Class<T> clazz);
+
+    Map<String, Object> parse(String json);
+
+    <T> List<T> parseList(String json, Class<T> clazz);
 }

@@ -43,7 +43,7 @@ public interface ApplicationApi {
         value = {"/add"},
         consumes = {"application/json"}
     )
-    Result addApp(@ApiParam(value = "新增应用",required = true)@Valid @RequestBody App App);
+    Result addApp(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody App app);
 
     @ApiOperation(
         value = "编辑应用",
@@ -55,5 +55,5 @@ public interface ApplicationApi {
         value = {"/app/edit"},
         consumes = {"application/json"}
     )
-    Result editApp(@ApiParam(value = "编辑应用",required = true) @Valid @RequestBody App App);
+    Result editApp(@ApiParam(value = "编辑应用", required = true) @Valid @RequestBody App App);
 }

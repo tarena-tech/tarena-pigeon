@@ -15,21 +15,11 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.controller;
+package com.tarena.mnmp.commons.mq;
 
-import com.tarena.mnmp.admin.codegen.api.app.ApplicationApi;
+public interface EventHandlerMappingContainer {
 
-import com.tarena.mnmp.app.App;
-import com.tarena.mnmp.protocol.Result;
-import org.springframework.web.bind.annotation.RestController;
+    void put(MQHandler handler);
 
-@RestController
-public class ApplicationController implements ApplicationApi {
-    @Override public Result addApp(App app) {
-        return Result.success();
-    }
-
-    @Override public Result editApp(App app) {
-        return Result.success();
-    }
+    MQHandler get(String eventClazzName);
 }

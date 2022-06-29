@@ -14,22 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.commons.mq;
 
-package com.tarena.mnmp.admin.controller;
+public interface MQIdempotent {
+    boolean duplicate(String keys);
 
-import com.tarena.mnmp.admin.codegen.api.app.ApplicationApi;
-
-import com.tarena.mnmp.app.App;
-import com.tarena.mnmp.protocol.Result;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class ApplicationController implements ApplicationApi {
-    @Override public Result addApp(App app) {
-        return Result.success();
-    }
-
-    @Override public Result editApp(App app) {
-        return Result.success();
-    }
+    boolean consumed(String keys);
 }

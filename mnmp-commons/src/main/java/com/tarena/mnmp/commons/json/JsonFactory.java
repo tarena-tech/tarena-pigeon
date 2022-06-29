@@ -15,21 +15,30 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.controller;
+package com.tarena.mnmp.commons.json;
 
-import com.tarena.mnmp.admin.codegen.api.app.ApplicationApi;
+import java.util.Iterator;
+import java.util.ServiceLoader;
 
-import com.tarena.mnmp.app.App;
-import com.tarena.mnmp.protocol.Result;
-import org.springframework.web.bind.annotation.RestController;
+public class JsonFactory {
+    private volatile static Json json;
 
-@RestController
-public class ApplicationController implements ApplicationApi {
-    @Override public Result addApp(App app) {
-        return Result.success();
-    }
-
-    @Override public Result editApp(App app) {
-        return Result.success();
+    public static Json getProvider() {
+        if (json != null) {
+            return json;
+        }
+        synchronized (JsonFactory.class) {
+            if (json != null) {
+                return json;
+            }
+            ServiceLoader<Json> loader = ServiceLoader.load(Json.class);
+            Iterator<Json> it = loader.iterator();
+            if (it.hasNext()) {
+                json = it.next();
+                return json;
+            }
+            throw new RuntimeException(
+                "Json Provider could not be instantiated: ");
+        }
     }
 }

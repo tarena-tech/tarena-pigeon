@@ -22,5 +22,6 @@
         <module>mnmp-admin-domain</module>
         <module>mnmp-admin-repository</module>
         <module>mnmp-protocol</module>
+        <module>mnmp-rocketmq</module>
     </modules>
 </project>

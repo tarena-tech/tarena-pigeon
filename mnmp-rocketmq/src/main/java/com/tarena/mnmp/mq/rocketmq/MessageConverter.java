@@ -15,21 +15,15 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.controller;
+package com.tarena.mnmp.mq.rocketmq;
 
-import com.tarena.mnmp.admin.codegen.api.app.ApplicationApi;
+import com.tarena.mnmp.commons.mq.MQEvent;
+import java.io.UnsupportedEncodingException;
+import org.apache.rocketmq.common.message.Message;
 
-import com.tarena.mnmp.app.App;
-import com.tarena.mnmp.protocol.Result;
-import org.springframework.web.bind.annotation.RestController;
+public interface MessageConverter {
 
-@RestController
-public class ApplicationController implements ApplicationApi {
-    @Override public Result addApp(App app) {
-        return Result.success();
-    }
+    MQEvent fromMessage(Message message) throws UnsupportedEncodingException;
 
-    @Override public Result editApp(App app) {
-        return Result.success();
-    }
+    Message createMessage(String topic, String tag, MQEvent event);
 }

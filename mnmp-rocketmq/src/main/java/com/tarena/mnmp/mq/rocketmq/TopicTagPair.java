@@ -15,21 +15,27 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.controller;
+package com.tarena.mnmp.mq.rocketmq;
 
-import com.tarena.mnmp.admin.codegen.api.app.ApplicationApi;
+import java.util.List;
 
-import com.tarena.mnmp.app.App;
-import com.tarena.mnmp.protocol.Result;
-import org.springframework.web.bind.annotation.RestController;
+public class TopicTagPair {
+    private String topic;
+    private List<String> tags;
 
-@RestController
-public class ApplicationController implements ApplicationApi {
-    @Override public Result addApp(App app) {
-        return Result.success();
+    public String getTopic() {
+        return topic;
     }
 
-    @Override public Result editApp(App app) {
-        return Result.success();
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }

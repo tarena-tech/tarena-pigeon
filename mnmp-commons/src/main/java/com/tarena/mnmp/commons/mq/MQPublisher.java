@@ -15,21 +15,8 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.controller;
+package com.tarena.mnmp.commons.mq;
 
-import com.tarena.mnmp.admin.codegen.api.app.ApplicationApi;
-
-import com.tarena.mnmp.app.App;
-import com.tarena.mnmp.protocol.Result;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class ApplicationController implements ApplicationApi {
-    @Override public Result addApp(App app) {
-        return Result.success();
-    }
-
-    @Override public Result editApp(App app) {
-        return Result.success();
-    }
+public interface MQPublisher {
+    void publish(MQEvent event) throws Throwable;
 }
