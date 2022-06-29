@@ -48,5 +48,11 @@
             <artifactId>fastjson2</artifactId>
             <version>2.0.8</version>
         </dependency>
+        <!--阿里云短信-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>dysmsapi20170525</artifactId>
+            <version>2.0.9</version>
+        </dependency>
     </dependencies>
 </project>

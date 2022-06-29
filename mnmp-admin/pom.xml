@@ -6,10 +6,25 @@
         <artifactId>mnmp-bom</artifactId>
         <groupId>com.tarena.mnmp</groupId>
         <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../mnmp-bom</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mnmp-admin</artifactId>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tarena.mnmp</groupId>
+            <artifactId>mnmp-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>2.0.9</version>
+        </dependency>
         <dependency>
             <groupId>com.tarena.mnmp</groupId>
             <artifactId>mnmp-admin-domain</artifactId>

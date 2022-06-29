@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+package com.tarena.mnmp.commons.protocol;
 package com.tarena.mnmp.protocol;
 
 public class BusinessException extends Exception {
