@@ -24,12 +24,25 @@ public class DefaultNoticeEvent implements NoticeEvent {
     private String triggerTime;
     private NoticeType noticeType;
     private String provider;
+    private Integer batch;
+    private Integer size;
 
-    public DefaultNoticeEvent(Long taskId, String triggerTime, NoticeType noticeType, String provider) {
+    public DefaultNoticeEvent(Long taskId, String triggerTime, NoticeType noticeType, String provider, Integer batch,
+        Integer size) {
         this.taskId = taskId;
         this.triggerTime = triggerTime;
         this.noticeType = noticeType;
         this.provider = provider;
+        this.batch = batch;
+        this.size = size;
+    }
+
+    public Integer batchIndex() {
+        return this.batch;
+    }
+
+    public Integer getSize() {
+        return this.size;
     }
 
     @Override public Long getTaskId() {

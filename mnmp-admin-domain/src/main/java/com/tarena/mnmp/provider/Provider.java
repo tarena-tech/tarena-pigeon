@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package provider;
+package com.tarena.mnmp.provider;
 
 import java.util.Date;
 
