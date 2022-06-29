@@ -33,6 +33,7 @@ import org.junit.Test;
 
 public class DispatcherTest {
 
+
     private static List<BaseNoticeTarget> assemble() throws Exception {
         EmailTargetAssembler emailTargetAssembler = new EmailTargetAssembler();
         emailTargetAssembler.afterPropertiesSet();
