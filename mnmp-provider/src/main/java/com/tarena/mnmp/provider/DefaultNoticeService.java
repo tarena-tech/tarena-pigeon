@@ -22,7 +22,7 @@ import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
 import com.tarena.dispatcher.impl.DispatcherRegistry;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.NoticeService;
-import com.tarena.mnmp.commons.protocol.BusinessException;
+import com.tarena.mnmp.protocol.BusinessException;
 
 public class DefaultNoticeService implements NoticeService {
     @Override public void send(NoticeDTO notice) throws BusinessException {

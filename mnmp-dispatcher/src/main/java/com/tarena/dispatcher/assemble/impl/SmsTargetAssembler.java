@@ -21,7 +21,7 @@ import com.tarena.dispatcher.DefaultNoticeEvent;
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.commons.enums.NoticeType;
+import com.tarena.mnmp.enums.NoticeType;
 import java.util.ArrayList;
 import java.util.List;
 

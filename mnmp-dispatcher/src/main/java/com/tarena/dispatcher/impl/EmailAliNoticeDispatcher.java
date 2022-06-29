@@ -18,7 +18,7 @@
 package com.tarena.dispatcher.impl;
 
 import com.tarena.dispatcher.event.EmailNoticeEvent;
-import com.tarena.mnmp.commons.enums.NoticeType;
+import com.tarena.mnmp.enums.NoticeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

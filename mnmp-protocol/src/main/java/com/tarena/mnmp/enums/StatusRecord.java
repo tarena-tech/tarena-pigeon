@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.commons.enums;
+package com.tarena.mnmp.enums;
 
 /**
  * 记录状态

@@ -15,37 +15,10 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.commons.enums;
+package com.tarena.mnmp.constant;
 
-public enum NoticeType {
-    SMS(1, "Short Messaging Service"),
-    EMAIL(2, "email"),
-    WECHAT(3, " enterprise wechat");
+public class ErrorCode {
 
-    private int type;
-    private String description;
-
-    NoticeType(int type, String description) {
-        this.type = type;
-        this.description = description;
-    }
-
-    public static NoticeType getEnum(int type) {
-        NoticeType[] noticeTypeEnums = values();
-        for (NoticeType noticeTypeEnum : noticeTypeEnums) {
-            if (noticeTypeEnum.type() == type) {
-                return noticeTypeEnum;
-            }
-        }
-        return null;
-    }
-
-    public int type() {
-        return type;
-    }
-
-    public String getDescription() {
-        return description;
-    }
+    public static final String SYSTEM_ERROR = "00000";
 
 }

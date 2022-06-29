@@ -15,37 +15,35 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.commons.enums;
+package com.tarena.mnmp.enums;
 
-public enum TaskStatus {
-    TASK_NO_OPEN(0, "PREPARING"),
-    TASK_DOING(1, "PUSHING"),
-    TASK_STOP(2, "STOP"),
-    TASK_END(3, "END");
+public enum SendType {
+    IMMEDIATELY("immediately", 0),
+    DELAY("delay", 1),
+    CYCLE("cycle", 2),
+    ;
 
-    private int status;
-    private String description;
+    private String name;
+    private Integer type;
 
-    TaskStatus(int status, String description) {
-        this.status = status;
-        this.description = description;
+    SendType(String name, Integer type) {
+        this.name = name;
+        this.type = type;
     }
 
-    public static TaskStatus getInstance(int status) {
-        TaskStatus[] taskStatusEnums = values();
-        for (TaskStatus auditStatusEnum : taskStatusEnums) {
-            if (auditStatusEnum.status() == status) {
-                return auditStatusEnum;
-            }
-        }
-        return null;
+    public Integer getType() {
+        return this.type;
     }
 
-    public int status() {
-        return this.status;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
-    public String msg() {
-        return this.description;
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

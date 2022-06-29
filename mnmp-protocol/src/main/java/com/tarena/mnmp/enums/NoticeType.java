@@ -15,40 +15,37 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.commons.enums;
+package com.tarena.mnmp.enums;
 
-public enum CycleLevel {
+public enum NoticeType {
+    SMS(1, "Short Messaging Service"),
+    EMAIL(2, "email"),
+    WECHAT(3, " enterprise wechat");
 
-    MINUTE(0, "分钟"),
-    HOUR(1, "小时"),
-    DAY(2, "日"),
-    WEEK(3, "周"),
-    MONTH(4, "月"),
-    YEAR(5, "年");
+    private int type;
+    private String description;
 
-    public static CycleLevel getInstance(int level) {
-        CycleLevel[] cycleLevels = values();
-        for (CycleLevel cycleLevel : cycleLevels) {
-            if (cycleLevel.getLevel() == level) {
-                return cycleLevel;
-            }
-        }
-        return HOUR;
+    NoticeType(int type, String description) {
+        this.type = type;
+        this.description = description;
     }
 
-    private String description;
-    private Integer level;
+    public static NoticeType getEnum(int type) {
+        NoticeType[] noticeTypeEnums = values();
+        for (NoticeType noticeTypeEnum : noticeTypeEnums) {
+            if (noticeTypeEnum.type() == type) {
+                return noticeTypeEnum;
+            }
+        }
+        return null;
+    }
 
-    CycleLevel(Integer level, String description) {
-        this.description = description;
-        this.level = level;
+    public int type() {
+        return type;
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
-    public Integer getLevel() {
-        return level;
-    }
 }

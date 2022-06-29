@@ -15,10 +15,26 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.commons.constant;
+package com.tarena.mnmp.protocol;
 
-public class ErrorCode {
+public class BusinessException extends Exception {
+    public BusinessException(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+    private String code;
+    private String msg;
 
-    public static final String SYSTEM_ERROR = "00000";
+    public String getCode() {
+        return code;
+    }
 
+    public String getMsg() {
+        return msg;
+    }
+
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return super.fillInStackTrace();
+    }
 }

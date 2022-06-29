@@ -15,35 +15,40 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.commons.enums;
+package com.tarena.mnmp.enums;
 
-public enum SendType {
-    IMMEDIATELY("immediately", 0),
-    DELAY("delay", 1),
-    CYCLE("cycle", 2),
-    ;
+public enum CycleLevel {
 
-    private String name;
-    private Integer type;
+    MINUTE(0, "分钟"),
+    HOUR(1, "小时"),
+    DAY(2, "日"),
+    WEEK(3, "周"),
+    MONTH(4, "月"),
+    YEAR(5, "年");
 
-    SendType(String name, Integer type) {
-        this.name = name;
-        this.type = type;
+    public static CycleLevel getInstance(int level) {
+        CycleLevel[] cycleLevels = values();
+        for (CycleLevel cycleLevel : cycleLevels) {
+            if (cycleLevel.getLevel() == level) {
+                return cycleLevel;
+            }
+        }
+        return HOUR;
     }
 
-    public Integer getType() {
-        return this.type;
+    private String description;
+    private Integer level;
+
+    CycleLevel(Integer level, String description) {
+        this.description = description;
+        this.level = level;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public String getDescription() {
+        return this.description;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public Integer getLevel() {
+        return level;
     }
 }

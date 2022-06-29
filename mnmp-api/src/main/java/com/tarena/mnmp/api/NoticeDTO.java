@@ -17,8 +17,8 @@
 
 package com.tarena.mnmp.api;
 
-import com.tarena.mnmp.commons.enums.NoticeType;
-import com.tarena.mnmp.commons.enums.SendType;
+import com.tarena.mnmp.enums.NoticeType;
+import com.tarena.mnmp.enums.SendType;
 import java.util.List;
 
 public class NoticeDTO {

@@ -17,8 +17,8 @@
 
 package com.tarena.schedule.utils;
 
-import com.tarena.mnmp.commons.enums.CycleLevel;
-import com.tarena.mnmp.commons.enums.SendType;
+import com.tarena.mnmp.enums.CycleLevel;
+import com.tarena.mnmp.enums.SendType;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;

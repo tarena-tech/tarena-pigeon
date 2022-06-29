@@ -15,10 +15,37 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.commons.enums;
+package com.tarena.mnmp.enums;
 
-public enum TargetStatus {
-    SENT_TO_PROVIDER,
-    SENT_TO_TARGET,
-    SENT_FAIL
+public enum TaskStatus {
+    TASK_NO_OPEN(0, "PREPARING"),
+    TASK_DOING(1, "PUSHING"),
+    TASK_STOP(2, "STOP"),
+    TASK_END(3, "END");
+
+    private int status;
+    private String description;
+
+    TaskStatus(int status, String description) {
+        this.status = status;
+        this.description = description;
+    }
+
+    public static TaskStatus getInstance(int status) {
+        TaskStatus[] taskStatusEnums = values();
+        for (TaskStatus auditStatusEnum : taskStatusEnums) {
+            if (auditStatusEnum.status() == status) {
+                return auditStatusEnum;
+            }
+        }
+        return null;
+    }
+
+    public int status() {
+        return this.status;
+    }
+
+    public String msg() {
+        return this.description;
+    }
 }

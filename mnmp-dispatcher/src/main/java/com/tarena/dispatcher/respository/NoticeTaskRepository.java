@@ -18,7 +18,7 @@
 package com.tarena.dispatcher.respository;
 
 import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.commons.enums.TaskStatus;
+import com.tarena.mnmp.enums.TaskStatus;
 
 public interface NoticeTaskRepository {
     Integer modifyTaskStatus(Integer taskId, TaskStatus taskStatus, String reason);

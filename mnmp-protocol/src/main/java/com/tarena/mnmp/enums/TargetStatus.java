@@ -15,26 +15,10 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.commons.protocol;
+package com.tarena.mnmp.enums;
 
-public class BusinessException extends Exception {
-    public BusinessException(String code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
-    private String code;
-    private String msg;
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    @Override
-    public synchronized Throwable fillInStackTrace() {
-        return super.fillInStackTrace();
-    }
+public enum TargetStatus {
+    SENT_TO_PROVIDER,
+    SENT_TO_TARGET,
+    SENT_FAIL
 }
