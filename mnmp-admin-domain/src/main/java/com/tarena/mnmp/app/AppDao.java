@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.app;
+package com.tarena.mnmp.app;
 
 import com.tarena.mnmp.commons.enums.StatusRecord;
 import java.util.List;
