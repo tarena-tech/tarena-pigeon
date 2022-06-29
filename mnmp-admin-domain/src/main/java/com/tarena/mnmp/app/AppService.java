@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.app;
+package com.tarena.mnmp.app;
 
 public class AppService {
 }

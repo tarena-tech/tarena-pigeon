@@ -1,8 +1,8 @@
 package com.tarena.mnmp.admin.controller;
 
 import com.tarena.mnmp.admin.codegen.api.app.ApplicationApi;
-import com.tarena.mnmp.commons.pojo.admin.dto.AppAddDTO;
-import com.tarena.mnmp.commons.pojo.admin.dto.AppEditDTO;
+import com.tarena.mnmp.app.dto.AppAddDTO;
+import com.tarena.mnmp.app.dto.AppEditDTO;
 import com.tarena.mnmp.commons.protocol.Result;
 import org.springframework.web.bind.annotation.RestController;
 

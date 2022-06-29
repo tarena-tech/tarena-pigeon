@@ -1,10 +1,11 @@
-package com.tarena.mnmp.commons.pojo.admin.dto;
+package com.tarena.mnmp.app.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tarena.mnmp.commons.regex.admin.AppRegexExpression;
 import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 
-public class AppStandardDTO implements Serializable, AppRegexExpression {
+public class AppEditDTO implements Serializable, AppRegexExpression {
     private static final long serialVersionUID = 1L;
     private static final String VALIDATE_MESSAGE_PREFIX = "应用编辑失败";
     @JsonProperty("id")

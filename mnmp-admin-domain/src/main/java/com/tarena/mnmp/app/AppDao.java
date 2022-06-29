@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.admin.app;
 
+import com.tarena.mnmp.app.model.App;
 import com.tarena.mnmp.commons.enums.StatusRecord;
 import java.util.List;
 

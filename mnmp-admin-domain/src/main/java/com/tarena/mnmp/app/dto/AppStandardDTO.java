@@ -1,24 +1,15 @@
-package com.tarena.mnmp.commons.pojo.admin.dto;
+package com.tarena.mnmp.app.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tarena.mnmp.commons.regex.admin.AppRegexExpression;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
-@ApiModel(
-    value = "应用新增"
-)
-public class AppAddDTO implements Serializable, AppRegexExpression {
+public class AppStandardDTO implements Serializable, AppRegexExpression {
     private static final long serialVersionUID = 1L;
-    private static final String VALIDATE_MESSAGE_PREFIX = "应用新增失败";
+    private static final String VALIDATE_MESSAGE_PREFIX = "应用编辑失败";
     @JsonProperty("id")
     private Long id;
     @JsonProperty("code")
-    @NotNull(message = VALIDATE_MESSAGE_PREFIX + "请填写应用CODE！")
-    //@Pattern(regexp = TEST_REGEX, message = VALIDATE_MESSAGE_PREFIX + TEST_MESSAGE)
     private String code;
     @JsonProperty("name")
     private String name;
