@@ -61,6 +61,5 @@ public class DispatcherTest {
         smsAliNoticeDispatcher.afterPropertiesSet();
         List<BaseNoticeTarget> baseNoticeTargets = assemble();
         DispatcherRegistry.getInstance().dispatcher(baseNoticeTargets);
-
     }
 }
