@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/mnmp-admin-repository/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/mnmp-admin-domain/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/mnmp-admin/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/mnmp-dispatcher/src/main/java" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

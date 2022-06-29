@@ -64,8 +64,9 @@ public abstract class AbstractScheduler {
             for (NoticeTaskTrigger trigger : triggers) {
                 List<List<String>> targetsList = this.getTargets(trigger);
                 List<NoticeDTO> notices = this.assemble(trigger, targetsList);
+                int batchIndex = 0;
                 for (NoticeDTO notice : notices) {
-                    this.send(TargetAssemblerRegistry.getInstance().assemble(notice));
+                    this.send(TargetAssemblerRegistry.getInstance().assemble(notice, batchIndex++));
                 }
                 Date nextTriggerTime = trigger.generateNextTriggerTime();
                 if (trigger.isFinish(nextTriggerTime)) {

@@ -32,9 +32,9 @@ public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> 
     }
 
     @Override
-    public SmsNoticeEvent assemble(NoticeDTO notice) {
+    public SmsNoticeEvent assemble(NoticeDTO notice, Integer batchIndex) {
         SmsNoticeEvent smsNoticeEvent = new SmsNoticeEvent();
-        DefaultNoticeEvent noticeEvent = new DefaultNoticeEvent(notice.getTaskId(), notice.getTriggerTime(), notice.getNoticeType(), "Ali");
+        DefaultNoticeEvent noticeEvent = new DefaultNoticeEvent(notice.getTaskId(), notice.getTriggerTime(), notice.getNoticeType(), "Ali", batchIndex, notice.getTargets().size());
         smsNoticeEvent.setNoticeEvent(noticeEvent);
         List<String> targets = notice.getTargets();
         List<SmsTarget> targetList = new ArrayList<>();
