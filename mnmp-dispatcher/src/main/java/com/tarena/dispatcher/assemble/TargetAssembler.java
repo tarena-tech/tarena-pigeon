@@ -17,11 +17,10 @@
 
 package com.tarena.dispatcher.assemble;
 
+import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.api.NoticeTargetEvent;
-import java.util.List;
 
-public interface TargetAssembler<T extends NoticeTargetEvent> {
+public interface TargetAssembler<T extends NoticeEventGetter> {
     /**
      * 获取当前通知类型
      *
@@ -35,5 +34,5 @@ public interface TargetAssembler<T extends NoticeTargetEvent> {
      * @param notice
      * @return
      */
-    List<T> assemble(NoticeDTO notice);
+    T assemble(NoticeDTO notice);
 }

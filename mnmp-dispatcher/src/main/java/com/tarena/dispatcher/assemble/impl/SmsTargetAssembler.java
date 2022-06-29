@@ -17,33 +17,33 @@
 
 package com.tarena.dispatcher.assemble.impl;
 
-import com.tarena.dispatcher.SmsNoticeTarget;
+import com.tarena.dispatcher.DefaultNoticeEvent;
+import com.tarena.dispatcher.SmsTarget;
+import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.commons.enums.NoticeType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeTarget> {
+public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> {
     @Override
     public String getNoticeType() {
         return NoticeType.SMS.toString();
     }
 
     @Override
-    public List<SmsNoticeTarget> assemble(NoticeDTO notice) {
-        List<SmsNoticeTarget> smsNoticeTargets = new ArrayList<>();
-        String targets = notice.getTargets();
-        String[] targetArray = targets.split(",");
-        for (String target : targetArray) {
-            SmsNoticeTarget noticeTarget = new SmsNoticeTarget();
-            noticeTarget.setSignName("阿里云短信测试");
-            noticeTarget.setTemplateCode("SMS_154950909");
-            noticeTarget.setTemplateParam("{\"code\":\""+notice.getTemplateParam()+"\"}");
-            noticeTarget.setTarget(target);
-            noticeTarget.setNoticeType(this.getNoticeType());
-            noticeTarget.setProviderCode("Ali");
-            smsNoticeTargets.add(noticeTarget);
+    public SmsNoticeEvent assemble(NoticeDTO notice) {
+        SmsNoticeEvent smsNoticeEvent = new SmsNoticeEvent();
+        DefaultNoticeEvent noticeEvent = new DefaultNoticeEvent(notice.getTaskId(), notice.getTriggerTime(), notice.getNoticeType(), "Ali");
+        smsNoticeEvent.setNoticeEvent(noticeEvent);
+        List<String> targets = notice.getTargets();
+        List<SmsTarget> targetList = new ArrayList<>();
+        for (String target : targets) {
+            SmsTarget smsTarget = new SmsTarget();
+            smsTarget.setTarget(target);
+            targetList.add(smsTarget);
         }
-        return smsNoticeTargets;
+        smsNoticeEvent.setTargets(targetList);
+        return smsNoticeEvent;
     }
 }

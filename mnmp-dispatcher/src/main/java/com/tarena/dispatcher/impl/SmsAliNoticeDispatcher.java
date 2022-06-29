@@ -17,20 +17,15 @@
 
 package com.tarena.dispatcher.impl;
 
-import com.aliyun.dysmsapi20170525.Client;
-import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
-import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
-import com.aliyun.dysmsapi20170525.models.SendSmsResponseBody;
-import com.aliyun.tea.TeaException;
-import com.aliyun.teaopenapi.models.Config;
-import com.aliyun.teautil.models.RuntimeOptions;
-import com.tarena.dispatcher.BaseNoticeTarget;
-import com.tarena.dispatcher.SmsNoticeTarget;
+import com.alibaba.fastjson2.JSON;
+import com.tarena.dispatcher.SmsTarget;
+import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.mnmp.commons.enums.NoticeType;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeTarget> {
+public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEvent> {
     private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
 
     public String getNoticeType() {
@@ -38,40 +33,10 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeTa
     }
 
     @Override
-    public void dispatcher(SmsNoticeTarget notice){
-        logger.info("sms-ali dispatcher");
-        Config config = new Config()
-            // 您的 AccessKey ID
-            .setAccessKeyId("LTAI5tMCbgQhRZTpFDHTpjdS")
-            // 您的 AccessKey Secret
-            .setAccessKeySecret("u8q0vU62VSH0rsoWHyuN5EF07ScIB1");
-        // 访问的域名
-        config.endpoint = "dysmsapi.aliyuncs.com";
-        Client client=null;
-        try {
-            client = new Client(config);
-        } catch (Exception e) {
-            logger.info("create ali cloud message client failed,due to:{}"+e.getMessage());
-            e.printStackTrace();
-        }
-        SendSmsRequest sendSmsRequest = new SendSmsRequest();
-        sendSmsRequest.setPhoneNumbers(notice.getTarget());
-        sendSmsRequest.setTemplateParam(notice.getTemplateParam());
-        sendSmsRequest.setSignName(notice.getSignName());
-        sendSmsRequest.setTemplateCode(notice.getTemplateCode());
-        RuntimeOptions runtime = new RuntimeOptions();
-        try {
-            // 复制代码运行请自行打印 API 的返回值
-            SendSmsResponse sendSmsResponse = client.sendSmsWithOptions(sendSmsRequest, runtime);
-            SendSmsResponseBody body = sendSmsResponse.getBody();
-            logger.info(body.getCode()+"/"+body.getMessage()+"/"+body.getRequestId());
-        } catch (TeaException error) {
-            // 如有需要，请打印 error
-            com.aliyun.teautil.Common.assertAsString(error.message);
-        } catch (Exception _error) {
-            TeaException error = new TeaException(_error.getMessage(), _error);
-            // 如有需要，请打印 error
-            com.aliyun.teautil.Common.assertAsString(error.message);
+    public void dispatcher(SmsNoticeEvent notice) {
+        List<SmsTarget> targets = notice.getTargets();
+        for (SmsTarget smsTarget : targets) {
+            logger.info("sms-ali dispatcher " + JSON.toJSONString(smsTarget));
         }
     }
 }

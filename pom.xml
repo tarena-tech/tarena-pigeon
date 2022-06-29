@@ -19,5 +19,7 @@
         <module>mnmp-commons</module>
         <module>mnmp-consumer</module>
         <module>mnmp-monitor</module>
+        <module>mnmp-admin-domain</module>
+        <module>mnmp-admin-repository</module>
     </modules>
 </project>

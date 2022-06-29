@@ -15,10 +15,32 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.dispatcher.event;
 
-import com.tarena.mnmp.commons.protocol.BusinessException;
+import com.tarena.dispatcher.DefaultNoticeEvent;
+import com.tarena.dispatcher.EmailTarget;
+import com.tarena.dispatcher.NoticeEvent;
+import com.tarena.dispatcher.NoticeEventGetter;
+import java.util.List;
 
-public interface NoticeService {
-    void send(NoticeDTO notice) throws BusinessException;
+public class EmailNoticeEvent implements NoticeEventGetter {
+    private DefaultNoticeEvent noticeEvent;
+
+    private List<EmailTarget> targets;
+
+    public void setNoticeEvent(DefaultNoticeEvent noticeEvent) {
+        this.noticeEvent = noticeEvent;
+    }
+
+    public List<EmailTarget> getTargets() {
+        return targets;
+    }
+
+    public void setTargets(List<EmailTarget> targets) {
+        this.targets = targets;
+    }
+
+    @Override public NoticeEvent getNoticeEvent() {
+        return noticeEvent;
+    }
 }

@@ -15,10 +15,32 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.dispatcher.event;
 
-public interface NoticeTargetEvent {
-    String getNoticeType();
+import com.tarena.dispatcher.DefaultNoticeEvent;
+import com.tarena.dispatcher.NoticeEvent;
+import com.tarena.dispatcher.NoticeEventGetter;
+import com.tarena.dispatcher.SmsTarget;
+import java.util.List;
 
-    String getProvider();
+public class SmsNoticeEvent implements NoticeEventGetter {
+    private DefaultNoticeEvent noticeEvent;
+
+    private List<SmsTarget> targets;
+
+    public void setNoticeEvent(DefaultNoticeEvent noticeEvent) {
+        this.noticeEvent = noticeEvent;
+    }
+
+    public List<SmsTarget> getTargets() {
+        return targets;
+    }
+
+    public void setTargets(List<SmsTarget> targets) {
+        this.targets = targets;
+    }
+
+    @Override public NoticeEvent getNoticeEvent() {
+        return noticeEvent;
+    }
 }

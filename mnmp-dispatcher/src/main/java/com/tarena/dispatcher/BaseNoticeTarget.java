@@ -17,11 +17,8 @@
 
 package com.tarena.dispatcher;
 
-import com.tarena.mnmp.api.NoticeTargetEvent;
-
-public class BaseNoticeTarget implements NoticeTargetEvent {
+public class BaseNoticeTarget {
     private String appCode;
-    private String noticeType;
     private Long templateId;
     private String templateCode;
     private String templateParam;
@@ -30,7 +27,6 @@ public class BaseNoticeTarget implements NoticeTargetEvent {
     private String serverIp;
     private Long signId;
     private String signName;
-    private String providerCode;
     private Long appId;
     private Integer sendType;
     private Long recordId;
@@ -42,19 +38,6 @@ public class BaseNoticeTarget implements NoticeTargetEvent {
 
     public void setAppCode(String appCode) {
         this.appCode = appCode;
-    }
-
-    public String getNoticeType() {
-        return noticeType;
-    }
-
-    @Override
-    public String getProvider() {
-        return providerCode;
-    }
-
-    public void setNoticeType(String noticeType) {
-        this.noticeType = noticeType;
     }
 
     public Long getTemplateId() {
@@ -119,14 +102,6 @@ public class BaseNoticeTarget implements NoticeTargetEvent {
 
     public void setSignName(String signName) {
         this.signName = signName;
-    }
-
-    public String getProviderCode() {
-        return providerCode;
-    }
-
-    public void setProviderCode(String providerCode) {
-        this.providerCode = providerCode;
     }
 
     public Long getAppId() {

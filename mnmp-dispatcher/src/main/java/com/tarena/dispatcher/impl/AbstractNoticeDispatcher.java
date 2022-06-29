@@ -18,10 +18,10 @@
 package com.tarena.dispatcher.impl;
 
 import com.tarena.dispatcher.NoticeDispatcher;
-import com.tarena.mnmp.api.NoticeTargetEvent;
+import com.tarena.dispatcher.NoticeEventGetter;
 import org.springframework.beans.factory.InitializingBean;
 
-public abstract class AbstractNoticeDispatcher<T extends NoticeTargetEvent> implements NoticeDispatcher<T>, InitializingBean {
+public abstract class AbstractNoticeDispatcher<T extends NoticeEventGetter> implements NoticeDispatcher<T>, InitializingBean {
     private DispatcherRegistry dispatcherRegistry = DispatcherRegistry.getInstance();
 
     @Override

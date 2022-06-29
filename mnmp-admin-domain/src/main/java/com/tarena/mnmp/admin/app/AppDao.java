@@ -15,10 +15,19 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.mnmp.admin.app;
 
-import com.tarena.mnmp.commons.protocol.BusinessException;
+import com.tarena.mnmp.commons.enums.StatusRecord;
+import java.util.List;
 
-public interface NoticeService {
-    void send(NoticeDTO notice) throws BusinessException;
+public interface AppDao {
+    Integer save(App app);
+
+    List<App> queryAllApps(StatusRecord status);
+
+    App findById(Integer appId);
+
+    void disable(Integer appId);
+
+    void enable(Integer appId);
 }

@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.api;
+package com.tarena.dispatcher;
 
-import com.tarena.mnmp.commons.protocol.BusinessException;
-
-public interface NoticeService {
-    void send(NoticeDTO notice) throws BusinessException;
+public interface NoticeEventGetter {
+    NoticeEvent getNoticeEvent();
 }
