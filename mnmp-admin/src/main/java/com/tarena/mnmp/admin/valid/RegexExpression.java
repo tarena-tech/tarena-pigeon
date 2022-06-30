@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.app;
+package com.tarena.mnmp.admin.valid;
 
-public class AppService {
-    public void addApp(App app) {
-    }
+/**
+ * 校验数据正则表达式
+ */
+public class RegexExpression {
 }

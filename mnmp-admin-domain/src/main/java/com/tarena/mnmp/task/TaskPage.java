@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.app;
+package com.tarena.mnmp.task;
 
-public class AppService {
-    public void addApp(App app) {
-    }
+public class TaskPage {
 }

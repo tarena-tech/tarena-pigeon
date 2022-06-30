@@ -17,43 +17,149 @@
 
 package com.tarena.mnmp.admin.codegen.api.app;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.app.App;
-import com.tarena.mnmp.protocol.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Validated
 @Api(
-    tags = "C端应用APP"
+    value = "app",
+    tags = "应用管理"
 )
 @RequestMapping("/app")
 public interface AppApi {
+    /**
+     * 新增应用
+     *
+     * @param app
+     */
+    @ApiOperationSupport(order = 1001)
     @ApiOperation(
         value = "新增应用",
         nickname = "addApp",
-        notes = ""
+        notes = "",
+        tags = "C端应用APP"
     )
     @PostMapping(
         value = {"/add"},
         consumes = {"application/json"}
     )
-    Result addApp(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody App app);
+    void addApp(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody App app);
 
+    /**
+     * 编辑应用
+     *
+     * @param app
+     */
+    @ApiOperationSupport(order = 1002)
     @ApiOperation(
         value = "编辑应用",
         nickname = "editApp",
         notes = "",
-        tags = {"App"}
+        tags = "C端应用APP"
     )
     @PostMapping(
-        value = {"/app/edit"},
+        value = {"/edit"},
         consumes = {"application/json"}
     )
-    Result editApp(@ApiParam(value = "编辑应用", required = true) @Valid @RequestBody App app);
+    void editApp(@ApiParam(value = "编辑应用", required = true) @Valid @RequestBody App app);
+
+    /**
+     * 关闭应用
+     *
+     * @param id
+     */
+    @ApiOperationSupport(order = 1003)
+    @ApiOperation(
+        value = "关闭应用",
+        nickname = "closeApp",
+        notes = "",
+        tags = "C端应用APP"
+    )
+    @PostMapping({"/close"})
+    void closeApp(
+        @NotNull @ApiParam(value = "要关闭的应用", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+
+    /**
+     * 开启应用
+     *
+     * @param id
+     */
+    @ApiOperationSupport(order = 1004)
+    @ApiOperation(
+        value = "开启应用",
+        nickname = "openApp",
+        notes = "",
+        tags = "C端应用APP"
+    )
+    @PostMapping({"/open"})
+    void openApp(
+        @NotNull @ApiParam(value = "要开启的应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+
+    /**
+     * 查看应用详情
+     *
+     * @param id
+     */
+    @ApiOperationSupport(order = 1005)
+    @ApiOperation(
+        value = "查看应用详情",
+        nickname = "queryAppDetail",
+        notes = "",
+        tags = "C端应用APP",
+        response = App.class
+    )
+    @GetMapping(
+        value = {"/queryDetail"},
+        produces = {"application/json"}
+    )
+    App queryAppDetail(
+        @NotNull @ApiParam(value = "应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+
+    /**
+     * 查看应用详情
+     */
+    @ApiOperationSupport(order = 10065)
+    @ApiOperation(
+        value = "查询应用管理列表",
+        nickname = "queryList",
+        notes = "",
+        tags = "C端应用APP",
+        response = App.class,
+        responseContainer = "List"
+    )
+    @GetMapping(
+        value = {"/queryList"},
+        produces = {"application/json"}
+    )
+    List<App> queryList();
+
+    /**
+     * 查看应用详情
+     */
+    @ApiOperationSupport(order = 1007)
+    @ApiOperation(
+        value = "根据用户查询相应的应用管理列表",
+        nickname = "queryListByUser",
+        notes = "",
+        tags = "C端应用APP",
+        response = App.class,
+        responseContainer = "List"
+    )
+    @GetMapping(
+        value = {"/queryListByUser"},
+        produces = {"application/json"}
+    )
+    List<App> queryListByUser();
 }

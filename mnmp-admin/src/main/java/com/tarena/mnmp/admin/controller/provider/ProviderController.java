@@ -15,9 +15,42 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.app;
+package com.tarena.mnmp.admin.controller.provider;
 
-public class AppService {
-    public void addApp(App app) {
+import com.tarena.mnmp.admin.codegen.api.provider.ProviderApi;
+import com.tarena.mnmp.provider.Provider;
+import java.util.List;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ProviderController implements ProviderApi {
+    @Override
+    public void addProvider(Provider provider) {
+
+    }
+
+    @Override
+    public void closeProvider(Long id) {
+
+    }
+
+    @Override
+    public void editProvider(Provider provider) {
+
+    }
+
+    @Override
+    public void openProvider(Long id) {
+
+    }
+
+    @Override
+    public List<Provider> queryList() {
+        return null;
+    }
+
+    @Override
+    public Provider queryProviderDetail(Long id) {
+        return null;
     }
 }
