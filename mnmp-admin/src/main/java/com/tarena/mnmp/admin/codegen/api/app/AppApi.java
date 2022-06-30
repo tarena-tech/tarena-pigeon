@@ -48,8 +48,7 @@ public interface AppApi {
     @ApiOperation(
         value = "新增应用",
         nickname = "addApp",
-        notes = "",
-        tags = "C端应用APP"
+        notes = ""
     )
     @PostMapping(
         value = {"/add"},
@@ -66,8 +65,7 @@ public interface AppApi {
     @ApiOperation(
         value = "编辑应用",
         nickname = "editApp",
-        notes = "",
-        tags = "C端应用APP"
+        notes = ""
     )
     @PostMapping(
         value = {"/edit"},
@@ -84,8 +82,7 @@ public interface AppApi {
     @ApiOperation(
         value = "关闭应用",
         nickname = "closeApp",
-        notes = "",
-        tags = "C端应用APP"
+        notes = ""
     )
     @PostMapping({"/close"})
     void closeApp(
@@ -100,8 +97,7 @@ public interface AppApi {
     @ApiOperation(
         value = "开启应用",
         nickname = "openApp",
-        notes = "",
-        tags = "C端应用APP"
+        notes = ""
     )
     @PostMapping({"/open"})
     void openApp(
@@ -117,7 +113,6 @@ public interface AppApi {
         value = "查看应用详情",
         nickname = "queryAppDetail",
         notes = "",
-        tags = "C端应用APP",
         response = App.class
     )
     @GetMapping(
@@ -135,7 +130,6 @@ public interface AppApi {
         value = "查询应用管理列表",
         nickname = "queryList",
         notes = "",
-        tags = "C端应用APP",
         response = App.class,
         responseContainer = "List"
     )
@@ -153,7 +147,6 @@ public interface AppApi {
         value = "根据用户查询相应的应用管理列表",
         nickname = "queryListByUser",
         notes = "",
-        tags = "C端应用APP",
         response = App.class,
         responseContainer = "List"
     )
