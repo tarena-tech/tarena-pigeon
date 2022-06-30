@@ -34,7 +34,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Validated
 @Api(
-    value = "签名管理"
+    value = "签名管理",
+    tags="签名管理"
 )
 @RequestMapping("/sign")
 public interface SignApi {
@@ -80,8 +81,7 @@ public interface SignApi {
     @ApiOperation(
         value = "开启签名",
         nickname = "openSign",
-        notes = "",
-        tags = {"Sign"}
+        notes = ""
     )
     @PostMapping({"/open"})
     void openSign(

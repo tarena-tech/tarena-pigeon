@@ -65,8 +65,7 @@ public interface TemplateApi {
     @ApiOperation(
         value = "关闭使用短信模板",
         nickname = "closeSmsTemplate",
-        notes = "",
-        tags = {"Template"}
+        notes = ""
     )
     @PostMapping({"/template/sms/close"})
     void closeSmsTemplate(
@@ -122,8 +121,7 @@ public interface TemplateApi {
         value = "查看短信模板详情",
         nickname = "querySmsTemplateDetail",
         notes = "",
-        response = SmsTemplate.class,
-        tags = {"Template"}
+        response = SmsTemplate.class
     )
     @GetMapping(
         value = {"/template/sms/queryDetail"},
@@ -137,8 +135,7 @@ public interface TemplateApi {
         value = "修改短信模板",
         nickname = "updateSmsTemplate",
         notes = "",
-        response = String.class,
-        tags = {"Template"}
+        response = String.class
     )
     @PostMapping(
         value = {"/template/sms/update"},
@@ -152,8 +149,7 @@ public interface TemplateApi {
     @ApiOperation(
         value = "短信模板审核",
         nickname = "doAuditSmsTemplate",
-        notes = "",
-        tags = {"Template"}
+        notes = ""
     )
     @PostMapping({"/template/sms/doAudit"})
     void doAuditSmsTemplate(
@@ -166,8 +162,7 @@ public interface TemplateApi {
         value = "新增企微模板",
         nickname = "addWecomTemplate",
         notes = "",
-        response = String.class,
-        tags = {"Template"}
+        response = String.class
     )
     @PostMapping(
         value = {"/template/wecom"},
@@ -190,8 +185,7 @@ public interface TemplateApi {
         value = "查询企微模板信息（分页）",
         nickname = "queryWecomListByPage",
         notes = "",
-        response = WecomTemplatePage.class,
-        tags = {"Template"}
+        response = WecomTemplatePage.class
     )
     @PostMapping(
         value = {"/template/wecom/page"},
@@ -206,8 +200,7 @@ public interface TemplateApi {
         value = "查看企微模板详情",
         nickname = "queryWecomTemplateDetail",
         notes = "",
-        response = WecomTemplate.class,
-        tags = {"Template"}
+        response = WecomTemplate.class
     )
     @GetMapping(
         value = {"/template/wecom/{templateId}"},
@@ -222,8 +215,7 @@ public interface TemplateApi {
         nickname = "queryWecomTemplatesByParam",
         notes = "",
         response = WecomTemplate.class,
-        responseContainer = "List",
-        tags = {"Template"}
+        responseContainer = "List"
     )
     @GetMapping(
         value = {"/template/wecoms"},
@@ -240,8 +232,7 @@ public interface TemplateApi {
         value = "修改企微模板",
         nickname = "updateWecomTemplate",
         notes = "",
-        response = String.class,
-        tags = {"Template"}
+        response = String.class
     )
     @PutMapping(
         value = {"/template/wecom"},
@@ -265,8 +256,7 @@ public interface TemplateApi {
     @ApiOperation(
         value = "企微模板审核",
         nickname = "updateWecomTemplateAuditStatus",
-        notes = "",
-        tags = {"Template"}
+        notes = ""
     )
     @PutMapping({"/template/wecom/{id}/audit/{auditStatus}"})
     void updateWecomTemplateAuditStatus(@ApiParam(value = "企微模版id", required = true) @PathVariable("id") Long id,
@@ -277,8 +267,7 @@ public interface TemplateApi {
     @ApiOperation(
         value = "企微模版启用停用",
         nickname = "updateWecomTemplateUseStatus",
-        notes = "",
-        tags = {"Template"}
+        notes = ""
     )
     @PutMapping({"/template/wecom/{id}/useage/{useStatus}"})
     void updateWecomTemplateUseStatus(@ApiParam(value = "模板id", required = true) @PathVariable("id") Long id,
