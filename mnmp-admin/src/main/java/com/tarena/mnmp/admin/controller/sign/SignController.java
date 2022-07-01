@@ -15,7 +15,36 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.codegen.api.targets;
+package com.tarena.mnmp.admin.controller.sign;
 
-public interface TargetApi {
+import com.tarena.mnmp.admin.codegen.api.sign.SignApi;
+import com.tarena.mnmp.sign.Sign;
+import java.util.List;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class SignController implements SignApi {
+    @Override public String addSign(Sign sign) {
+        return null;
+    }
+
+    @Override public void closeSign(Long id) {
+
+    }
+
+    @Override public String editSign(Sign sign) {
+        return null;
+    }
+
+    @Override public void openSign(Long id) {
+
+    }
+
+    @Override public Sign querySignDetail(Long id) {
+        return null;
+    }
+
+    @Override public List<Sign> querySignList(String appCode, Integer status, String name) {
+        return null;
+    }
 }

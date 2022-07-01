@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.codegen.api.targets;
+package com.tarena.mnmp.task;
 
-public interface TargetApi {
+public class TaskPage {
 }

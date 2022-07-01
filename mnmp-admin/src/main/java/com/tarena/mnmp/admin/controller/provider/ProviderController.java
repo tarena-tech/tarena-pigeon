@@ -15,12 +15,42 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.exception;
+package com.tarena.mnmp.admin.controller.provider;
 
-import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.admin.codegen.api.provider.ProviderApi;
+import com.tarena.mnmp.provider.Provider;
+import java.util.List;
+import org.springframework.web.bind.annotation.RestController;
 
-public class AdminException extends BusinessException {
-    public AdminException(String code, String msg) {
-        super(code, msg);
+@RestController
+public class ProviderController implements ProviderApi {
+    @Override
+    public void addProvider(Provider provider) {
+
+    }
+
+    @Override
+    public void closeProvider(Long id) {
+
+    }
+
+    @Override
+    public void editProvider(Provider provider) {
+
+    }
+
+    @Override
+    public void openProvider(Long id) {
+
+    }
+
+    @Override
+    public List<Provider> queryList() {
+        return null;
+    }
+
+    @Override
+    public Provider queryProviderDetail(Long id) {
+        return null;
     }
 }

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.exception.handler;
+package com.tarena.mnmp.admin.exe.handler;
 
-import com.tarena.mnmp.admin.exception.AdminException;
+import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,17 +25,23 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice(basePackages = "com.tarena.mnmp.admin.controller")
-public class AdminGlobaleExceptionHandler {
-    private static Logger logger = LoggerFactory.getLogger(AdminGlobaleExceptionHandler.class);
+/**
+ * 全局异常捕获
+ */
+@RestControllerAdvice
+public class AdminGlobalExceptionHandler {
+    private static Logger logger = LoggerFactory.getLogger(AdminGlobalExceptionHandler.class);
+
     /**
      * 处理业务异常
      */
-    @ExceptionHandler({AdminException.class})
-    public Result handleCoolSharkServiceException(AdminException e) {
+    @ExceptionHandler({BusinessException.class})
+    public Result handleBusinessException(BusinessException e) {
         logger.debug("出现业务异常，业务错误码={}，描述文本={}", e.getCode(), e.getMessage());
         e.printStackTrace();
-        return Result.fail(e);
+        Result result = Result.fail(e);
+        logger.debug("即将返回：{}", result);
+        return result;
     }
 
     /**
@@ -46,7 +52,9 @@ public class AdminGlobaleExceptionHandler {
         logger.debug("验证请求数据时出现异常：{}", e.getClass().getName());
         e.printStackTrace();
         String message = e.getBindingResult().getFieldError().getDefaultMessage();
-        return new Result(message);
+        Result result = new Result(message);
+        logger.debug("即将返回：{}", result);
+        return result;
     }
 
     /**
@@ -56,6 +64,8 @@ public class AdminGlobaleExceptionHandler {
     public Result handleSystemError(Throwable e) {
         logger.debug("出现系统异常，异常类型={}，描述文本={}", e.getClass().getName(), e.getMessage());
         e.printStackTrace();
-        return Result.fail();
+        Result result = Result.fail();
+        logger.debug("即将返回：{}", result);
+        return result;
     }
 }

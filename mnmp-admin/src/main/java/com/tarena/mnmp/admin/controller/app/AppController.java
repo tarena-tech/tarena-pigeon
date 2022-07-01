@@ -15,9 +15,50 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.app;
+package com.tarena.mnmp.admin.controller.app;
 
-public class AppService {
+import com.tarena.mnmp.admin.codegen.api.app.AppApi;
+import com.tarena.mnmp.app.App;
+import com.tarena.mnmp.app.AppService;
+import java.util.List;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class AppController implements AppApi {
+    private AppService appService;
+
+    @Override
     public void addApp(App app) {
+        appService.addApp(app);
+    }
+
+    @Override
+    public void editApp(App app) {
+
+    }
+
+    @Override
+    public void closeApp(Long id) {
+
+    }
+
+    @Override
+    public void openApp(Long id) {
+
+    }
+
+    @Override
+    public App queryAppDetail(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<App> queryList() {
+        return null;
+    }
+
+    @Override
+    public List<App> queryListByUser() {
+        return null;
     }
 }

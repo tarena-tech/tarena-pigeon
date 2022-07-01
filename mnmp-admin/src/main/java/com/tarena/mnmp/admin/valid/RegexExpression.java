@@ -15,21 +15,10 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.controller;
+package com.tarena.mnmp.admin.valid;
 
-import com.tarena.mnmp.admin.codegen.api.app.ApplicationApi;
-
-import com.tarena.mnmp.app.App;
-import com.tarena.mnmp.protocol.Result;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class ApplicationController implements ApplicationApi {
-    @Override public Result addApp(App app) {
-        return Result.success();
-    }
-
-    @Override public Result editApp(App app) {
-        return Result.success();
-    }
+/**
+ * 校验数据正则表达式
+ */
+public class RegexExpression {
 }
