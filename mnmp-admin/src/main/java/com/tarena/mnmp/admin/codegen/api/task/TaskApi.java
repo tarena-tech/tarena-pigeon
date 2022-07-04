@@ -50,7 +50,9 @@ public interface TaskApi {
         nickname = "addTask",
         notes = ""
     )
-    @PostMapping({""})
+    @PostMapping(
+        value={""}
+    )
     void addTask(@ApiParam(value = "新增任务", required = true) @Valid @RequestBody TaskData taskData);
 
     @ApiOperationSupport(order = 5002)

@@ -19,6 +19,7 @@ package com.tarena.mnmp.task;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiParam;
+import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,6 +40,24 @@ public class TaskData {
     private Integer cycleLevel;
     private Integer cycleNum;
     private Integer auditStatus;
+    private String fileName;
+    private List<NoticeTargetData> targets;
+
+    public List<NoticeTargetData> getTargets() {
+        return targets;
+    }
+
+    public void setTargets(List<NoticeTargetData> targets) {
+        this.targets = targets;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     public Long getId() {
         return id;
