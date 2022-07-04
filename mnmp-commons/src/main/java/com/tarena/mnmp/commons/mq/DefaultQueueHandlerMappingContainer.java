@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DefaultQueueHandlerMappingContainer implements EventHandlerMappingContainer {
-    private Logger logger = LoggerFactory.getLogger(DefaultQueueHandlerMappingContainer.class);
+    private static Logger logger = LoggerFactory.getLogger(DefaultQueueHandlerMappingContainer.class);
 
     public DefaultQueueHandlerMappingContainer() {
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.dispatcher.test;
+package com.tarena.commons.test;
 
 import com.tarena.dispatcher.assemble.impl.EmailTargetAssembler;
 import com.tarena.dispatcher.assemble.impl.SmsTargetAssembler;
