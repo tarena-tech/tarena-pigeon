@@ -21,6 +21,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.template.SmsTemplate;
 import com.tarena.mnmp.template.SmsTemplatePage;
 import com.tarena.mnmp.template.WecomTemplate;
+import com.tarena.mnmp.template.WecomTemplateData;
 import com.tarena.mnmp.template.WecomTemplatePage;
 import com.tarena.mnmp.template.WecomTemplatePageQuery;
 import io.swagger.annotations.Api;
@@ -67,7 +68,7 @@ public interface TemplateApi {
         nickname = "closeSmsTemplate",
         notes = ""
     )
-    @PostMapping({"/template/sms/close"})
+    @PostMapping({"/sms/close"})
     void closeSmsTemplate(
         @NotNull @ApiParam(value = "要关闭的模板id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
@@ -77,7 +78,7 @@ public interface TemplateApi {
         nickname = "openSmsTemplate",
         notes = ""
     )
-    @PostMapping({"/template/sms/open"})
+    @PostMapping({"/sms/open"})
     void openSmsTemplate(
         @NotNull @ApiParam(value = "要开启的模板id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
@@ -89,7 +90,7 @@ public interface TemplateApi {
         response = SmsTemplatePage.class
     )
     @GetMapping(
-        value = {"/template/sms/queryListByPage"},
+        value = {"/sms/queryListByPage"},
         produces = {"application/json"}
     )
     SmsTemplatePage queryListByPage(
@@ -107,7 +108,7 @@ public interface TemplateApi {
         responseContainer = "List"
     )
     @GetMapping(
-        value = {"/template/sms/queryListByParam"},
+        value = {"/sms/queryListByParam"},
         produces = {"application/json"}
     )
     List<SmsTemplate> queryListByParam(
@@ -124,7 +125,7 @@ public interface TemplateApi {
         response = SmsTemplate.class
     )
     @GetMapping(
-        value = {"/template/sms/queryDetail"},
+        value = {"/sms/queryDetail"},
         produces = {"application/json"}
     )
     SmsTemplate querySmsTemplateDetail(
@@ -138,7 +139,7 @@ public interface TemplateApi {
         response = String.class
     )
     @PostMapping(
-        value = {"/template/sms/update"},
+        value = {"/sms/update"},
         produces = {"application/json"},
         consumes = {"application/json"}
     )
@@ -151,7 +152,7 @@ public interface TemplateApi {
         nickname = "doAuditSmsTemplate",
         notes = ""
     )
-    @PostMapping({"/template/sms/doAudit"})
+    @PostMapping({"/sms/doAudit"})
     void doAuditSmsTemplate(
         @NotNull @ApiParam(value = "要审核的模板id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
         @NotNull @ApiParam(value = "审核状态 -1未通过 1通过", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus,
@@ -165,21 +166,10 @@ public interface TemplateApi {
         response = String.class
     )
     @PostMapping(
-        value = {"/template/wecom"},
+        value = {"/wecom"},
         produces = {"application/json"}
     )
-    String addWecomTemplate(
-        @NotNull @ApiParam(value = "模版名称", required = true) @Valid @RequestParam(value = "name", required = true) String name,
-        @NotNull @ApiParam(value = "系统应用id", required = true) @Valid @RequestParam(value = "appId", required = true) Long appId,
-        @NotNull @ApiParam(value = "企微应用id", required = true) @Valid @RequestParam(value = "wecomAgentId", required = true) Long wecomAgentId,
-        @NotNull @ApiParam(value = "消息模板类型 1:文本 2:图片 3:视频 4:文件 5:文本卡片", required = true) @Valid @RequestParam(value = "templateType", required = true) Integer templateType,
-        @ApiParam("卡片跳转链接") @Valid @RequestParam(value = "url", required = false) String url,
-        @ApiParam("视频标题/卡片标题") @Valid @RequestParam(value = "title", required = false) String title,
-        @ApiParam("文本内容/视频描述/卡片内容") @Valid @RequestParam(value = "description", required = false) String description,
-        @ApiParam("按钮文案") @Valid @RequestParam(value = "btntxt", required = false) String btntxt,
-        @ApiParam("分享设置：0表示可对外分享，1表示不能分享") @Valid @RequestParam(value = "safe", required = false) Integer safe,
-        @ApiParam("附件") @Valid @RequestParam(value = "file", required = false) MultipartFile file);
-
+    String addWecomTemplate(@ApiParam(value = "新增企微模板", required = true) @Valid @RequestBody WecomTemplateData wecomTemplateData);
     @ApiOperationSupport(order = 4102)
     @ApiOperation(
         value = "查询企微模板信息（分页）",
@@ -188,7 +178,7 @@ public interface TemplateApi {
         response = WecomTemplatePage.class
     )
     @PostMapping(
-        value = {"/template/wecom/page"},
+        value = {"/wecom/page"},
         produces = {"application/json"},
         consumes = {"application/json"}
     )
@@ -203,7 +193,7 @@ public interface TemplateApi {
         response = WecomTemplate.class
     )
     @GetMapping(
-        value = {"/template/wecom/{templateId}"},
+        value = {"/wecom/{templateId}"},
         produces = {"application/json"}
     )
     WecomTemplate queryWecomTemplateDetail(
@@ -218,7 +208,7 @@ public interface TemplateApi {
         responseContainer = "List"
     )
     @GetMapping(
-        value = {"/template/wecoms"},
+        value = {"/wecoms"},
         produces = {"application/json"}
     )
     List<WecomTemplate> queryWecomTemplatesByParam(
@@ -235,22 +225,10 @@ public interface TemplateApi {
         response = String.class
     )
     @PutMapping(
-        value = {"/template/wecom"},
+        value = {"/wecom"},
         produces = {"application/json"}
     )
-    String updateWecomTemplate(
-        @NotNull @ApiParam(value = "模版id", required = true) @Valid @RequestParam(value = "id", required = true) Integer id,
-        @NotNull @ApiParam(value = "模版code", required = true) @Valid @RequestParam(value = "code", required = true) String code,
-        @NotNull @ApiParam(value = "模版名称", required = true) @Valid @RequestParam(value = "name", required = true) String name,
-        @NotNull @ApiParam(value = "系统应用id", required = true) @Valid @RequestParam(value = "appId", required = true) Long appId,
-        @NotNull @ApiParam(value = "企微应用id", required = true) @Valid @RequestParam(value = "wecomAgentId", required = true) Long wecomAgentId,
-        @NotNull @ApiParam(value = "消息模板类型 1:文本 2:图片 3:视频 4:文件 5:文本卡片", required = true) @Valid @RequestParam(value = "templateType", required = true) Integer templateType,
-        @ApiParam("卡片跳转链接") @Valid @RequestParam(value = "url", required = false) String url,
-        @ApiParam("视频标题/卡片标题") @Valid @RequestParam(value = "title", required = false) String title,
-        @ApiParam("文本内容/视频描述/卡片内容") @Valid @RequestParam(value = "description", required = false) String description,
-        @ApiParam("按钮文案") @Valid @RequestParam(value = "btntxt", required = false) String btntxt,
-        @ApiParam("分享设置：0表示可对外分享，1表示不能分享") @Valid @RequestParam(value = "safe", required = false) Integer safe,
-        @ApiParam("附件") @Valid @RequestParam(value = "file", required = false) MultipartFile file);
+    String updateWecomTemplate(@ApiParam(value = "修改企微模板(未通过审核)", required = true) @Valid @RequestBody WecomTemplateData wecomTemplateData);
 
     @ApiOperationSupport(order = 4106)
     @ApiOperation(
@@ -258,7 +236,7 @@ public interface TemplateApi {
         nickname = "updateWecomTemplateAuditStatus",
         notes = ""
     )
-    @PutMapping({"/template/wecom/{id}/audit/{auditStatus}"})
+    @PutMapping({"/wecom/{id}/audit/{auditStatus}"})
     void updateWecomTemplateAuditStatus(@ApiParam(value = "企微模版id", required = true) @PathVariable("id") Long id,
         @ApiParam(value = "审核状态 -1未通过 1通过", required = true) @PathVariable("auditStatus") Integer auditStatus,
         @ApiParam("审核意见") @Valid @RequestParam(value = "auditResult", required = false) String auditResult);
@@ -269,7 +247,7 @@ public interface TemplateApi {
         nickname = "updateWecomTemplateUseStatus",
         notes = ""
     )
-    @PutMapping({"/template/wecom/{id}/useage/{useStatus}"})
+    @PutMapping({"/wecom/{id}/useage/{useStatus}"})
     void updateWecomTemplateUseStatus(@ApiParam(value = "模板id", required = true) @PathVariable("id") Long id,
         @ApiParam(value = "使用状态 1启用 0停用", required = true) @PathVariable("useStatus") Integer useStatus);
 }
