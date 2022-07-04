@@ -24,7 +24,6 @@ import com.tarena.mnmp.task.TaskPage;
 import com.tarena.mnmp.task.TaskQuery;
 import com.tarena.mnmp.task.TaskStatistics;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class TaskController implements TaskApi {
@@ -54,7 +53,7 @@ public class TaskController implements TaskApi {
     }
 
     @Override public void updateTask(TaskData taskData) {
-        
+
     }
 
 }

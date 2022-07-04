@@ -18,11 +18,7 @@
 package com.tarena.mnmp.task;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiParam;
 import java.util.List;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @ApiModel(value = "任务新增或修改")
 public class TaskData {

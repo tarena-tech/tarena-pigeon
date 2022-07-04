@@ -17,7 +17,6 @@
 
 package com.tarena.dispatcher.impl;
 
-import com.alibaba.fastjson2.JSON;
 import com.tarena.dispatcher.NoticeDispatcher;
 import com.tarena.dispatcher.NoticeEventGetter;
 import org.springframework.beans.factory.InitializingBean;
