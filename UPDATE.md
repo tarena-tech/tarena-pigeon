@@ -1,5 +1,7 @@
 # Charlie Show
 #更新汇总
+## 2022年7月3日14:21
+- [修改]mnmp-commons 基础包不引用spring等依赖,迁移到admin
 ## 2022年7月3日13:51
 - [修改] 模板接口修改大批参数方法,引入对象封装WecomTemplateData
 ## 2022年7月3日9:51
