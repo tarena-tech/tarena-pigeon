@@ -14,14 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.tarena.mnmp.app;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
-
 @ApiModel(value = "应用")
 public class App {
     @ApiModelProperty(value = "应用id", name = "id", required = false)

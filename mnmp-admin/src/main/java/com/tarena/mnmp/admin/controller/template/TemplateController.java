@@ -21,11 +21,11 @@ import com.tarena.mnmp.admin.codegen.api.template.TemplateApi;
 import com.tarena.mnmp.template.SmsTemplate;
 import com.tarena.mnmp.template.SmsTemplatePage;
 import com.tarena.mnmp.template.WecomTemplate;
+import com.tarena.mnmp.template.WecomTemplateData;
 import com.tarena.mnmp.template.WecomTemplatePage;
 import com.tarena.mnmp.template.WecomTemplatePageQuery;
 import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class TemplateController implements TemplateApi {
@@ -63,9 +63,7 @@ public class TemplateController implements TemplateApi {
 
     }
 
-    @Override
-    public String addWecomTemplate(String name, Long appId, Long wecomAgentId, Integer templateType, String url,
-        String title, String description, String btntxt, Integer safe, MultipartFile file) {
+    @Override public String addWecomTemplate(WecomTemplateData wecomTemplateData) {
         return null;
     }
 
@@ -82,9 +80,7 @@ public class TemplateController implements TemplateApi {
         return null;
     }
 
-    @Override public String updateWecomTemplate(Integer id, String code, String name, Long appId, Long wecomAgentId,
-        Integer templateType, String url, String title, String description, String btntxt, Integer safe,
-        MultipartFile file) {
+    @Override public String updateWecomTemplate(WecomTemplateData wecomTemplateData) {
         return null;
     }
 
