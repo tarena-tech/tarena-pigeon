@@ -26,7 +26,6 @@ import com.tarena.mnmp.template.WecomTemplatePage;
 import com.tarena.mnmp.template.WecomTemplatePageQuery;
 import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class TemplateController implements TemplateApi {

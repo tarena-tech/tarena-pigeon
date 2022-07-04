@@ -51,7 +51,7 @@ public interface TaskApi {
         notes = ""
     )
     @PostMapping(
-        value={""}
+        value = {""}
     )
     void addTask(@ApiParam(value = "新增任务", required = true) @Valid @RequestBody TaskData taskData);
 

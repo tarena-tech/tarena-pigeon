@@ -39,7 +39,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 @Validated
 @Api(
@@ -169,7 +168,9 @@ public interface TemplateApi {
         value = {"/wecom"},
         produces = {"application/json"}
     )
-    String addWecomTemplate(@ApiParam(value = "新增企微模板", required = true) @Valid @RequestBody WecomTemplateData wecomTemplateData);
+    String addWecomTemplate(
+        @ApiParam(value = "新增企微模板", required = true) @Valid @RequestBody WecomTemplateData wecomTemplateData);
+
     @ApiOperationSupport(order = 4102)
     @ApiOperation(
         value = "查询企微模板信息（分页）",
@@ -228,7 +229,8 @@ public interface TemplateApi {
         value = {"/wecom"},
         produces = {"application/json"}
     )
-    String updateWecomTemplate(@ApiParam(value = "修改企微模板(未通过审核)", required = true) @Valid @RequestBody WecomTemplateData wecomTemplateData);
+    String updateWecomTemplate(
+        @ApiParam(value = "修改企微模板(未通过审核)", required = true) @Valid @RequestBody WecomTemplateData wecomTemplateData);
 
     @ApiOperationSupport(order = 4106)
     @ApiOperation(
