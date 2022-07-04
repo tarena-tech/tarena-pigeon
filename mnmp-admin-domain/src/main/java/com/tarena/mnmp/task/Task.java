@@ -20,7 +20,9 @@ package com.tarena.mnmp.task;
 import io.swagger.annotations.ApiModel;
 
 @ApiModel(value = "任务")
+
 public class Task {
+
 
     private Long id;
 

@@ -57,8 +57,8 @@ public class AppController implements AppApi {
         return null;
     }
 
-    @Override
+    /*@Override
     public List<App> queryListByUser() {
         return null;
-    }
+    }*/
 }

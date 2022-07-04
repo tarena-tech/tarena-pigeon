@@ -19,6 +19,7 @@ package com.tarena.mnmp.admin.codegen.api.task;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.task.Task;
+import com.tarena.mnmp.task.TaskData;
 import com.tarena.mnmp.task.TaskPage;
 import com.tarena.mnmp.task.TaskQuery;
 import com.tarena.mnmp.task.TaskStatistics;
@@ -35,14 +36,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 @Validated
 @Api(
     value = "Task",
     tags = "任务管理"
 )
-@RequestMapping("/task")
+@RequestMapping("/api/task")
 public interface TaskApi {
     @ApiOperationSupport(order = 5001)
     @ApiOperation(
@@ -50,8 +50,8 @@ public interface TaskApi {
         nickname = "addTask",
         notes = ""
     )
-    @PostMapping({"/api/task"})
-    void addTask(@NotNull @ApiParam(value = "任务名称",required = true) @Valid @RequestParam(value = "name",required = true) String name, @NotNull @ApiParam(value = "应用Id",required = true) @Valid @RequestParam(value = "appId",required = true) Long appId, @NotNull @ApiParam(value = "消息类型 1:SMS 3:WECOM",required = true) @Valid @RequestParam(value = "noticeType",required = true) Integer noticeType, @NotNull @ApiParam(value = "消息子类型 1:文本 2:图片 3:视频 4:文件 5:文本卡片",required = true) @Valid @RequestParam(value = "templateType",required = true) Integer templateType, @NotNull @ApiParam(value = "模板ID",required = true) @Valid @RequestParam(value = "templateId",required = true) Long templateId, @NotNull @ApiParam(value = "任务类型",required = true) @Valid @RequestParam(value = "taskType",required = true) Integer taskType, @NotNull @ApiParam(value = "备注",required = true) @Valid @RequestParam(value = "remark",required = true) String remark, @NotNull @ApiParam(value = "上传文件",required = true) @Valid @RequestParam(value = "file",required = true) MultipartFile file, @NotNull @ApiParam(value = "审核状态 -1草稿 0审核中",required = true) @Valid @RequestParam(value = "auditStatus",required = true) Integer auditStatus, @ApiParam("签名ID") @Valid @RequestParam(value = "signId",required = false) Long signId, @ApiParam("发送时间") @Valid @RequestParam(value = "triggerTime",required = false) Long triggerTime, @ApiParam("发送结束时间") @Valid @RequestParam(value = "triggerEndTime",required = false) Long triggerEndTime, @ApiParam("周期级别") @Valid @RequestParam(value = "cycleLevel",required = false) Integer cycleLevel, @ApiParam("周期数") @Valid @RequestParam(value = "cycleNum",required = false) Integer cycleNum);
+    @PostMapping({""})
+    void addTask(@ApiParam(value = "新增任务", required = true) @Valid @RequestBody TaskData taskData);
 
     @ApiOperationSupport(order = 5002)
     @ApiOperation(
@@ -59,11 +59,11 @@ public interface TaskApi {
         nickname = "doAudit",
         notes = ""
     )
-    @PutMapping({"/api/task/{id}/audit/{auditStatus}"})
+    @PutMapping({"/{id}/audit/{auditStatus}"})
     void doAudit(
-        @ApiParam(value = "要审核的任务id",required = true) @PathVariable("id") Long id,
-        @ApiParam(value = "审核状态 1通过 2未通过",required = true) @PathVariable("auditStatus") Integer auditStatus,
-        @ApiParam("审核意见") @Valid @RequestParam(value = "auditResult",required = false) String auditResult);
+        @ApiParam(value = "要审核的任务id", required = true) @PathVariable("id") Long id,
+        @ApiParam(value = "审核状态 1通过 2未通过", required = true) @PathVariable("auditStatus") Integer auditStatus,
+        @ApiParam("审核意见") @Valid @RequestParam(value = "auditResult", required = false) String auditResult);
 
     @ApiOperationSupport(order = 5003)
     @ApiOperation(
@@ -73,11 +73,11 @@ public interface TaskApi {
         response = TaskPage.class
     )
     @PostMapping(
-        value = {"/api/task/page"},
+        value = {"/page"},
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    TaskPage queryListByPage(@ApiParam(value = "任务查询参数",required = true) @Valid @RequestBody TaskQuery taskQuery);
+    TaskPage queryListByPage(@ApiParam(value = "任务查询参数", required = true) @Valid @RequestBody TaskQuery taskQuery);
 
     @ApiOperationSupport(order = 5004)
     @ApiOperation(
@@ -87,10 +87,10 @@ public interface TaskApi {
         response = Task.class
     )
     @GetMapping(
-        value = {"/api/task/{id}"},
+        value = {"/{id}"},
         produces = {"application/json"}
     )
-    Task queryTaskDetail(@ApiParam(value = "任务id",required = true) @PathVariable("id") Long id);
+    Task queryTaskDetail(@ApiParam(value = "任务id", required = true) @PathVariable("id") Long id);
 
     @ApiOperationSupport(order = 5005)
     @ApiOperation(
@@ -100,18 +100,20 @@ public interface TaskApi {
         response = TaskStatistics.class
     )
     @GetMapping(
-        value = {"/api/task/taskStatistics"},
+        value = {"/taskStatistics"},
         produces = {"application/json"}
     )
-    TaskStatistics queryTaskStatistics(@NotNull @ApiParam(value = "任务id",required = true) @Valid @RequestParam(value = "id",required = true) Long id);
+    TaskStatistics queryTaskStatistics(
+        @NotNull @ApiParam(value = "任务id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+
     @ApiOperationSupport(order = 5006)
     @ApiOperation(
         value = "终止任务",
         nickname = "stopTask",
         notes = ""
     )
-    @PutMapping({"/api/task/stop/{id}"})
-    void stopTask(@ApiParam(value = "任务id",required = true) @PathVariable("id") Long id);
+    @PutMapping({"/stop/{id}"})
+    void stopTask(@ApiParam(value = "任务id", required = true) @PathVariable("id") Long id);
 
     @ApiOperationSupport(order = 5007)
     @ApiOperation(
@@ -119,21 +121,7 @@ public interface TaskApi {
         nickname = "updateTask",
         notes = ""
     )
-    @PutMapping({"/api/task"})
-    void updateTask(
-        @NotNull @ApiParam(value = "任务Id",required = true) @Valid @RequestParam(value = "id",required = true) Long id,
-        @NotNull @ApiParam(value = "任务名称",required = true) @Valid @RequestParam(value = "name",required = true) String name,
-        @NotNull @ApiParam(value = "应用Id",required = true) @Valid @RequestParam(value = "appId",required = true) Long appId,
-        @NotNull @ApiParam(value = "消息类型",required = true) @Valid @RequestParam(value = "noticeType",required = true) Integer noticeType,
-        @NotNull @ApiParam(value = "消息子类型",required = true) @Valid @RequestParam(value = "templateType",required = true) Integer templateType,
-        @NotNull @ApiParam(value = "模板ID",required = true) @Valid @RequestParam(value = "templateId",required = true) Long templateId,
-        @NotNull @ApiParam(value = "任务类型",required = true) @Valid @RequestParam(value = "taskType",required = true) Integer taskType,
-        @NotNull @ApiParam(value = "备注",required = true) @Valid @RequestParam(value = "remark",required = true) String remark,
-        @NotNull @ApiParam(value = "审核状态 -1草稿 0审核中",required = true) @Valid @RequestParam(value = "auditStatus",required = true) Integer auditStatus,
-        @ApiParam("签名ID") @Valid @RequestParam(value = "signId",required = false) Long signId, @ApiParam("发送时间") @Valid @RequestParam(value = "triggerTime",required = false) Long triggerTime,
-        @ApiParam("发送结束时间") @Valid @RequestParam(value = "triggerEndTime",required = false) Long triggerEndTime,
-        @ApiParam("周期级别") @Valid @RequestParam(value = "cycleLevel",required = false) Integer cycleLevel,
-        @ApiParam("周期数") @Valid @RequestParam(value = "cycleNum",required = false) Integer cycleNum,
-        @ApiParam("上传文件") @Valid @RequestParam(value = "file",required = false) MultipartFile file);
+    @PutMapping({""})
+    void updateTask(@ApiParam(value = "更新任务", required = true) @Valid @RequestBody TaskData taskData);
 
 }
