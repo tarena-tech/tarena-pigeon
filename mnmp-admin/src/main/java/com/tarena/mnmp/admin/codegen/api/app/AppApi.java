@@ -123,7 +123,7 @@ public interface AppApi {
         @NotNull @ApiParam(value = "应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
     /**
-     * 查看应用详情
+     * 查询应用管理列表
      */
     @ApiOperationSupport(order = 10065)
     @ApiOperation(
@@ -140,7 +140,7 @@ public interface AppApi {
     List<App> queryList();
 
     /**
-     * 查看应用详情
+     * 根据用户查询相应的应用管理列表
      */
     @ApiOperationSupport(order = 1007)
     @ApiOperation(
