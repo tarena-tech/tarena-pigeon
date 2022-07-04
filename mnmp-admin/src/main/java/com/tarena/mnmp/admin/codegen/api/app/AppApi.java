@@ -142,7 +142,7 @@ public interface AppApi {
     /**
      * 根据用户查询相应的应用管理列表
      */
-    @ApiOperationSupport(order = 1007)
+    /*@ApiOperationSupport(order = 1007)
     @ApiOperation(
         value = "根据用户查询相应的应用管理列表",
         nickname = "queryListByUser",
@@ -154,5 +154,5 @@ public interface AppApi {
         value = {"/queryListByUser"},
         produces = {"application/json"}
     )
-    List<App> queryListByUser();
+    List<App> queryListByUser();*/
 }

@@ -15,50 +15,32 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.controller.app;
+package com.tarena.mnmp.task;
 
-import com.tarena.mnmp.admin.codegen.api.app.AppApi;
-import com.tarena.mnmp.app.App;
-import com.tarena.mnmp.app.AppService;
+import io.swagger.annotations.ApiModel;
 import java.util.List;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class AppController implements AppApi {
-    private AppService appService;
+/**
+ * 通知人群
+ */
+@ApiModel(value = "通知人群")
+public class NoticeTargetData {
+    private String target;
+    private List<String> templateParams;
 
-    @Override
-    public void addApp(App app) {
-        appService.addApp(app);
+    public String getTarget() {
+        return target;
     }
 
-    @Override
-    public void editApp(App app) {
-
+    public void setTarget(String target) {
+        this.target = target;
     }
 
-    @Override
-    public void closeApp(Long id) {
-
+    public List<String> getTemplateParams() {
+        return templateParams;
     }
 
-    @Override
-    public void openApp(Long id) {
-
+    public void setTemplateParams(List<String> templateParams) {
+        this.templateParams = templateParams;
     }
-
-    @Override
-    public App queryAppDetail(Long id) {
-        return null;
-    }
-
-    @Override
-    public List<App> queryList() {
-        return null;
-    }
-
-    /*@Override
-    public List<App> queryListByUser() {
-        return null;
-    }*/
 }

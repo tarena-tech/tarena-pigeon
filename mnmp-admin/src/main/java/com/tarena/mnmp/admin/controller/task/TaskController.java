@@ -19,6 +19,7 @@ package com.tarena.mnmp.admin.controller.task;
 
 import com.tarena.mnmp.admin.codegen.api.task.TaskApi;
 import com.tarena.mnmp.task.Task;
+import com.tarena.mnmp.task.TaskData;
 import com.tarena.mnmp.task.TaskPage;
 import com.tarena.mnmp.task.TaskQuery;
 import com.tarena.mnmp.task.TaskStatistics;
@@ -27,9 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class TaskController implements TaskApi {
-    @Override public void addTask(String name, Long appId, Integer noticeType, Integer templateType, Long templateId,
-        Integer taskType, String remark, MultipartFile file, Integer auditStatus, Long signId, Long triggerTime,
-        Long triggerEndTime, Integer cycleLevel, Integer cycleNum) {
+
+    @Override public void addTask(TaskData taskData) {
 
     }
 
@@ -53,10 +53,8 @@ public class TaskController implements TaskApi {
 
     }
 
-    @Override
-    public void updateTask(Long id, String name, Long appId, Integer noticeType, Integer templateType, Long templateId,
-        Integer taskType, String remark, Integer auditStatus, Long signId, Long triggerTime, Long triggerEndTime,
-        Integer cycleLevel, Integer cycleNum, MultipartFile file) {
-
+    @Override public void updateTask(TaskData taskData) {
+        
     }
+
 }
