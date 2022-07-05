@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tarena.mnmp.admin.mapper.AppMapper">
+
+    <resultMap type="com.tarena.mnmp.app.App" id="AppMap">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="leader" property="code"/>
+        <result column="team_members" property="teamMembers"/>
+        <result column="remarks" property="remarks"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="AppAllFields">
+        id
+        ,
+        code,
+        name,
+        leader,
+        team_members,
+        remarks,
+        status,
+        create_time,
+        update_time
+    </sql>
+    <insert id="save">
+        insert into notice_app (code,
+                                name,
+                                leader,
+                                team_members,
+                                remarks,
+                                status,
+                                create_time,
+                                update_time)
+        values (#{code}, #{name}, #{leader}, #{teamMembers}, #{remarks}, #{status}, now(), now())
+    </insert>
+    <select id="queryAllApps" parameterType="com.tarena.mnmp.enums.StatusRecord" resultMap="AppMap">
+        select
+        <include refid="AppAllFields"></include>
+        from notice_app
+        where
+        status=#{status.status}
+    </select>
+</mapper>
+

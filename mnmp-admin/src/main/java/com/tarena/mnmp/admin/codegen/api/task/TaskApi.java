@@ -18,8 +18,8 @@
 package com.tarena.mnmp.admin.codegen.api.task;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.vo.task.TaskVO;
 import com.tarena.mnmp.task.Task;
-import com.tarena.mnmp.task.TaskData;
 import com.tarena.mnmp.task.TaskPage;
 import com.tarena.mnmp.task.TaskQuery;
 import com.tarena.mnmp.task.TaskStatistics;
@@ -53,7 +53,7 @@ public interface TaskApi {
     @PostMapping(
         value = {""}
     )
-    void addTask(@ApiParam(value = "新增任务", required = true) @Valid @RequestBody TaskData taskData);
+    void addTask(@ApiParam(value = "新增任务", required = true) @Valid @RequestBody TaskVO taskVO);
 
     @ApiOperationSupport(order = 5002)
     @ApiOperation(
@@ -124,6 +124,6 @@ public interface TaskApi {
         notes = ""
     )
     @PutMapping({""})
-    void updateTask(@ApiParam(value = "更新任务", required = true) @Valid @RequestBody TaskData taskData);
+    void updateTask(@ApiParam(value = "更新任务", required = true) @Valid @RequestBody TaskVO taskVO);
 
 }

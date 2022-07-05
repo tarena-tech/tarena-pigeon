@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.task;
+package com.tarena.mnmp.admin.vo.task;
 
+import com.tarena.mnmp.task.NoticeTargetData;
 import io.swagger.annotations.ApiModel;
 import java.util.List;
 
 @ApiModel(value = "任务新增或修改")
-public class TaskData {
+public class TaskVO {
     private Long id;
     private String name;
     private Long appId;
@@ -31,11 +32,9 @@ public class TaskData {
     private Integer taskType;
     private String remark;
     private Long signId;
-    private Long triggerTime;
     private Long triggerEndTime;
     private Integer cycleLevel;
     private Integer cycleNum;
-    private Integer auditStatus;
     private String fileName;
     private List<NoticeTargetData> targets;
 
@@ -59,13 +58,6 @@ public class TaskData {
         return id;
     }
 
-    public Integer getAuditStatus() {
-        return auditStatus;
-    }
-
-    public void setAuditStatus(Integer auditStatus) {
-        this.auditStatus = auditStatus;
-    }
 
     public void setId(Long id) {
         this.id = id;
@@ -133,14 +125,6 @@ public class TaskData {
 
     public void setSignId(Long signId) {
         this.signId = signId;
-    }
-
-    public Long getTriggerTime() {
-        return triggerTime;
-    }
-
-    public void setTriggerTime(Long triggerTime) {
-        this.triggerTime = triggerTime;
     }
 
     public Long getTriggerEndTime() {

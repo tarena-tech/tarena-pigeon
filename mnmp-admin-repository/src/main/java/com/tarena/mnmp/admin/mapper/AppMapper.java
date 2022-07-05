@@ -15,16 +15,9 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin;
+package com.tarena.mnmp.admin.mapper;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.tarena.mnmp.app.AppDao;
 
-@SpringBootApplication
-@MapperScan("com.tarena.mnmp.admin.mapper")
-public class AdminApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(AdminApplication.class, args);
-    }
+public interface AppMapper extends AppDao {
 }

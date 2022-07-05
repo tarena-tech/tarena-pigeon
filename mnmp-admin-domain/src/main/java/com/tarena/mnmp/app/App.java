@@ -43,14 +43,6 @@ public class App {
     @ApiModelProperty(value = "应用更新时间", name = "updateTime", required = false)
     private Date updateTime;
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -113,5 +105,13 @@ public class App {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

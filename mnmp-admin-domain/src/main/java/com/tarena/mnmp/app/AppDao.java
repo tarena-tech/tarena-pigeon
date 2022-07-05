@@ -19,7 +19,6 @@ package com.tarena.mnmp.app;
 
 import com.tarena.mnmp.enums.StatusRecord;
 import java.util.List;
-
 public interface AppDao {
     Integer save(App app);
 

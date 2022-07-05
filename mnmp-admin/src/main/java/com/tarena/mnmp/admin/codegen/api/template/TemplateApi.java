@@ -18,10 +18,10 @@
 package com.tarena.mnmp.admin.codegen.api.template;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.vo.template.WecomTemplateVO;
 import com.tarena.mnmp.template.SmsTemplate;
 import com.tarena.mnmp.template.SmsTemplatePage;
 import com.tarena.mnmp.template.WecomTemplate;
-import com.tarena.mnmp.template.WecomTemplateData;
 import com.tarena.mnmp.template.WecomTemplatePage;
 import com.tarena.mnmp.template.WecomTemplatePageQuery;
 import io.swagger.annotations.Api;
@@ -169,7 +169,7 @@ public interface TemplateApi {
         produces = {"application/json"}
     )
     String addWecomTemplate(
-        @ApiParam(value = "新增企微模板", required = true) @Valid @RequestBody WecomTemplateData wecomTemplateData);
+        @ApiParam(value = "新增企微模板", required = true) @Valid @RequestBody WecomTemplateVO wecomTemplateVO);
 
     @ApiOperationSupport(order = 4102)
     @ApiOperation(
@@ -230,7 +230,7 @@ public interface TemplateApi {
         produces = {"application/json"}
     )
     String updateWecomTemplate(
-        @ApiParam(value = "修改企微模板(未通过审核)", required = true) @Valid @RequestBody WecomTemplateData wecomTemplateData);
+        @ApiParam(value = "修改企微模板(未通过审核)", required = true) @Valid @RequestBody WecomTemplateVO wecomTemplateVO);
 
     @ApiOperationSupport(order = 4106)
     @ApiOperation(
