@@ -17,6 +17,8 @@
 
 package com.tarena.mnmp.commons.mq;
 
-public interface MQHandler<T extends MQEvent> {
+import org.springframework.beans.factory.InitializingBean;
+
+public interface MQHandler<T extends MQEvent> extends InitializingBean {
     void handle(T t) throws Throwable;
 }

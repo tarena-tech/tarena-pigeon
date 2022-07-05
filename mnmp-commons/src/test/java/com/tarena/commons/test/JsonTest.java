@@ -20,9 +20,11 @@ package com.tarena.commons.test;
 import com.tarena.mnmp.commons.json.JsonFactory;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.Test;
 
 public class JsonTest {
-    public static void main(String[] args) {
+    @Test
+    public void test() {
         List<String> list = new ArrayList<>();
         list.add("a");
         list.add("b");

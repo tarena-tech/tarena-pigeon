@@ -37,7 +37,7 @@ public class MQContainerProvider {
                 queueHandlerMappingContainer = it.next();
                 return queueHandlerMappingContainer;
             }
-            String defaultProvider = "com.sparrow.mq.DefaultQueueHandlerMappingContainer";
+            String defaultProvider = "com.tarena.mnmp.commons.mq.DefaultQueueHandlerMappingContainer";
             try {
                 Class<?> rabbitPublisher = Class.forName(defaultProvider);
                 queueHandlerMappingContainer = (EventHandlerMappingContainer) rabbitPublisher.newInstance();

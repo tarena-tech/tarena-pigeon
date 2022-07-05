@@ -192,7 +192,6 @@ public class RocketMQConsumer {
                 defaultMQPushConsumer.setConsumeMessageBatchMaxSize(batchSize);
             }
             if (pullSize != null && pullSize > 0) {
-                System.err.println("pull size:" + pullSize);
                 defaultMQPushConsumer.setPullBatchSize(pullSize);
             }
             //消费一批消息，最大数。因为一批消息如果有一个失败，都会失败，所以这里设置为1
@@ -205,7 +204,7 @@ public class RocketMQConsumer {
             defaultMQPushConsumer.setInstanceName(getInstanceName() + Symbol.UNDERLINE + groupName);
             defaultMQPushConsumer.registerMessageListener(messageListener);
             defaultMQPushConsumer.setPullInterval(this.pullInterval);
-            defaultMQPushConsumer.setConsumeThreadMin(this.threadCount);
+            defaultMQPushConsumer.setConsumeThreadMin(this.getThreadCount());
             log.info("finished rocket mq client start!");
             return defaultMQPushConsumer;
         } catch (Exception e) {

@@ -18,9 +18,8 @@
 package com.tarena.mnmp.commons.mq;
 
 public abstract class AbstractMQHandler<T extends MQEvent> implements MQHandler<T> {
-    private EventHandlerMappingContainer queueHandlerMappingContainer;
 
-    public void setQueueHandlerMappingContainer(EventHandlerMappingContainer queueHandlerMappingContainer) {
-        this.queueHandlerMappingContainer = queueHandlerMappingContainer;
+    @Override public void afterPropertiesSet() throws Exception {
+        MQContainerProvider.getContainer().put(this);
     }
 }

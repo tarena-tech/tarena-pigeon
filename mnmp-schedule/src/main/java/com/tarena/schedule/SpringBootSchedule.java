@@ -17,12 +17,8 @@
 
 package com.tarena.schedule;
 
-import com.alibaba.fastjson2.JSON;
 import com.tarena.dispatcher.NoticeEventGetter;
-import com.tarena.dispatcher.assemble.impl.EmailTargetAssembler;
-import com.tarena.dispatcher.assemble.impl.SmsTargetAssembler;
-import com.tarena.dispatcher.impl.EmailAliNoticeDispatcher;
-import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
+import com.tarena.mnmp.commons.mq.MQPublisher;
 import com.tarena.mnmp.enums.CycleLevel;
 import com.tarena.mnmp.enums.SendType;
 import com.tarena.schedule.utils.NoticeTaskTrigger;
@@ -31,25 +27,15 @@ import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class Startup extends AbstractScheduler {
-    private static Logger logger = LoggerFactory.getLogger(Startup.class);
+@Component
+public class SpringBootSchedule extends AbstractScheduler {
+    private static Logger logger = LoggerFactory.getLogger(Application.class);
 
-    public static void main(String[] args) throws Exception {
-
-        EmailTargetAssembler emailTargetAssembler = new EmailTargetAssembler();
-        emailTargetAssembler.afterPropertiesSet();
-        SmsTargetAssembler smsTargetAssembler = new SmsTargetAssembler();
-        smsTargetAssembler.afterPropertiesSet();
-
-        EmailAliNoticeDispatcher emailAliNoticeDispatcher = new EmailAliNoticeDispatcher();
-        emailAliNoticeDispatcher.afterPropertiesSet();
-        SmsAliNoticeDispatcher smsAliNoticeDispatcher = new SmsAliNoticeDispatcher();
-        smsAliNoticeDispatcher.afterPropertiesSet();
-
-        Startup startup = new Startup();
-        startup.schedule();
-    }
+    @Autowired
+    private MQPublisher mqPublisher;
 
     @Override List<NoticeTaskTrigger> queryTriggers() {
         List<NoticeTaskTrigger> triggers = new ArrayList<>();
@@ -86,7 +72,6 @@ public class Startup extends AbstractScheduler {
     }
 
     @Override <T extends NoticeEventGetter> void send(T event) {
-        logger.info("send event:{}", JSON.toJSONString(event));
-        logger.info("send event class {}", event.getClass());
+        this.mqPublisher.publish(event);
     }
 }

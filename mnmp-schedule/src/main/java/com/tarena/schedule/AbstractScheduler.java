@@ -43,7 +43,7 @@ public abstract class AbstractScheduler {
 
     abstract List<List<String>> getTargets(NoticeTaskTrigger noticeTaskTrigger);
 
-    abstract <T extends NoticeEventGetter> void send(T noticeEvent);
+    abstract <T extends NoticeEventGetter> void send(T noticeEvent) throws Throwable;
 
     private List<NoticeDTO> assemble(NoticeTaskTrigger noticeTaskTrigger, List<List<String>> targets) {
         List<NoticeDTO> notices = new ArrayList<>();
@@ -58,27 +58,27 @@ public abstract class AbstractScheduler {
     }
 
     public void schedule() {
-        //while (!stop()) {
-        try {
-            List<NoticeTaskTrigger> triggers = this.queryTriggers();
-            for (NoticeTaskTrigger trigger : triggers) {
-                List<List<String>> targetsList = this.getTargets(trigger);
-                List<NoticeDTO> notices = this.assemble(trigger, targetsList);
-                int batchIndex = 0;
-                for (NoticeDTO notice : notices) {
-                    this.send(TargetAssemblerRegistry.getInstance().assemble(notice, batchIndex++));
+        while (!stop()) {
+            try {
+                List<NoticeTaskTrigger> triggers = this.queryTriggers();
+                for (NoticeTaskTrigger trigger : triggers) {
+                    List<List<String>> targetsList = this.getTargets(trigger);
+                    List<NoticeDTO> notices = this.assemble(trigger, targetsList);
+                    int batchIndex = 0;
+                    for (NoticeDTO notice : notices) {
+                        this.send(TargetAssemblerRegistry.getInstance().assemble(notice, batchIndex++));
+                    }
+                    Date nextTriggerTime = trigger.generateNextTriggerTime();
+                    if (trigger.isFinish(nextTriggerTime)) {
+                        this.finishTask(trigger);
+                    }
                 }
-                Date nextTriggerTime = trigger.generateNextTriggerTime();
-                if (trigger.isFinish(nextTriggerTime)) {
-                    this.finishTask(trigger);
+                if (CollectionUtils.isEmpty(triggers)) {
+                    Thread.sleep(1000L);
                 }
+            } catch (Throwable e) {
+                logger.error("schedule error ", e);
             }
-            if (CollectionUtils.isEmpty(triggers)) {
-                Thread.sleep(1000L);
-            }
-        } catch (Throwable e) {
-            logger.error("schedule error ", e);
         }
-        //}
     }
 }

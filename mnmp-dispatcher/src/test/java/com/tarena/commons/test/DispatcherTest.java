@@ -53,7 +53,8 @@ public class DispatcherTest {
         assemble();
     }
 
-    public static void main(String[] args) throws Exception {
+    @Test
+    public void test() throws Exception {
         EmailAliNoticeDispatcher emailAliNoticeDispatcher = new EmailAliNoticeDispatcher();
         emailAliNoticeDispatcher.afterPropertiesSet();
         SmsAliNoticeDispatcher smsAliNoticeDispatcher = new SmsAliNoticeDispatcher();

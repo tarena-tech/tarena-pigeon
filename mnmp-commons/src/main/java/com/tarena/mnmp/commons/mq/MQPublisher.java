@@ -18,5 +18,5 @@
 package com.tarena.mnmp.commons.mq;
 
 public interface MQPublisher {
-    void publish(MQEvent event) throws Throwable;
+    void publish(MQEvent event);
 }

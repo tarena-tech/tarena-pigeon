@@ -25,6 +25,7 @@ import com.tarena.mnmp.enums.NoticeType;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class EmailTargetAssembler extends AbstractTargetAssembler<EmailNoticeEvent> {
     @Override
     public String getNoticeType() {

@@ -17,7 +17,9 @@
 
 package com.tarena.dispatcher;
 
-public class BaseNoticeTarget {
+import java.io.Serializable;
+
+public class BaseNoticeTarget implements Serializable {
     private String appCode;
     private Long templateId;
     private String templateCode;

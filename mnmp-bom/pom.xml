@@ -46,9 +46,9 @@
         <tomcat.plugin.version>2.2</tomcat.plugin.version>
         <jna.version>5.3.1</jna.version>
         <logback.version>1.2.9</logback.version>
-        <spring.framework.version>4.2.6.RELEASE</spring.framework.version>
+        <spring.framework.version>5.1.8.RELEASE</spring.framework.version>
+        <spring.boot.version>2.1.6.RELEASE</spring.boot.version>
     </properties>
-
 
 
     <licenses>
@@ -76,9 +76,9 @@
                 <version>${mnmp_commons_version}</version>
             </dependency>
             <dependency>
-                    <artifactId>mnmp-api</artifactId>
-                    <groupId>com.tarena.mnmp</groupId>
-                    <version>${mnmp_api_version}</version>
+                <artifactId>mnmp-api</artifactId>
+                <groupId>com.tarena.mnmp</groupId>
+                <version>${mnmp_api_version}</version>
             </dependency>
 
             <dependency>
@@ -143,14 +143,63 @@
             </dependency>
 
             <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-            <version>2.4.3</version>
-        </dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>2.4.3</version>
+            </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.framework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${spring.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot</artifactId>
+                <version>${spring.boot.version}</version>
+
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-autoconfigure</artifactId>
+                <version>${spring.boot.version}</version>
+
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring.boot.version}</version>
+
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring.boot.version}</version>
+
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${spring.boot.version}</version>
+
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring.boot.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -37,7 +37,6 @@ public class RocketMQPublisher implements MQPublisher {
     private String nameServerAddress;
     private String group;
     private String topic;
-    private String tag;
     private Boolean debug;
     private MQProducer producer;
     private MessageConverter messageConverter;
@@ -63,13 +62,6 @@ public class RocketMQPublisher implements MQPublisher {
         return topic;
     }
 
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
 
     public MessageConverter getMessageConverter() {
         return messageConverter;
@@ -97,7 +89,7 @@ public class RocketMQPublisher implements MQPublisher {
 
     @Override
     public void publish(MQEvent event) {
-        Message msg = this.messageConverter.createMessage(topic, tag, event);
+        Message msg = this.messageConverter.createMessage(topic,"",event);
         String key = UUID.randomUUID().toString();
         msg.setKeys(Collections.singletonList(key));
         // logger.info("event {} ,monitor key {},msgKey {}", JsonFactory.getProvider().toString(event), productKey == null ? "" : productKey.key(), key);
