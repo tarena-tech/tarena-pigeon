@@ -15,16 +15,17 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin;
+package com.tarena.test.mnmp.admin.sql;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+public class AppSqlScript {
+    /**
+     * 清空所有数据表的SQL脚本
+     */
+    public static final String TRUNCATE_APP_TABLE = "classpath:sql/truncate_app_test_data.sql";
 
-@SpringBootApplication
-@MapperScan("com.tarena.mnmp.admin.mapper")
-public class AdminApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(AdminApplication.class, args);
-    }
+    /**
+     * 向所有数据表中插入测试数据的SQL脚本
+     */
+    public static final String INSERT_TEST_DATA = "classpath:sql/insert_app_test_data.sql";
+
 }

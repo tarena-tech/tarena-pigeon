@@ -17,6 +17,9 @@
 
 package com.tarena.mnmp.app;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class AppService {
     public void addApp(App app) {
     }

@@ -1,5 +1,13 @@
 # Charlie Show
 #更新汇总
+### 2022年7月4日17:14
+- [修改] WecomTemplateData接收前端数据,修改成VO类放到admin下
+- [新增] app模块添加saveApp方法
+- [新增] app模块添加queryAllApps方法
+## 2022年7月4日16:24
+- [修改] TaskData接收前端数据,删除字段triggerTime 和审核状态
+- [修改] TaskData接收前端数据,修改名称TaskVO
+- [修改] TaskVO迁移到admin项目,在domain层需要assenble封装,不能直接接收
 ## 2022年7月3日14:21
 - [修改]mnmp-commons 基础包不引用spring等依赖,迁移到admin
 ## 2022年7月3日13:51

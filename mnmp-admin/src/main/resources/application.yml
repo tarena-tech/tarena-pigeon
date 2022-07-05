@@ -24,3 +24,11 @@ knife4j:
     username: root
     # 密码
     password: root
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+  configuration:
+    cache-enabled: false
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    default-enum-type-handler: org.apache.ibatis.type.EnumTypeHandler

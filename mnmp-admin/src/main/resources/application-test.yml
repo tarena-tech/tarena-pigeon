@@ -1,0 +1,12 @@
+my:
+  server:
+    addr: 192.168.56.150
+spring:
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://${my.server.addr}:3306/tarena_mnmp?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: root
+    password: tarena2017Up;
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 1

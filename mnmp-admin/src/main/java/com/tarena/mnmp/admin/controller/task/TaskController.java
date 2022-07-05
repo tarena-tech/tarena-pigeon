@@ -18,8 +18,8 @@
 package com.tarena.mnmp.admin.controller.task;
 
 import com.tarena.mnmp.admin.codegen.api.task.TaskApi;
+import com.tarena.mnmp.admin.vo.task.TaskVO;
 import com.tarena.mnmp.task.Task;
-import com.tarena.mnmp.task.TaskData;
 import com.tarena.mnmp.task.TaskPage;
 import com.tarena.mnmp.task.TaskQuery;
 import com.tarena.mnmp.task.TaskStatistics;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TaskController implements TaskApi {
 
-    @Override public void addTask(TaskData taskData) {
+    @Override public void addTask(TaskVO taskVO) {
 
     }
 
@@ -52,7 +52,7 @@ public class TaskController implements TaskApi {
 
     }
 
-    @Override public void updateTask(TaskData taskData) {
+    @Override public void updateTask(TaskVO taskVO) {
 
     }
 

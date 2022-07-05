@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.template;
+package com.tarena.mnmp.admin.vo.template;
 
 import io.swagger.annotations.ApiModel;
 
 @ApiModel("新增修改企微模板")
-public class WecomTemplateData {
+public class WecomTemplateVO {
     private Long id;
     private String code;
     private String name;
