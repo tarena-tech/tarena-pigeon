@@ -54,6 +54,8 @@ public class Task {
 
     private String templateName;
 
+    private String templateContent;
+
     private String pushSuccRate;
 
     private Integer pushCount;
@@ -62,7 +64,7 @@ public class Task {
 
     private String signName;
 
-    private String templateContent;
+
 
     private String creator;
 
