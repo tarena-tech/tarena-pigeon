@@ -1,7 +1,10 @@
 # Charlie Show
-## TODO-LIST
-- admin 持久层方法sql实现
-- admin 业务层实现
+## NEXT-TODO-PLAN-LIST
+### admin后台管理
+- app应用模块持久层实现
+- app应用模块业务层实现
+- provider持久层
+- provider业务层
 #更新汇总
 ### 2022年7月5日17:14
 - [修改] WecomTemplateData接收前端数据,修改成VO类放到admin下
