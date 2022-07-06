@@ -19,6 +19,7 @@ package com.tarena.mnmp.task;
 
 import io.swagger.annotations.ApiModel;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 通知人群
@@ -26,7 +27,7 @@ import java.util.List;
 @ApiModel(value = "通知人群")
 public class NoticeTargetData {
     private String target;
-    private List<String> templateParams;
+    private Map<String,Object> templateParams;
 
     public String getTarget() {
         return target;
@@ -36,11 +37,11 @@ public class NoticeTargetData {
         this.target = target;
     }
 
-    public List<String> getTemplateParams() {
+    public Map<String, Object> getTemplateParams() {
         return templateParams;
     }
 
-    public void setTemplateParams(List<String> templateParams) {
+    public void setTemplateParams(Map<String, Object> templateParams) {
         this.templateParams = templateParams;
     }
 }
