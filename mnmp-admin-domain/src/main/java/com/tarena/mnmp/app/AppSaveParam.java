@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package com.tarena.mnmp.app;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
@@ -22,6 +23,13 @@ import javax.validation.constraints.NotNull;
 
 @ApiModel(value = "应用新增入参")
 public class AppSaveParam {
+    @ApiModelProperty(
+        value = "主键",
+        name = "id",
+        required = false,
+        example = "1"
+    )
+    private Long id;
     @ApiModelProperty(
         value = "应用编码",
         name = "code",
@@ -80,6 +88,13 @@ public class AppSaveParam {
     )
     private Date updateTime;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCode() {
         return code;

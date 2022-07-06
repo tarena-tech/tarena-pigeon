@@ -41,8 +41,8 @@ public class AppMapperTest {
 
     @Test
     @Sql(
-        scripts = {AppSqlScript.TRUNCATE_APP_TABLE,AppSqlScript.INSERT_TEST_DATA},
-        config=@SqlConfig(encoding = "UTF-8")
+        scripts = {AppSqlScript.TRUNCATE_APP_TABLE, AppSqlScript.INSERT_TEST_DATA},
+        config = @SqlConfig(encoding = "UTF-8")
     )
     @Sql(
         scripts = {AppSqlScript.TRUNCATE_APP_TABLE},
@@ -51,9 +51,10 @@ public class AppMapperTest {
     public void queryAllAppsTest() throws BusinessException {
         List<AppDO> apps =
             appMapper.queryAllApps();
-        logger.info("查询app总数:{}",apps.size());
-        Asserts.isTrue(apps.size()!=22,new BusinessException(ErrorCode.SYSTEM_ERROR,"查询所有app列表测试持久层mapper失败"));
+        logger.info("查询app总数:{}", apps.size());
+        Asserts.isTrue(apps.size() != 22, new BusinessException(ErrorCode.SYSTEM_ERROR, "查询所有app列表测试持久层mapper失败"));
     }
+
     @Test
     @Sql(
         scripts = {AppSqlScript.TRUNCATE_APP_TABLE},
@@ -64,7 +65,7 @@ public class AppMapperTest {
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
     public void saveAppTest() throws BusinessException {
-        AppDO appDO=new AppDO();
+        AppDO appDO = new AppDO();
         appDO.setTeamMembers("wang,li,zhang,zhao");
         appDO.setStatus(1);
         appDO.setRemarks("测试程序");
@@ -72,8 +73,56 @@ public class AppMapperTest {
         appDO.setLeader("ceshiwang");
         appDO.setCode("CODE_TEST_001");
         Integer result = appMapper.save(appDO);
-        Asserts.isTrue(result==0,new BusinessException(ErrorCode.SYSTEM_ERROR,"新增app应用测试持久层mapper失败"));
+        Asserts.isTrue(result == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "新增app应用测试持久层mapper失败"));
         logger.info("新增app应用测试持久层mapper成功");
     }
 
+    @Test
+    @Sql(
+        scripts = {AppSqlScript.TRUNCATE_APP_TABLE, AppSqlScript.INSERT_TEST_DATA},
+        config = @SqlConfig(encoding = "UTF-8")
+    )
+    @Sql(
+        scripts = {AppSqlScript.TRUNCATE_APP_TABLE},
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
+    )
+    public void openAndCloseTest() throws BusinessException {
+        AppDO appDO1 = appMapper.findById(1L);
+        AppDO appDO2 = appMapper.findById(2L);
+        Asserts.isTrue(appDO1 == null || appDO2 == null, new BusinessException(ErrorCode.SYSTEM_ERROR, "id查询app应用测试持久层mapper失败"));
+        Integer status1 = appDO1.getStatus();
+        Integer status2 = appDO2.getStatus();
+        Asserts.isTrue(status1 == 1 || status2 == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "测试app数据有误,请检查前两条status属性是否是0,1"));
+        appMapper.enable(appDO1.getId());
+        appMapper.disable(appDO2.getId());
+        appDO1 = appMapper.findById(1L);
+        appDO2 = appMapper.findById(2L);
+        status1 = appDO1.getStatus();
+        status2 = appDO2.getStatus();
+        Asserts.isTrue(status1 == 0 || status2 == 1, new BusinessException(ErrorCode.SYSTEM_ERROR, "开启关闭app应用测试持久层mapper失败"));
+        logger.info("开启关闭app应用测试持久层mapper成功");
+    }
+
+    @Test
+    @Sql(
+        scripts = {AppSqlScript.TRUNCATE_APP_TABLE, AppSqlScript.INSERT_TEST_DATA},
+        config = @SqlConfig(encoding = "UTF-8")
+    )
+    @Sql(
+        scripts = {AppSqlScript.TRUNCATE_APP_TABLE},
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
+    )
+    public void modifyAppTest() throws BusinessException {
+        AppDO appDO = new AppDO();
+        appDO.setId(1L);
+        appDO.setTeamMembers("wang,li,zhang,zhao");
+        appDO.setStatus(1);
+        appDO.setRemarks("测试程序");
+        appDO.setName("达内测试");
+        appDO.setLeader("ceshiwang");
+        appDO.setCode("CODE_TEST_001");
+        Integer result = appMapper.modify(appDO);
+        Asserts.isTrue(result == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "更新app应用测试持久层mapper失败"));
+        logger.info("更新app应用测试持久层mapper成功");
+    }
 }
