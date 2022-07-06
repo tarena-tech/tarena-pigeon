@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
-package com.tarena.commons.test;
+package com.tarena.mnmp.extentions.autoconfigurations;
 
-import com.tarena.mnmp.commons.json.JsonFactory;
-import java.util.ArrayList;
-import java.util.List;
-import org.junit.Test;
+import com.tarena.mnmp.commons.json.Json;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-public class JsonTest {
-    @Test
-    public void test() {
-        List<String> list = new ArrayList<>();
-        list.add("a");
-        list.add("b");
-        System.out.println(JsonFactory.getProvider().toString(list));
+@Configuration
+public class FastJsonAutoConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(Json.class)
+    @ConditionalOnProperty(prefix = "json", value = "provider", havingValue = "fastJson")
+    public FastJson json() {
+        return new FastJson();
     }
 }

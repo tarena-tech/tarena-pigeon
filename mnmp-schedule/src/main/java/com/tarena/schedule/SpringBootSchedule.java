@@ -33,7 +33,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class SpringBootSchedule extends AbstractScheduler {
     private static Logger logger = LoggerFactory.getLogger(Application.class);
-
     @Autowired
     private MQPublisher mqPublisher;
 

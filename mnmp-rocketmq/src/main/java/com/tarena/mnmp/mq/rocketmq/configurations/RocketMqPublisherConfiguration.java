@@ -24,6 +24,8 @@ import com.tarena.mnmp.mq.rocketmq.MessageConverter;
 import com.tarena.mnmp.mq.rocketmq.RocketMQPublisher;
 import com.tarena.mnmp.mq.rocketmq.configurations.properties.RocketMqConfig;
 import org.apache.rocketmq.client.exception.MQClientException;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +33,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(RocketMqConfig.class)
 public class RocketMqPublisherConfiguration {
-
     private RocketMqConfig rocketMqConfig;
 
     public RocketMqPublisherConfiguration(RocketMqConfig rocketMqConfig) {
@@ -39,6 +40,8 @@ public class RocketMqPublisherConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean(MessageConverter.class)
+    @ConditionalOnProperty(prefix = "rocket", value = "message_charset")
     public MessageConverter messageConverter() {
         JsonMessageConverter jsonMessageConverter = new JsonMessageConverter();
         jsonMessageConverter.setCharset(this.rocketMqConfig.getMessageCharset());
@@ -46,6 +49,8 @@ public class RocketMqPublisherConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean(MQPublisher.class)
+    @ConditionalOnProperty(prefix = "rocket", value = "publish_group")
     public MQPublisher publisher(MessageConverter messageConverter) throws MQClientException {
         RocketMQPublisher publisher = new RocketMQPublisher();
         publisher.setTopic(this.rocketMqConfig.getTopic());

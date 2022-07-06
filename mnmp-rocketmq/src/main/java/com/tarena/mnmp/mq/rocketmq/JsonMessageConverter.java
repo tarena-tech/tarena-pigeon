@@ -17,7 +17,7 @@
 
 package com.tarena.mnmp.mq.rocketmq;
 
-import com.tarena.mnmp.commons.json.JsonFactory;
+import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.mq.MQClient;
 import com.tarena.mnmp.commons.mq.MQEvent;
 import java.io.UnsupportedEncodingException;
@@ -31,8 +31,14 @@ public class JsonMessageConverter implements MessageConverter {
 
     private String charset;
 
+    private Json jsonProvider;
+
     public void setCharset(String charset) {
         this.charset = charset;
+    }
+
+    public void setJsonProvider(Json jsonProvider) {
+        this.jsonProvider = jsonProvider;
     }
 
     @Override
@@ -47,7 +53,7 @@ public class JsonMessageConverter implements MessageConverter {
 
         String className = message.getProperties().get(MQClient.CLASS_NAME);
         try {
-            return (MQEvent) JsonFactory.getProvider().parse(json, Class.forName(className));
+            return (MQEvent) jsonProvider.parse(json, Class.forName(className));
         } catch (ClassNotFoundException e) {
             logger.error("class{} not found", className);
             return null;
@@ -56,7 +62,7 @@ public class JsonMessageConverter implements MessageConverter {
 
     @Override
     public Message createMessage(String topic, String tag, MQEvent event) {
-        String jsonString = JsonFactory.getProvider().toString(event);
+        String jsonString = jsonProvider.toString(event);
         try {
             byte[] bytes = jsonString.getBytes(charset);
             Message message = new Message(topic, tag, bytes);

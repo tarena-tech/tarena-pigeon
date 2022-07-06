@@ -19,7 +19,6 @@ package com.tarena.dispatcher.impl;
 
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
-import com.tarena.mnmp.commons.json.JsonFactory;
 import com.tarena.mnmp.enums.NoticeType;
 import java.util.List;
 import org.slf4j.Logger;
@@ -36,7 +35,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
     public void dispatcher(SmsNoticeEvent notice) {
         List<SmsTarget> targets = notice.getTargets();
         for (SmsTarget smsTarget : targets) {
-            logger.info("sms-ali dispatcher " + JsonFactory.getProvider().toString(smsTarget));
+            logger.info("sms-ali dispatcher " + this.jsonProvider.toString(smsTarget));
         }
     }
 }

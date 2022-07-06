@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.mq.rocketmq.configurations;
 
+import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.mq.MQContainerProvider;
 import com.tarena.mnmp.constant.Pair;
 import com.tarena.mnmp.constant.Symbol;
@@ -30,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UnknownFormatConversionException;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,13 +48,18 @@ public class RocketMqConsumerConfiguration {
     }
 
     @Bean
-    public MessageConverter messageConverter() {
+    @ConditionalOnMissingBean(MessageConverter.class)
+    @ConditionalOnProperty(prefix = "rocket", value = "message_charset")
+    public MessageConverter messageConverter(Json json) {
         JsonMessageConverter jsonMessageConverter = new JsonMessageConverter();
+        jsonMessageConverter.setJsonProvider(json);
         jsonMessageConverter.setCharset(this.rocketMqConfig.getMessageCharset());
         return jsonMessageConverter;
     }
 
     @Bean
+    @ConditionalOnMissingBean(RocketMQMessageListener.class)
+    @ConditionalOnProperty(prefix = "rocket", value = "consumer_group")
     public RocketMQMessageListener rocketMQMessageListener(MessageConverter messageConverter) {
         RocketMQMessageListener rocketMQMessageListener = new RocketMQMessageListener();
         rocketMQMessageListener.setMessageConverter(messageConverter);
@@ -60,8 +68,9 @@ public class RocketMqConsumerConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean(RocketMQConsumer.class)
+    @ConditionalOnProperty(prefix = "rocket", value = "consumer_group")
     public RocketMQConsumer rocketMQConsumer(RocketMQMessageListener rocketMQMessageListener) {
-
         List<TopicTagPair> topicConfigList = new ArrayList<TopicTagPair>();
         if (!this.rocketMqConfig.getSubscribeTopicTags().contains(Symbol.COLON)) {
             throw new UnknownFormatConversionException("format error for example topic1:tag1,tag1,tag3|topic2:tag1,tag2,tag3");

@@ -17,8 +17,6 @@
 
 package com.tarena.schedule;
 
-import com.tarena.dispatcher.boot.EnableNoticeDispatcher;
-import com.tarena.mnmp.mq.rocketmq.boot.EnableRocketMqPublisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -28,8 +26,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 
 @SpringBootApplication
-@EnableRocketMqPublisher
-@EnableNoticeDispatcher
 public class Application {
     private static Logger logger = LoggerFactory.getLogger(Application.class);
 

@@ -42,7 +42,7 @@
         </dependency>
         <dependency>
             <groupId>com.tarena.mnmp</groupId>
-            <artifactId>mnmp-rocketmq</artifactId>
+            <artifactId>mnmp-autoconfigurations</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
