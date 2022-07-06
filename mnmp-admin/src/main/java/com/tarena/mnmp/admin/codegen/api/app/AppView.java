@@ -20,31 +20,44 @@ package com.tarena.mnmp.admin.codegen.api.app;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
-import javax.validation.constraints.NotNull;
 
 @ApiModel(value = "应用控制层出参")
 public class AppView {
-    @ApiModelProperty(value = "主键", name = "id", required = true)
-    @NotNull
+    @ApiModelProperty(
+        value = "主键",
+        name = "id")
     private Integer id;
-    @ApiModelProperty(value = "应用编码", name = "code", required = true)
-
+    @ApiModelProperty(
+        value = "应用编码",
+        name = "code")
     private String code;
-    @ApiModelProperty(value = "应用名称", name = "name", required = true)
-
+    @ApiModelProperty(
+        value = "应用名称",
+        name = "name")
     private String name;
-    @ApiModelProperty(value = "应用负责人", name = "leader", required = true)
-
+    @ApiModelProperty(
+        value = "应用负责人",
+        name = "leader")
     private String leader;
-    @ApiModelProperty(value = "应用组员", name = "teamMembers", required = false)
+    @ApiModelProperty(
+        value = "应用组员",
+        name = "teamMembers")
     private String teamMembers;
-    @ApiModelProperty(value = "应用简介", name = "remarks", required = true)
+    @ApiModelProperty(
+        value = "应用简介",
+        name = "remarks")
     private String remarks;
-    @ApiModelProperty(value = "应用状态", name = "status", required = false)
+    @ApiModelProperty(
+        value = "应用状态",
+        name = "status")
     private Integer status;
-    @ApiModelProperty(value = "应用创建时间", name = "createTime", required = false)
+    @ApiModelProperty(
+        value = "应用创建时间",
+        name = "createTime")
     private Date createTime;
-    @ApiModelProperty(value = "应用更新时间", name = "updateTime", required = false)
+    @ApiModelProperty(
+        value = "应用更新时间",
+        name = "updateTime")
     private Date updateTime;
 
     public String getCode() {

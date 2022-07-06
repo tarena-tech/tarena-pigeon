@@ -22,25 +22,62 @@ import javax.validation.constraints.NotNull;
 
 @ApiModel(value = "应用新增入参")
 public class AppSaveParam {
-
-    @ApiModelProperty(value = "应用编码", name = "code", required = true)
+    @ApiModelProperty(
+        value = "应用编码",
+        name = "code",
+        required = true,
+        example = "APP_001")
     @NotNull(message = "请填写应用编码")
     private String code;
-    @ApiModelProperty(value = "应用名称", name = "name", required = true)
+    @ApiModelProperty(
+        value = "应用名称",
+        name = "name",
+        required = true,
+        example = "酷鲨商城用户中台"
+    )
     @NotNull(message = "请填写应用名称")
     private String name;
-    @ApiModelProperty(value = "应用负责人", name = "leader", required = true)
+    @ApiModelProperty(
+        value = "应用负责人",
+        name = "leader",
+        required = true,
+        example = "charlie"
+    )
     @NotNull(message = "请填写应用负责人")
     private String leader;
-    @ApiModelProperty(value = "应用组员", name = "teamMembers", required = false)
+    @ApiModelProperty(
+        value = "应用组员",
+        name = "teamMembers",
+        required = false,
+        notes = "使用,号隔开不同成员",
+        example = "张三,李四,王五"
+    )
     private String teamMembers;
-    @ApiModelProperty(value = "应用简介", name = "remarks", required = true)
+    @ApiModelProperty(
+        value = "应用简介",
+        name = "remarks",
+        required = true,
+        example = "java教学电商项目"
+    )
+    @NotNull(message = "请填写应用简介")
     private String remarks;
-    @ApiModelProperty(value = "应用状态", name = "status", required = false)
+    @ApiModelProperty(
+        value = "应用状态",
+        name = "status",
+        required = false
+    )
     private Integer status;
-    @ApiModelProperty(value = "应用创建时间", name = "createTime", required = false)
+    @ApiModelProperty(
+        value = "应用创建时间",
+        name = "createTime",
+        required = false
+    )
     private Date createTime;
-    @ApiModelProperty(value = "应用更新时间", name = "updateTime", required = false)
+    @ApiModelProperty(
+        value = "应用更新时间",
+        name = "updateTime",
+        required = false
+    )
     private Date updateTime;
 
 

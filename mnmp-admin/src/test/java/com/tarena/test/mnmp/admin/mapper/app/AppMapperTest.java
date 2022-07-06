@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.test.mnmp.admin.mapper;
+package com.tarena.test.mnmp.admin.mapper.app;
 
 import com.tarena.mnmp.admin.AdminApplication;
 import com.tarena.mnmp.admin.mapper.AppMapper;
@@ -23,7 +23,7 @@ import com.tarena.mnmp.app.AppDO;
 import com.tarena.mnmp.commons.utils.Asserts;
 import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.protocol.BusinessException;
-import com.tarena.test.mnmp.admin.sql.AppSqlScript;
+import com.tarena.test.mnmp.admin.sql.app.AppSqlScript;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -44,10 +44,15 @@ public class AppMapperTest {
         scripts = {AppSqlScript.TRUNCATE_APP_TABLE,AppSqlScript.INSERT_TEST_DATA},
         config=@SqlConfig(encoding = "UTF-8")
     )
-    public void queryAllAppsTest() {
+    @Sql(
+        scripts = {AppSqlScript.TRUNCATE_APP_TABLE},
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
+    )
+    public void queryAllAppsTest() throws BusinessException {
         List<AppDO> apps =
             appMapper.queryAllApps();
         logger.info("查询app总数:{}",apps.size());
+        Asserts.isTrue(apps.size()!=22,new BusinessException(ErrorCode.SYSTEM_ERROR,"查询所有app列表测试持久层mapper失败"));
     }
     @Test
     @Sql(

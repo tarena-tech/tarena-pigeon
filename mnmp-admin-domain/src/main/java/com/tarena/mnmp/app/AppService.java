@@ -27,15 +27,15 @@ public class AppService {
     @Autowired
     private AppDao appDao;
 
-    public void addApp(AppSaveParam appAddParam) {
+    public void addApp(AppSaveParam appSaveParam) {
         AppDO appDO = new AppDO();
-        BeanUtils.copyProperties(appAddParam, appDO);
+        BeanUtils.copyProperties(appSaveParam, appDO);
         appDao.save(appDO);
     }
 
-    public void editApp(AppSaveParam appEditParam) {
+    public void editApp(AppSaveParam appSaveParam) {
         AppDO appDO = new AppDO();
-        BeanUtils.copyProperties(appEditParam, appDO);
+        BeanUtils.copyProperties(appSaveParam, appDO);
         appDao.modify(appDO);
     }
 
