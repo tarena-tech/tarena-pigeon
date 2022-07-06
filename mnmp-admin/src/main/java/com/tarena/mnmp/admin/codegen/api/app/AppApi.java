@@ -42,7 +42,7 @@ public interface AppApi {
     /**
      * 新增应用
      *
-     * @param appAddParam
+     * @param appSaveParam
      */
     @ApiOperationSupport(order = 1001)
     @ApiOperation(
@@ -54,12 +54,12 @@ public interface AppApi {
         value = {"/add"},
         consumes = {"application/json"}
     )
-    void addApp(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody AppSaveParam appAddParam);
+    void addApp(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody AppSaveParam appSaveParam);
 
     /**
      * 编辑应用
      *
-     * @param appEditParam
+     * @param appSaveParam
      */
     @ApiOperationSupport(order = 1002)
     @ApiOperation(
@@ -71,7 +71,7 @@ public interface AppApi {
         value = {"/edit"},
         consumes = {"application/json"}
     )
-    void editApp(@ApiParam(value = "编辑应用", required = true) @Valid @RequestBody AppSaveParam appEditParam);
+    void editApp(@ApiParam(value = "编辑应用", required = true) @Valid @RequestBody AppSaveParam appSaveParam);
 
     /**
      * 关闭应用
