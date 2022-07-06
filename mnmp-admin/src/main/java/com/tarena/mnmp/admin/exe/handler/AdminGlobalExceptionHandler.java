@@ -19,6 +19,7 @@ package com.tarena.mnmp.admin.exe.handler;
 
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
@@ -51,7 +52,7 @@ public class AdminGlobalExceptionHandler {
     public Result handleBindException(BindException e) {
         logger.error("验证请求数据时出现异常：{}", e.getClass().getName(),e);
         e.printStackTrace();
-        String message = e.getBindingResult().getFieldError().getDefaultMessage();
+        String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
         Result result = new Result(message);
         logger.debug("即将返回：{}", result);
         return result;

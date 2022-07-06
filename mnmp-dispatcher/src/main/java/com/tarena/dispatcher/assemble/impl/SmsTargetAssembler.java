@@ -33,6 +33,20 @@ public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> 
 
     @Override
     public SmsNoticeEvent assemble(NoticeDTO notice, Integer batchIndex) {
+//        List<SmsNoticeTarget> smsNoticeTargets = new ArrayList<>();
+//        String targets = notice.getTargets();
+//        String[] targetArray = targets.split(",");
+//        for (String target : targetArray) {
+//            SmsNoticeTarget noticeTarget = new SmsNoticeTarget();
+//            noticeTarget.setSignName("阿里云短信测试");
+//            noticeTarget.setTemplateCode("SMS_154950909");
+//            noticeTarget.setTemplateParam("{\"code\":\""+notice.getTemplateParam()+"\"}");
+//            noticeTarget.setTarget(target);
+//            noticeTarget.setNoticeType(this.getNoticeType());
+//            noticeTarget.setProviderCode("Ali");
+//            smsNoticeTargets.add(noticeTarget);
+//        }
+//        return smsNoticeTargets;
         SmsNoticeEvent smsNoticeEvent = new SmsNoticeEvent();
         DefaultNoticeEvent noticeEvent = new DefaultNoticeEvent(notice.getTaskId(), notice.getTriggerTime(), notice.getNoticeType(), "Ali", batchIndex, notice.getTargets().size());
         smsNoticeEvent.setNoticeEvent(noticeEvent);
@@ -41,6 +55,9 @@ public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> 
         for (String target : targets) {
             SmsTarget smsTarget = new SmsTarget();
             smsTarget.setTarget(target);
+            smsTarget.setSignName("阿里云短信测试");
+            smsTarget.setTemplateCode("SMS_154950909");
+            smsTarget.setTemplateParam("{\"code\":\""+notice.getTemplateParam()+"\"}");
             targetList.add(smsTarget);
         }
         smsNoticeEvent.setTargets(targetList);

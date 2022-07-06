@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiModel;
 import java.util.Date;
 @ApiModel(value = "供应商")
 public class Provider {
+
     private Integer id;
     private String name;
     private String noticeType;
