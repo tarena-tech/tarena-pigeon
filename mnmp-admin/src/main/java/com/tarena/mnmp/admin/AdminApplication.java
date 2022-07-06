@@ -23,8 +23,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@MapperScan(basePackages = {"com.tarena.mnmp.app","com.tarena.mnmp.provider"})
-@ComponentScan(basePackages = {"com.tarena.mnmp.admin","com.tarena.mnmp"})
+@MapperScan("com.tarena.mnmp.*.*Dao")
+@ComponentScan(basePackages = {"com.tarena.mnmp.admin", "com.tarena.mnmp"})
 public class AdminApplication {
     public static void main(String[] args) {
         SpringApplication.run(AdminApplication.class, args);
