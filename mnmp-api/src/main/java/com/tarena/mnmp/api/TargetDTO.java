@@ -23,8 +23,6 @@ public class TargetDTO {
     private String target;
     private Map<String, Object> params;
 
-
-
     public TargetDTO(String target, Map<String, Object> params) {
         this.target = target;
         this.params = params;
