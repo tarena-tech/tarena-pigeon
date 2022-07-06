@@ -18,27 +18,27 @@
 package com.tarena.dispatcher.respository;
 
 import com.tarena.dispatcher.EmailTarget;
-import com.tarena.dispatcher.NoticeEvent;
 import com.tarena.dispatcher.event.EmailNoticeEvent;
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.mnmp.enums.TargetStatus;
+import com.tarena.mnmp.protocol.NoticeEvent;
 
 public interface TargetLogRepository {
 
     TargetStatus getSmsStatus(NoticeEvent noticeEvent, String target);
 
+    Integer modifySmsStatus(NoticeEvent noticeEvent, String target, TargetStatus targetStatus);
+
+    void newSmsTargetLog(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus);
+
     TargetStatus getEmailStatus(NoticeEvent noticeEvent, String target);
 
     TargetStatus getWechatStatus(NoticeEvent noticeEvent, String target);
 
-    Integer modifySmsStatus(NoticeEvent noticeEvent, String target, TargetStatus targetStatus);
-
     Integer modifyEmailStatus(NoticeEvent noticeEvent, String target, TargetStatus targetStatus);
 
     Integer modifyWechatStatus(NoticeEvent noticeEvent, String target, TargetStatus targetStatus);
-
-    void newSmsTargetLog(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus);
 
     void newEmailTargetLog(EmailNoticeEvent event, EmailTarget target, TargetStatus targetStatus);
 }

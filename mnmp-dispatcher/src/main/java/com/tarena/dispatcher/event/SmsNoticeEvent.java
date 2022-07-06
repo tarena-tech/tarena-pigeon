@@ -18,9 +18,9 @@
 package com.tarena.dispatcher.event;
 
 import com.tarena.dispatcher.DefaultNoticeEvent;
-import com.tarena.dispatcher.NoticeEvent;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.SmsTarget;
+import com.tarena.mnmp.protocol.NoticeEvent;
 import java.util.List;
 
 public class SmsNoticeEvent implements NoticeEventGetter {

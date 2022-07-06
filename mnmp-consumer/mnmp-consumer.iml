@@ -28,6 +28,7 @@
     <orderEntry type="module" module-name="mnmp-protocol" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-pool2:2.4.3" level="project" />
     <orderEntry type="module" module-name="mnmp-dispatcher" />
+    <orderEntry type="module" module-name="mnmp-monitor" />
     <orderEntry type="module" module-name="mnmp-api" />
     <orderEntry type="library" name="Maven: com.aliyun:dysmsapi20170525:2.0.9" level="project" />
     <orderEntry type="library" name="Maven: com.aliyun:tea-util:0.2.13" level="project" />

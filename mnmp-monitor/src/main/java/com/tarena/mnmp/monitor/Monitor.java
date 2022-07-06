@@ -19,6 +19,7 @@ package com.tarena.mnmp.monitor;
 
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.enums.TargetStatus;
+import com.tarena.mnmp.protocol.NoticeEvent;
 
 public interface Monitor {
     /**
@@ -31,9 +32,11 @@ public interface Monitor {
     /**
      * 监控通知目标状态
      *
+     * @param noticeEvent
+     * @param target
      * @param status
      */
-    void noticeStatus(TargetStatus status);
+    void noticeStatus(NoticeEvent noticeEvent, String target, TargetStatus status);
 
     /**
      * 监控schedule 调度

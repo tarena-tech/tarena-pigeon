@@ -21,12 +21,19 @@ import com.tarena.dispatcher.NoticeDispatcher;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.respository.TargetLogRepository;
 import com.tarena.mnmp.commons.json.Json;
+import com.tarena.mnmp.monitor.Monitor;
 import org.springframework.beans.factory.InitializingBean;
 
 public abstract class AbstractNoticeDispatcher<T extends NoticeEventGetter> implements NoticeDispatcher<T>, InitializingBean {
     private DispatcherRegistry dispatcherRegistry = DispatcherRegistry.getInstance();
 
     protected Json jsonProvider;
+
+    protected Monitor monitor;
+
+    public void setMonitor(Monitor monitor) {
+        this.monitor = monitor;
+    }
 
     protected TargetLogRepository targetLogRepository;
 
