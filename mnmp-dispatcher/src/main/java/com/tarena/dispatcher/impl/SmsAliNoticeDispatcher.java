@@ -26,7 +26,6 @@ import com.aliyun.teaopenapi.models.Config;
 import com.aliyun.teautil.models.RuntimeOptions;
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
-import com.tarena.mnmp.commons.json.JsonFactory;
 import com.tarena.mnmp.enums.NoticeType;
 import java.util.List;
 import org.slf4j.Logger;
@@ -58,7 +57,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
         }
         List<SmsTarget> targets = notice.getTargets();
         for (SmsTarget smsTarget : targets) {
-            logger.info("sms-ali dispatcher " + JsonFactory.getProvider().toString(smsTarget));
+
             SendSmsRequest sendSmsRequest = new SendSmsRequest();
             sendSmsRequest.setPhoneNumbers(smsTarget.getTarget());
             sendSmsRequest.setTemplateCode(smsTarget.getTemplateCode());
