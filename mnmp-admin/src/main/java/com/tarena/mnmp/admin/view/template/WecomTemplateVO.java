@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.vo.template;
+package com.tarena.mnmp.admin.view.template;
 
 import io.swagger.annotations.ApiModel;
 

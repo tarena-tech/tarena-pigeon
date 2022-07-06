@@ -18,7 +18,7 @@
 package com.tarena.mnmp.admin.controller.template;
 
 import com.tarena.mnmp.admin.codegen.api.template.TemplateApi;
-import com.tarena.mnmp.admin.vo.template.WecomTemplateVO;
+import com.tarena.mnmp.admin.view.template.WecomTemplateVO;
 import com.tarena.mnmp.template.SmsTemplate;
 import com.tarena.mnmp.template.SmsTemplatePage;
 import com.tarena.mnmp.template.WecomTemplate;

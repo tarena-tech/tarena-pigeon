@@ -17,16 +17,16 @@
 
 package com.tarena.mnmp.app;
 
-import com.tarena.mnmp.enums.StatusRecord;
 import java.util.List;
 public interface AppDao {
-    Integer save(App app);
+    Integer save(AppDO appDO);
 
-    List<App> queryAllApps(StatusRecord status);
+    List<AppDO> queryAllApps();
 
-    App findById(Integer appId);
+    AppDO findById(Long appId);
 
-    void disable(Integer appId);
+    void disable(Long appId);
 
-    void enable(Integer appId);
+    void enable(Long appId);
+    Integer modify(AppDO appDO);
 }

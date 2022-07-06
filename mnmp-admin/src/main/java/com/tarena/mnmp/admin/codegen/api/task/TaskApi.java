@@ -18,7 +18,7 @@
 package com.tarena.mnmp.admin.codegen.api.task;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.tarena.mnmp.admin.vo.task.TaskVO;
+import com.tarena.mnmp.admin.view.task.TaskVO;
 import com.tarena.mnmp.task.Task;
 import com.tarena.mnmp.task.TaskPage;
 import com.tarena.mnmp.task.TaskQuery;

@@ -17,10 +17,53 @@
 
 package com.tarena.mnmp.app;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AppService {
-    public void addApp(App app) {
+    @Autowired
+    private AppDao appDao;
+
+    public void addApp(AppAddParam appAddParam) {
+        AppDO appDO = new AppDO();
+        BeanUtils.copyProperties(appAddParam, appDO);
+        appDao.save(appDO);
     }
+
+    public void editApp(AppEditParam appEditParam) {
+        AppDO appDO = new AppDO();
+        BeanUtils.copyProperties(appEditParam, appDO);
+        appDao.modify(appDO);
+    }
+
+    public void closeApp(Long id) {
+        appDao.disable(id);
+    }
+
+    public void openApp(Long id) {
+        appDao.enable(id);
+    }
+
+    public AppDTO queryAppDetail(Long id) {
+        AppDO appDO = appDao.findById(id);
+        AppDTO appDTO = new AppDTO();
+        BeanUtils.copyProperties(appDO, appDTO);
+        return appDTO;
+    }
+
+    public List<AppDTO> queryList() {
+        List<AppDO> appDOs = appDao.queryAllApps();
+        List<AppDTO> appDTOs = new ArrayList<>();
+        for (AppDO appDO : appDOs) {
+            AppDTO appDTO = new AppDTO();
+            BeanUtils.copyProperties(appDO, appDTO);
+            appDTOs.add(appDTO);
+        }
+        return appDTOs;
+    }
+
 }

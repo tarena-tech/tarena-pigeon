@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tarena.mnmp.admin.mapper.AppMapper">
 
-    <resultMap type="com.tarena.mnmp.app.App" id="AppMap">
+    <resultMap type="com.tarena.mnmp.app.AppDO" id="AppMap">
         <id column="id" property="id"/>
         <result column="code" property="code"/>
         <result column="name" property="name"/>
@@ -37,12 +37,10 @@
                                 update_time)
         values (#{code}, #{name}, #{leader}, #{teamMembers}, #{remarks}, #{status}, now(), now())
     </insert>
-    <select id="queryAllApps" parameterType="com.tarena.mnmp.enums.StatusRecord" resultMap="AppMap">
+    <select id="queryAllApps" resultMap="AppMap">
         select
         <include refid="AppAllFields"></include>
         from notice_app
-        where
-        status=#{status.status}
     </select>
 </mapper>
 
