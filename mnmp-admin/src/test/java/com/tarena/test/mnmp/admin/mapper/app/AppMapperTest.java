@@ -20,6 +20,7 @@ package com.tarena.test.mnmp.admin.mapper.app;
 import com.tarena.mnmp.admin.AdminApplication;
 import com.tarena.mnmp.admin.mapper.app.AppMapper;
 import com.tarena.mnmp.app.AppDO;
+import com.tarena.mnmp.app.AppDao;
 import com.tarena.mnmp.commons.utils.Asserts;
 import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.protocol.BusinessException;
@@ -37,7 +38,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 public class AppMapperTest {
     private static Logger logger = LoggerFactory.getLogger(AppMapperTest.class);
     @Autowired
-    private AppMapper appMapper;
+    private AppDao appMapper;
 
     @Test
     @Sql(

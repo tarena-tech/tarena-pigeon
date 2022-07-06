@@ -26,6 +26,7 @@ import com.tarena.mnmp.commons.utils.Asserts;
 import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.provider.ProviderDO;
+import com.tarena.mnmp.provider.ProviderDao;
 import com.tarena.test.mnmp.admin.mapper.app.AppMapperTest;
 import com.tarena.test.mnmp.admin.sql.app.AppSqlScript;
 import com.tarena.test.mnmp.admin.sql.provider.ProviderSqlScript;
@@ -42,7 +43,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 public class ProviderMapperTest {
     private static Logger logger = LoggerFactory.getLogger(ProviderMapperTest.class);
     @Autowired
-    private ProviderMapper providerMapper;
+    private ProviderDao providerMapper;
     /**
      * 查询
      */

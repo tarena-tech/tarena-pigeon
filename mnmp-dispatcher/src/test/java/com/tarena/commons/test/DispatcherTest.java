@@ -25,8 +25,13 @@ import com.tarena.dispatcher.impl.DispatcherRegistry;
 import com.tarena.dispatcher.impl.EmailAliNoticeDispatcher;
 import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
 import com.tarena.mnmp.api.NoticeDTO;
+import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.enums.NoticeType;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 
 public class DispatcherTest {
@@ -40,7 +45,14 @@ public class DispatcherTest {
         NoticeDTO notice = new NoticeDTO();
         notice.setNoticeType(NoticeType.SMS);
         notice.setTemplateContent("1656");
-        notice.setTargets(Arrays.asList("18510273063"));
+        List<String> strings = Arrays.asList("18510273063");
+        Map<String,Object> params=new HashMap<>();
+        List<TargetDTO> targetDTOS=new ArrayList<>();
+        for (String string : strings) {
+            TargetDTO targetDTO=new TargetDTO(string,params);
+            targetDTOS.add(targetDTO);
+        }
+        notice.setTargets(targetDTOS);
         SmsNoticeEvent targetList = TargetAssemblerRegistry.getInstance().assemble(notice, 1);
         return targetList;
     }
