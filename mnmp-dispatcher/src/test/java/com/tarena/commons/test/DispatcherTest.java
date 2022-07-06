@@ -42,9 +42,6 @@ public class DispatcherTest {
         notice.setTemplateParam("1656");
         notice.setTargets(Arrays.asList("18510273063"));
         SmsNoticeEvent targetList = TargetAssemblerRegistry.getInstance().assemble(notice, 1);
-        //String json = SerializationProvider.get().serialize(TargetAssemblerRegistry.getInstance().assemble(notice));
-        //List<SmsTarget> targetList = SerializationProvider.get().deserialize(json, SmsTarget.class);
-        //Assert.assertEquals(5, targetList.size());
         return targetList;
     }
 
