@@ -53,11 +53,12 @@ public class Result<T> implements Serializable {
         return success;
     }
 
+    public static Result fail(String errorCode, String message) {
+        return new Result(errorCode, message);
+    }
+
     public static Result fail(BusinessException business) {
-        Result result = new Result(business.getCode(), business.getMessage());
-        result.code = business.getCode();
-        result.error = business.getMsg();
-        return result;
+        return new Result(business.getCode(), business.getMessage());
     }
 
     public static Result fail() {

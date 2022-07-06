@@ -16,11 +16,13 @@
  */
 
 package com.tarena.mnmp.protocol;
+
 public class BusinessException extends Exception {
     public BusinessException(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }
+
     private String code;
     private String msg;
 
@@ -28,8 +30,8 @@ public class BusinessException extends Exception {
         return code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return this.msg;
     }
 
     @Override

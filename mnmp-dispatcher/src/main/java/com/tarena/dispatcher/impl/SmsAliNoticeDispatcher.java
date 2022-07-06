@@ -20,7 +20,6 @@ package com.tarena.dispatcher.impl;
 import com.tarena.dispatcher.NoticeEvent;
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
-import com.tarena.dispatcher.respository.TargetLogRepository;
 import com.tarena.mnmp.enums.NoticeType;
 import com.tarena.mnmp.enums.TargetStatus;
 import java.util.List;
@@ -30,20 +29,12 @@ import org.slf4j.LoggerFactory;
 public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEvent> {
     private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
 
-    private TargetLogRepository targetLogRepository;
-
     public String getNoticeType() {
         return NoticeType.SMS.name().toLowerCase() + "Ali";
     }
 
     private void doDispatcher(SmsNoticeEvent notice, SmsTarget target) {
-        try {
-            //TODO DO dispatcher
-            this.targetLogRepository.newSmsTargetLog(notice, target, TargetStatus.SENT_TO_PROVIDER);
-        } catch (Exception e) {
-            logger.error("sms sent fail notice:{} target:{}", this.jsonProvider.toString(notice), this.jsonProvider.toString(target), e);
-            this.targetLogRepository.newSmsTargetLog(notice, target, TargetStatus.SENT_FAIL);
-        }
+//todo
     }
 
     @Override
@@ -54,9 +45,14 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
             TargetStatus sentStatus = this.targetLogRepository.getSmsStatus(event, smsTarget.getTarget());
             //未发送或发送失败则重试
             if (sentStatus == null || sentStatus.equals(TargetStatus.UNSENT) || sentStatus.equals(TargetStatus.SENT_FAIL)) {
-                this.doDispatcher(notice, smsTarget);
+                try {
+                    this.doDispatcher(notice, smsTarget);
+                    this.targetLogRepository.newSmsTargetLog(notice, smsTarget, TargetStatus.SENT_TO_PROVIDER);
+                } catch (Exception e) {
+                    logger.error("sms sent fail notice:{} target:{}", this.jsonProvider.toString(notice), this.jsonProvider.toString(smsTarget), e);
+                    this.targetLogRepository.newSmsTargetLog(notice, smsTarget, TargetStatus.SENT_FAIL);
+                }
             }
-            logger.info("sms-ali dispatcher " + this.jsonProvider.toString(smsTarget));
         }
     }
 }

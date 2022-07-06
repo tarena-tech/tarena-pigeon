@@ -21,6 +21,7 @@ import com.tarena.dispatcher.assemble.impl.EmailTargetAssembler;
 import com.tarena.dispatcher.assemble.impl.SmsTargetAssembler;
 import com.tarena.dispatcher.impl.EmailAliNoticeDispatcher;
 import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
+import com.tarena.dispatcher.respository.TargetLogRepository;
 import com.tarena.mnmp.commons.json.Json;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -47,18 +48,20 @@ public class DispatcherConfiguration {
     @Bean
     @ConditionalOnMissingBean(SmsAliNoticeDispatcher.class)
     @ConditionalOnProperty(prefix = "dispatcher", value = "notice_sms_ali", havingValue = "true")
-    public SmsAliNoticeDispatcher smsAliNoticeDispatcher(Json json) {
+    public SmsAliNoticeDispatcher smsAliNoticeDispatcher(Json json, TargetLogRepository targetLogRepository) {
         SmsAliNoticeDispatcher aliNoticeDispatcher = new SmsAliNoticeDispatcher();
         aliNoticeDispatcher.setJsonProvider(json);
+        aliNoticeDispatcher.setTargetLogRepository(targetLogRepository);
         return aliNoticeDispatcher;
     }
 
     @Bean
     @ConditionalOnMissingBean(SmsAliNoticeDispatcher.class)
     @ConditionalOnProperty(prefix = "dispatcher", value = "notice_email_ali", havingValue = "true")
-    public EmailAliNoticeDispatcher emailAliNoticeDispatcher(Json json) {
+    public EmailAliNoticeDispatcher emailAliNoticeDispatcher(Json json, TargetLogRepository targetLogRepository) {
         EmailAliNoticeDispatcher emailAliNoticeDispatcher = new EmailAliNoticeDispatcher();
         emailAliNoticeDispatcher.setJsonProvider(json);
+        emailAliNoticeDispatcher.setTargetLogRepository(targetLogRepository);
         return emailAliNoticeDispatcher;
     }
 }
