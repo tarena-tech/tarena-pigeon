@@ -17,7 +17,6 @@
 
 package com.tarena.mnmp.app;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +27,13 @@ public class AppService {
     @Autowired
     private AppDao appDao;
 
-    public void addApp(AppAddParam appAddParam) {
+    public void addApp(AppSaveParam appAddParam) {
         AppDO appDO = new AppDO();
         BeanUtils.copyProperties(appAddParam, appDO);
         appDao.save(appDO);
     }
 
-    public void editApp(AppEditParam appEditParam) {
+    public void editApp(AppSaveParam appEditParam) {
         AppDO appDO = new AppDO();
         BeanUtils.copyProperties(appEditParam, appDO);
         appDao.modify(appDO);
@@ -48,22 +47,11 @@ public class AppService {
         appDao.enable(id);
     }
 
-    public AppDTO queryAppDetail(Long id) {
-        AppDO appDO = appDao.findById(id);
-        AppDTO appDTO = new AppDTO();
-        BeanUtils.copyProperties(appDO, appDTO);
-        return appDTO;
+    public AppDO queryAppDetail(Long id) {
+        return appDao.findById(id);
     }
 
-    public List<AppDTO> queryList() {
-        List<AppDO> appDOs = appDao.queryAllApps();
-        List<AppDTO> appDTOs = new ArrayList<>();
-        for (AppDO appDO : appDOs) {
-            AppDTO appDTO = new AppDTO();
-            BeanUtils.copyProperties(appDO, appDTO);
-            appDTOs.add(appDTO);
-        }
-        return appDTOs;
+    public List<AppDO> queryList() {
+        return appDao.queryAllApps();
     }
-
 }

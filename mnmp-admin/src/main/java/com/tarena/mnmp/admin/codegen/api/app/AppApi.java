@@ -18,9 +18,7 @@
 package com.tarena.mnmp.admin.codegen.api.app;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.tarena.mnmp.admin.view.app.AppView;
-import com.tarena.mnmp.app.AppAddParam;
-import com.tarena.mnmp.app.AppEditParam;
+import com.tarena.mnmp.app.AppSaveParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -56,7 +54,7 @@ public interface AppApi {
         value = {"/add"},
         consumes = {"application/json"}
     )
-    void addApp(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody AppAddParam appAddParam);
+    void addApp(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody AppSaveParam appAddParam);
 
     /**
      * 编辑应用
@@ -73,7 +71,7 @@ public interface AppApi {
         value = {"/edit"},
         consumes = {"application/json"}
     )
-    void editApp(@ApiParam(value = "编辑应用", required = true) @Valid @RequestBody AppEditParam appEditParam);
+    void editApp(@ApiParam(value = "编辑应用", required = true) @Valid @RequestBody AppSaveParam appEditParam);
 
     /**
      * 关闭应用

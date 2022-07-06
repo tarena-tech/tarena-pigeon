@@ -19,11 +19,9 @@ package com.tarena.test.mnmp.admin.mapper;
 
 import com.tarena.mnmp.admin.AdminApplication;
 import com.tarena.mnmp.admin.mapper.AppMapper;
-import com.tarena.mnmp.app.App;
 import com.tarena.mnmp.app.AppDO;
 import com.tarena.mnmp.commons.utils.Asserts;
 import com.tarena.mnmp.constant.ErrorCode;
-import com.tarena.mnmp.enums.StatusRecord;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.test.mnmp.admin.sql.AppSqlScript;
 import java.util.List;

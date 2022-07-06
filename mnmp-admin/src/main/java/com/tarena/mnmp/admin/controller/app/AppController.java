@@ -17,12 +17,9 @@
 
 package com.tarena.mnmp.admin.controller.app;
 
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.codegen.api.app.AppApi;
-import com.tarena.mnmp.admin.view.app.AppView;
-import com.tarena.mnmp.app.AppAddParam;
-import com.tarena.mnmp.app.AppDTO;
-import com.tarena.mnmp.app.AppEditParam;
+import com.tarena.mnmp.admin.codegen.api.app.AppView;
+import com.tarena.mnmp.app.AppSaveParam;
 import com.tarena.mnmp.app.AppService;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +32,7 @@ public class AppController implements AppApi {
     @Autowired
     private AppService appService;
 
-    @Override public void addApp(AppAddParam appAddParam) {
+    @Override public void addApp(AppSaveParam appAddParam) {
         appService.addApp(appAddParam);
     }
 
