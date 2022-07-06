@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProviderController implements ProviderApi {
+    
     @Override
     public void addProvider(Provider provider) {
 
