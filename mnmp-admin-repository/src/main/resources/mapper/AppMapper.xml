@@ -39,8 +39,48 @@
     </insert>
     <select id="queryAllApps" resultMap="AppMap">
         select
-        <include refid="AppAllFields"></include>
+        <include refid="AppAllFields"/>
         from notice_app
     </select>
+    <select id="findById" resultMap="AppMap">
+        select
+        <include refid="AppAllFields"/>
+        from notice_app
+        where id=#{id}
+    </select>
+    <update id="disable" >
+        update notice_app
+        set status=0
+        where id=#{id}
+    </update>
+    <update id="enable">
+        update notice_app
+        set status=1
+        where id=#{id}
+    </update>
+    <update id="modify" >
+        update notice_app
+        <set>
+            <if test="code!=null">
+                code=#{code},
+            </if>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="leader!=null">
+                leader=#{leader},
+            </if>
+            <if test="teamMembers!=null">
+                team_members=#{teamMembers},
+            </if>
+            <if test="remarks!=null">
+                remarks=#{remarks},
+            </if>
+            <if test="true">
+                update_time=now()
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 </mapper>
 

@@ -15,43 +15,30 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.app;
+package com.tarena.mnmp.provider;
 
+import io.swagger.annotations.ApiModel;
 import java.util.Date;
 
-public class AppDO {
-    private Long id;
-
-    private String code;
-
+@ApiModel(value = "供应商")
+public class ProviderDO {
+    private Integer id;
     private String name;
-
-    private String leader;
-
-    private String teamMembers;
-
+    private String noticeType;
+    private String officialWebsite;
+    private String contacts;
+    private String phone;
     private String remarks;
-
     private Integer status;
-
     private Date createTime;
-
     private Date updateTime;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public String getName() {
@@ -62,20 +49,36 @@ public class AppDO {
         this.name = name;
     }
 
-    public String getLeader() {
-        return leader;
+    public String getNoticeType() {
+        return noticeType;
     }
 
-    public void setLeader(String leader) {
-        this.leader = leader;
+    public void setNoticeType(String noticeType) {
+        this.noticeType = noticeType;
     }
 
-    public String getTeamMembers() {
-        return teamMembers;
+    public String getOfficialWebsite() {
+        return officialWebsite;
     }
 
-    public void setTeamMembers(String teamMembers) {
-        this.teamMembers = teamMembers;
+    public void setOfficialWebsite(String officialWebsite) {
+        this.officialWebsite = officialWebsite;
+    }
+
+    public String getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getRemarks() {
