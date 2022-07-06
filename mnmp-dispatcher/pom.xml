@@ -37,10 +37,11 @@
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <artifactId>mnmp-api</artifactId>
+            <artifactId>mnmp-monitor</artifactId>
             <groupId>com.tarena.mnmp</groupId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+
 
         <!--阿里云短信-->
         <dependency>

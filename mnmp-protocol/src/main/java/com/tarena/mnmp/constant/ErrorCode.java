@@ -21,4 +21,6 @@ public class ErrorCode {
 
     public static final String SYSTEM_ERROR = "00000";
 
+    public static final String SEND_ALI_SMS_ERROR = "00001";
+
 }

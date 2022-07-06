@@ -19,10 +19,17 @@ package com.tarena.dispatcher.assemble.impl;
 
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.TargetAssembler;
+import com.tarena.mnmp.commons.utils.DollarPlaceholderReplacer;
 import org.springframework.beans.factory.InitializingBean;
 
 public abstract class AbstractTargetAssembler<T extends NoticeEventGetter> implements TargetAssembler<T>, InitializingBean {
     private TargetAssemblerRegistry targetAssemblerRegistry = TargetAssemblerRegistry.getInstance();
+
+    protected DollarPlaceholderReplacer dollarPlaceholderReplacer;
+
+    public void setDollarPlaceholderReplacer(DollarPlaceholderReplacer dollarPlaceholderReplacer) {
+        this.dollarPlaceholderReplacer = dollarPlaceholderReplacer;
+    }
 
     @Override
     public void afterPropertiesSet() throws Exception {

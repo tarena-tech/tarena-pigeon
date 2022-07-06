@@ -22,10 +22,18 @@ import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
 import com.tarena.dispatcher.impl.DispatcherRegistry;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.NoticeService;
+import com.tarena.mnmp.monitor.Monitor;
 import com.tarena.mnmp.protocol.BusinessException;
 
 public class DefaultNoticeService implements NoticeService {
+    private Monitor monitor;
+
+    public void setMonitor(Monitor monitor) {
+        this.monitor = monitor;
+    }
+
     @Override public void send(NoticeDTO notice) throws BusinessException {
+        this.monitor.noticeRequest(notice);
         NoticeEventGetter noticeEvent = TargetAssemblerRegistry.getInstance().assemble(notice);
         DispatcherRegistry.getInstance().dispatcher(noticeEvent);
     }

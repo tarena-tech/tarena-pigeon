@@ -18,10 +18,10 @@
 package com.tarena.dispatcher.impl;
 
 import com.tarena.dispatcher.NoticeDispatcher;
-import com.tarena.dispatcher.NoticeEvent;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.NoticeEvent;
 import java.util.HashMap;
 import java.util.Map;
 

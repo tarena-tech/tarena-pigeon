@@ -18,13 +18,16 @@
 package com.tarena.schedule;
 
 import com.tarena.dispatcher.NoticeEventGetter;
+import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.commons.mq.MQPublisher;
 import com.tarena.mnmp.enums.CycleLevel;
 import com.tarena.mnmp.enums.SendType;
 import com.tarena.schedule.utils.NoticeTaskTrigger;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,12 +63,14 @@ public class SpringBootSchedule extends AbstractScheduler {
 
     }
 
-    @Override List<List<String>> getTargets(NoticeTaskTrigger noticeTaskTrigger) {
-        List<List<String>> targetsList = new ArrayList<>();
-        List<String> targets = new ArrayList<>();
-        targets.add("135");
-        targets.add("136");
-        targets.add("137");
+    @Override List<List<TargetDTO>> getTargets(NoticeTaskTrigger noticeTaskTrigger) {
+        List<List<TargetDTO>> targetsList = new ArrayList<>();
+        List<TargetDTO> targets = new ArrayList<>();
+        Map<String, Object> param = new HashMap<>();
+        param.put("student", "zhangsan");
+        targets.add(new TargetDTO("hello student1 ${student}", param));
+        targets.add(new TargetDTO("hello student2 ${student}", param));
+        targets.add(new TargetDTO("hello student3 ${student}", param));
         targetsList.add(targets);
         return targetsList;
     }

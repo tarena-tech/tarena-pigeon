@@ -17,6 +17,7 @@
 
 package com.tarena.dispatcher;
 
+import com.tarena.mnmp.protocol.NoticeEvent;
 import com.tarena.mnmp.enums.NoticeType;
 
 public class DefaultNoticeEvent implements NoticeEvent {

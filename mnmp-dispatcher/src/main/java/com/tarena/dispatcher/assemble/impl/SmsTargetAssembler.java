@@ -21,6 +21,7 @@ import com.tarena.dispatcher.DefaultNoticeEvent;
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.mnmp.api.NoticeDTO;
+import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.enums.NoticeType;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,33 +32,22 @@ public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> 
         return NoticeType.SMS.toString();
     }
 
+
+
     @Override
     public SmsNoticeEvent assemble(NoticeDTO notice, Integer batchIndex) {
-//        List<SmsNoticeTarget> smsNoticeTargets = new ArrayList<>();
-//        String targets = notice.getTargets();
-//        String[] targetArray = targets.split(",");
-//        for (String target : targetArray) {
-//            SmsNoticeTarget noticeTarget = new SmsNoticeTarget();
-//            noticeTarget.setSignName("阿里云短信测试");
-//            noticeTarget.setTemplateCode("SMS_154950909");
-//            noticeTarget.setTemplateParam("{\"code\":\""+notice.getTemplateParam()+"\"}");
-//            noticeTarget.setTarget(target);
-//            noticeTarget.setNoticeType(this.getNoticeType());
-//            noticeTarget.setProviderCode("Ali");
-//            smsNoticeTargets.add(noticeTarget);
-//        }
-//        return smsNoticeTargets;
         SmsNoticeEvent smsNoticeEvent = new SmsNoticeEvent();
         DefaultNoticeEvent noticeEvent = new DefaultNoticeEvent(notice.getTaskId(), notice.getTriggerTime(), notice.getNoticeType(), "Ali", batchIndex, notice.getTargets().size());
         smsNoticeEvent.setNoticeEvent(noticeEvent);
-        List<String> targets = notice.getTargets();
+        List<TargetDTO> targets = notice.getTargets();
         List<SmsTarget> targetList = new ArrayList<>();
-        for (String target : targets) {
+        for (TargetDTO targetDto : targets) {
             SmsTarget smsTarget = new SmsTarget();
-            smsTarget.setTarget(target);
-            smsTarget.setSignName("阿里云短信测试");
-            smsTarget.setTemplateCode("SMS_154950909");
-            smsTarget.setTemplateParam("{\"code\":\"" + notice.getTemplateParam() + "\"}");
+            smsTarget.setTarget(targetDto.getTarget());
+            smsTarget.setSignName(notice.getSignName());
+            smsTarget.setTemplateCode(notice.getTemplateCode());
+            smsTarget.setTemplateParam("{\"code\":\"" + notice.getTemplateContent() + "\"}");
+            smsTarget.setContent(this.dollarPlaceholderReplacer.buildContent(notice.getTemplateCode(),targetDto.getParams()));
             targetList.add(smsTarget);
         }
         smsNoticeEvent.setTargets(targetList);

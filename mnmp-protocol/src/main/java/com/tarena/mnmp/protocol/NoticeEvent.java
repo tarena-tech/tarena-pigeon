@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.dispatcher;
+package com.tarena.mnmp.protocol;
 
 import com.tarena.mnmp.enums.NoticeType;
 

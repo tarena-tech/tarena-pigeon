@@ -39,7 +39,7 @@ public class DispatcherTest {
 
         NoticeDTO notice = new NoticeDTO();
         notice.setNoticeType(NoticeType.SMS);
-        notice.setTemplateParam("1656");
+        notice.setTemplateContent("1656");
         notice.setTargets(Arrays.asList("18510273063"));
         SmsNoticeEvent targetList = TargetAssemblerRegistry.getInstance().assemble(notice, 1);
         return targetList;

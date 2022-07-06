@@ -20,13 +20,13 @@ package com.tarena.dispatcher.impl;
 import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
-import com.aliyun.dysmsapi20170525.models.SendSmsResponseBody;
-import com.aliyun.tea.TeaException;
-import com.aliyun.teaopenapi.models.Config;
-import com.aliyun.teautil.models.RuntimeOptions;
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
+import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.enums.NoticeType;
+import com.tarena.mnmp.enums.TargetStatus;
+import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.NoticeEvent;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,48 +34,55 @@ import org.slf4j.LoggerFactory;
 public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEvent> {
     private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
 
+    private static final String OK = "OK";
+
+    private String aliTemplateCode;
+
+    public void setAliTemplateCode(String aliTemplateCode) {
+        this.aliTemplateCode = aliTemplateCode;
+    }
+
+    private Client aliSmsClient;
+
+    public void setAliSmsClient(Client aliSmsClient) {
+        this.aliSmsClient = aliSmsClient;
+    }
+
     public String getNoticeType() {
         return NoticeType.SMS.name().toLowerCase() + "Ali";
     }
 
+    private String doDispatcher(SmsNoticeEvent notice, SmsTarget smsTarget) throws Exception {
+        SendSmsRequest sendReq = new SendSmsRequest()
+            .setPhoneNumbers(smsTarget.getTarget())
+            .setSignName(smsTarget.getSignName())
+            .setTemplateCode(this.aliTemplateCode)
+            .setTemplateParam("{\"content\":\"" + smsTarget.getContent() + "\"}");
+        SendSmsResponse sendResp = this.aliSmsClient.sendSms(sendReq);
+        if (!OK.equals(sendResp.body.code)) {
+            logger.error("错误信息: " + sendResp.body.message + "");
+            throw new BusinessException(ErrorCode.SEND_ALI_SMS_ERROR, sendResp.body.message);
+        }
+        return sendResp.body.bizId;
+    }
+
     @Override
     public void dispatcher(SmsNoticeEvent notice) {
-        logger.info("sms-ali dispatcher");
-        Config config = new Config()
-            // 您的 AccessKey ID
-            .setAccessKeyId("LTAI5tMCbgQhRZTpFDHTpjdS")
-            // 您的 AccessKey Secret
-            .setAccessKeySecret("u8q0vU62VSH0rsoWHyuN5EF07ScIB1");
-//        // 访问的域名
-        config.endpoint = "dysmsapi.aliyuncs.com";
-        Client client = null;
-        try {
-            client = new Client(config);
-        } catch (Exception e) {
-            logger.info("create ali cloud message client failed,due to:{}" + e.getMessage());
-            e.printStackTrace();
-        }
         List<SmsTarget> targets = notice.getTargets();
+        NoticeEvent event = notice.getNoticeEvent();
         for (SmsTarget smsTarget : targets) {
-
-            SendSmsRequest sendSmsRequest = new SendSmsRequest();
-            sendSmsRequest.setPhoneNumbers(smsTarget.getTarget());
-            sendSmsRequest.setTemplateCode(smsTarget.getTemplateCode());
-            sendSmsRequest.setTemplateParam(smsTarget.getTemplateParam());
-            sendSmsRequest.setSignName(smsTarget.getSignName());
-            RuntimeOptions runtime = new RuntimeOptions();
-            try {
-                // 复制代码运行请自行打印 API 的返回值
-                SendSmsResponse sendSmsResponse = client.sendSmsWithOptions(sendSmsRequest, runtime);
-                SendSmsResponseBody body = sendSmsResponse.getBody();
-                logger.info(body.getCode() + "/" + body.getMessage() + "/" + body.getRequestId());
-            } catch (TeaException error) {
-                // 如有需要，请打印 error
-                com.aliyun.teautil.Common.assertAsString(error.message);
-            } catch (Exception _error) {
-                TeaException error = new TeaException(_error.getMessage(), _error);
-                // 如有需要，请打印 error
-                com.aliyun.teautil.Common.assertAsString(error.message);
+            TargetStatus sentStatus = this.targetLogRepository.getSmsStatus(event, smsTarget.getTarget());
+            //未发送或发送失败则重试
+            if (sentStatus == null || sentStatus.equals(TargetStatus.UNSENT) || sentStatus.equals(TargetStatus.SENT_FAIL)) {
+                try {
+                    String bizId = this.doDispatcher(notice, smsTarget);
+                    this.targetLogRepository.newSuccessSmsTargetLog(notice, smsTarget, TargetStatus.SENT_FAIL, bizId);
+                    this.monitor.noticeStatus(event, smsTarget.getTarget(), TargetStatus.SENT_FAIL);
+                } catch (Exception e) {
+                    logger.error("sms sent fail notice:{} target:{}", this.jsonProvider.toString(notice), this.jsonProvider.toString(smsTarget), e);
+                    this.targetLogRepository.newFailSmsTargetLog(notice, smsTarget, TargetStatus.SENT_FAIL, e.getMessage());
+                    this.monitor.noticeStatus(event, smsTarget.getTarget(), TargetStatus.SENT_FAIL);
+                }
             }
         }
     }
