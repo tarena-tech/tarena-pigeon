@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tarena.mnmp.admin.mapper.provider.ProviderMapper">
+
+    <resultMap type="com.tarena.mnmp.provider.ProviderDO" id="ProviderMap">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="notice_type" property="noticeType"/>
+        <result column="official_website" property="officialWebsite"/>
+        <result column="contacts" property="contacts"/>
+        <result column="phone" property="phone"/>
+        <result column="remarks" property="remarks"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="ProviderAllFields">
+        id
+        ,name
+        ,code
+        ,notice_type
+        ,official_website
+        ,contacts
+        ,phone
+        ,remarks
+        ,status
+        ,create_time
+        ,update_time
+    </sql>
+    <insert id="save">
+        insert into notice_provider
+        ( name
+        , code
+        , notice_type
+        , official_website
+        , contacts
+        , phone
+        , remarks
+        , status
+        , create_time
+        , update_time)
+        values (
+                #{name},
+                #{code},
+                #{noticeType},
+                #{officialWebsite},
+                #{contacts},
+                #{phone},
+                #{remarks},
+                #{status},
+                now(),
+                now()
+               )
+    </insert>
+    <select id="queryAllProviders" resultMap="ProviderMap">
+        select
+        <include refid="ProviderAllFields"/>
+        from notice_provider
+    </select>
+    <select id="findById" resultMap="ProviderMap">
+        select
+        <include refid="ProviderAllFields"/>
+        from notice_provider
+        where id=#{id}
+    </select>
+    <update id="disable">
+        update notice_provider
+        set
+            status=0
+        where id=#{id}
+    </update>
+    <update id="enable">
+        update notice_provider
+        set
+            status=1
+        where id=#{id}
+    </update>
+    <update id="modify">
+        update notice_provider
+        <set>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="code!=null">
+                code=#{code},
+            </if>
+            <if test="noticeType!=null">
+                notice_type=#{noticeType},
+            </if>
+            <if test="officialWebsite!=null">
+                official_website=#{officialWebsite},
+            </if>
+            <if test="contacts!=null">
+                contacts=#{contacts},
+            </if>
+            <if test="phone!=null">
+                phone=#{phone},
+            </if>
+            <if test="remarks!=null">
+                remarks=#{remarks},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="true">
+                update_time=now()
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+</mapper>
+

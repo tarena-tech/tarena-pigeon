@@ -21,7 +21,7 @@ public class AppSqlScript {
     /**
      * 清空所有数据表的SQL脚本
      */
-    public static final String TRUNCATE_APP_TABLE = "classpath:sql/app/truncate_app_test_data.sql";
+    public static final String TRUNCATE_TABLE = "classpath:sql/app/truncate_app_test_data.sql";
 
     /**
      * 向所有数据表中插入测试数据的SQL脚本

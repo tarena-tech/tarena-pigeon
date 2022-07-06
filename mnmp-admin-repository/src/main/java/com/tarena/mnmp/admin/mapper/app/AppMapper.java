@@ -15,20 +15,9 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.provider;
+package com.tarena.mnmp.admin.mapper.app;
 
-import java.util.List;
+import com.tarena.mnmp.app.AppDao;
 
-public interface ProviderDao {
-    Integer save(ProviderDO aDo);
-
-    void disable(Long id);
-
-    Integer modify(ProviderDO aDo);
-
-    void enable(Long id);
-
-    List<ProviderDO> queryAllProviders();
-
-    ProviderDO findById(Long id);
+public interface AppMapper extends AppDao {
 }

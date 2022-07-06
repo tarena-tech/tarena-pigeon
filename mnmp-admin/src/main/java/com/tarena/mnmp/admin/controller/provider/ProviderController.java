@@ -18,40 +18,52 @@
 package com.tarena.mnmp.admin.controller.provider;
 
 import com.tarena.mnmp.admin.codegen.api.provider.ProviderApi;
-import com.tarena.mnmp.provider.Provider;
+import com.tarena.mnmp.admin.codegen.api.provider.ProviderView;
+import com.tarena.mnmp.provider.ProviderDO;
+import com.tarena.mnmp.provider.ProviderSaveParam;
+import com.tarena.mnmp.provider.ProviderService;
+import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProviderController implements ProviderApi {
-    
-    @Override
-    public void addProvider(Provider provider) {
+    @Autowired
+    private ProviderService providerService;
 
+    @Override public void addProvider(ProviderSaveParam providerSaveParam) {
+        providerService.addProvider(providerSaveParam);
     }
 
-    @Override
-    public void closeProvider(Long id) {
-
+    @Override public void closeProvider(Long id) {
+        providerService.closeProvider(id);
     }
 
-    @Override
-    public void editProvider(Provider provider) {
-
+    @Override public void editProvider(ProviderSaveParam providerSaveParam) {
+        providerService.editProvider(providerSaveParam);
     }
 
-    @Override
-    public void openProvider(Long id) {
-
+    @Override public void openProvider(Long id) {
+        providerService.openProvider(id);
     }
 
-    @Override
-    public List<Provider> queryList() {
-        return null;
+    @Override public List<ProviderView> queryList() {
+        List<ProviderDO> providerDOs = providerService.queryList();
+        List<ProviderView> providerViews = new ArrayList<>();
+        for (ProviderDO providerDO : providerDOs) {
+            ProviderView providerView = new ProviderView();
+            BeanUtils.copyProperties(providerDO, providerView);
+            providerViews.add(providerView);
+        }
+        return providerViews;
     }
 
-    @Override
-    public Provider queryProviderDetail(Long id) {
-        return null;
+    @Override public ProviderView queryProviderDetail(Long id) {
+        ProviderDO providerDO = providerService.queryProviderDetail(id);
+        ProviderView providerView = new ProviderView();
+        BeanUtils.copyProperties(providerDO, providerView);
+        return providerView;
     }
 }

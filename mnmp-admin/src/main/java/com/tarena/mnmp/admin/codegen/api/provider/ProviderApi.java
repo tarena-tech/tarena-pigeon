@@ -18,7 +18,6 @@
 package com.tarena.mnmp.admin.codegen.api.provider;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.tarena.mnmp.provider.Provider;
 import com.tarena.mnmp.provider.ProviderSaveParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,7 +42,7 @@ public interface ProviderApi {
     /**
      * 新增服务商
      *
-     * @param provider
+     * @param providerSaveParam
      */
     @ApiOperationSupport(order = 2001)
     @ApiOperation(
@@ -102,7 +101,7 @@ public interface ProviderApi {
         value = {"/queryList"},
         produces = {"application/json"}
     )
-    List<Provider> queryList();
+    List<ProviderView> queryList();
 
     @ApiOperationSupport(order = 2006)
     @ApiOperation(
@@ -115,6 +114,6 @@ public interface ProviderApi {
         value = {"/queryDetail"},
         produces = {"application/json"}
     )
-    Provider queryProviderDetail(
+    ProviderView queryProviderDetail(
         @NotNull @ApiParam(value = "服务商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 }
