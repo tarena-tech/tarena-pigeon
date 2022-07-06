@@ -33,7 +33,7 @@ public class DollarPlaceholderReplacerTest {
         param.put("time", "2021");
         param.put("courseName", "语言");
 
-        String content = dollarPlaceholderReplacer.buildContent("亲爱的${teacherName}老师，您在${time}的${courseName}已到达上课时间，请主讲老师尽快从授课端进入教室~", json.toString(param));
+        String content = dollarPlaceholderReplacer.buildContent("亲爱的${teacherName}老师，您在${time}的${courseName}已到达上课时间，请主讲老师尽快从授课端进入教室~", param);
         System.out.println(content);
     }
 }
