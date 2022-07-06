@@ -19,6 +19,7 @@ package com.tarena.mnmp.admin.controller.app;
 
 import com.tarena.mnmp.admin.codegen.api.app.AppApi;
 import com.tarena.mnmp.admin.codegen.api.app.AppView;
+import com.tarena.mnmp.app.AppDO;
 import com.tarena.mnmp.app.AppSaveParam;
 import com.tarena.mnmp.app.AppService;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class AppController implements AppApi {
         appService.addApp(appAddParam);
     }
 
-    @Override public void editApp(AppEditParam appEditParam) {
+    @Override public void editApp(AppSaveParam appEditParam) {
         appService.editApp(appEditParam);
     }
 
@@ -49,19 +50,18 @@ public class AppController implements AppApi {
     }
 
     @Override public AppView queryAppDetail(Long id) {
-        AppDTO appDTO = appService.queryAppDetail(id);
+        AppDO appDO = appService.queryAppDetail(id);
         AppView appVO = new AppView();
-        BeanUtils.copyProperties(appDTO, appVO);
-
+        BeanUtils.copyProperties(appDO, appVO);
         return appVO;
     }
 
     @Override public List<AppView> queryList() {
-        List<AppDTO> appDTOs = appService.queryList();
+        List<AppDO> appDTOs = appService.queryList();
         List<AppView> appVOs = new ArrayList<>();
-        for (AppDTO appDTO : appDTOs) {
+        for (AppDO appDO : appDTOs) {
             AppView appVO = new AppView();
-            BeanUtils.copyProperties(appDTO, appVO);
+            BeanUtils.copyProperties(appDO, appVO);
             appVOs.add(appVO);
         }
         return appVOs;
