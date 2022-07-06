@@ -20,6 +20,7 @@ package com.tarena.schedule;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
 import com.tarena.mnmp.api.NoticeDTO;
+import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.enums.NoticeType;
 import com.tarena.schedule.utils.NoticeTaskTrigger;
 import java.util.ArrayList;
@@ -41,13 +42,13 @@ public abstract class AbstractScheduler {
 
     abstract void updateNextTriggerTime(NoticeTaskTrigger noticeTaskTrigger);
 
-    abstract List<List<String>> getTargets(NoticeTaskTrigger noticeTaskTrigger);
+    abstract List<List<TargetDTO>> getTargets(NoticeTaskTrigger noticeTaskTrigger);
 
     abstract <T extends NoticeEventGetter> void send(T noticeEvent) throws Throwable;
 
-    private List<NoticeDTO> assemble(NoticeTaskTrigger noticeTaskTrigger, List<List<String>> targets) {
+    private List<NoticeDTO> assemble(NoticeTaskTrigger noticeTaskTrigger, List<List<TargetDTO>> targets) {
         List<NoticeDTO> notices = new ArrayList<>();
-        for (List<String> targetList : targets) {
+        for (List<TargetDTO> targetList : targets) {
             NoticeDTO notice = new NoticeDTO();
             notice.setNoticeType(NoticeType.SMS);
             notice.setTargets(targetList);
@@ -62,7 +63,7 @@ public abstract class AbstractScheduler {
             try {
                 List<NoticeTaskTrigger> triggers = this.queryTriggers();
                 for (NoticeTaskTrigger trigger : triggers) {
-                    List<List<String>> targetsList = this.getTargets(trigger);
+                    List<List<TargetDTO>> targetsList = this.getTargets(trigger);
                     List<NoticeDTO> notices = this.assemble(trigger, targetsList);
                     int batchIndex = 0;
                     for (NoticeDTO notice : notices) {

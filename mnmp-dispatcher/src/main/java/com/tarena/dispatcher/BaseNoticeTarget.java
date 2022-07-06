@@ -33,7 +33,7 @@ public class BaseNoticeTarget implements Serializable {
     private Integer sendType;
     private Long recordId;
     private Long sendTimeAt;
-    private String templateContent;
+    private String content;
 
     public String getAppCode() {
         return appCode;
@@ -139,11 +139,11 @@ public class BaseNoticeTarget implements Serializable {
         this.sendTimeAt = sendTimeAt;
     }
 
-    public String getTemplateContent() {
-        return templateContent;
+    public String getContent() {
+        return content;
     }
 
-    public void setTemplateContent(String templateContent) {
-        this.templateContent = templateContent;
+    public void setContent(String content) {
+        this.content = content;
     }
 }

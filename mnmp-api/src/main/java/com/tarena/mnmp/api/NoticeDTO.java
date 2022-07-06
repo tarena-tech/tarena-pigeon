@@ -28,8 +28,8 @@ public class NoticeDTO {
     private NoticeType noticeType;
     private String appCode;
     private String templateCode;
-    private String templateParam;
-    private List<String> targets;
+    private String templateContent;
+    private List<TargetDTO> targets;
     private String signCode;
     private String signName;
 
@@ -65,19 +65,19 @@ public class NoticeDTO {
         this.templateCode = templateCode;
     }
 
-    public String getTemplateParam() {
-        return templateParam;
+    public String getTemplateContent() {
+        return templateContent;
     }
 
-    public void setTemplateParam(String templateParam) {
-        this.templateParam = templateParam;
+    public void setTemplateContent(String templateContent) {
+        this.templateContent = templateContent;
     }
 
-    public List<String> getTargets() {
+    public List<TargetDTO> getTargets() {
         return targets;
     }
 
-    public void setTargets(List<String> targets) {
+    public void setTargets(List<TargetDTO> targets) {
         this.targets = targets;
     }
 

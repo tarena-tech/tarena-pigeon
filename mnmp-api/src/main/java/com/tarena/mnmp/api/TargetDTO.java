@@ -15,13 +15,26 @@
  * limitations under the License.
  */
 
-package com.tarena.dispatcher.respository;
+package com.tarena.mnmp.api;
 
-import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.enums.TaskStatus;
+import java.util.Map;
 
-public interface NoticeTaskRepository {
-    Integer modifyTaskStatus(Integer taskId, TaskStatus taskStatus, String reason);
+public class TargetDTO {
+    private String target;
+    private Map<String, Object> params;
 
-    void saveTask(NoticeDTO notice);
+
+
+    public TargetDTO(String target, Map<String, Object> params) {
+        this.target = target;
+        this.params = params;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public Map<String, Object> getParams() {
+        return params;
+    }
 }
