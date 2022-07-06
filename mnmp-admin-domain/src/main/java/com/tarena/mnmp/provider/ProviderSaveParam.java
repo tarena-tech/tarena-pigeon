@@ -32,23 +32,79 @@ public class ProviderSaveParam {
     @ApiModelProperty(
         value = "供应商名称",
         name = "name",
-        required = true,
-        example = "1"
+        required = false,
+        example = "ali"
     )
     private String name;
     @ApiModelProperty(
+        value = "供应商编码",
+        name = "code",
+        required = false,
+        example = "SMS_20220111"
+    )
+    private String code;
+    @ApiModelProperty(
         value = "业务类型",
-        name = "id",
+        name = "noticeType",
         required = false,
         example = "1"
     )
-    private String noticeType;
+    private Integer noticeType;
+    @ApiModelProperty(
+        value = "官方网站",
+        name = "officialWebsite",
+        required = false
+    )
     private String officialWebsite;
+    @ApiModelProperty(
+        value = "联系人",
+        name = "contacts",
+        required = false,
+        example = "张三"
+    )
     private String contacts;
+    @ApiModelProperty(
+        value = "联系电话",
+        name = "phone",
+        required = false,
+        example = "18800099000"
+    )
     private String phone;
+    @ApiModelProperty(
+        value = "简介",
+        name = "remarks",
+        required = false,
+        example = "ali"
+    )
     private String remarks;
+    @ApiModelProperty(
+        value = "审核状态",
+        name = "status",
+        required = false,
+        example = "1"
+    )
     private Integer status;
+    @ApiModelProperty(
+        value = "创建时间",
+        name = "createTime",
+        required = false
+    )
     private Date createTime;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @ApiModelProperty(
+        value = "更新时间",
+        name = "updateTime",
+        required = false
+    )
+
     private Date updateTime;
 
     public Integer getId() {
@@ -67,11 +123,11 @@ public class ProviderSaveParam {
         this.name = name;
     }
 
-    public String getNoticeType() {
+    public Integer getNoticeType() {
         return noticeType;
     }
 
-    public void setNoticeType(String noticeType) {
+    public void setNoticeType(Integer noticeType) {
         this.noticeType = noticeType;
     }
 

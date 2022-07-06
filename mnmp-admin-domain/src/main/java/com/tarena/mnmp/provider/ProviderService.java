@@ -17,5 +17,41 @@
 
 package com.tarena.mnmp.provider;
 
+import java.util.List;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class ProviderService {
+    @Autowired
+    private ProviderDao providerDao;
+
+    public void addProvider(ProviderSaveParam providerSaveParam) {
+        ProviderDO providerDO = new ProviderDO();
+        BeanUtils.copyProperties(providerSaveParam, providerDO);
+        providerDao.save(providerDO);
+    }
+
+    public void closeProvider(Long id) {
+        providerDao.disable(id);
+    }
+
+    public void editProvider(ProviderSaveParam providerSaveParam) {
+        ProviderDO providerDO = new ProviderDO();
+        BeanUtils.copyProperties(providerSaveParam, providerDO);
+        providerDao.modify(providerDO);
+    }
+
+    public void openProvider(Long id) {
+        providerDao.enable(id);
+    }
+
+    public List<ProviderDO> queryList() {
+        return providerDao.queryAllProviders();
+    }
+
+    public ProviderDO queryProviderDetail(Long id) {
+        return providerDao.findById(id);
+    }
 }

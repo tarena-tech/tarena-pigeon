@@ -17,14 +17,13 @@
 
 package com.tarena.mnmp.provider;
 
-import io.swagger.annotations.ApiModel;
 import java.util.Date;
 
-@ApiModel(value = "供应商")
 public class ProviderDO {
-    private Integer id;
+    private Long id;
+    private String code;
     private String name;
-    private String noticeType;
+    private Integer noticeType;
     private String officialWebsite;
     private String contacts;
     private String phone;
@@ -33,11 +32,19 @@ public class ProviderDO {
     private Date createTime;
     private Date updateTime;
 
-    public Integer getId() {
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -49,11 +56,11 @@ public class ProviderDO {
         this.name = name;
     }
 
-    public String getNoticeType() {
+    public Integer getNoticeType() {
         return noticeType;
     }
 
-    public void setNoticeType(String noticeType) {
+    public void setNoticeType(Integer noticeType) {
         this.noticeType = noticeType;
     }
 

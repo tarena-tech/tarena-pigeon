@@ -8,27 +8,24 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
+ * Unless required by providerlicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
 
-package com.tarena.mnmp.provider;
+package com.tarena.test.mnmp.admin.sql.provider;
 
-import java.util.List;
+public class ProviderSqlScript {
+    /**
+     * 清空所有数据表的SQL脚本
+     */
+    public static final String TRUNCATE_TABLE = "classpath:sql/provider/truncate_provider_test_data.sql";
 
-public interface ProviderDao {
-    Integer save(ProviderDO aDo);
+    /**
+     * 向所有数据表中插入测试数据的SQL脚本
+     */
+    public static final String INSERT_TEST_DATA = "classpath:sql/provider/insert_provider_test_data.sql";
 
-    void disable(Long id);
-
-    Integer modify(ProviderDO aDo);
-
-    void enable(Long id);
-
-    List<ProviderDO> queryAllProviders();
-
-    ProviderDO findById(Long id);
 }

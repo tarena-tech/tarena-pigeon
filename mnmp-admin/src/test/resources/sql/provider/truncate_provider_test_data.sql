@@ -15,20 +15,4 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.provider;
-
-import java.util.List;
-
-public interface ProviderDao {
-    Integer save(ProviderDO aDo);
-
-    void disable(Long id);
-
-    Integer modify(ProviderDO aDo);
-
-    void enable(Long id);
-
-    List<ProviderDO> queryAllProviders();
-
-    ProviderDO findById(Long id);
-}
+truncate notice_provider;

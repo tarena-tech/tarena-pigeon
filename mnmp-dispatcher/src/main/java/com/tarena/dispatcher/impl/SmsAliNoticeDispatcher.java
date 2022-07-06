@@ -48,11 +48,11 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
             .setAccessKeySecret("u8q0vU62VSH0rsoWHyuN5EF07ScIB1");
 //        // 访问的域名
         config.endpoint = "dysmsapi.aliyuncs.com";
-        Client client=null;
+        Client client = null;
         try {
             client = new Client(config);
         } catch (Exception e) {
-            logger.info("create ali cloud message client failed,due to:{}"+e.getMessage());
+            logger.info("create ali cloud message client failed,due to:{}" + e.getMessage());
             e.printStackTrace();
         }
         List<SmsTarget> targets = notice.getTargets();
@@ -68,7 +68,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
                 // 复制代码运行请自行打印 API 的返回值
                 SendSmsResponse sendSmsResponse = client.sendSmsWithOptions(sendSmsRequest, runtime);
                 SendSmsResponseBody body = sendSmsResponse.getBody();
-                logger.info(body.getCode()+"/"+body.getMessage()+"/"+body.getRequestId());
+                logger.info(body.getCode() + "/" + body.getMessage() + "/" + body.getRequestId());
             } catch (TeaException error) {
                 // 如有需要，请打印 error
                 com.aliyun.teautil.Common.assertAsString(error.message);

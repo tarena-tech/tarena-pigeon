@@ -57,7 +57,7 @@ public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> 
             smsTarget.setTarget(target);
             smsTarget.setSignName("阿里云短信测试");
             smsTarget.setTemplateCode("SMS_154950909");
-            smsTarget.setTemplateParam("{\"code\":\""+notice.getTemplateParam()+"\"}");
+            smsTarget.setTemplateParam("{\"code\":\"" + notice.getTemplateParam() + "\"}");
             targetList.add(smsTarget);
         }
         smsNoticeEvent.setTargets(targetList);

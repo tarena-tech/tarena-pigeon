@@ -18,7 +18,7 @@
 package com.tarena.test.mnmp.admin.mapper.app;
 
 import com.tarena.mnmp.admin.AdminApplication;
-import com.tarena.mnmp.admin.mapper.AppMapper;
+import com.tarena.mnmp.admin.mapper.app.AppMapper;
 import com.tarena.mnmp.app.AppDO;
 import com.tarena.mnmp.commons.utils.Asserts;
 import com.tarena.mnmp.constant.ErrorCode;
@@ -41,11 +41,11 @@ public class AppMapperTest {
 
     @Test
     @Sql(
-        scripts = {AppSqlScript.TRUNCATE_APP_TABLE, AppSqlScript.INSERT_TEST_DATA},
+        scripts = {AppSqlScript.TRUNCATE_TABLE, AppSqlScript.INSERT_TEST_DATA},
         config = @SqlConfig(encoding = "UTF-8")
     )
     @Sql(
-        scripts = {AppSqlScript.TRUNCATE_APP_TABLE},
+        scripts = {AppSqlScript.TRUNCATE_TABLE},
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
     public void queryAllAppsTest() throws BusinessException {
@@ -57,11 +57,11 @@ public class AppMapperTest {
 
     @Test
     @Sql(
-        scripts = {AppSqlScript.TRUNCATE_APP_TABLE},
+        scripts = {AppSqlScript.TRUNCATE_TABLE},
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
     )
     @Sql(
-        scripts = {AppSqlScript.TRUNCATE_APP_TABLE},
+        scripts = {AppSqlScript.TRUNCATE_TABLE},
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
     public void saveAppTest() throws BusinessException {
@@ -79,11 +79,11 @@ public class AppMapperTest {
 
     @Test
     @Sql(
-        scripts = {AppSqlScript.TRUNCATE_APP_TABLE, AppSqlScript.INSERT_TEST_DATA},
+        scripts = {AppSqlScript.TRUNCATE_TABLE, AppSqlScript.INSERT_TEST_DATA},
         config = @SqlConfig(encoding = "UTF-8")
     )
     @Sql(
-        scripts = {AppSqlScript.TRUNCATE_APP_TABLE},
+        scripts = {AppSqlScript.TRUNCATE_TABLE},
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
     public void openAndCloseTest() throws BusinessException {
@@ -105,11 +105,11 @@ public class AppMapperTest {
 
     @Test
     @Sql(
-        scripts = {AppSqlScript.TRUNCATE_APP_TABLE, AppSqlScript.INSERT_TEST_DATA},
+        scripts = {AppSqlScript.TRUNCATE_TABLE, AppSqlScript.INSERT_TEST_DATA},
         config = @SqlConfig(encoding = "UTF-8")
     )
     @Sql(
-        scripts = {AppSqlScript.TRUNCATE_APP_TABLE},
+        scripts = {AppSqlScript.TRUNCATE_TABLE},
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
     public void modifyAppTest() throws BusinessException {
