@@ -20,6 +20,7 @@ package com.tarena.test.mnmp.admin.mapper;
 import com.tarena.mnmp.admin.AdminApplication;
 import com.tarena.mnmp.admin.mapper.AppMapper;
 import com.tarena.mnmp.app.App;
+import com.tarena.mnmp.app.AppDO;
 import com.tarena.mnmp.commons.utils.Asserts;
 import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.enums.StatusRecord;
@@ -46,8 +47,8 @@ public class AppMapperTest {
         config=@SqlConfig(encoding = "UTF-8")
     )
     public void queryAllAppsTest() {
-        List<App> apps =
-            appMapper.queryAllApps(StatusRecord.ENABLE);
+        List<AppDO> apps =
+            appMapper.queryAllApps();
         logger.info("查询app总数:{}",apps.size());
     }
     @Test
@@ -60,14 +61,14 @@ public class AppMapperTest {
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
     public void saveAppTest() throws BusinessException {
-        App app=new App();
-        app.setTeamMembers("wang,li,zhang,zhao");
-        app.setStatus(1);
-        app.setRemarks("测试程序");
-        app.setName("达内测试");
-        app.setLeader("ceshiwang");
-        app.setCode("CODE_TEST_001");
-        Integer result = appMapper.save(app);
+        AppDO appDO=new AppDO();
+        appDO.setTeamMembers("wang,li,zhang,zhao");
+        appDO.setStatus(1);
+        appDO.setRemarks("测试程序");
+        appDO.setName("达内测试");
+        appDO.setLeader("ceshiwang");
+        appDO.setCode("CODE_TEST_001");
+        Integer result = appMapper.save(appDO);
         Asserts.isTrue(result==0,new BusinessException(ErrorCode.SYSTEM_ERROR,"新增app应用测试持久层mapper失败"));
         logger.info("新增app应用测试持久层mapper成功");
     }

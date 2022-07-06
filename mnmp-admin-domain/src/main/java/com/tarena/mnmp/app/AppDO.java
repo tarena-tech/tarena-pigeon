@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.tarena.mnmp.app;
+
 import java.util.Date;
 
-
-public class App {
-
+public class AppDO {
     private Integer id;
 
     private String code;

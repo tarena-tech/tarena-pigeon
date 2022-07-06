@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.vo.task;
+package com.tarena.mnmp.admin.view.task;
 
 import com.tarena.mnmp.task.NoticeTargetData;
 import io.swagger.annotations.ApiModel;

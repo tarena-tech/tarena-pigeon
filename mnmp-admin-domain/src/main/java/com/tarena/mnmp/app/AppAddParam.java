@@ -15,36 +15,34 @@
  * limitations under the License.
  */
 package com.tarena.mnmp.app;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
 
+@ApiModel(value = "应用新增入参")
+public class AppAddParam {
 
-public class App {
-
-    private Integer id;
-
+    @ApiModelProperty(value = "应用编码", name = "code", required = true)
+    @NotNull(message = "请填写应用编码")
     private String code;
-
+    @ApiModelProperty(value = "应用名称", name = "name", required = true)
+    @NotNull(message = "请填写应用名称")
     private String name;
-
+    @ApiModelProperty(value = "应用负责人", name = "leader", required = true)
+    @NotNull(message = "请填写应用负责人")
     private String leader;
-
+    @ApiModelProperty(value = "应用组员", name = "teamMembers", required = false)
     private String teamMembers;
-
+    @ApiModelProperty(value = "应用简介", name = "remarks", required = true)
     private String remarks;
-
+    @ApiModelProperty(value = "应用状态", name = "status", required = false)
     private Integer status;
-
+    @ApiModelProperty(value = "应用创建时间", name = "createTime", required = false)
     private Date createTime;
-
+    @ApiModelProperty(value = "应用更新时间", name = "updateTime", required = false)
     private Date updateTime;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getCode() {
         return code;

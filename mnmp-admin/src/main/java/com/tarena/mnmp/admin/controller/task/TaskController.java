@@ -18,7 +18,7 @@
 package com.tarena.mnmp.admin.controller.task;
 
 import com.tarena.mnmp.admin.codegen.api.task.TaskApi;
-import com.tarena.mnmp.admin.vo.task.TaskVO;
+import com.tarena.mnmp.admin.view.task.TaskVO;
 import com.tarena.mnmp.task.Task;
 import com.tarena.mnmp.task.TaskPage;
 import com.tarena.mnmp.task.TaskQuery;

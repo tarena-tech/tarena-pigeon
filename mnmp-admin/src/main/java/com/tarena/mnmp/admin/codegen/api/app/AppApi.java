@@ -18,7 +18,9 @@
 package com.tarena.mnmp.admin.codegen.api.app;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.tarena.mnmp.app.App;
+import com.tarena.mnmp.admin.view.app.AppView;
+import com.tarena.mnmp.app.AppAddParam;
+import com.tarena.mnmp.app.AppEditParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -42,7 +44,7 @@ public interface AppApi {
     /**
      * 新增应用
      *
-     * @param app
+     * @param appAddParam
      */
     @ApiOperationSupport(order = 1001)
     @ApiOperation(
@@ -54,12 +56,12 @@ public interface AppApi {
         value = {"/add"},
         consumes = {"application/json"}
     )
-    void addApp(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody App app);
+    void addApp(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody AppAddParam appAddParam);
 
     /**
      * 编辑应用
      *
-     * @param app
+     * @param appEditParam
      */
     @ApiOperationSupport(order = 1002)
     @ApiOperation(
@@ -71,7 +73,7 @@ public interface AppApi {
         value = {"/edit"},
         consumes = {"application/json"}
     )
-    void editApp(@ApiParam(value = "编辑应用", required = true) @Valid @RequestBody App app);
+    void editApp(@ApiParam(value = "编辑应用", required = true) @Valid @RequestBody AppEditParam appEditParam);
 
     /**
      * 关闭应用
@@ -113,13 +115,13 @@ public interface AppApi {
         value = "查看应用详情",
         nickname = "queryAppDetail",
         notes = "",
-        response = App.class
+        response = AppView.class
     )
     @GetMapping(
         value = {"/queryDetail"},
         produces = {"application/json"}
     )
-    App queryAppDetail(
+    AppView queryAppDetail(
         @NotNull @ApiParam(value = "应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
     /**
@@ -130,29 +132,12 @@ public interface AppApi {
         value = "查询应用管理列表",
         nickname = "queryList",
         notes = "",
-        response = App.class,
+        response = AppView.class,
         responseContainer = "List"
     )
     @GetMapping(
         value = {"/queryList"},
         produces = {"application/json"}
     )
-    List<App> queryList();
-
-    /**
-     * 根据用户查询相应的应用管理列表
-     */
-    /*@ApiOperationSupport(order = 1007)
-    @ApiOperation(
-        value = "根据用户查询相应的应用管理列表",
-        nickname = "queryListByUser",
-        notes = "",
-        response = App.class,
-        responseContainer = "List"
-    )
-    @GetMapping(
-        value = {"/queryListByUser"},
-        produces = {"application/json"}
-    )
-    List<App> queryListByUser();*/
+    List<AppView> queryList();
 }

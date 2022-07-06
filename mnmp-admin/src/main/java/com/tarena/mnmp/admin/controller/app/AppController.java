@@ -17,48 +17,56 @@
 
 package com.tarena.mnmp.admin.controller.app;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.codegen.api.app.AppApi;
-import com.tarena.mnmp.app.App;
+import com.tarena.mnmp.admin.view.app.AppView;
+import com.tarena.mnmp.app.AppAddParam;
+import com.tarena.mnmp.app.AppDTO;
+import com.tarena.mnmp.app.AppEditParam;
 import com.tarena.mnmp.app.AppService;
+import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AppController implements AppApi {
+    @Autowired
     private AppService appService;
 
-    @Override
-    public void addApp(App app) {
-        appService.addApp(app);
+    @Override public void addApp(AppAddParam appAddParam) {
+        appService.addApp(appAddParam);
     }
 
-    @Override
-    public void editApp(App app) {
-
+    @Override public void editApp(AppEditParam appEditParam) {
+        appService.editApp(appEditParam);
     }
 
-    @Override
-    public void closeApp(Long id) {
-
+    @Override public void closeApp(Long id) {
+        appService.closeApp(id);
     }
 
-    @Override
-    public void openApp(Long id) {
-
+    @Override public void openApp(Long id) {
+        appService.openApp(id);
     }
 
-    @Override
-    public App queryAppDetail(Long id) {
-        return null;
+    @Override public AppView queryAppDetail(Long id) {
+        AppDTO appDTO = appService.queryAppDetail(id);
+        AppView appVO = new AppView();
+        BeanUtils.copyProperties(appDTO, appVO);
+
+        return appVO;
     }
 
-    @Override
-    public List<App> queryList() {
-        return null;
+    @Override public List<AppView> queryList() {
+        List<AppDTO> appDTOs = appService.queryList();
+        List<AppView> appVOs = new ArrayList<>();
+        for (AppDTO appDTO : appDTOs) {
+            AppView appVO = new AppView();
+            BeanUtils.copyProperties(appDTO, appVO);
+            appVOs.add(appVO);
+        }
+        return appVOs;
     }
-
-    /*@Override
-    public List<App> queryListByUser() {
-        return null;
-    }*/
 }
