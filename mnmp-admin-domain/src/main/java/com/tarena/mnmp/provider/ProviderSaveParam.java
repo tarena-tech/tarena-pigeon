@@ -17,5 +17,117 @@
 
 package com.tarena.mnmp.provider;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
+@ApiModel(value = "供应商新增入参")
 public class ProviderSaveParam {
+    @ApiModelProperty(
+        value = "主键",
+        name = "id",
+        required = false,
+        example = "1"
+    )
+    private Integer id;
+    @ApiModelProperty(
+        value = "供应商名称",
+        name = "name",
+        required = true,
+        example = "1"
+    )
+    private String name;
+    @ApiModelProperty(
+        value = "业务类型",
+        name = "id",
+        required = false,
+        example = "1"
+    )
+    private String noticeType;
+    private String officialWebsite;
+    private String contacts;
+    private String phone;
+    private String remarks;
+    private Integer status;
+    private Date createTime;
+    private Date updateTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNoticeType() {
+        return noticeType;
+    }
+
+    public void setNoticeType(String noticeType) {
+        this.noticeType = noticeType;
+    }
+
+    public String getOfficialWebsite() {
+        return officialWebsite;
+    }
+
+    public void setOfficialWebsite(String officialWebsite) {
+        this.officialWebsite = officialWebsite;
+    }
+
+    public String getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 }

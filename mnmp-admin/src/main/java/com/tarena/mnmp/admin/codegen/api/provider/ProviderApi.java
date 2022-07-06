@@ -19,6 +19,7 @@ package com.tarena.mnmp.admin.codegen.api.provider;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.provider.Provider;
+import com.tarena.mnmp.provider.ProviderSaveParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -54,7 +55,8 @@ public interface ProviderApi {
         value = {"/add"},
         consumes = {"application/json"}
     )
-    void addProvider(@ApiParam(value = "新增服务商", required = true) @Valid @RequestBody Provider provider);
+    void addProvider(
+        @ApiParam(value = "新增服务商", required = true) @Valid @RequestBody ProviderSaveParam providerSaveParam);
 
     @ApiOperationSupport(order = 2002)
     @ApiOperation(
@@ -76,7 +78,7 @@ public interface ProviderApi {
         value = {"/edit"},
         consumes = {"application/json"}
     )
-    void editProvider(@ApiParam(value = "修改服务商信息", required = true) @Valid @RequestBody Provider provider);
+    void editProvider(@ApiParam(value = "修改服务商信息", required = true) @Valid @RequestBody ProviderSaveParam providerSaveParam);
 
     @ApiOperationSupport(order = 2004)
     @ApiOperation(
@@ -93,7 +95,7 @@ public interface ProviderApi {
         value = "查询服务商列表",
         nickname = "queryList",
         notes = "",
-        response = Provider.class,
+        response = ProviderView.class,
         responseContainer = "List"
     )
     @GetMapping(
@@ -107,7 +109,7 @@ public interface ProviderApi {
         value = "查看服务商详情",
         nickname = "queryProviderDetail",
         notes = "",
-        response = Provider.class
+        response = ProviderView.class
     )
     @GetMapping(
         value = {"/queryDetail"},
