@@ -19,10 +19,24 @@ package com.tarena.dispatcher.impl;
 
 import com.tarena.dispatcher.NoticeDispatcher;
 import com.tarena.dispatcher.NoticeEventGetter;
+import com.tarena.dispatcher.respository.TargetLogRepository;
+import com.tarena.mnmp.commons.json.Json;
 import org.springframework.beans.factory.InitializingBean;
 
 public abstract class AbstractNoticeDispatcher<T extends NoticeEventGetter> implements NoticeDispatcher<T>, InitializingBean {
     private DispatcherRegistry dispatcherRegistry = DispatcherRegistry.getInstance();
+
+    protected Json jsonProvider;
+
+    protected TargetLogRepository targetLogRepository;
+
+    public void setJsonProvider(Json jsonProvider) {
+        this.jsonProvider = jsonProvider;
+    }
+
+    public void setTargetLogRepository(TargetLogRepository targetLogRepository) {
+        this.targetLogRepository = targetLogRepository;
+    }
 
     @Override
     public void afterPropertiesSet() throws Exception {

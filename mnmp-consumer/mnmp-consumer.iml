@@ -27,7 +27,6 @@
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.12" level="project" />
     <orderEntry type="module" module-name="mnmp-protocol" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-pool2:2.4.3" level="project" />
-    <orderEntry type="library" name="Maven: com.alibaba.fastjson2:fastjson2:2.0.8" level="project" />
     <orderEntry type="module" module-name="mnmp-dispatcher" />
     <orderEntry type="module" module-name="mnmp-api" />
     <orderEntry type="library" name="Maven: com.aliyun:dysmsapi20170525:2.0.9" level="project" />
@@ -122,6 +121,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-jcl:5.3.9" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:5.3.9" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.xmlunit:xmlunit-core:2.8.2" level="project" />
+    <orderEntry type="module" module-name="mnmp-autoconfigurations" />
     <orderEntry type="module" module-name="mnmp-rocketmq" />
     <orderEntry type="library" name="Maven: org.apache.rocketmq:rocketmq-client:4.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.rocketmq:rocketmq-common:4.4.0" level="project" />
@@ -131,5 +131,6 @@
     <orderEntry type="library" name="Maven: org.apache.rocketmq:rocketmq-logging:4.4.0" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-tcnative-boringssl-static:1.1.33.Fork26" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.4" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba.fastjson2:fastjson2:2.0.8" level="project" />
   </component>
 </module>

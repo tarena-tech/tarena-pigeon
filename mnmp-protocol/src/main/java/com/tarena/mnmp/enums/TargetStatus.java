@@ -18,7 +18,9 @@
 package com.tarena.mnmp.enums;
 
 public enum TargetStatus {
+    UNSENT,
     SENT_TO_PROVIDER,
     SENT_TO_TARGET,
-    SENT_FAIL
+    SENT_FAIL,
+    SENT_TARGET_FAIL
 }

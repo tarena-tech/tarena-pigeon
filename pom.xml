@@ -23,5 +23,6 @@
         <module>mnmp-admin-repository</module>
         <module>mnmp-protocol</module>
         <module>mnmp-rocketmq</module>
+        <module>mnmp-autoconfigurations</module>
     </modules>
 </project>

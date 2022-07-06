@@ -50,7 +50,7 @@ public class AdminGlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public Result handleBindException(BindException e) {
-        logger.debug("验证请求数据时出现异常：{}", e.getClass().getName());
+        logger.error("验证请求数据时出现异常：{}", e.getClass().getName(),e);
         e.printStackTrace();
         String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
         Result result = new Result(message);

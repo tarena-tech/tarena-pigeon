@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.commons.json;
+package com.tarena.mnmp.extentions.autoconfigurations;
 
 import com.alibaba.fastjson2.JSON;
+import com.tarena.mnmp.commons.json.Json;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;

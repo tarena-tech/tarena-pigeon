@@ -17,25 +17,28 @@
 
 package com.tarena.dispatcher.respository;
 
+import com.tarena.dispatcher.EmailTarget;
+import com.tarena.dispatcher.NoticeEvent;
 import com.tarena.dispatcher.event.EmailNoticeEvent;
 import com.tarena.dispatcher.SmsTarget;
+import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.mnmp.enums.TargetStatus;
 
 public interface TargetLogRepository {
 
-    TargetStatus getSmsStatus(Integer taskId, String target);
+    TargetStatus getSmsStatus(NoticeEvent noticeEvent, String target);
 
-    TargetStatus getEmailStatus(Integer taskId, String target);
+    TargetStatus getEmailStatus(NoticeEvent noticeEvent, String target);
 
-    TargetStatus getWechatStatus(Integer taskId, String target);
+    TargetStatus getWechatStatus(NoticeEvent noticeEvent, String target);
 
-    Integer modifySmsStatus(Integer taskId, String target, TargetStatus targetStatus);
+    Integer modifySmsStatus(NoticeEvent noticeEvent, String target, TargetStatus targetStatus);
 
-    Integer modifyEmailStatus(Integer taskId, String target, TargetStatus targetStatus);
+    Integer modifyEmailStatus(NoticeEvent noticeEvent, String target, TargetStatus targetStatus);
 
-    Integer modifyWechatStatus(Integer taskId, String target, TargetStatus targetStatus);
+    Integer modifyWechatStatus(NoticeEvent noticeEvent, String target, TargetStatus targetStatus);
 
-    void saveSmsTargetLog(Integer taskId, SmsTarget smsNoticeTarget);
+    void newSmsTargetLog(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus);
 
-    void saveEmailTargetLog(Integer taskId, EmailNoticeEvent emailNoticeTarget);
+    void newEmailTargetLog(EmailNoticeEvent event, EmailTarget target, TargetStatus targetStatus);
 }
