@@ -78,7 +78,7 @@ public class NoticeTaskTrigger implements Serializable {
 
     public boolean isFinish(Date nextTriggerTime) {
         //下次执行时间大于任务结束时间则任务结束
-        return this.triggerEndTime != null && this.nextTriggerTime.after(this.triggerEndTime);
+        return nextTriggerTime != null && nextTriggerTime.after(this.triggerEndTime);
     }
 
     public Long getTaskId() {
