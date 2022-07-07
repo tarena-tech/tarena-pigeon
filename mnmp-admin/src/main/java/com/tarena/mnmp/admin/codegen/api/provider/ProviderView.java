@@ -66,9 +66,16 @@ public class ProviderView {
     private String remarks;
     @ApiModelProperty(
         value = "审核状态",
-        name = "status"
+        name = "auditStatus",
+        notes = "0审核中,1通过,-1未通过"
     )
-    private Integer status;
+    private Integer auditStatus;
+    @ApiModelProperty(
+        value = "开启停用",
+        name = "enabled",
+        notes = "0停用,1开启"
+    )
+    private Integer enabled;
     @ApiModelProperty(
         value = "创建时间",
         name = "createTime"
@@ -144,12 +151,20 @@ public class ProviderView {
         this.remarks = remarks;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getAuditStatus() {
+        return auditStatus;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
+    }
+
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
     }
 
     public Date getCreateTime() {

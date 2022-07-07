@@ -28,9 +28,26 @@ public class ProviderDO {
     private String contacts;
     private String phone;
     private String remarks;
-    private Integer status;
+    private Integer auditStatus;
+    private Integer enabled;
     private Date createTime;
     private Date updateTime;
+
+    public Integer getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
+    }
+
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
+    }
 
     public String getCode() {
         return code;
@@ -96,13 +113,6 @@ public class ProviderDO {
         this.remarks = remarks;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 
     public Date getCreateTime() {
         return createTime;

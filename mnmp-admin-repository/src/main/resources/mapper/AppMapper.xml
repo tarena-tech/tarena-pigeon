@@ -9,7 +9,8 @@
         <result column="leader" property="code"/>
         <result column="team_members" property="teamMembers"/>
         <result column="remarks" property="remarks"/>
-        <result column="status" property="status"/>
+        <result column="enabled" property="enabled"/>
+        <result column="audit_status" property="auditStatus"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
@@ -21,7 +22,8 @@
         leader,
         team_members,
         remarks,
-        status,
+        audit_status,
+        enabled,
         create_time,
         update_time
     </sql>
@@ -31,10 +33,11 @@
                                 leader,
                                 team_members,
                                 remarks,
-                                status,
+                                audit_status,
+                                enabled,
                                 create_time,
                                 update_time)
-        values (#{code}, #{name}, #{leader}, #{teamMembers}, #{remarks}, #{status}, now(), now())
+        values (#{code}, #{name}, #{leader}, #{teamMembers}, #{remarks}, #{auditStatus},#{enabled}, now(), now())
     </insert>
     <select id="queryAllApps" resultMap="AppMap">
         select
@@ -49,12 +52,12 @@
     </select>
     <update id="disable" >
         update notice_app
-        set status=0
+        set enabled=0
         where id=#{id}
     </update>
     <update id="enable">
         update notice_app
-        set status=1
+        set enabled=1
         where id=#{id}
     </update>
     <update id="modify" >

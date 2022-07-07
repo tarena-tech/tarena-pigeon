@@ -18,7 +18,6 @@
 package com.tarena.test.mnmp.admin.mapper.app;
 
 import com.tarena.mnmp.admin.AdminApplication;
-import com.tarena.mnmp.admin.mapper.app.AppMapper;
 import com.tarena.mnmp.app.AppDO;
 import com.tarena.mnmp.app.AppDao;
 import com.tarena.mnmp.commons.utils.Asserts;
@@ -68,7 +67,8 @@ public class AppMapperTest {
     public void saveAppTest() throws BusinessException {
         AppDO appDO = new AppDO();
         appDO.setTeamMembers("wang,li,zhang,zhao");
-        appDO.setStatus(1);
+        appDO.setAuditStatus(0);
+        appDO.setEnabled(0);
         appDO.setRemarks("测试程序");
         appDO.setName("达内测试");
         appDO.setLeader("ceshiwang");
@@ -91,16 +91,16 @@ public class AppMapperTest {
         AppDO appDO1 = appMapper.findById(1L);
         AppDO appDO2 = appMapper.findById(2L);
         Asserts.isTrue(appDO1 == null || appDO2 == null, new BusinessException(ErrorCode.SYSTEM_ERROR, "id查询app应用测试持久层mapper失败"));
-        Integer status1 = appDO1.getStatus();
-        Integer status2 = appDO2.getStatus();
-        Asserts.isTrue(status1 == 1 || status2 == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "测试app数据有误,请检查前两条status属性是否是0,1"));
+        Integer enabled1 = appDO1.getEnabled();
+        Integer enabled2 = appDO2.getEnabled();
+        Asserts.isTrue(enabled1 == 1 || enabled2 == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "测试app数据有误,请检查前两条status属性是否是0,1"));
         appMapper.enable(appDO1.getId());
         appMapper.disable(appDO2.getId());
         appDO1 = appMapper.findById(1L);
         appDO2 = appMapper.findById(2L);
-        status1 = appDO1.getStatus();
-        status2 = appDO2.getStatus();
-        Asserts.isTrue(status1 == 0 || status2 == 1, new BusinessException(ErrorCode.SYSTEM_ERROR, "开启关闭app应用测试持久层mapper失败"));
+        enabled1 = appDO1.getEnabled();
+        enabled2 = appDO2.getEnabled();
+        Asserts.isTrue(enabled1 == 0 || enabled2 == 1, new BusinessException(ErrorCode.SYSTEM_ERROR, "开启关闭app应用测试持久层mapper失败"));
         logger.info("开启关闭app应用测试持久层mapper成功");
     }
 
@@ -117,7 +117,8 @@ public class AppMapperTest {
         AppDO appDO = new AppDO();
         appDO.setId(1L);
         appDO.setTeamMembers("wang,li,zhang,zhao");
-        appDO.setStatus(1);
+        appDO.setEnabled(0);
+        appDO.setAuditStatus(0);
         appDO.setRemarks("测试程序");
         appDO.setName("达内测试");
         appDO.setLeader("ceshiwang");

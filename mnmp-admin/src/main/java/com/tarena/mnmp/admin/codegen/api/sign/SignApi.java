@@ -18,7 +18,8 @@
 package com.tarena.mnmp.admin.codegen.api.sign;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.tarena.mnmp.sign.Sign;
+import com.tarena.mnmp.sign.SignSaveParam;
+import com.tarena.mnmp.sign.SignQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -51,7 +52,7 @@ public interface SignApi {
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    String addSign(@ApiParam(value = "新增签名", required = true) @Valid @RequestBody Sign sign);
+    void addSign(@ApiParam(value = "新增签名", required = true) @Valid @RequestBody SignSaveParam signParam);
 
     @ApiOperationSupport(order = 3002)
     @ApiOperation(
@@ -75,7 +76,7 @@ public interface SignApi {
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    String editSign(@ApiParam(value = "编辑签名", required = true) @Valid @RequestBody Sign sign);
+    void editSign(@ApiParam(value = "编辑签名", required = true) @Valid @RequestBody SignSaveParam signParam);
 
     @ApiOperationSupport(order = 3004)
     @ApiOperation(
@@ -92,13 +93,13 @@ public interface SignApi {
         value = "查看签名详情",
         nickname = "querySignDetail",
         notes = "",
-        response = Sign.class
+        response = SignView.class
     )
     @GetMapping(
         value = {"/queryDetail"},
         produces = {"application/json"}
     )
-    Sign querySignDetail(
+    SignView querySignDetail(
         @NotNull @ApiParam(value = "签名id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
     @ApiOperationSupport(order = 3006)
@@ -106,15 +107,12 @@ public interface SignApi {
         value = "查询签名列表",
         nickname = "querySignList",
         notes = "",
-        response = Sign.class,
+        response = SignView.class,
         responseContainer = "List"
     )
     @GetMapping(
         value = {"/queryList"},
         produces = {"application/json"}
     )
-    List<Sign> querySignList(
-        @ApiParam("应用code") @Valid @RequestParam(value = "appCode", required = false) String appCode,
-        @ApiParam("状态 0:未开启 1:开启") @Valid @RequestParam(value = "status", required = false) Integer status,
-        @ApiParam("签名名称") @Valid @RequestParam(value = "name", required = false) String name);
+    List<SignView> querySignList(@ApiParam(value = "签名查询入参", required = true) @Valid @RequestBody SignQuery signQuery);
 }

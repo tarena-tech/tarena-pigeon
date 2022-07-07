@@ -11,7 +11,7 @@
         <result column="contacts" property="contacts"/>
         <result column="phone" property="phone"/>
         <result column="remarks" property="remarks"/>
-        <result column="status" property="status"/>
+        <result column="audit_status" property="auditStatus"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
@@ -25,7 +25,8 @@
         ,contacts
         ,phone
         ,remarks
-        ,status
+        ,audit_status
+        ,enabled
         ,create_time
         ,update_time
     </sql>
@@ -38,7 +39,8 @@
         , contacts
         , phone
         , remarks
-        , status
+        , audit_status
+        , enabled
         , create_time
         , update_time)
         values (
@@ -49,7 +51,8 @@
                 #{contacts},
                 #{phone},
                 #{remarks},
-                #{status},
+                #{auditStatus},
+                #{enabled},
                 now(),
                 now()
                )
@@ -68,13 +71,13 @@
     <update id="disable">
         update notice_provider
         set
-            status=0
+            enabled=0
         where id=#{id}
     </update>
     <update id="enable">
         update notice_provider
         set
-            status=1
+            enabled=1
         where id=#{id}
     </update>
     <update id="modify">
@@ -100,9 +103,6 @@
             </if>
             <if test="remarks!=null">
                 remarks=#{remarks},
-            </if>
-            <if test="status!=null">
-                status=#{status},
             </if>
             <if test="true">
                 update_time=now()

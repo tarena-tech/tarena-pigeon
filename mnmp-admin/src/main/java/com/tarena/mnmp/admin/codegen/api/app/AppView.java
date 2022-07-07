@@ -48,9 +48,15 @@ public class AppView {
         name = "remarks")
     private String remarks;
     @ApiModelProperty(
-        value = "应用状态",
-        name = "status")
-    private Integer status;
+        value = "应用审核状态",
+        name = "auditStatus"
+    )
+    private Integer auditStatus;
+    @ApiModelProperty(
+        value = "应用开启停用",
+        name = "auditStatus"
+    )
+    private Integer enabled;
     @ApiModelProperty(
         value = "应用创建时间",
         name = "createTime")
@@ -100,12 +106,28 @@ public class AppView {
         this.remarks = remarks;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getId() {
+        return id;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
+    }
+
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
     }
 
     public Date getCreateTime() {

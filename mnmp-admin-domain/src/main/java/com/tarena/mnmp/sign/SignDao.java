@@ -15,9 +15,20 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.mapper.provider;
+package com.tarena.mnmp.sign;
 
-import com.tarena.mnmp.provider.ProviderDao;
+import java.util.List;
 
-public interface ProviderMapper extends ProviderDao {
+public interface SignDao {
+    Integer save(SignDO aDo);
+
+    void disable(Long id);
+
+    Integer modify(SignDO aDo);
+
+    void enable(Long id);
+
+    SignDO findById(Long id);
+
+    List<SignDO> querySigns(SignQuery query);
 }

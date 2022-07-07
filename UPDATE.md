@@ -4,7 +4,10 @@
 - app业务逻辑
 - provider业务逻辑
 - sign增删查改
-#更新汇总
+- provider保留status和enable字段业务审核和停用开启
+# 更新汇总
+## 2022年7月7日16:48
+- [修改] app保留auditStatus和enabled业务字段,审核,停用开启改造完成
 ## 2022年7月6日14:50
 - [修改] 恢复ali短信发送dispatcher代码
 - [修改] 修改admin持久层扫描*Dao接口

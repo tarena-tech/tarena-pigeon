@@ -18,33 +18,53 @@
 package com.tarena.mnmp.admin.controller.sign;
 
 import com.tarena.mnmp.admin.codegen.api.sign.SignApi;
-import com.tarena.mnmp.sign.Sign;
+import com.tarena.mnmp.admin.codegen.api.sign.SignView;
+import com.tarena.mnmp.sign.SignDO;
+import com.tarena.mnmp.sign.SignQuery;
+import com.tarena.mnmp.sign.SignSaveParam;
+import com.tarena.mnmp.sign.SignService;
+import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SignController implements SignApi {
-    @Override public String addSign(Sign sign) {
-        return null;
+    @Autowired
+    private SignService signService;
+
+    @Override public void addSign(SignSaveParam signSaveParam) {
+        signService.addSign(signSaveParam);
     }
 
     @Override public void closeSign(Long id) {
-
+        signService.closeSign(id);
     }
 
-    @Override public String editSign(Sign sign) {
-        return null;
+    @Override public void editSign(SignSaveParam signSaveParam) {
+        signService.editSign(signSaveParam);
     }
 
     @Override public void openSign(Long id) {
-
+        signService.openSign(id);
     }
 
-    @Override public Sign querySignDetail(Long id) {
-        return null;
+    @Override public SignView querySignDetail(Long id) {
+        SignDO signDO = signService.querySignDetail(id);
+        SignView signView = new SignView();
+        BeanUtils.copyProperties(signDO, signView);
+        return signView;
     }
 
-    @Override public List<Sign> querySignList(String appCode, Integer status, String name) {
-        return null;
+    @Override public List<SignView> querySignList(SignQuery signQuery) {
+        List<SignDO> signDOs = signService.querySignList(signQuery);
+        List<SignView> signViews = new ArrayList<>();
+        for (SignDO signDO : signDOs) {
+            SignView signView = new SignView();
+            BeanUtils.copyProperties(signDO,signView);
+            signViews.add(signView);
+        }
+        return signViews;
     }
 }

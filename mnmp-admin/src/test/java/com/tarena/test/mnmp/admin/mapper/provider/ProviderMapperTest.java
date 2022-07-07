@@ -20,15 +20,11 @@ package com.tarena.test.mnmp.admin.mapper.provider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tarena.mnmp.admin.AdminApplication;
-import com.tarena.mnmp.admin.mapper.provider.ProviderMapper;
-
 import com.tarena.mnmp.commons.utils.Asserts;
 import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.provider.ProviderDO;
 import com.tarena.mnmp.provider.ProviderDao;
-import com.tarena.test.mnmp.admin.mapper.app.AppMapperTest;
-import com.tarena.test.mnmp.admin.sql.app.AppSqlScript;
 import com.tarena.test.mnmp.admin.sql.provider.ProviderSqlScript;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -74,7 +70,8 @@ public class ProviderMapperTest {
     public void saveProviderTest() throws BusinessException {
         ProviderDO providerDO = new ProviderDO();
         providerDO.setCode("SMS_20220707");
-        providerDO.setStatus(1);
+        providerDO.setAuditStatus(0);
+        providerDO.setEnabled(0);
         providerDO.setRemarks("测试供应商");
         providerDO.setName("ALI");
         providerDO.setContacts("zhangsan");
@@ -99,16 +96,16 @@ public class ProviderMapperTest {
         ProviderDO providerDO1 =providerMapper.findById(1L);
         ProviderDO providerDO2 =providerMapper.findById(2L);
         Asserts.isTrue(providerDO1 == null ||providerDO2 == null, new BusinessException(ErrorCode.SYSTEM_ERROR, "id查询provider供应商测试持久层mapper失败"));
-        Integer status1 =providerDO1.getStatus();
-        Integer status2 =providerDO2.getStatus();
-        Asserts.isTrue(status1 == 1 || status2 == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "测试provider数据有误,请检查前两条status属性是否是0,1"));
+        Integer enabled1 =providerDO1.getEnabled();
+        Integer enabled2 =providerDO2.getEnabled();
+        Asserts.isTrue(enabled1 == 1 || enabled2 == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "测试provider数据有误,请检查前两条status属性是否是0,1"));
         providerMapper.enable(providerDO1.getId());
         providerMapper.disable(providerDO2.getId());
         providerDO1 =providerMapper.findById(1L);
         providerDO2 =providerMapper.findById(2L);
-        status1 =providerDO1.getStatus();
-        status2 =providerDO2.getStatus();
-        Asserts.isTrue(status1 == 0 || status2 == 1, new BusinessException(ErrorCode.SYSTEM_ERROR, "开启关闭app应用测试持久层mapper失败"));
+        enabled1 =providerDO1.getEnabled();
+        enabled2 =providerDO2.getEnabled();
+        Asserts.isTrue(enabled1 == 0 || enabled2 == 1, new BusinessException(ErrorCode.SYSTEM_ERROR, "开启关闭app应用测试持久层mapper失败"));
         logger.info("开启关闭provider供应商测试持久层mapper成功");
     }
 
@@ -127,7 +124,8 @@ public class ProviderMapperTest {
         ProviderDO updateProviderDO = new ProviderDO();
         updateProviderDO.setId(1L);
         updateProviderDO.setCode("SMS_20220707");
-        updateProviderDO.setStatus(1);
+        updateProviderDO.setAuditStatus(0);
+        updateProviderDO.setEnabled(0);
         updateProviderDO.setRemarks("测试供应商");
         updateProviderDO.setName("ALI");
         updateProviderDO.setContacts("zhangsan");

@@ -15,5 +15,5 @@
  * limitations under the License.
  */
 
-INSERT  INTO `notice_provider`(`id`,`name`,`code`,`notice_type`,`official_website`,`contacts`,`phone`,`remarks`,`status`,`create_time`,`update_time`) VALUES (1,'阿里云','ali',1,'','张三','13676789890','阿里云服务',0,'2021-08-23 00:00:00',NOW());
-INSERT  INTO `notice_provider`(`id`,`name`,`code`,`notice_type`,`official_website`,`contacts`,`phone`,`remarks`,`status`,`create_time`,`update_time`) VALUES (2,'华为云','hw',1,NULL,'李四','255676','华为云服务',1,'2021-08-23 00:00:00',NOW());
+INSERT  INTO `notice_provider`(`id`,`name`,`code`,`notice_type`,`official_website`,`contacts`,`phone`,`remarks`,`audit_status`,`enabled`,`create_time`,`update_time`) VALUES (1,'阿里云','ali',1,'','张三','13676789890','阿里云服务',0,0,'2021-08-23 00:00:00',NOW());
+INSERT  INTO `notice_provider`(`id`,`name`,`code`,`notice_type`,`official_website`,`contacts`,`phone`,`remarks`,`audit_status`,`enabled`,`create_time`,`update_time`) VALUES (2,'华为云','hw',1,NULL,'李四','255676','华为云服务',1,1,'2021-08-23 00:00:00',NOW());

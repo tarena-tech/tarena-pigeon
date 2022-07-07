@@ -70,7 +70,8 @@ public class AppServiceTest {
     public void saveAppTest() throws BusinessException {
         AppSaveParam appSaveParam = new AppSaveParam();
         appSaveParam.setTeamMembers("wang,li,zhang,zhao");
-        appSaveParam.setStatus(1);
+        appSaveParam.setAuditStatus(0);
+        appSaveParam.setEnabled(0);
         appSaveParam.setRemarks("测试程序");
         appSaveParam.setName("达内测试");
         appSaveParam.setLeader("ceshiwang");
@@ -96,16 +97,16 @@ public class AppServiceTest {
         AppDO appDO1 = appService.queryAppDetail(1L);
         AppDO appDO2 = appService.queryAppDetail(2L);
         Asserts.isTrue(appDO1 == null || appDO2 == null, new BusinessException(ErrorCode.SYSTEM_ERROR, "id查询app应用测试持久层mapper失败"));
-        Integer status1 = appDO1.getStatus();
-        Integer status2 = appDO2.getStatus();
-        Asserts.isTrue(status1 == 1 || status2 == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "测试app数据有误,请检查前两条status属性是否是0,1"));
+        Integer enabled1 = appDO1.getEnabled();
+        Integer enabled2 = appDO2.getEnabled();
+        Asserts.isTrue(enabled1 == 1 || enabled2 == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "测试app数据有误,请检查前两条status属性是否是0,1"));
         appService.openApp(appDO1.getId());
         appService.closeApp(appDO2.getId());
         appDO1 = appService.queryAppDetail(1L);
         appDO2 = appService.queryAppDetail(2L);
-        status1 = appDO1.getStatus();
-        status2 = appDO2.getStatus();
-        Asserts.isTrue(status1 == 0 || status2 == 1, new BusinessException(ErrorCode.SYSTEM_ERROR, "开启关闭app应用测试持久层mapper失败"));
+        enabled1 = appDO1.getEnabled();
+        enabled2 = appDO2.getEnabled();
+        Asserts.isTrue(enabled1 == 0 || enabled2 == 1, new BusinessException(ErrorCode.SYSTEM_ERROR, "开启关闭app应用测试持久层mapper失败"));
         logger.info("开启关闭app应用测试业务层service成功");
     }
 
@@ -122,7 +123,8 @@ public class AppServiceTest {
         AppSaveParam appSaveParam = new AppSaveParam();
         appSaveParam.setId(1L);
         appSaveParam.setTeamMembers("wang,li,zhang,zhao");
-        appSaveParam.setStatus(1);
+        appSaveParam.setAuditStatus(0);
+        appSaveParam.setEnabled(0);
         appSaveParam.setRemarks("测试程序");
         appSaveParam.setName("达内测试");
         appSaveParam.setLeader("ceshiwang");

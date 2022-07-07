@@ -70,11 +70,17 @@ public class AppSaveParam {
     @NotNull(message = "请填写应用简介")
     private String remarks;
     @ApiModelProperty(
-        value = "应用状态",
-        name = "status",
+        value = "应用审核状态",
+        name = "auditStatus",
         required = false
     )
-    private Integer status;
+    private Integer auditStatus;
+    @ApiModelProperty(
+        value = "应用开启停用",
+        name = "enabled",
+        required = false
+    )
+    private Integer enabled;
     @ApiModelProperty(
         value = "应用创建时间",
         name = "createTime",
@@ -136,12 +142,20 @@ public class AppSaveParam {
         this.remarks = remarks;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getAuditStatus() {
+        return auditStatus;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
+    }
+
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
     }
 
     public Date getCreateTime() {

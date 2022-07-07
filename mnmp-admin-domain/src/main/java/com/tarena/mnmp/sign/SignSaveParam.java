@@ -18,27 +18,76 @@
 package com.tarena.mnmp.sign;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
 
-@ApiModel(value = "签名")
-public class Sign {
-
+@ApiModel(value = "签名新增入参")
+public class SignSaveParam {
+    @ApiModelProperty(
+        value = "主键",
+        name = "id",
+        required = false
+    )
     private Long id;
 
+    @ApiModelProperty(
+        value = "签名名称",
+        name = "name",
+        required = false
+    )
     private String name;
-
+    @ApiModelProperty(
+        value = "应用名称",
+        name = "appName",
+        required = false
+    )
     private String appName;
-
+    @ApiModelProperty(
+        value = "应用主键",
+        name = "appId",
+        required = false
+    )
     private Long appId;
-
+    @ApiModelProperty(
+        value = "应用编码",
+        name = "appCode",
+        required = false
+    )
     private String appCode;
-
+    @ApiModelProperty(
+        value = "简介",
+        name = "remark",
+        required = false,
+        example = "测试签名简介"
+    )
     private String remark;
-
+    @ApiModelProperty(
+        value = "创建者",
+        name = "creator",
+        required = false
+    )
     private String creator;
+    @ApiModelProperty(
+        value = "状态",
+        name = "status",
+        required = false
+    )
+    private Integer status;
+    @ApiModelProperty(
+        value = "创建时间",
+        name = "createTime",
+        required = false
+    )
+    private Date createTime;
 
-    private Integer enabled;
+    @ApiModelProperty(
+        value = "修改时间",
+        name = "createTime",
+        required = false
+    )
+    private Date updateTime;
 
-    private Long createTime;
+
 
     public Long getId() {
         return id;
@@ -96,19 +145,27 @@ public class Sign {
         this.creator = creator;
     }
 
-    public Integer getEnabled() {
-        return enabled;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public Long getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Long createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

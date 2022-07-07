@@ -15,84 +15,30 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.app;
+package com.tarena.mnmp.sign;
 
 import java.util.Date;
 
-public class AppDO {
-    private Long id;
+public class SignDO {
 
-    private String code;
+    private Long id;
 
     private String name;
 
-    private String leader;
+    private String appName;
 
-    private String teamMembers;
+    private Long appId;
 
-    private String remarks;
+    private String appCode;
 
+    private String remark;
 
+    private String creator;
 
     private Integer enabled;
 
-    private Integer auditStatus;
-
     private Date createTime;
-
     private Date updateTime;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLeader() {
-        return leader;
-    }
-
-    public void setLeader(String leader) {
-        this.leader = leader;
-    }
-
-    public String getTeamMembers() {
-        return teamMembers;
-    }
-
-    public void setTeamMembers(String teamMembers) {
-        this.teamMembers = teamMembers;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
@@ -105,6 +51,63 @@ public class AppDO {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+
+    public Long getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Long appId) {
+        this.appId = appId;
+    }
+
+    public String getAppCode() {
+        return appCode;
+    }
+
+    public void setAppCode(String appCode) {
+        this.appCode = appCode;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
     public Integer getEnabled() {
         return enabled;
     }
@@ -113,11 +116,5 @@ public class AppDO {
         this.enabled = enabled;
     }
 
-    public Integer getAuditStatus() {
-        return auditStatus;
-    }
 
-    public void setAuditStatus(Integer auditStatus) {
-        this.auditStatus = auditStatus;
-    }
 }
