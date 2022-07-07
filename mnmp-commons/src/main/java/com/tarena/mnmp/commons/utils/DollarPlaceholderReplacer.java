@@ -30,7 +30,13 @@ public class DollarPlaceholderReplacer {
         this.jsonProvider = jsonProvider;
     }
 
-    public String buildContent(String templateContent, Map<String,Object> params) {
+    public String buildContent(String templateContent, Map<String, Object> params) {
+        if (templateContent == null) {
+            return null;
+        }
+        if (params == null) {
+            return templateContent;
+        }
         Pattern p = Pattern.compile("(\\$\\{)([\\w]+)(\\})");
         Matcher m = p.matcher(templateContent);
         StringBuffer sb = new StringBuffer();

@@ -23,6 +23,7 @@ import com.tarena.dispatcher.impl.EmailAliNoticeDispatcher;
 import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
 import com.tarena.dispatcher.respository.TargetLogRepository;
 import com.tarena.mnmp.commons.json.Json;
+import com.tarena.mnmp.commons.utils.DollarPlaceholderReplacer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -32,17 +33,27 @@ import org.springframework.context.annotation.Configuration;
 public class DispatcherConfiguration {
 
     @Bean
+    @ConditionalOnMissingBean(DollarPlaceholderReplacer.class)
+    public DollarPlaceholderReplacer dollarPlaceholderReplacer() {
+        return new DollarPlaceholderReplacer();
+    }
+
+    @Bean
     @ConditionalOnMissingBean(EmailTargetAssembler.class)
     @ConditionalOnProperty(prefix = "dispatcher", value = "assembler_email", havingValue = "true")
-    public EmailTargetAssembler emailTargetAssembler() {
-        return new EmailTargetAssembler();
+    public EmailTargetAssembler emailTargetAssembler(DollarPlaceholderReplacer dollarPlaceholderReplacer) {
+        EmailTargetAssembler emailTargetAssembler = new EmailTargetAssembler();
+        emailTargetAssembler.setDollarPlaceholderReplacer(dollarPlaceholderReplacer);
+        return emailTargetAssembler;
     }
 
     @Bean
     @ConditionalOnMissingBean(SmsTargetAssembler.class)
     @ConditionalOnProperty(prefix = "dispatcher", value = "assembler_sms", havingValue = "true")
-    public SmsTargetAssembler smsTargetAssembler() {
-        return new SmsTargetAssembler();
+    public SmsTargetAssembler smsTargetAssembler(DollarPlaceholderReplacer dollarPlaceholderReplacer) {
+        SmsTargetAssembler smsTargetAssembler = new SmsTargetAssembler();
+        smsTargetAssembler.setDollarPlaceholderReplacer(dollarPlaceholderReplacer);
+        return smsTargetAssembler;
     }
 
     @Bean

@@ -52,7 +52,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
         return NoticeType.SMS.name().toLowerCase() + "Ali";
     }
 
-    private String doDispatcher(SmsNoticeEvent notice, SmsTarget smsTarget) throws Exception {
+    protected String doDispatcher(SmsNoticeEvent notice, SmsTarget smsTarget) throws Exception {
         SendSmsRequest sendReq = new SendSmsRequest()
             .setPhoneNumbers(smsTarget.getTarget())
             .setSignName(smsTarget.getSignName())
@@ -77,7 +77,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
                 try {
                     String bizId = this.doDispatcher(notice, smsTarget);
                     this.targetLogRepository.newSuccessSmsTargetLog(notice, smsTarget, TargetStatus.SENT_FAIL, bizId);
-                    this.monitor.noticeStatus(event, smsTarget.getTarget(), TargetStatus.SENT_FAIL);
+                    this.monitor.noticeStatus(event, smsTarget.getTarget(), TargetStatus.SENT_TO_PROVIDER);
                 } catch (Exception e) {
                     logger.error("sms sent fail notice:{} target:{}", this.jsonProvider.toString(notice), this.jsonProvider.toString(smsTarget), e);
                     this.targetLogRepository.newFailSmsTargetLog(notice, smsTarget, TargetStatus.SENT_FAIL, e.getMessage());
