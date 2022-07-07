@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.admin.exe.handler;
 
+import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
 import java.util.Objects;
@@ -53,9 +54,9 @@ public class AdminGlobalExceptionHandler {
         logger.error("验证请求数据时出现异常：{}", e.getClass().getName(),e);
         e.printStackTrace();
         String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
-        Result result = new Result(message);
-        logger.debug("即将返回：{}", result);
-        return result;
+        BusinessException businessException = new BusinessException(ErrorCode.SYSTEM_ERROR,message);
+
+        return Result.fail(businessException);
     }
 
     /**

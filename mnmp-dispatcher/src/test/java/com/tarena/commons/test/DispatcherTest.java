@@ -44,9 +44,12 @@ public class DispatcherTest {
 
         NoticeDTO notice = new NoticeDTO();
         notice.setNoticeType(NoticeType.SMS);
+        notice.setSignName("阿里云测试短信");
+        notice.setTemplateCode("SMS_154950909");
         notice.setTemplateContent("1656");
         List<String> strings = Arrays.asList("18510273063");
         Map<String,Object> params=new HashMap<>();
+        params.put("code","1656");
         List<TargetDTO> targetDTOS=new ArrayList<>();
         for (String string : strings) {
             TargetDTO targetDTO=new TargetDTO(string,params);
