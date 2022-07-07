@@ -18,6 +18,7 @@
 package com.tarena.schedule;
 
 import com.tarena.dispatcher.NoticeEventGetter;
+import com.tarena.dispatcher.respository.TaskRepository;
 import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.commons.mq.MQPublisher;
 import com.tarena.mnmp.enums.CycleLevel;
@@ -53,14 +54,6 @@ public class SpringBootSchedule extends AbstractScheduler {
 
     @Override boolean stop() {
         return false;
-    }
-
-    @Override void finishTask(NoticeTaskTrigger noticeTaskTrigger) {
-
-    }
-
-    @Override void updateNextTriggerTime(NoticeTaskTrigger noticeTaskTrigger) {
-
     }
 
     @Override List<List<TargetDTO>> getTargets(NoticeTaskTrigger noticeTaskTrigger) {

@@ -19,6 +19,7 @@ package com.tarena.schedule;
 
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
+import com.tarena.dispatcher.respository.TaskRepository;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.enums.NoticeType;
@@ -28,19 +29,19 @@ import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 public abstract class AbstractScheduler {
 
     private static Logger logger = LoggerFactory.getLogger(AbstractScheduler.class);
 
+    @Autowired
+    private TaskRepository taskRepository;
+
     abstract List<NoticeTaskTrigger> queryTriggers();
 
     abstract boolean stop();
-
-    abstract void finishTask(NoticeTaskTrigger noticeTaskTrigger);
-
-    abstract void updateNextTriggerTime(NoticeTaskTrigger noticeTaskTrigger);
 
     abstract List<List<TargetDTO>> getTargets(NoticeTaskTrigger noticeTaskTrigger);
 
@@ -63,6 +64,7 @@ public abstract class AbstractScheduler {
             try {
                 List<NoticeTaskTrigger> triggers = this.queryTriggers();
                 for (NoticeTaskTrigger trigger : triggers) {
+                    this.taskRepository.updateStartTime(trigger.getTaskId(), new Date());
                     List<List<TargetDTO>> targetsList = this.getTargets(trigger);
                     List<NoticeDTO> notices = this.assemble(trigger, targetsList);
                     int batchIndex = 0;
@@ -71,7 +73,9 @@ public abstract class AbstractScheduler {
                     }
                     Date nextTriggerTime = trigger.generateNextTriggerTime();
                     if (trigger.isFinish(nextTriggerTime)) {
-                        this.finishTask(trigger);
+                        this.taskRepository.finishTask(trigger.getTaskId(), nextTriggerTime);
+                    } else {
+                        this.taskRepository.updateNextTriggerTime(trigger.getTaskId(), nextTriggerTime);
                     }
                 }
                 if (CollectionUtils.isEmpty(triggers)) {
