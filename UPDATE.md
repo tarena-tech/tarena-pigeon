@@ -1,12 +1,16 @@
 # Charlie Show
 ## NEXT-TODO-PLAN-LIST
 ### admin后台管理
-- app应用模块持久层实现
-- app应用模块业务层实现
-- provider持久层
-- provider业务层
+- app业务逻辑
+- provider业务逻辑
+- sign增删查改
 #更新汇总
-### 2022年7月5日17:14
+## 2022年7月6日14:50
+- [修改] 恢复ali短信发送dispatcher代码
+- [修改] 修改admin持久层扫描*Dao接口
+- [新增] 实现provider增删查改功能,测试providerDao
+- [新增] 实现appService,测试appService
+## 2022年7月5日17:14
 - [修改] WecomTemplateData接收前端数据,修改成VO类放到admin下
 - [新增] app模块添加saveApp方法
 - [新增] app模块添加queryAllApps方法
