@@ -56,7 +56,7 @@ public class SignService {
     }
 
     public void auditSign(Long id, Integer status) {
-        SignDO signDO=new SignDO();
+        SignDO signDO = new SignDO();
         signDO.setId(id);
         signDO.setAuditStatus(signDO.getAuditStatus());
         signDao.modify(signDO);
