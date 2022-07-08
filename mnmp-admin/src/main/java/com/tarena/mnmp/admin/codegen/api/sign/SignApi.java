@@ -121,7 +121,7 @@ public interface SignApi {
      * @param id
      * @param auditStatus
      */
-    public void auditApp(
+    public void auditSign(
         @NotNull @ApiParam(value = "签名id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
         @NotNull @ApiParam(value = "审核结果", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus
     );

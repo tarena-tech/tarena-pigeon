@@ -68,7 +68,7 @@ public class SignController implements SignApi {
         return signViews;
     }
 
-    @Override public void auditApp(Long id, Integer auditStatus) {
-
+    @Override public void auditSign(Long id, Integer auditStatus) {
+        signService.auditSign(id,auditStatus);
     }
 }
