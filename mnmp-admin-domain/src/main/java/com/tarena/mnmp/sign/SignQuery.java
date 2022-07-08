@@ -28,10 +28,10 @@ public class SignQuery {
     )
     private String appCode;
     @ApiModelProperty(
-        value = "签名状态",
-        name = "status"
+        value = "审核状态",
+        name = "auditStatus"
     )
-    private Integer status;
+    private Integer auditStatus;
     @ApiModelProperty(
         value = "签名名称",
         name = "name"
@@ -46,12 +46,12 @@ public class SignQuery {
         this.appCode = appCode;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getAuditStatus() {
+        return auditStatus;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
     }
 
     public String getName() {

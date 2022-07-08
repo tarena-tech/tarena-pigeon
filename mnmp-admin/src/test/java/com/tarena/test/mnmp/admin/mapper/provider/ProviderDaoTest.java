@@ -36,8 +36,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 
 @SpringBootTest(classes = AdminApplication.class)
-public class ProviderMapperTest {
-    private static Logger logger = LoggerFactory.getLogger(ProviderMapperTest.class);
+public class ProviderDaoTest {
+    private static Logger logger = LoggerFactory.getLogger(ProviderDaoTest.class);
     @Autowired
     private ProviderDao providerMapper;
     /**
@@ -54,7 +54,7 @@ public class ProviderMapperTest {
     )
     public void queryAllProvidersTest() throws BusinessException {
         List<ProviderDO> providers =
-           providerMapper.queryAllProviders();
+            providerMapper.queryAllProviders();
         logger.info("查询app总数:{}",providers.size());
         Asserts.isTrue(providers.size() != 2, new BusinessException(ErrorCode.SYSTEM_ERROR, "查询所有provider列表测试持久层mapper失败"));
     }
@@ -98,7 +98,7 @@ public class ProviderMapperTest {
         Asserts.isTrue(providerDO1 == null ||providerDO2 == null, new BusinessException(ErrorCode.SYSTEM_ERROR, "id查询provider供应商测试持久层mapper失败"));
         Integer enabled1 =providerDO1.getEnabled();
         Integer enabled2 =providerDO2.getEnabled();
-        Asserts.isTrue(enabled1 == 1 || enabled2 == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "测试provider数据有误,请检查前两条status属性是否是0,1"));
+        Asserts.isTrue(enabled1 == 1 || enabled2 == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "测试provider数据有误,请检查前两条enabled属性是否是0,1"));
         providerMapper.enable(providerDO1.getId());
         providerMapper.disable(providerDO2.getId());
         providerDO1 =providerMapper.findById(1L);

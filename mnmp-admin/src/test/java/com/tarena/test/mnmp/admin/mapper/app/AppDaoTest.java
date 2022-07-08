@@ -34,8 +34,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 
 @SpringBootTest(classes = {AdminApplication.class})
-public class AppMapperTest {
-    private static Logger logger = LoggerFactory.getLogger(AppMapperTest.class);
+public class AppDaoTest {
+    private static Logger logger = LoggerFactory.getLogger(AppDaoTest.class);
     @Autowired
     private AppDao appMapper;
 
@@ -93,7 +93,7 @@ public class AppMapperTest {
         Asserts.isTrue(appDO1 == null || appDO2 == null, new BusinessException(ErrorCode.SYSTEM_ERROR, "id查询app应用测试持久层mapper失败"));
         Integer enabled1 = appDO1.getEnabled();
         Integer enabled2 = appDO2.getEnabled();
-        Asserts.isTrue(enabled1 == 1 || enabled2 == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "测试app数据有误,请检查前两条status属性是否是0,1"));
+        Asserts.isTrue(enabled1 == 1 || enabled2 == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "测试app数据有误,请检查前两条enabled属性是否是0,1"));
         appMapper.enable(appDO1.getId());
         appMapper.disable(appDO2.getId());
         appDO1 = appMapper.findById(1L);

@@ -16,7 +16,8 @@
     </resultMap>
 
     <sql id="AppAllFields">
-        id,
+        id
+        ,
         code,
         name,
         leader,
@@ -37,7 +38,7 @@
                                 enabled,
                                 create_time,
                                 update_time)
-        values (#{code}, #{name}, #{leader}, #{teamMembers}, #{remarks}, #{auditStatus},#{enabled}, now(), now())
+        values (#{code}, #{name}, #{leader}, #{teamMembers}, #{remarks}, #{auditStatus}, #{enabled}, now(), now())
     </insert>
     <select id="queryAllApps" resultMap="AppMap">
         select
@@ -50,17 +51,17 @@
         from notice_app
         where id=#{id}
     </select>
-    <update id="disable" >
+    <update id="disable">
         update notice_app
-        set enabled=0
-        where id=#{id}
+        set enabled=0,update_time=now()
+        where id = #{id}
     </update>
     <update id="enable">
         update notice_app
-        set enabled=1
-        where id=#{id}
+        set enabled=1,update_time=now()
+        where id = #{id}
     </update>
-    <update id="modify" >
+    <update id="modify">
         update notice_app
         <set>
             <if test="code!=null">
@@ -77,6 +78,9 @@
             </if>
             <if test="remarks!=null">
                 remarks=#{remarks},
+            </if>
+            <if test="auditStatus!=null">
+                audit_status=#{auditStatus}
             </if>
             <if test="true">
                 update_time=now()

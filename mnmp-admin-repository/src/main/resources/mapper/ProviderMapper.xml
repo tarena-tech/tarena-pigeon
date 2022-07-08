@@ -71,13 +71,13 @@
     <update id="disable">
         update notice_provider
         set
-            enabled=0
+            enabled=0,update_time=now()
         where id=#{id}
     </update>
     <update id="enable">
         update notice_provider
         set
-            enabled=1
+            enabled=1,update_time=now()
         where id=#{id}
     </update>
     <update id="modify">
@@ -103,6 +103,9 @@
             </if>
             <if test="remarks!=null">
                 remarks=#{remarks},
+            </if>
+            <if test="auditStatus!=null">
+                audit_status=#{auditStatus}
             </if>
             <if test="true">
                 update_time=now()

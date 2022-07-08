@@ -66,4 +66,9 @@ public class ProviderController implements ProviderApi {
         BeanUtils.copyProperties(providerDO, providerView);
         return providerView;
     }
+
+    @Override public void auditProvider(Long id, Integer auditStatus) {
+        providerService.auditProvider(id,auditStatus);
+    }
+
 }

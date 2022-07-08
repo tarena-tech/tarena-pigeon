@@ -67,4 +67,8 @@ public class SignController implements SignApi {
         }
         return signViews;
     }
+
+    @Override public void auditApp(Long id, Integer auditStatus) {
+
+    }
 }

@@ -54,4 +54,11 @@ public class ProviderService {
     public ProviderDO queryProviderDetail(Long id) {
         return providerDao.findById(id);
     }
+
+    public void auditProvider(Long id, Integer auditStatus) {
+        ProviderDO providerDO = new ProviderDO();
+        providerDO.setId(id);
+        providerDO.setAuditStatus(auditStatus);
+        providerDao.modify(providerDO);
+    }
 }

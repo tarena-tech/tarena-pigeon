@@ -66,4 +66,9 @@ public class AppController implements AppApi {
         }
         return appVOs;
     }
+
+    @Override public void auditApp(Long id, Integer auditStatus) {
+        appService.auditApp(id,auditStatus);
+    }
+
 }
