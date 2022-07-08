@@ -14,13 +14,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.45</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -34,12 +27,10 @@
         <dependency>
             <groupId>com.tarena.mnmp</groupId>
             <artifactId>mnmp-commons</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <artifactId>mnmp-monitor</artifactId>
             <groupId>com.tarena.mnmp</groupId>
-            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
 
@@ -52,12 +43,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot</artifactId>
-            <version>2.5.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>2.5.4</version>
         </dependency>
     </dependencies>
 </project>

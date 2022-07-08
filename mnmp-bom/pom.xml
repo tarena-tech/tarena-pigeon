@@ -29,6 +29,19 @@
         <mnmp_commons_version>1.0.0-SNAPSHOT</mnmp_commons_version>
         <mnmp_api_version>1.0.0-SNAPSHOT</mnmp_api_version>
         <mnmp_dispacher_version>1.0.0-SNAPSHOT</mnmp_dispacher_version>
+        <mnmp_dispacher_repository_version>1.0.0-SNAPSHOT</mnmp_dispacher_repository_version>
+        <mnmp_admin_domin_version>1.0.0-SNAPSHOT</mnmp_admin_domin_version>
+        <mnmp_admin_repository_version>1.0.0-SNAPSHOT</mnmp_admin_repository_version>
+        <mnmp_api_version>1.0.0-SNAPSHOT</mnmp_api_version>
+        <mnmp_monitor_version>1.0.0-SNAPSHOT</mnmp_monitor_version>
+        <mnmp_protocol_version>1.0.0-SNAPSHOT</mnmp_protocol_version>
+        <mnmp_provider_version>1.0.0-SNAPSHOT</mnmp_provider_version>
+        <mnmp_rocketmq_version>1.0.0-SNAPSHOT</mnmp_rocketmq_version>
+        <mnmp_schedule_version>1.0.0-SNAPSHOT</mnmp_schedule_version>
+        <mnmp_configuration_version>1.0.0-SNAPSHOT</mnmp_configuration_version>
+        <mnmp_consumer_version>1.0.0-SNAPSHOT</mnmp_consumer_version>
+
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Build Environment -->
         <maven.compile.source>1.8</maven.compile.source>
@@ -76,15 +89,54 @@
                 <version>${mnmp_commons_version}</version>
             </dependency>
             <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-admin-domain</artifactId>
+                <version>${mnmp_admin_domin_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-admin-repository</artifactId>
+                <version>${mnmp_admin_repository_version}</version>
+            </dependency>
+            <dependency>
                 <artifactId>mnmp-api</artifactId>
                 <groupId>com.tarena.mnmp</groupId>
                 <version>${mnmp_api_version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.tarena.mnmp</groupId>
                 <artifactId>mnmp-dispatcher</artifactId>
                 <version>${mnmp_dispacher_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-dispatcher-repository</artifactId>
+                <version>${mnmp_dispacher_repository_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-monitor</artifactId>
+                <version>${mnmp_monitor_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-protocol</artifactId>
+                <version>${mnmp_protocol_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-provider</artifactId>
+                <version>${mnmp_provider_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-rocketmq</artifactId>
+                <version>${mnmp_rocketmq_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-autoconfigurations</artifactId>
+                <version>${mnmp_configuration_version}</version>
             </dependency>
 
             <dependency>
@@ -155,6 +207,11 @@
 
             <dependency>
                 <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
                 <version>${spring.framework.version}</version>
             </dependency>
@@ -168,31 +225,26 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot</artifactId>
                 <version>${spring.boot.version}</version>
-
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-autoconfigure</artifactId>
                 <version>${spring.boot.version}</version>
-
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring.boot.version}</version>
-
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
                 <version>${spring.boot.version}</version>
-
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-configuration-processor</artifactId>
                 <version>${spring.boot.version}</version>
-
             </dependency>
 
             <dependency>
@@ -200,6 +252,31 @@
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>${spring.boot.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>2.0.8</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>2.2.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>3.4.5</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>2.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-validation</artifactId>
+                <version>2.5.4</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

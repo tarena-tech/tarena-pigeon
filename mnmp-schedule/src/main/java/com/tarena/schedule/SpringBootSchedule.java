@@ -18,7 +18,6 @@
 package com.tarena.schedule;
 
 import com.tarena.dispatcher.NoticeEventGetter;
-import com.tarena.dispatcher.respository.TaskRepository;
 import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.commons.mq.MQPublisher;
 import com.tarena.mnmp.enums.CycleLevel;
