@@ -60,7 +60,7 @@ public class SignSaveParam {
         required = false,
         example = "测试签名简介"
     )
-    private String remark;
+    private String remarks;
     @ApiModelProperty(
         value = "创建者",
         name = "creator",
@@ -68,11 +68,11 @@ public class SignSaveParam {
     )
     private String creator;
     @ApiModelProperty(
-        value = "状态",
-        name = "status",
+        value = "审核状态",
+        name = "auditStatus",
         required = false
     )
-    private Integer status;
+    private Integer auditStatus;
     @ApiModelProperty(
         value = "创建时间",
         name = "createTime",
@@ -87,7 +87,24 @@ public class SignSaveParam {
     )
     private Date updateTime;
 
+    private Integer enabled;
 
+
+    public Integer getAuditStatus() {
+        return auditStatus;
+    }
+
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
+    }
 
     public Long getId() {
         return id;
@@ -129,12 +146,12 @@ public class SignSaveParam {
         this.appCode = appCode;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     public String getCreator() {
@@ -145,13 +162,7 @@ public class SignSaveParam {
         this.creator = creator;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 
     public Date getCreateTime() {
         return createTime;

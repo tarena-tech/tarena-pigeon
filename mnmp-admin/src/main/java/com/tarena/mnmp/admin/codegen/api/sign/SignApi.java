@@ -115,4 +115,14 @@ public interface SignApi {
         produces = {"application/json"}
     )
     List<SignView> querySignList(@ApiParam(value = "签名查询入参", required = true) @Valid @RequestBody SignQuery signQuery);
+
+    /**
+     * 审核签名
+     * @param id
+     * @param auditStatus
+     */
+    public void auditSign(
+        @NotNull @ApiParam(value = "签名id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
+        @NotNull @ApiParam(value = "审核结果", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus
+    );
 }

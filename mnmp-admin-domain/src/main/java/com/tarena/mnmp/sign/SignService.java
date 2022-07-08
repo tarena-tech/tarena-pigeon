@@ -54,4 +54,11 @@ public class SignService {
     public List<SignDO> querySignList(SignQuery signQuery) {
         return signDao.querySigns(signQuery);
     }
+
+    public void auditSign(Long id, Integer status) {
+        SignDO signDO = new SignDO();
+        signDO.setId(id);
+        signDO.setAuditStatus(signDO.getAuditStatus());
+        signDao.modify(signDO);
+    }
 }

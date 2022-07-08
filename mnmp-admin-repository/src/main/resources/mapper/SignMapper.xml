@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tarena.mnmp.sign.SignDao">
+
+    <resultMap type="com.tarena.mnmp.sign.SignDO" id="SignMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="audit_status" property="auditStatus"/>
+        <result column="app_name" property="appName"/>
+        <result column="app_id" property="appId"/>
+        <result column="app_code" property="appCode"/>
+        <result column="enabled" property="enabled"/>
+        <result column="remarks" property="remarks"/>
+        <result column="creator" property="creator"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <sql id="SignAllFields">
+        id
+        ,name
+        ,audit_status
+        ,app_id
+        ,app_code
+        ,app_name
+        ,remarks
+        ,enabled
+        ,creator
+        ,create_time
+        ,update_time
+    </sql>
+    <insert id="save">
+        insert into notice_sms_sign (
+                                name
+                               ,audit_status
+                               ,app_id
+                               ,app_code
+                               ,remarks
+                               ,enabled
+                               ,creator
+                               ,create_time
+                               ,update_time
+        )
+        values (#{name},#{auditStatus},#{appId},#{appCode},#{remarks},#{enabled},#{creator},now(),now())
+    </insert>
+    <select id="querySigns" resultMap="SignMap">
+        select
+            <include refid="SignAllFields"/>
+        from notice_sms_sign
+        <where>
+            <if test="auditStatus!=null">
+                audit_status=#{auditStatus}
+            </if>
+            <if test="name!=null">
+                and name like concat("%",#{name},"%")
+            </if>
+            <if test="appCode!=null">
+                and app_code like concat("%",#{appCode},"%")
+            </if>
+        </where>
+    </select>
+    <select id="queryAllApps" resultMap="SignMap">
+        select
+        <include refid="SignAllFields"/>
+        from notice_sms_sign
+    </select>
+    <select id="findById" resultMap="SignMap">
+        select
+        <include refid="SignAllFields"/>
+        from notice_sms_sign
+        where id=#{id}
+    </select>
+    <update id="disable">
+        update notice_sms_sign
+        set enabled=0,update_time=now()
+        where id = #{id}
+    </update>
+    <update id="enable">
+        update notice_sms_sign
+        set enabled=1,update_time=now()
+        where id = #{id}
+    </update>
+    <update id="modify">
+        update notice_sms_sign
+        <set>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="auditStatus!=null">
+                audit_status=#{auditStatus},
+            </if>
+            <if test="appId!=null">
+                app_id=#{appId},
+            </if>
+            <if test="appCode!=null">
+                app_code=#{appCode},
+            </if>
+            <if test="remarks!=null">
+                remarks=#{remarks},
+            </if>
+            <if test="creator!=null">
+                creator=#{creator},
+            </if>
+            <if test="true">
+                update_time=now()
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+</mapper>
+

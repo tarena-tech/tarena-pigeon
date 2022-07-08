@@ -28,17 +28,28 @@ public class SignDO {
     private String appName;
 
     private Long appId;
-
     private String appCode;
 
-    private String remark;
+    private String remarks;
 
     private String creator;
 
     private Integer enabled;
-
+    private Integer auditStatus;
     private Date createTime;
     private Date updateTime;
+
+    public Integer getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
@@ -92,12 +103,12 @@ public class SignDO {
         this.appCode = appCode;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     public String getCreator() {

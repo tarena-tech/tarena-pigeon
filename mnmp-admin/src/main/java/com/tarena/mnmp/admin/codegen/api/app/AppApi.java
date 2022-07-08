@@ -52,6 +52,7 @@ public interface AppApi {
     )
     @PostMapping(
         value = {"/add"},
+        produces = {"application/json"},
         consumes = {"application/json"}
     )
     void addApp(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody AppSaveParam appSaveParam);
@@ -69,6 +70,7 @@ public interface AppApi {
     )
     @PostMapping(
         value = {"/edit"},
+        produces = {"application/json"},
         consumes = {"application/json"}
     )
     void editApp(@ApiParam(value = "编辑应用", required = true) @Valid @RequestBody AppSaveParam appSaveParam);
@@ -84,7 +86,11 @@ public interface AppApi {
         nickname = "closeApp",
         notes = ""
     )
-    @PostMapping({"/close"})
+    @PostMapping(
+        value = {"/close"},
+        produces = {"application/json"},
+        consumes = {"application/json"}
+    )
     void closeApp(
         @NotNull @ApiParam(value = "要关闭的应用", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
@@ -99,7 +105,11 @@ public interface AppApi {
         nickname = "openApp",
         notes = ""
     )
-    @PostMapping({"/open"})
+    @PostMapping(
+        value = {"/open"},
+        produces = {"application/json"},
+        consumes = {"application/json"}
+    )
     void openApp(
         @NotNull @ApiParam(value = "要开启的应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
@@ -117,7 +127,8 @@ public interface AppApi {
     )
     @GetMapping(
         value = {"/queryDetail"},
-        produces = {"application/json"}
+        produces = {"application/json"},
+        consumes = {"application/json"}
     )
     AppView queryAppDetail(
         @NotNull @ApiParam(value = "应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
@@ -125,7 +136,7 @@ public interface AppApi {
     /**
      * 查询应用管理列表
      */
-    @ApiOperationSupport(order = 10065)
+    @ApiOperationSupport(order = 1006)
     @ApiOperation(
         value = "查询应用管理列表",
         nickname = "queryList",
@@ -135,7 +146,26 @@ public interface AppApi {
     )
     @GetMapping(
         value = {"/queryList"},
-        produces = {"application/json"}
+        produces = {"application/json"},
+        consumes = {"application/json"}
     )
     List<AppView> queryList();
+
+    /**
+     * 审核应用
+     */
+    @ApiOperationSupport(order = 1007)
+    @ApiOperation(
+        value = "审核应用",
+        notes = ""
+    )
+    @PostMapping(
+        value = "audit",
+        produces = {"application/json"},
+        consumes = {"application/json"}
+    )
+    public void auditApp(
+        @NotNull @ApiParam(value = "应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
+        @NotNull @ApiParam(value = "审核结果", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus
+        );
 }

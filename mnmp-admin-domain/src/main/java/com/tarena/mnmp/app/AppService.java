@@ -54,4 +54,11 @@ public class AppService {
     public List<AppDO> queryList() {
         return appDao.queryAllApps();
     }
+
+    public void auditApp(Long id, Integer auditStatus) {
+        AppDO appDO = new AppDO();
+        appDO.setId(id);
+        appDO.setAuditStatus(auditStatus);
+        appDao.modify(appDO);
+    }
 }

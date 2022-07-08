@@ -116,4 +116,23 @@ public interface ProviderApi {
     )
     ProviderView queryProviderDetail(
         @NotNull @ApiParam(value = "服务商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+
+    /**
+     * 审核应用
+     */
+    @ApiOperationSupport(order = 2007)
+    @ApiOperation(
+        value = "审核供应商",
+        notes = ""
+    )
+    @PostMapping(
+        value = "/audit",
+        produces = {"application/json"},
+        consumes = {"application/json"}
+    )
+    public void auditProvider(
+        @NotNull @ApiParam(value = "供应商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
+        @NotNull @ApiParam(value = "审核结果", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus
+        );
+
 }
