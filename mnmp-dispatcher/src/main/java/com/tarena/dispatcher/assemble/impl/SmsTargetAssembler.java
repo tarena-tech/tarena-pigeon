@@ -32,8 +32,6 @@ public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> 
         return NoticeType.SMS.toString();
     }
 
-
-
     @Override
     public SmsNoticeEvent assemble(NoticeDTO notice, Integer batchIndex) {
         SmsNoticeEvent smsNoticeEvent = new SmsNoticeEvent();
@@ -47,7 +45,7 @@ public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> 
             smsTarget.setSignName(notice.getSignName());
             smsTarget.setTemplateCode(notice.getTemplateCode());
             smsTarget.setTemplateParam("{\"code\":\"" + notice.getTemplateContent() + "\"}");
-            smsTarget.setContent(this.dollarPlaceholderReplacer.buildContent(notice.getTemplateCode(),targetDto.getParams()));
+            smsTarget.setContent(this.dollarPlaceholderReplacer.buildContent(notice.getTemplateCode(), targetDto.getParams()));
             targetList.add(smsTarget);
         }
         smsNoticeEvent.setTargets(targetList);

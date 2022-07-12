@@ -84,7 +84,6 @@ public class DispatcherTest {
         emailAliNoticeDispatcher.setTargetLogRepository(targetLogRepository);
         emailAliNoticeDispatcher.setMonitor(monitor);
 
-
         SmsAliNoticeDispatcher smsAliNoticeDispatcher = new AliSmsDispatcherMock();
         smsAliNoticeDispatcher.afterPropertiesSet();
         smsAliNoticeDispatcher.setTargetLogRepository(targetLogRepository);

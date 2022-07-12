@@ -48,5 +48,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.tarena.mnmp</groupId>
+            <artifactId>mnmp-dispatcher-repository</artifactId>
+        </dependency>
     </dependencies>
 </project>

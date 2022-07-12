@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tarena.dispatcher.storage.mapper.TaskDao">
+
+    <resultMap type="com.tarena.dispatcher.storage.entity.TaskDO" id="NoticeTaskMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="taskStatus" column="task_status" jdbcType="INTEGER"/>
+        <result property="taskType" column="task_type" jdbcType="INTEGER"/>
+        <result property="noticeType" column="notice_type" jdbcType="INTEGER"/>
+        <result property="templateId" column="template_id" jdbcType="INTEGER"/>
+        <result property="templateType" column="template_type" jdbcType="INTEGER"/>
+        <result property="signId" column="sign_id" jdbcType="INTEGER"/>
+        <result property="appId" column="app_id" jdbcType="INTEGER"/>
+        <result property="cycleStr" column="cycle_str" jdbcType="VARCHAR"/>
+        <result property="targetType" column="target_type" jdbcType="INTEGER"/>
+        <result property="targetFileName" column="target_file_name" jdbcType="VARCHAR"/>
+        <result property="targetFileUrl" column="target_file_url" jdbcType="VARCHAR"/>
+        <result property="creator" column="creator" jdbcType="INTEGER"/>
+        <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="cycleLevel" column="cycle_level" jdbcType="INTEGER"/>
+        <result property="cycleNum" column="cycle_num" jdbcType="INTEGER"/>
+        <result property="triggerTime" column="trigger_time" jdbcType="TIMESTAMP"/>
+        <result property="triggerEndTime" column="trigger_end_time" jdbcType="TIMESTAMP"/>
+        <result property="nextTriggerTime" column="next_trigger_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="NoticeTaskMap">
+        select
+          id, name, task_status, task_type, notice_type, template_id, template_type, sign_id, app_id, cycle_str, target_type, target_file_name, target_file_url, creator, dept_id,remark,
+           cycle_level, cycle_num, trigger_time, trigger_end_time,next_trigger_time,create_time, update_time
+        from notice_task
+        where id = #{id}
+    </select>
+
+    <select id="queryTriggers" resultMap="NoticeTaskMap">
+        select
+          id, name, task_status, task_type, notice_type, template_id, template_type, sign_id, app_id, cycle_str, target_type, target_file_name, target_file_url, creator, dept_id,remark,
+           cycle_level, cycle_num, trigger_time, trigger_end_time,next_trigger_time,create_time, update_time
+        from notice_task
+        where next_trigger_time is not null
+    </select>
+
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update notice_task
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="taskStatus != null">
+                task_status = #{taskStatus},
+            </if>
+            <if test="taskType != null">
+                task_type = #{taskType},
+            </if>
+            <if test="noticeType != null">
+                notice_type = #{noticeType},
+            </if>
+            <if test="templateId != null">
+                template_id = #{templateId},
+            </if>
+            <if test="templateType != null">
+                template_type = #{templateType},
+            </if>
+            <if test="signId != null">
+                sign_id = #{signId},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId},
+            </if>
+            <if test="cycleStr != null and cycleStr != ''">
+                cycle_str = #{cycleStr},
+            </if>
+            <if test="targetType != null">
+                target_type = #{targetType},
+            </if>
+            <if test="targetFileName != null and targetFileName != ''">
+                target_file_name = #{targetFileName},
+            </if>
+            <if test="targetFileUrl != null and targetFileUrl != ''">
+                target_file_url = #{targetFileUrl},
+            </if>
+            <if test="creator != null">
+                creator = #{creator},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="cycleLevel != null">
+                cycle_level = #{cycleLevel},
+            </if>
+            <if test="cycleNum != null">
+                cycle_num = #{cycleNum},
+            </if>
+            <if test="triggerTime != null">
+                trigger_time = #{triggerTime},
+            </if>
+            <if test="triggerEndTime != null">
+                trigger_end_time = #{triggerEndTime},
+            </if>
+            <if test="nextTriggerTime != null">
+                next_trigger_time = #{nextTriggerTime},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
+

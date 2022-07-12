@@ -15,23 +15,21 @@
  * limitations under the License.
  */
 
-package com.tarena.commons.test;
+package com.tarena.dispatcher.storage.mapper;
 
-import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.enums.TargetStatus;
-import com.tarena.mnmp.monitor.Monitor;
-import com.tarena.mnmp.protocol.NoticeEvent;
+import com.tarena.dispatcher.storage.entity.TaskTargetDO;
+import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 
-public class MonitorMock implements Monitor {
-    @Override public void noticeRequest(NoticeDTO notice) {
-        System.out.println("notice request");
-    }
+/**
+ * 消息任务目标表(NoticeTaskTarget)
+ *
+ * @author liuhuan
+ */
+@Mapper
+public interface TaskTargetDao {
 
-    @Override public void noticeStatus(NoticeEvent noticeEvent, String target, TargetStatus status) {
-        System.out.println("notice status " + status);
-    }
+    List<TaskTargetDO> queryAll(TaskTargetDO targetDO);
 
-    @Override public void schedule() {
-        System.out.println("schedule ....");
-    }
 }
+

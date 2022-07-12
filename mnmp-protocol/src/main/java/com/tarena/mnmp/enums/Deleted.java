@@ -15,15 +15,28 @@
  * limitations under the License.
  */
 
-package com.tarena.commons.test;
+package com.tarena.mnmp.enums;
 
-import com.tarena.dispatcher.SmsTarget;
-import com.tarena.dispatcher.event.SmsNoticeEvent;
-import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
+public enum Deleted {
 
-public class AliSmsDispatcherMock extends SmsAliNoticeDispatcher {
-    @Override protected String doDispatcher(SmsNoticeEvent notice, SmsTarget smsTarget) throws Exception {
-        System.out.println("mock ali sms");
-        return "bizId";
+    NO(0, "未删除"),
+    YES(1, "已删除");
+
+    private Integer val;
+    private String description;
+
+    Deleted(Integer val, String description) {
+        this.val = val;
+        this.description = description;
     }
+
+    public Integer getVal() {
+        return val;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
 }

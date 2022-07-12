@@ -17,8 +17,8 @@
 
 package com.tarena.dispatcher;
 
-import com.tarena.mnmp.protocol.NoticeEvent;
 import com.tarena.mnmp.enums.NoticeType;
+import com.tarena.mnmp.protocol.NoticeEvent;
 
 public class DefaultNoticeEvent implements NoticeEvent {
     private Long taskId;

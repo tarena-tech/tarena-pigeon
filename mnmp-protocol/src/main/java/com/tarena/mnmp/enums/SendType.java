@@ -31,6 +31,24 @@ public enum SendType {
         this.type = type;
     }
 
+
+    public static SendType getEnum(int type) {
+        SendType[] sendTypeEnums = values();
+        for (SendType sendType : sendTypeEnums) {
+            if (sendType.getType() == type) {
+                return sendType;
+            }
+        }
+        return null;
+    }
+
+    public static boolean notImmediately(int type) {
+        if(DELAY.type.intValue() == type || CYCLE.type.intValue() == type){
+            return true;
+        }
+        return false;
+    }
+
     public Integer getType() {
         return this.type;
     }
