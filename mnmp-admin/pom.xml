@@ -41,7 +41,7 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
-    <build>
+    <!--<build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -51,6 +51,24 @@
                     <testFailureIgnore>true</testFailureIgnore>
                     <skip>false</skip>
                 </configuration>
+            </plugin>
+        </plugins>
+    </build>-->
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
