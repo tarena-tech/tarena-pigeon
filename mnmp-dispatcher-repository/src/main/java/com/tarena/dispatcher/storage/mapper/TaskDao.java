@@ -24,11 +24,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
-/**
- * 消息任务表(NoticeTask)
- *
- * @author liuhuan
- */
+
 @Mapper
 public interface TaskDao {
 

@@ -21,11 +21,7 @@ import com.tarena.dispatcher.storage.entity.TaskTargetDO;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
-/**
- * 消息任务目标表(NoticeTaskTarget)
- *
- * @author liuhuan
- */
+
 @Mapper
 public interface TaskTargetDao {
 
