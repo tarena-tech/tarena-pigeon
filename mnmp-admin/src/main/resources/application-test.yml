@@ -1,12 +1,13 @@
 my:
   server:
-    addr: 192.168.56.150
+    addr:  192.168.195.203
 spring:
   # 数据源配置
   datasource:
-    url: jdbc:mysql://${my.server.addr}:3306/tarena_mnmp?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
-    username: root
-    password: tarena2017Up;
+    url: jdbc:mysql://${my.server.addr}:3306/tarena_pigeon?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: pigeon_user
+    password: PigeonPas$8x;
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 1
+
