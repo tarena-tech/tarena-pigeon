@@ -112,7 +112,6 @@ public abstract class AbstractScheduler {
     }
 
     private void sendByTask(NoticeTaskTrigger trigger) throws Throwable {
-        this.taskRepository.updateStartTime(trigger.getTaskId(), new Date());
         List<List<TargetDTO>> targetsList = this.getTargets(trigger);
         List<NoticeDTO> notices = this.assemble(trigger, targetsList);
         int batchIndex = 0;
