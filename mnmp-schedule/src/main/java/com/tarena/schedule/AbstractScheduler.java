@@ -72,7 +72,7 @@ public abstract class AbstractScheduler {
         for (List<TargetDTO> targetList : targets) {
             NoticeDTO notice = new NoticeDTO();
             notice.setTaskId(taskTrigger.getTaskId());
-            notice.setTriggerTime(new SimpleDateFormat(DATEFORMATSECOND).format(taskTrigger.getTriggerTime()));
+            notice.setTriggerTime(new SimpleDateFormat(DATEFORMATSECOND).format(taskTrigger.getFirstTriggerTime()));
             notice.setNoticeType(NoticeType.SMS);
             notice.setTargets(targetList);
             TemplateDO template = taskRepository.queryTemplate(taskTrigger.getTemplateId());
