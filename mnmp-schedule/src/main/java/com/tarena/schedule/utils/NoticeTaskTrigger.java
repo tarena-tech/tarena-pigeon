@@ -49,7 +49,7 @@ public class NoticeTaskTrigger implements Serializable {
     /**
      * 任务开始时间
      */
-    private Date triggerTime;
+    private Date firstTriggerTime;
     /**
      * 任务结束时间
      */
@@ -129,12 +129,12 @@ public class NoticeTaskTrigger implements Serializable {
         this.taskType = taskType;
     }
 
-    public Date getTriggerTime() {
-        return triggerTime;
+    public Date getFirstTriggerTime() {
+        return firstTriggerTime;
     }
 
-    public void setTriggerTime(Date triggerTime) {
-        this.triggerTime = triggerTime;
+    public void setFirstTriggerTime(Date firstTriggerTime) {
+        this.firstTriggerTime = firstTriggerTime;
     }
 
     public Long getTemplateId() {

@@ -49,10 +49,6 @@ public class TaskDO implements Serializable {
      */
     private Long templateId;
     /**
-     * 消息类型子类型 1:sms-短信通知 2:sms-验证码 3:sms-推广短信
-     */
-    private Integer templateType;
-    /**
      * 签名ID
      */
     private Long signId;
@@ -60,10 +56,6 @@ public class TaskDO implements Serializable {
      * 所属应用
      */
     private Long appId;
-    /**
-     * 周期原始JSON串,用于编辑对比等;涉及多天则在触发器表对应多条
-     */
-    private String cycleStr;
     /**
      * 目标类型 1:文件上传 2.规则匹配
      */
@@ -98,9 +90,9 @@ public class TaskDO implements Serializable {
      */
     private Integer cycleNum;
     /**
-     * 任务触发时间
+     * 任务首次触发时间
      */
-    private Date triggerTime;
+    private Date firstTriggerTime;
     /**
      * 任务触发结束时间
      */

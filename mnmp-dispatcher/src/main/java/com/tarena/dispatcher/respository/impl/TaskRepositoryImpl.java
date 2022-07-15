@@ -50,6 +50,13 @@ public class TaskRepositoryImpl implements TaskRepository {
         return taskDao.updateNextTriggerTime(nextTriggerTime, taskId);
     }
 
+    /**
+     * 修改任务首次触发时间
+     * 在任务审核之后赋值即可
+     * @param taskId
+     * @param triggerTime
+     * @return
+     */
     @Override public Integer updateStartTime(Long taskId, Date triggerTime) {
         return null;
     }
