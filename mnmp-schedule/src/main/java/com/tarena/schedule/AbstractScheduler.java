@@ -27,6 +27,7 @@ import com.tarena.dispatcher.storage.entity.TaskTargetDO;
 import com.tarena.dispatcher.storage.entity.TemplateDO;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.TargetDTO;
+import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.enums.NoticeType;
 import com.tarena.mnmp.enums.SendType;
 import com.tarena.mnmp.enums.TaskStatus;
@@ -46,11 +47,11 @@ import org.springframework.util.CollectionUtils;
 public abstract class AbstractScheduler {
 
     private static Logger logger = LoggerFactory.getLogger(AbstractScheduler.class);
-
-
-
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private Json json;
 
     abstract boolean stop();
 
@@ -111,7 +112,7 @@ public abstract class AbstractScheduler {
         if (trigger.isFinish(nextTriggerTime)) {
             this.taskRepository.finishTask(trigger.getTaskId(), TaskStatus.TASK_END.status());
         } else {
-            this.taskRepository.updateNextTriggerTimeAndStatus(trigger.getTaskId(), nextTriggerTime,TaskStatus.TASK_DOING.status());
+            this.taskRepository.updateNextTriggerTimeAndStatus(trigger.getTaskId(), nextTriggerTime, TaskStatus.TASK_DOING.status());
         }
     }
 
@@ -144,7 +145,7 @@ public abstract class AbstractScheduler {
         List<TargetDTO> targets = new ArrayList<>();
         List<TaskTargetDO> taskTargetList = taskRepository.getTargets(noticeTaskTrigger.getTaskId());
         taskTargetList.forEach(target -> {
-            targets.add(new TargetDTO(target.getTarget(), JSONObject.parseObject(target.getParams(), Map.class)));
+            targets.add(new TargetDTO(target.getTarget(), this.json.parse(target.getParams())));
         });
         targetsList.add(targets);
         return targetsList;
