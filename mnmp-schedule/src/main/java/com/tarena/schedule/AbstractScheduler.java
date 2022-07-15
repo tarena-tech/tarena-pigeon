@@ -88,13 +88,6 @@ public abstract class AbstractScheduler {
                 List<NoticeTaskTrigger> triggers = queryTriggers();
                 if (!CollectionUtils.isEmpty(triggers)) {
                     for (NoticeTaskTrigger trigger : triggers) {
-                        if (SendType.notImmediately(trigger.getTaskType())) {
-                            String triggerTime = new SimpleDateFormat(DATEFORMATMIN).format(trigger.getNextTriggerTime());
-                            String nowTime = new SimpleDateFormat(DATEFORMATMIN).format(new Date());
-                            if (!triggerTime.equals(nowTime)) {
-                                return;
-                            }
-                        }
                         sendByTask(trigger);
                     }
                 }
@@ -118,8 +111,7 @@ public abstract class AbstractScheduler {
         if (trigger.isFinish(nextTriggerTime)) {
             this.taskRepository.finishTask(trigger.getTaskId(), TaskStatus.TASK_END.status());
         } else {
-            this.taskRepository.updateNextTriggerTime(trigger.getTaskId(), nextTriggerTime);
-            this.taskRepository.updateTaskStatus(trigger.getTaskId(), TaskStatus.TASK_DOING.status());
+            this.taskRepository.updateNextTriggerTimeAndStatus(trigger.getTaskId(), nextTriggerTime,TaskStatus.TASK_DOING.status());
         }
     }
 
