@@ -26,7 +26,7 @@ import java.util.List;
 
 public interface TaskRepository {
 
-    Integer updateNextTriggerTime(Long taskId, Date nextTriggerTime);
+    Integer updateNextTriggerTimeAndStatus(Long taskId, Date nextTriggerTime,Integer taskStatus);
 
     Integer updateStartTime(Long taskId, Date triggerTime);
 

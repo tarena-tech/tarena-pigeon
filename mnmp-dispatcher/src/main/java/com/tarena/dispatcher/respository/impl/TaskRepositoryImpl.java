@@ -46,8 +46,8 @@ public class TaskRepositoryImpl implements TaskRepository {
      * @param nextTriggerTime
      * @return
      */
-    @Override public Integer updateNextTriggerTime(Long taskId, Date nextTriggerTime) {
-        return taskDao.updateNextTriggerTime(nextTriggerTime, taskId);
+    @Override public Integer updateNextTriggerTimeAndStatus(Long taskId, Date nextTriggerTime,Integer taskStatus) {
+        return taskDao.updateNextTriggerTime(taskId,nextTriggerTime,taskStatus );
     }
 
     /**
