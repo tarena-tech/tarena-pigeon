@@ -21,11 +21,8 @@ import com.tarena.dispatcher.storage.entity.TaskTargetDO;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
-
 @Mapper
 public interface TaskTargetDao {
-
     List<TaskTargetDO> queryAll(TaskTargetDO targetDO);
-
 }
 

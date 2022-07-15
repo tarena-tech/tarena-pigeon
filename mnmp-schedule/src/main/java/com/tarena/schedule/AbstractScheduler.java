@@ -53,9 +53,6 @@ public abstract class AbstractScheduler {
     @Autowired
     private TaskRepository taskRepository;
 
-    //abstract List<NoticeTaskTrigger> queryTriggers();
-    //abstract List<List<TargetDTO>> getTargets(NoticeTaskTrigger noticeTaskTrigger);
-
     abstract boolean stop();
 
     abstract <T extends NoticeEventGetter> void send(T noticeEvent) throws Throwable;

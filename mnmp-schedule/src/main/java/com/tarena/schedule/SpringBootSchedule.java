@@ -30,33 +30,9 @@ public class SpringBootSchedule extends AbstractScheduler {
     @Autowired
     private MQPublisher mqPublisher;
 
-    /*@Override List<NoticeTaskTrigger> queryTriggers() {
-        List<NoticeTaskTrigger> triggers = new ArrayList<>();
-        NoticeTaskTrigger trigger = new NoticeTaskTrigger();
-        trigger.setCycleLevel(CycleLevel.HOUR.getLevel());
-        trigger.setNextTriggerTime(new Date());
-        trigger.setTriggerEndTime(new Date());
-        trigger.setSendType(SendType.DELAY);
-        trigger.setCycleNum(1);
-        triggers.add(trigger);
-        return triggers;
-    }*/
-
     @Override boolean stop() {
         return false;
     }
-
-    /*@Override List<List<TargetDTO>> getTargets(NoticeTaskTrigger noticeTaskTrigger) {
-        List<List<TargetDTO>> targetsList = new ArrayList<>();
-        List<TargetDTO> targets = new ArrayList<>();
-        Map<String, Object> param = new HashMap<>();
-        param.put("student", "zhangsan");
-        targets.add(new TargetDTO("hello student1 ${student}", param));
-        targets.add(new TargetDTO("hello student2 ${student}", param));
-        targets.add(new TargetDTO("hello student3 ${student}", param));
-        targetsList.add(targets);
-        return targetsList;
-    }*/
 
     @Override <T extends NoticeEventGetter> void send(T event) {
         this.mqPublisher.publish(event);
