@@ -15,27 +15,8 @@
  * limitations under the License.
  */
 
-package com.tarena.commons.test;
+package com.tarena.mnmp.constant;
 
-import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.enums.TargetStatus;
-import com.tarena.mnmp.monitor.Monitor;
-import com.tarena.mnmp.protocol.NoticeEvent;
-
-public class MonitorMock implements Monitor {
-    @Override public void alarms(String key, String msg) {
-
-    }
-
-    @Override public void noticeRequest(NoticeDTO notice) {
-        System.out.println("notice request");
-    }
-
-    @Override public void noticeStatus(NoticeEvent noticeEvent, String target, TargetStatus status) {
-        System.out.println("notice status " + status);
-    }
-
-    @Override public void schedule() {
-        System.out.println("schedule ....");
-    }
+public class AlarmKey {
+    public static final String MSG_SENT_ERROR = "MSG_SENT_ERROR";
 }

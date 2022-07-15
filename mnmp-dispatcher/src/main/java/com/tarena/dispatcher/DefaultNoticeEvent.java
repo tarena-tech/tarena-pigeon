@@ -61,4 +61,15 @@ public class DefaultNoticeEvent implements NoticeEvent {
     @Override public String getProvider() {
         return this.provider;
     }
+
+    @Override public String toString() {
+        return "{" +
+            "taskId=" + taskId +
+            ", triggerTime='" + triggerTime + '\'' +
+            ", noticeType=" + noticeType +
+            ", provider='" + provider + '\'' +
+            ", batch=" + batch +
+            ", size=" + size +
+            '}';
+    }
 }

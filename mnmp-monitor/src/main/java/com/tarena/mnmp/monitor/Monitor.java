@@ -22,6 +22,8 @@ import com.tarena.mnmp.enums.TargetStatus;
 import com.tarena.mnmp.protocol.NoticeEvent;
 
 public interface Monitor {
+    void alarms(String key, String msg);
+
     /**
      * 监控前端请求
      *

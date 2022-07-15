@@ -18,6 +18,9 @@
 package com.tarena.mnmp.constant;
 
 public class Constant {
+    public static final String DATE_FORMAT_SECOND = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT_MIN = "yyyy-MM-dd HH:mm";
+
     public static final String DEFAULT = "default";
     public static final String ERROR = "error";
     public static final String SUCCESS = "success";
@@ -44,7 +47,6 @@ public class Constant {
     public static final String CONTENT_TYPE_JSON_ALT = "text/x-json";
 
     public static final String CONTENT_TYPE_XML = "application/xml";
-
 
     public static final String ACCESS_DENIED = "Access Denied";
     public static final String DEFAULT_LANGUAGE = "zh_cn";

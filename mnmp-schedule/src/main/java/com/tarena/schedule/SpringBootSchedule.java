@@ -18,7 +18,10 @@
 package com.tarena.schedule;
 
 import com.tarena.dispatcher.NoticeEventGetter;
+import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.mq.MQPublisher;
+import com.tarena.mnmp.constant.AlarmKey;
+import com.tarena.mnmp.monitor.Monitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +29,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SpringBootSchedule extends AbstractScheduler {
-    private static Logger logger = LoggerFactory.getLogger(Application.class);
     @Autowired
     private MQPublisher mqPublisher;
+    @Autowired
+    private Monitor monitor;
 
     @Override boolean stop() {
         return false;
     }
 
     @Override <T extends NoticeEventGetter> void send(T event) {
-        this.mqPublisher.publish(event);
+        try {
+            this.mqPublisher.publish(event);
+        } catch (Throwable e) {
+            this.monitor.alarms(AlarmKey.MSG_SENT_ERROR, event.getNoticeEvent().toString());
+        }
     }
 }

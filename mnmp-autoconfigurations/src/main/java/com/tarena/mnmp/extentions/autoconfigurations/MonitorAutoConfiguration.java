@@ -15,27 +15,24 @@
  * limitations under the License.
  */
 
-package com.tarena.commons.test;
+package com.tarena.mnmp.extentions.autoconfigurations;
 
-import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.enums.TargetStatus;
+import com.tarena.mnmp.commons.json.Json;
+import com.tarena.mnmp.monitor.DefaultMonitor;
 import com.tarena.mnmp.monitor.Monitor;
-import com.tarena.mnmp.protocol.NoticeEvent;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-public class MonitorMock implements Monitor {
-    @Override public void alarms(String key, String msg) {
-
-    }
-
-    @Override public void noticeRequest(NoticeDTO notice) {
-        System.out.println("notice request");
-    }
-
-    @Override public void noticeStatus(NoticeEvent noticeEvent, String target, TargetStatus status) {
-        System.out.println("notice status " + status);
-    }
-
-    @Override public void schedule() {
-        System.out.println("schedule ....");
+@Configuration
+public class MonitorAutoConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(Monitor.class)
+    @ConditionalOnProperty(prefix = "monitor", value = "impl", havingValue = "default")
+    public Monitor monitor(Json jsonProvider) {
+        DefaultMonitor monitor = new DefaultMonitor();
+        monitor.setJsonProvider(jsonProvider);
+        return monitor;
     }
 }

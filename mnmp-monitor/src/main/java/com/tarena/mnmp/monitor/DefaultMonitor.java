@@ -15,27 +15,38 @@
  * limitations under the License.
  */
 
-package com.tarena.commons.test;
+package com.tarena.mnmp.monitor;
 
 import com.tarena.mnmp.api.NoticeDTO;
+import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.enums.TargetStatus;
-import com.tarena.mnmp.monitor.Monitor;
 import com.tarena.mnmp.protocol.NoticeEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class MonitorMock implements Monitor {
+public class DefaultMonitor implements Monitor {
+    private static Logger logger = LoggerFactory.getLogger(DefaultMonitor.class);
+
+    private Json jsonProvider;
+
+    public void setJsonProvider(Json jsonProvider) {
+        this.jsonProvider = jsonProvider;
+    }
+
     @Override public void alarms(String key, String msg) {
-
+        logger.info("TARENA_MNMP_{}", key);
+        logger.error("TARENA_MNMP_{},msg {}", key, msg);
     }
 
     @Override public void noticeRequest(NoticeDTO notice) {
-        System.out.println("notice request");
+        logger.info("TARENA_MNMP_NOTICE_REQUEST {}", this.jsonProvider.toString(notice));
     }
 
     @Override public void noticeStatus(NoticeEvent noticeEvent, String target, TargetStatus status) {
-        System.out.println("notice status " + status);
+        logger.info("TARENA_MNMP_NOTICE [{}], TARGET {}, STATUS {}", noticeEvent.toString(), target, status);
     }
 
     @Override public void schedule() {
-        System.out.println("schedule ....");
+        logger.info("TARENA_MNMP_NOTICE SCHEDULE {}", System.currentTimeMillis());
     }
 }

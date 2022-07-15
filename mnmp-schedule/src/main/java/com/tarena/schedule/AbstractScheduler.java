@@ -47,8 +47,7 @@ public abstract class AbstractScheduler {
 
     private static Logger logger = LoggerFactory.getLogger(AbstractScheduler.class);
 
-    public static final String DATEFORMATSECOND = "yyyy-MM-dd HH:mm:ss";
-    public static final String DATEFORMATMIN = "yyyy-MM-dd HH:mm";
+
 
     @Autowired
     private TaskRepository taskRepository;

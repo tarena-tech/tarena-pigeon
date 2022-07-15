@@ -19,9 +19,10 @@ package com.tarena.mnmp.api;
 
 import com.tarena.mnmp.enums.NoticeType;
 import com.tarena.mnmp.enums.SendType;
+import java.io.Serializable;
 import java.util.List;
 
-public class NoticeDTO {
+public class NoticeDTO implements Serializable {
     private Long taskId;
     private String triggerTime;
     private SendType sendType;

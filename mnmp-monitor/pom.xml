@@ -32,5 +32,15 @@
             <artifactId>mnmp-api</artifactId>
             <groupId>com.tarena.mnmp</groupId>
         </dependency>
+
+        <dependency>
+            <artifactId>mnmp-commons</artifactId>
+            <groupId>com.tarena.mnmp</groupId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
     </dependencies>
 </project>
