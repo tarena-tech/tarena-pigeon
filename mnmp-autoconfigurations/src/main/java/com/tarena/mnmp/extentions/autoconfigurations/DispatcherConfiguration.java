@@ -17,13 +17,18 @@
 
 package com.tarena.mnmp.extentions.autoconfigurations;
 
+import com.aliyun.dysmsapi20170525.Client;
+import com.aliyun.teaopenapi.models.Config;
 import com.tarena.dispatcher.assemble.impl.EmailTargetAssembler;
 import com.tarena.dispatcher.assemble.impl.SmsTargetAssembler;
 import com.tarena.dispatcher.impl.EmailAliNoticeDispatcher;
 import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
 import com.tarena.dispatcher.respository.TargetLogRepository;
+import com.tarena.dispatcher.respository.TaskRepository;
+import com.tarena.dispatcher.storage.entity.TemplateDO;
 import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.utils.DollarPlaceholderReplacer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +36,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DispatcherConfiguration {
+
+    @Value("${dispatcher.sms_ali_pigeon_template_id}")
+    private Long pigeonAliTemplateId;
+
+    @Value("${dispatcher.sms_ali_template_code}")
+    private String aliTemplateCode;
 
     @Bean
     @ConditionalOnMissingBean(DollarPlaceholderReplacer.class)
@@ -55,14 +66,23 @@ public class DispatcherConfiguration {
         smsTargetAssembler.setDollarPlaceholderReplacer(dollarPlaceholderReplacer);
         return smsTargetAssembler;
     }
+    @ConditionalOnProperty(prefix = "dispatcher", value = "notice_sms_ali_template_id")
+    Client smsAliClient(TaskRepository taskRepository) throws Exception {
+        TemplateDO template= taskRepository.queryTemplate(this.pigeonAliTemplateId);
+
+        //todo 新建sms ali client
+        return new Client(new Config());
+    }
 
     @Bean
     @ConditionalOnMissingBean(SmsAliNoticeDispatcher.class)
     @ConditionalOnProperty(prefix = "dispatcher", value = "notice_sms_ali", havingValue = "true")
-    public SmsAliNoticeDispatcher smsAliNoticeDispatcher(Json json, TargetLogRepository targetLogRepository) {
+    public SmsAliNoticeDispatcher smsAliNoticeDispatcher(Json json, TargetLogRepository targetLogRepository, Client client) {
         SmsAliNoticeDispatcher aliNoticeDispatcher = new SmsAliNoticeDispatcher();
         aliNoticeDispatcher.setJsonProvider(json);
         aliNoticeDispatcher.setTargetLogRepository(targetLogRepository);
+        aliNoticeDispatcher.setAliTemplateCode(this.aliTemplateCode);
+        aliNoticeDispatcher.setAliSmsClient(client);
         return aliNoticeDispatcher;
     }
 
