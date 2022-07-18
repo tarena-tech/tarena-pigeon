@@ -37,8 +37,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DispatcherConfiguration {
 
-    @Value("${dispatcher.sms_ali_pigeon_template_id}")
-    private Long pigeonAliTemplateId;
+    @Value("${dispatcher.sms_ali_pigeon_provider_id}")
+    private Long pigeonAliProviderId;
 
     @Value("${dispatcher.sms_ali_template_code}")
     private String aliTemplateCode;
@@ -66,9 +66,9 @@ public class DispatcherConfiguration {
         smsTargetAssembler.setDollarPlaceholderReplacer(dollarPlaceholderReplacer);
         return smsTargetAssembler;
     }
-    @ConditionalOnProperty(prefix = "dispatcher", value = "notice_sms_ali_template_id")
+    @ConditionalOnProperty(prefix = "dispatcher", value = "sms_ali_pigeon_provider_id")
     Client smsAliClient(TaskRepository taskRepository) throws Exception {
-        TemplateDO template= taskRepository.queryTemplate(this.pigeonAliTemplateId);
+        TemplateDO template= taskRepository.queryTemplate(this.pigeonAliProviderId);
 
         //todo 新建sms ali client
         return new Client(new Config());
