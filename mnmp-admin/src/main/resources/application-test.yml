@@ -4,10 +4,9 @@ my:
 spring:
   # 数据源配置
   datasource:
-    url: jdbc:mysql://${my.server.addr}:3306/tarena_pigeon?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://${my.server.addr}:3316/tarena_pigeon?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
     username: pigeon_user
-    password: PigeonPas$8x;
+    password: PigeonPas$8x
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 1
-
