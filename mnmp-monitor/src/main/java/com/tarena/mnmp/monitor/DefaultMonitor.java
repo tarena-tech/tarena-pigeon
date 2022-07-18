@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DefaultMonitor implements Monitor {
-    private static Logger logger = LoggerFactory.getLogger(DefaultMonitor.class);
+    private static Logger logger = LoggerFactory.getLogger("TARENA_MNMP_MONITOR");
 
     private Json jsonProvider;
 

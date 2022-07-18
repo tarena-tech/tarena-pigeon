@@ -17,7 +17,6 @@
 
 package com.tarena.schedule;
 
-import com.alibaba.fastjson.JSONObject;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
 import com.tarena.dispatcher.respository.TaskRepository;
@@ -28,15 +27,14 @@ import com.tarena.dispatcher.storage.entity.TemplateDO;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.commons.json.Json;
+import com.tarena.mnmp.constant.Constant;
 import com.tarena.mnmp.enums.NoticeType;
-import com.tarena.mnmp.enums.SendType;
 import com.tarena.mnmp.enums.TaskStatus;
 import com.tarena.schedule.utils.NoticeTaskTrigger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +67,7 @@ public abstract class AbstractScheduler {
         for (List<TargetDTO> targetList : targets) {
             NoticeDTO notice = new NoticeDTO();
             notice.setTaskId(taskTrigger.getTaskId());
-            notice.setTriggerTime(new SimpleDateFormat(DATEFORMATSECOND).format(taskTrigger.getFirstTriggerTime()));
+            notice.setTriggerTime(new SimpleDateFormat(Constant.DATE_FORMAT_MIN).format(taskTrigger.getFirstTriggerTime()));
             notice.setNoticeType(NoticeType.SMS);
             notice.setTargets(targetList);
             TemplateDO template = taskRepository.queryTemplate(taskTrigger.getTemplateId());

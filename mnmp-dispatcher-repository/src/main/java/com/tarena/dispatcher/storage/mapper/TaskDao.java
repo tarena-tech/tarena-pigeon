@@ -24,7 +24,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
-
 @Mapper
 public interface TaskDao {
 
@@ -35,7 +34,7 @@ public interface TaskDao {
     List<TaskDO> queryTriggers();
 
     @Update("update notice_task set next_trigger_time = #{time}, task_status = #{taskStatus} , update_time = now() where id = #{id}")
-    int updateNextTriggerTime(@Param("id") Long id,@Param("time") Date time,@Param("taskStatus") Integer taskStatus);
+    int updateNextTriggerTime(@Param("id") Long id, @Param("time") Date time, @Param("taskStatus") Integer taskStatus);
 
     @Update("update notice_task set task_status = #{taskStatus},next_trigger_time = null, update_time = now()" +
         " where id = #{id}")

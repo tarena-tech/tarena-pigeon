@@ -49,11 +49,9 @@ public class TaskController implements TaskApi {
     }
 
     @Override public void stopTask(Long id) {
-
     }
 
     @Override public void updateTask(TaskVO taskVO) {
 
     }
-
 }

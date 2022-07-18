@@ -34,10 +34,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TaskRepositoryImpl implements TaskRepository {
-    @Autowired private TaskDao taskDao;
-    @Autowired private TaskTargetDao taskTargetDao;
-    @Autowired private TemplateDao templateDao;
-    @Autowired private SmsSignDao smsSignDao;
+
+    @Autowired
+    private TaskDao taskDao;
+    @Autowired
+    private TaskTargetDao taskTargetDao;
+    @Autowired
+    private TemplateDao templateDao;
+    @Autowired
+    private SmsSignDao smsSignDao;
 
     /**
      * 修改任务下次执行时间
@@ -46,13 +51,13 @@ public class TaskRepositoryImpl implements TaskRepository {
      * @param nextTriggerTime
      * @return
      */
-    @Override public Integer updateNextTriggerTimeAndStatus(Long taskId, Date nextTriggerTime,Integer taskStatus) {
-        return taskDao.updateNextTriggerTime(taskId,nextTriggerTime,taskStatus );
+    @Override public Integer updateNextTriggerTimeAndStatus(Long taskId, Date nextTriggerTime, Integer taskStatus) {
+        return taskDao.updateNextTriggerTime(taskId, nextTriggerTime, taskStatus);
     }
 
     /**
-     * 修改任务首次触发时间
-     * 在任务审核之后赋值即可
+     * 修改任务首次触发时间 在任务审核之后赋值即可
+     *
      * @param taskId
      * @param triggerTime
      * @return
