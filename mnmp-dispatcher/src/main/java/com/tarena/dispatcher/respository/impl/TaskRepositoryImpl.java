@@ -55,16 +55,6 @@ public class TaskRepositoryImpl implements TaskRepository {
         return taskDao.updateNextTriggerTime(taskId, nextTriggerTime, taskStatus);
     }
 
-    /**
-     * 修改任务首次触发时间 在任务审核之后赋值即可
-     *
-     * @param taskId
-     * @param triggerTime
-     * @return
-     */
-    @Override public Integer updateStartTime(Long taskId, Date triggerTime) {
-        return null;
-    }
 
     /**
      * 任务结束
@@ -76,11 +66,6 @@ public class TaskRepositoryImpl implements TaskRepository {
     @Override public Integer finishTask(Long taskId, Integer taskStatus) {
         return taskDao.finishTask(taskStatus, taskId);
     }
-
-    @Override public Integer updateTaskStatus(Long taskId, Integer taskStatus) {
-        return taskDao.updateStatus(taskStatus, taskId);
-    }
-
     /**
      * 获取要执行的任务列表
      *

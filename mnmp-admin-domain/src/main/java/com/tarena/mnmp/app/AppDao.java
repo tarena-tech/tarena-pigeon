@@ -20,6 +20,7 @@ package com.tarena.mnmp.app;
 import java.util.List;
 
 public interface AppDao {
+
     Integer save(AppDO appDO);
 
     List<AppDO> queryAllApps();

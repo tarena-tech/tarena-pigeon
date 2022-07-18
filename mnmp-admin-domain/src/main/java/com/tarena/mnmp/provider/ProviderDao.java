@@ -20,6 +20,7 @@ package com.tarena.mnmp.provider;
 import java.util.List;
 
 public interface ProviderDao {
+
     Integer save(ProviderDO aDo);
 
     void disable(Long id);

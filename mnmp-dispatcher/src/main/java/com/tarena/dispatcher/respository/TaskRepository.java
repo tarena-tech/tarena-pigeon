@@ -28,11 +28,7 @@ public interface TaskRepository {
 
     Integer updateNextTriggerTimeAndStatus(Long taskId, Date nextTriggerTime,Integer taskStatus);
 
-    Integer updateStartTime(Long taskId, Date triggerTime);
-
     Integer finishTask(Long taskId, Integer taskStatus);
-
-    Integer updateTaskStatus(Long taskId, Integer taskStatus);
 
     List<TaskDO> queryTriggers();
 
