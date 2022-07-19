@@ -58,6 +58,9 @@
             <groupId>com.tarena.mnmp</groupId>
             <artifactId>mnmp-dispatcher</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.tarena.mnmp</groupId>
+            <artifactId>mnmp-api</artifactId>
+        </dependency>
     </dependencies>
 </project>

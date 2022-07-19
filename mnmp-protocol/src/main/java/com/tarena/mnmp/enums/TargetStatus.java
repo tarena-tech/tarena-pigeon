@@ -18,15 +18,15 @@
 package com.tarena.mnmp.enums;
 
 public enum TargetStatus {
-    SENT_FAIL(0,"发送供应商失败"),
-    SENT_TO_PROVIDER(1,"发送供应商成功"),
-    SENT_TARGET_FAIL(2,"发送目标失败"),
-    SENT_TO_TARGET(3,"发送目标成功");
+    SENT_FAIL(0, "发送供应商失败"),
+    SENT_TO_PROVIDER(1, "发送供应商成功"),
+    SENT_TARGET_FAIL(2, "发送目标失败"),
+    SENT_TO_TARGET(3, "发送目标成功");
 
     private int status;
     private String msg;
 
-    TargetStatus(int status, String msg){
+    TargetStatus(int status, String msg) {
         this.status = status;
         this.msg = msg;
     }
