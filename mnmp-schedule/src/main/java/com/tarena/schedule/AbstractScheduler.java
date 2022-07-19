@@ -41,6 +41,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
+import com.google.common.collect.Lists;
 
 public abstract class AbstractScheduler {
 
@@ -140,13 +141,12 @@ public abstract class AbstractScheduler {
      * @return
      */
     private List<List<TargetDTO>> getTargets(NoticeTaskTrigger noticeTaskTrigger) {
-        List<List<TargetDTO>> targetsList = new ArrayList<>();
         List<TargetDTO> targets = new ArrayList<>();
         List<TaskTargetBO> taskTargetList = taskRepository.getTargets(noticeTaskTrigger.getTaskId());
         taskTargetList.forEach(target -> {
             targets.add(new TargetDTO(target.getTarget(), this.json.parse(target.getParams())));
         });
-        targetsList.add(targets);
+        List<List<TargetDTO>> targetsList = Lists.partition(targets, 1000);
         return targetsList;
     }
 }
