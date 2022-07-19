@@ -49,12 +49,14 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.14</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.tarena.mnmp</groupId>
+            <artifactId>mnmp-dispatcher</artifactId>
+        </dependency>
     </dependencies>
 </project>

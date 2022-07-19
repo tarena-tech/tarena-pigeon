@@ -15,18 +15,34 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin;
+package com.tarena.mnmp.protocol;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+public class ProviderClientConfig {
+    private String accessKeyId;
+    private String accessKeySecret;
+    private String defaultTemplate;
 
-@SpringBootApplication
-@MapperScan(basePackages = {"com.tarena.mnmp.app", "com.tarena.mnmp.provider", "com.tarena.mnmp.sign"})
-@ComponentScan(basePackages = {"com.tarena.mnmp.admin", "com.tarena.mnmp"})
-public class AdminApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(AdminApplication.class, args);
+    public String getAccessKeyId() {
+        return accessKeyId;
+    }
+
+    public void setAccessKeyId(String accessKeyId) {
+        this.accessKeyId = accessKeyId;
+    }
+
+    public String getAccessKeySecret() {
+        return accessKeySecret;
+    }
+
+    public void setAccessKeySecret(String accessKeySecret) {
+        this.accessKeySecret = accessKeySecret;
+    }
+
+    public String getDefaultTemplate() {
+        return defaultTemplate;
+    }
+
+    public void setDefaultTemplate(String defaultTemplate) {
+        this.defaultTemplate = defaultTemplate;
     }
 }

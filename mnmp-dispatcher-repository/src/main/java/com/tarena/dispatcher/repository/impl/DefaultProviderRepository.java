@@ -15,18 +15,24 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin;
+package com.tarena.dispatcher.repository.impl;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import com.tarena.dispatcher.respository.ProviderRepository;
+import com.tarena.dispatcher.storage.mapper.ProviderDao;
+import com.tarena.mnmp.commons.json.Json;
+import com.tarena.mnmp.protocol.ProviderClientConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@SpringBootApplication
-@MapperScan(basePackages = {"com.tarena.mnmp.app", "com.tarena.mnmp.provider", "com.tarena.mnmp.sign"})
-@ComponentScan(basePackages = {"com.tarena.mnmp.admin", "com.tarena.mnmp"})
-public class AdminApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(AdminApplication.class, args);
+@Repository
+public class DefaultProviderRepository implements ProviderRepository {
+    @Autowired
+    private ProviderDao providerDao;
+    @Autowired
+    private Json jsonProvider;
+
+    @Override public ProviderClientConfig getClientConfig(String providerCode) {
+        String clientConfig = this.providerDao.getClientConfig(providerCode);
+        return this.jsonProvider.parse(clientConfig, ProviderClientConfig.class);
     }
 }

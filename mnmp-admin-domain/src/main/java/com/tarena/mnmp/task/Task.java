@@ -64,8 +64,6 @@ public class Task {
 
     private String signName;
 
-
-
     private String creator;
 
     private String creatorName;

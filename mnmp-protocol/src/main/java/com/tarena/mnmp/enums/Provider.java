@@ -8,24 +8,29 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by providerlicable law or agreed to in writing, software
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
 
-package com.tarena.test.mnmp.admin.sql.provider;
+package com.tarena.mnmp.enums;
 
-public class ProviderSqlScript {
-    /**
-     * 清空所有数据表的SQL脚本
-     */
-    public static final String TRUNCATE_TABLE = "classpath:sql/provider/truncate_provider_test_data.sql";
+public enum Provider {
+    ALI_SMS(" {\"appId\":\"tedu\",\"accessKey\":\"key\",\"defaultTemplate\":\"template\"}");
 
-    /**
-     * 向所有数据表中插入测试数据的SQL脚本
-     */
-    public static final String INSERT_TEST_DATA = "classpath:sql/provider/insert_provider_test_data.sql";
+    private String example;
 
+    Provider(String example) {
+        this.example = example;
+    }
+
+    public String getExample() {
+        return example;
+    }
+
+    public void setExample(String example) {
+        this.example = example;
+    }
 }
