@@ -31,6 +31,16 @@ public enum TargetStatus {
         this.msg = msg;
     }
 
+    public static TargetStatus getStatusEnum(int status) {
+        TargetStatus[] targetStatusEnums = values();
+        for (TargetStatus statusEnum : targetStatusEnums) {
+            if (statusEnum.status() == status) {
+                return statusEnum;
+            }
+        }
+        return null;
+    }
+
     public int status() {
         return this.status;
     }

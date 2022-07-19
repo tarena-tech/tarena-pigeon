@@ -17,6 +17,7 @@
 
 package com.tarena.schedule;
 
+import com.google.common.collect.Lists;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
 import com.tarena.dispatcher.bo.SmsSignBO;
@@ -41,7 +42,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
-import com.google.common.collect.Lists;
 
 public abstract class AbstractScheduler {
 

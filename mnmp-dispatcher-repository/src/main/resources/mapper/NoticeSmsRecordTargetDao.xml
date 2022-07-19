@@ -19,7 +19,7 @@
     </resultMap>
 
     <!--查询单个-->
-    <select id="queryByParam" resultMap="NoticeSmsRecordTargetMap">
+    <select id="queryByParams" resultMap="NoticeSmsRecordTargetMap">
         select
         id, record_id, app_id,task_id, target, content, status, trigger_time,push_time, biz_id, send_result,
         create_time, update_time

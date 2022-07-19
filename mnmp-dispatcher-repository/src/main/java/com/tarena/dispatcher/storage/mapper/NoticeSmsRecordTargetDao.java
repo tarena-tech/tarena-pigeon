@@ -19,13 +19,18 @@ package com.tarena.dispatcher.storage.mapper;
 
 import com.tarena.dispatcher.storage.entity.NoticeSmsRecordTargetDO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface NoticeSmsRecordTargetDao {
 
-    NoticeSmsRecordTargetDO queryByParam();
-
     int insert(NoticeSmsRecordTargetDO data);
 
     void update(NoticeSmsRecordTargetDO data);
+
+    @Select("select status from notice_sms_record_target where task_id = #{taskId} " +
+        "and trigger_time = #{triggerTime} and target = #{target}")
+    Integer queryByParam(@Param("taskId") Long taskId, @Param("triggerTime") String triggerTime,
+        @Param("target") String target);
 }

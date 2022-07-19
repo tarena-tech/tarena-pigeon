@@ -19,6 +19,7 @@ package com.tarena.dispatcher.storage.entity;
 
 import java.io.Serializable;
 import lombok.Data;
+
 @Data
 public class TemplateDO implements Serializable {
     /**
