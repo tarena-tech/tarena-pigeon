@@ -22,18 +22,23 @@ import com.tarena.mnmp.admin.view.task.TaskVO;
 import com.tarena.mnmp.task.Task;
 import com.tarena.mnmp.task.TaskPage;
 import com.tarena.mnmp.task.TaskQuery;
+import com.tarena.mnmp.task.TaskService;
 import com.tarena.mnmp.task.TaskStatistics;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TaskController implements TaskApi {
+
+    @Autowired
+    private TaskService taskService;
 
     @Override public void addTask(TaskVO taskVO) {
 
     }
 
     @Override public void doAudit(Long id, Integer auditStatus, String auditResult) {
-
+        taskService.doAudit(id,auditStatus,auditResult);
     }
 
     @Override public TaskPage queryListByPage(TaskQuery taskQuery) {

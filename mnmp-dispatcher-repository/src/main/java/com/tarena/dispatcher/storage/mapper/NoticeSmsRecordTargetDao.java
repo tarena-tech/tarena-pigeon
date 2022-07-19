@@ -15,27 +15,17 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.enums;
+package com.tarena.dispatcher.storage.mapper;
 
-public enum TargetStatus {
-    SENT_FAIL(0,"发送供应商失败"),
-    SENT_TO_PROVIDER(1,"发送供应商成功"),
-    SENT_TARGET_FAIL(2,"发送目标失败"),
-    SENT_TO_TARGET(3,"发送目标成功");
+import com.tarena.dispatcher.storage.entity.NoticeSmsRecordTargetDO;
+import org.apache.ibatis.annotations.Mapper;
 
-    private int status;
-    private String msg;
+@Mapper
+public interface NoticeSmsRecordTargetDao {
 
-    TargetStatus(int status, String msg){
-        this.status = status;
-        this.msg = msg;
-    }
+    NoticeSmsRecordTargetDO queryByParam();
 
-    public int status() {
-        return this.status;
-    }
+    int insert(NoticeSmsRecordTargetDO data);
 
-    public String msg() {
-        return this.msg;
-    }
+    void update(NoticeSmsRecordTargetDO data);
 }

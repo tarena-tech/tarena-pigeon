@@ -73,14 +73,14 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
         for (SmsTarget smsTarget : targets) {
             TargetStatus sentStatus = this.targetLogRepository.getSmsStatus(event, smsTarget.getTarget());
             //未发送或发送失败则重试
-            if (sentStatus == null || sentStatus.equals(TargetStatus.UNSENT) || sentStatus.equals(TargetStatus.SENT_FAIL)) {
+            if (sentStatus == null || sentStatus.equals(TargetStatus.SENT_FAIL)) {
                 try {
                     String bizId = this.doDispatcher(notice, smsTarget);
-                    this.targetLogRepository.newSuccessSmsTargetLog(notice, smsTarget, TargetStatus.SENT_FAIL, bizId);
+                    this.targetLogRepository.newSuccessSmsTarget(notice, smsTarget, TargetStatus.SENT_TO_PROVIDER, bizId);
                     this.monitor.noticeStatus(event, smsTarget.getTarget(), TargetStatus.SENT_TO_PROVIDER);
                 } catch (Exception e) {
                     logger.error("sms sent fail notice:{} target:{}", this.jsonProvider.toString(notice), this.jsonProvider.toString(smsTarget), e);
-                    this.targetLogRepository.newFailSmsTargetLog(notice, smsTarget, TargetStatus.SENT_FAIL, e.getMessage());
+                    this.targetLogRepository.newFailSmsTarget(notice, smsTarget, TargetStatus.SENT_FAIL, e.getMessage());
                     this.monitor.noticeStatus(event, smsTarget.getTarget(), TargetStatus.SENT_FAIL);
                 }
             }
