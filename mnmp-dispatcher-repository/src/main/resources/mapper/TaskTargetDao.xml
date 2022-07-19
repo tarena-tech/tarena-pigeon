@@ -58,4 +58,14 @@
             </if>
         </where>
     </select>
+
+
+    <select id="queryListByTask" resultMap="NoticeTaskTargetMap">
+        select
+        id, task_id, target, params, deleted, create_time, update_time
+        from notice_task_target
+        where
+            task_id = #{taskId}
+            and deleted = 0
+    </select>
 </mapper>

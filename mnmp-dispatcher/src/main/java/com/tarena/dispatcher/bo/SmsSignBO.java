@@ -15,27 +15,44 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.enums;
+package com.tarena.dispatcher.bo;
 
-public enum TargetStatus {
-    SENT_FAIL(0,"发送供应商失败"),
-    SENT_TO_PROVIDER(1,"发送供应商成功"),
-    SENT_TARGET_FAIL(2,"发送目标失败"),
-    SENT_TO_TARGET(3,"发送目标成功");
+public class SmsSignBO {
+    /**
+     * 主键
+     */
 
-    private int status;
-    private String msg;
+    private Long id;
+    /**
+     * 签名全称
+     */
+    private String name;
+    /**
+     * 描述
+     */
+    private String remark;
 
-    TargetStatus(int status, String msg){
-        this.status = status;
-        this.msg = msg;
+    public Long getId() {
+        return id;
     }
 
-    public int status() {
-        return this.status;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String msg() {
-        return this.msg;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

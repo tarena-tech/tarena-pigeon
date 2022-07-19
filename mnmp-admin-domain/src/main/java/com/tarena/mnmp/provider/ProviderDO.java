@@ -17,12 +17,15 @@
 
 package com.tarena.mnmp.provider;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 public class ProviderDO {
     private Long id;
     private String code;
     private String name;
+    private String accessKey;
+    private String accessKeySecret;
     private Integer noticeType;
     private String officialWebsite;
     private String contacts;
@@ -128,5 +131,21 @@ public class ProviderDO {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getAccessKey() {
+        return accessKey;
+    }
+
+    public void setAccessKey(String accessKey) {
+        this.accessKey = accessKey;
+    }
+
+    public String getAccessKeySecret() {
+        return accessKeySecret;
+    }
+
+    public void setAccessKeySecret(String accessKeySecret) {
+        this.accessKeySecret = accessKeySecret;
     }
 }

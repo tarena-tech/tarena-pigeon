@@ -6,6 +6,8 @@
         <id column="id" property="id"/>
         <result column="code" property="code"/>
         <result column="name" property="name"/>
+        <result column="access_key" property="accessKey"/>
+        <result column="access_key_secret" property="accessKeySecret"/>
         <result column="notice_type" property="noticeType"/>
         <result column="official_website" property="officialWebsite"/>
         <result column="contacts" property="contacts"/>
@@ -20,6 +22,8 @@
         id
         ,name
         ,code
+        ,access_key
+        ,access_key_secret
         ,notice_type
         ,official_website
         ,contacts
@@ -34,6 +38,8 @@
         insert into notice_provider
         ( name
         , code
+        , access_key
+        , access_key_secret
         , notice_type
         , official_website
         , contacts
@@ -46,6 +52,8 @@
         values (
                 #{name},
                 #{code},
+                #{accessKey},
+                #{accessKeySecret},
                 #{noticeType},
                 #{officialWebsite},
                 #{contacts},
@@ -88,6 +96,12 @@
             </if>
             <if test="code!=null">
                 code=#{code},
+            </if>
+            <if test="accessKey != null and accessKey != ''">
+                access_key=#{accessKey},
+            </if>
+            <if test="accessKeySecret != null and accessKeySecret != ''">
+                access_key_secret=#{accessKeySecret},
             </if>
             <if test="noticeType!=null">
                 notice_type=#{noticeType},

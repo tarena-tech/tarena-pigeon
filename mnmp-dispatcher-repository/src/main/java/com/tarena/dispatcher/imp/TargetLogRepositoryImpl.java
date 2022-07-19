@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
-package com.tarena.commons.test;
+package com.tarena.dispatcher.imp;
 
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.dispatcher.respository.TargetLogRepository;
 import com.tarena.mnmp.enums.TargetStatus;
 import com.tarena.mnmp.protocol.NoticeEvent;
+import org.springframework.stereotype.Service;
 
-public class TargetLogRepositoryMock implements TargetLogRepository {
+@Service
+public class TargetLogRepositoryImpl implements TargetLogRepository {
     @Override public TargetStatus getSmsStatus(NoticeEvent noticeEvent, String target) {
         return null;
     }

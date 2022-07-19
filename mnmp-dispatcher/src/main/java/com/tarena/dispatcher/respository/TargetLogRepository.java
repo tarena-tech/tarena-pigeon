@@ -28,8 +28,8 @@ public interface TargetLogRepository {
 
     Integer modifySmsStatus(NoticeEvent noticeEvent, String target, TargetStatus targetStatus);
 
-    void newSuccessSmsTargetLog(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus, String bizId);
+    void newSuccessSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus, String bizId);
 
-    void newFailSmsTargetLog(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus, String errorMsg);
+    void newFailSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus, String errorMsg);
 
 }

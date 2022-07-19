@@ -20,9 +20,10 @@ package com.tarena.dispatcher.storage.mapper;
 import com.tarena.dispatcher.storage.entity.TaskTargetDO;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface TaskTargetDao {
-    List<TaskTargetDO> queryAll(TaskTargetDO targetDO);
+    List<TaskTargetDO> queryListByTask(@Param("taskId") Long taskId);
 }
 

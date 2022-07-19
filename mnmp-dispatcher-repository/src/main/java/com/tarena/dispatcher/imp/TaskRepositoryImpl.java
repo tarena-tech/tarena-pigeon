@@ -15,22 +15,27 @@
  * limitations under the License.
  */
 
-package com.tarena.dispatcher.respository.impl;
+package com.tarena.dispatcher.imp;
 
+
+import com.tarena.dispatcher.bo.SmsSignBO;
+import com.tarena.dispatcher.bo.TaskBO;
+import com.tarena.dispatcher.bo.TaskTargetBO;
+import com.tarena.dispatcher.bo.TemplateBO;
 import com.tarena.dispatcher.respository.TaskRepository;
-import com.tarena.dispatcher.storage.entity.SmsSignDO;
 import com.tarena.dispatcher.storage.entity.TaskDO;
 import com.tarena.dispatcher.storage.entity.TaskTargetDO;
-import com.tarena.dispatcher.storage.entity.TemplateDO;
 import com.tarena.dispatcher.storage.mapper.SmsSignDao;
 import com.tarena.dispatcher.storage.mapper.TaskDao;
 import com.tarena.dispatcher.storage.mapper.TaskTargetDao;
 import com.tarena.dispatcher.storage.mapper.TemplateDao;
-import com.tarena.mnmp.enums.Deleted;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class TaskRepositoryImpl implements TaskRepository {
@@ -71,8 +76,17 @@ public class TaskRepositoryImpl implements TaskRepository {
      *
      * @return
      */
-    @Override public List<TaskDO> queryTriggers() {
-        return taskDao.queryTriggers();
+    @Override public List<TaskBO> queryTriggers() {
+        List<TaskDO> resList = taskDao.queryTriggers();
+        if(!CollectionUtils.isEmpty(resList)){
+            List<TaskBO> triggers = resList.stream().map(task ->{
+                TaskBO bo = new TaskBO();
+                BeanUtils.copyProperties(task,bo);
+                return bo;
+            }).collect(Collectors.toList());
+            return triggers;
+        }
+        return null;
     }
 
     /**
@@ -80,18 +94,30 @@ public class TaskRepositoryImpl implements TaskRepository {
      *
      * @return
      */
-    @Override public List<TaskTargetDO> getTargets(Long taskId) {
-        TaskTargetDO taskTarget = new TaskTargetDO();
-        taskTarget.setTaskId(taskId);
-        taskTarget.setDeleted(Deleted.NO.getVal());
-        return taskTargetDao.queryAll(taskTarget);
+    @Override public List<TaskTargetBO> getTargets(Long taskId) {
+        List<TaskTargetDO> resList = taskTargetDao.queryListByTask(taskId);
+        if(!CollectionUtils.isEmpty(resList)){
+            List<TaskTargetBO> targets = resList.stream().map(target ->{
+                TaskTargetBO bo = new TaskTargetBO();
+                BeanUtils.copyProperties(target,bo);
+                return bo;
+            }).collect(Collectors.toList());
+            return targets;
+        }
+        return null;
     }
 
-    @Override public TemplateDO queryTemplate(Long templateId) {
-        return templateDao.selectById(templateId);
+    @Override public TemplateBO queryTemplate(Long templateId) {
+        TemplateBO template = new TemplateBO();
+        BeanUtils.copyProperties(
+            templateDao.selectById(templateId),template);
+        return template;
     }
 
-    @Override public SmsSignDO querySign(Long signId) {
-        return smsSignDao.selectById(signId);
+    @Override public SmsSignBO querySign(Long signId) {
+        SmsSignBO sign = new SmsSignBO();
+        BeanUtils.copyProperties(
+            smsSignDao.selectById(signId),sign);
+        return sign;
     }
 }

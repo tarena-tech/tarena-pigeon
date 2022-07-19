@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tarena.dispatcher.storage.mapper.NoticeSmsRecordTargetDao">
+
+    <resultMap type="com.tarena.dispatcher.storage.entity.NoticeSmsRecordTargetDO" id="NoticeSmsRecordTargetMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="recordId" column="record_id" jdbcType="INTEGER"/>
+        <result property="appId" column="app_id" jdbcType="INTEGER"/>
+        <result property="taskId" column="task_id" jdbcType="INTEGER"/>
+        <result property="target" column="target" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="triggerTime" column="trigger_time" jdbcType="VARCHAR"/>
+        <result property="pushTime" column="push_time" jdbcType="TIMESTAMP"/>
+        <result property="bizId" column="biz_id" jdbcType="VARCHAR"/>
+        <result property="sendResult" column="send_result" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryByParam" resultMap="NoticeSmsRecordTargetMap">
+        select
+        id, record_id, app_id,task_id, target, content, status, trigger_time,push_time, biz_id, send_result,
+        create_time, update_time
+        from notice_sms_record_target
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="recordId != null">
+                and record_id = #{recordId}
+            </if>
+            <if test="appId != null">
+                and app_id = #{appId}
+            </if>
+            <if test="taskId != null">
+                and task_id = #{taskId}
+            </if>
+            <if test="target != null and target != ''">
+                and target = #{target}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="triggerTime != null and triggerTime != ''">
+                and trigger_time = #{triggerTime}
+            </if>
+            <if test="pushTime != null">
+                and push_time = #{pushTime}
+            </if>
+            <if test="bizId != null and bizId != ''">
+                and biz_id = #{bizId}
+            </if>
+            <if test="sendResult != null and sendResult != ''">
+                and send_result = #{sendResult}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+    
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="NoticeSmsRecordTargetMap">
+        select
+        id, record_id, record_name, app_code, target, content, status, push_time, biz_id, send_result, provider_cost,
+        create_time, update_time
+        from notice_sms_record_target
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="recordId != null">
+                and record_id = #{recordId}
+            </if>
+            <if test="appId != null">
+                and app_id = #{appId}
+            </if>
+            <if test="taskId != null">
+                and task_id = #{taskId}
+            </if>
+            <if test="target != null and target != ''">
+                and target = #{target}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="triggerTime != null and triggerTime != ''">
+                and trigger_time = #{triggerTime}
+            </if>
+            <if test="pushTime != null">
+                and push_time = #{pushTime}
+            </if>
+            <if test="bizId != null and bizId != ''">
+                and biz_id = #{bizId}
+            </if>
+            <if test="sendResult != null and sendResult != ''">
+                and send_result = #{sendResult}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into notice_sms_record_target(record_id,  app_id, task_id, target, content, status,trigger_time,
+        push_time,push_receive_time, biz_id, send_result,create_time, update_time)
+        values (#{recordId}, #{appId},#{taskId}, #{target}, #{content}, #{status}, #{triggerTime}, #{pushTime},
+        #{pushReceiveTime},#{bizId},#{sendResult}, now(), #{updateTime})
+    </insert>
+
+
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update notice_sms_record_target
+        <set>
+            <if test="recordId != null">
+                 record_id = #{recordId},
+            </if>
+            <if test="appId != null">
+                 app_id = #{appId},
+            </if>
+            <if test="taskId != null">
+                 task_id = #{taskId},
+            </if>
+            <if test="target != null and target != ''">
+                 target = #{target},
+            </if>
+            <if test="content != null and content != ''">
+                 content = #{content},
+            </if>
+            <if test="status != null">
+                 status = #{status},
+            </if>
+            <if test="triggerTime != null and triggerTime != ''">
+                 trigger_time = #{triggerTime},
+            </if>
+            <if test="pushTime != null">
+                 push_time = #{pushTime},
+            </if>
+            <if test="bizId != null and bizId != ''">
+                 biz_id = #{bizId},
+            </if>
+            <if test="sendResult != null and sendResult != ''">
+                 send_result = #{sendResult},
+            </if>
+                update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+
+</mapper>
+

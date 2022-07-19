@@ -15,27 +15,26 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.enums;
+package com.tarena.mnmp.task;
 
-public enum TargetStatus {
-    SENT_FAIL(0,"发送供应商失败"),
-    SENT_TO_PROVIDER(1,"发送供应商成功"),
-    SENT_TARGET_FAIL(2,"发送目标失败"),
-    SENT_TO_TARGET(3,"发送目标成功");
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-    private int status;
-    private String msg;
+@Service
+public class TaskService {
+    private static final int AUDIT_STATUS_PASS = 1;
 
-    TargetStatus(int status, String msg){
-        this.status = status;
-        this.msg = msg;
-    }
+    @Autowired
+    private TaskDao taskDao;
 
-    public int status() {
-        return this.status;
-    }
+    public void doAudit(Long id, Integer status, String result) {
+        TaskDO taskDO = taskDao.queryById(id);
+        //todo 审核逻辑处理 修改任务状态,备注说明等
 
-    public String msg() {
-        return this.msg;
+        //审核通过后初始化执行时间
+        if (AUDIT_STATUS_PASS == status.intValue()) {
+            taskDO.setNextTriggerTime(taskDO.getFirstTriggerTime());
+        }
+        taskDao.update(taskDO);
     }
 }

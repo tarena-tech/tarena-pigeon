@@ -44,6 +44,20 @@ public class ProviderSaveParam {
     )
     private String code;
     @ApiModelProperty(
+        value = "供应商访问key",
+        name = "accessKey",
+        required = true,
+        example = "LTAI5tDUmvKicoxxx"
+    )
+    private String accessKey;
+    @ApiModelProperty(
+        value = "供应商访问Secret",
+        name = "accessKeySecret",
+        required = true,
+        example = "I2rF9nFhmjlFXoOguxxx"
+    )
+    private String accessKeySecret;
+    @ApiModelProperty(
         value = "业务类型",
         name = "noticeType",
         required = false,
@@ -202,5 +216,21 @@ public class ProviderSaveParam {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getAccessKey() {
+        return accessKey;
+    }
+
+    public void setAccessKey(String accessKey) {
+        this.accessKey = accessKey;
+    }
+
+    public String getAccessKeySecret() {
+        return accessKeySecret;
+    }
+
+    public void setAccessKeySecret(String accessKeySecret) {
+        this.accessKeySecret = accessKeySecret;
     }
 }

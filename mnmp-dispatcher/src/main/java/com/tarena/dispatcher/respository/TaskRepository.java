@@ -17,10 +17,10 @@
 
 package com.tarena.dispatcher.respository;
 
-import com.tarena.dispatcher.storage.entity.SmsSignDO;
-import com.tarena.dispatcher.storage.entity.TaskDO;
-import com.tarena.dispatcher.storage.entity.TaskTargetDO;
-import com.tarena.dispatcher.storage.entity.TemplateDO;
+import com.tarena.dispatcher.bo.SmsSignBO;
+import com.tarena.dispatcher.bo.TaskBO;
+import com.tarena.dispatcher.bo.TaskTargetBO;
+import com.tarena.dispatcher.bo.TemplateBO;
 import java.util.Date;
 import java.util.List;
 
@@ -30,12 +30,12 @@ public interface TaskRepository {
 
     Integer finishTask(Long taskId, Integer taskStatus);
 
-    List<TaskDO> queryTriggers();
+    List<TaskBO> queryTriggers();
 
-    List<TaskTargetDO> getTargets(Long taskId);
+    List<TaskTargetBO> getTargets(Long taskId);
 
-    TemplateDO queryTemplate(Long templateId);
+    TemplateBO queryTemplate(Long templateId);
 
-    SmsSignDO querySign(Long signId);
+    SmsSignBO querySign(Long signId);
 
 }

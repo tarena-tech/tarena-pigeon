@@ -19,11 +19,11 @@ package com.tarena.schedule;
 
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
+import com.tarena.dispatcher.bo.SmsSignBO;
+import com.tarena.dispatcher.bo.TaskBO;
+import com.tarena.dispatcher.bo.TaskTargetBO;
+import com.tarena.dispatcher.bo.TemplateBO;
 import com.tarena.dispatcher.respository.TaskRepository;
-import com.tarena.dispatcher.storage.entity.SmsSignDO;
-import com.tarena.dispatcher.storage.entity.TaskDO;
-import com.tarena.dispatcher.storage.entity.TaskTargetDO;
-import com.tarena.dispatcher.storage.entity.TemplateDO;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.commons.json.Json;
@@ -67,14 +67,15 @@ public abstract class AbstractScheduler {
         for (List<TargetDTO> targetList : targets) {
             NoticeDTO notice = new NoticeDTO();
             notice.setTaskId(taskTrigger.getTaskId());
-            notice.setTriggerTime(new SimpleDateFormat(Constant.DATE_FORMAT_MIN).format(taskTrigger.getFirstTriggerTime()));
+            //每次任务执行的时间
+            notice.setTriggerTime(new SimpleDateFormat(Constant.DATE_FORMAT_MIN).format(taskTrigger.getNextTriggerTime()));
             notice.setNoticeType(NoticeType.SMS);
             notice.setTargets(targetList);
-            TemplateDO template = taskRepository.queryTemplate(taskTrigger.getTemplateId());
+            TemplateBO template = taskRepository.queryTemplate(taskTrigger.getTemplateId());
             notice.setTemplateCode(template.getCode());
             notice.setTemplateContent(template.getContent());
             notice.setAppCode(template.getAppCode());
-            SmsSignDO sign = taskRepository.querySign(taskTrigger.getSignId());
+            SmsSignBO sign = taskRepository.querySign(taskTrigger.getSignId());
             notice.setSignName(sign.getName());
             notices.add(notice);
         }
@@ -120,7 +121,7 @@ public abstract class AbstractScheduler {
      * @return
      */
     private List<NoticeTaskTrigger> queryTriggers() {
-        List<TaskDO> taskList = taskRepository.queryTriggers();
+        List<TaskBO> taskList = taskRepository.queryTriggers();
         if (CollectionUtils.isEmpty(taskList)) {
             return null;
         }
@@ -141,7 +142,7 @@ public abstract class AbstractScheduler {
     private List<List<TargetDTO>> getTargets(NoticeTaskTrigger noticeTaskTrigger) {
         List<List<TargetDTO>> targetsList = new ArrayList<>();
         List<TargetDTO> targets = new ArrayList<>();
-        List<TaskTargetDO> taskTargetList = taskRepository.getTargets(noticeTaskTrigger.getTaskId());
+        List<TaskTargetBO> taskTargetList = taskRepository.getTargets(noticeTaskTrigger.getTaskId());
         taskTargetList.forEach(target -> {
             targets.add(new TargetDTO(target.getTarget(), this.json.parse(target.getParams())));
         });

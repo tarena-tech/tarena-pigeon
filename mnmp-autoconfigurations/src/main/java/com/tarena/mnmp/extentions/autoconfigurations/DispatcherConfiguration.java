@@ -21,11 +21,11 @@ import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.teaopenapi.models.Config;
 import com.tarena.dispatcher.assemble.impl.EmailTargetAssembler;
 import com.tarena.dispatcher.assemble.impl.SmsTargetAssembler;
+import com.tarena.dispatcher.bo.TemplateBO;
 import com.tarena.dispatcher.impl.EmailAliNoticeDispatcher;
 import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
 import com.tarena.dispatcher.respository.TargetLogRepository;
 import com.tarena.dispatcher.respository.TaskRepository;
-import com.tarena.dispatcher.storage.entity.TemplateDO;
 import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.utils.DollarPlaceholderReplacer;
 import org.springframework.beans.factory.annotation.Value;
@@ -68,7 +68,7 @@ public class DispatcherConfiguration {
     }
     @ConditionalOnProperty(prefix = "dispatcher", value = "sms_ali_pigeon_provider_id")
     Client smsAliClient(TaskRepository taskRepository) throws Exception {
-        TemplateDO template= taskRepository.queryTemplate(this.pigeonAliProviderId);
+        TemplateBO template= taskRepository.queryTemplate(this.pigeonAliProviderId);
 
         //todo 新建sms ali client
         return new Client(new Config());
