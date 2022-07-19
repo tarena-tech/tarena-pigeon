@@ -21,14 +21,15 @@ import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.teaopenapi.models.Config;
 import com.tarena.dispatcher.assemble.impl.EmailTargetAssembler;
 import com.tarena.dispatcher.assemble.impl.SmsTargetAssembler;
-import com.tarena.dispatcher.bo.TemplateBO;
 import com.tarena.dispatcher.impl.EmailAliNoticeDispatcher;
 import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
+import com.tarena.dispatcher.respository.ProviderRepository;
 import com.tarena.dispatcher.respository.TargetLogRepository;
-import com.tarena.dispatcher.respository.TaskRepository;
 import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.utils.DollarPlaceholderReplacer;
+import com.tarena.mnmp.protocol.ProviderClientConfig;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -37,11 +38,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DispatcherConfiguration {
 
-    @Value("${dispatcher.sms_ali_pigeon_provider_id}")
-    private Long pigeonAliProviderId;
-
-    @Value("${dispatcher.sms_ali_template_code}")
-    private String aliTemplateCode;
+    @Value("${dispatcher.sms_ali_pigeon_provider_code}")
+    private String pigeonAliProviderCode;
 
     @Bean
     @ConditionalOnMissingBean(DollarPlaceholderReplacer.class)
@@ -66,28 +64,36 @@ public class DispatcherConfiguration {
         smsTargetAssembler.setDollarPlaceholderReplacer(dollarPlaceholderReplacer);
         return smsTargetAssembler;
     }
-    @ConditionalOnProperty(prefix = "dispatcher", value = "sms_ali_pigeon_provider_id")
-    Client smsAliClient(TaskRepository taskRepository) throws Exception {
-        TemplateBO template= taskRepository.queryTemplate(this.pigeonAliProviderId);
 
-        //todo 新建sms ali client
-        return new Client(new Config());
+    @Bean
+    @ConditionalOnProperty(prefix = "dispatcher", value = "sms_ali_pigeon_provider_id")
+    @ConditionalOnBean({ProviderRepository.class})
+    public Client smsAliClient(ProviderRepository providerRepository) throws Exception {
+        ProviderClientConfig providerClientConfig = providerRepository.getClientConfig(this.pigeonAliProviderCode);
+        Config config = new Config();
+        config.setAccessKeyId(providerClientConfig.getAccessKeyId());
+        config.setAccessKeySecret(providerClientConfig.getAccessKeySecret());
+        return new Client(config);
     }
 
     @Bean
     @ConditionalOnMissingBean(SmsAliNoticeDispatcher.class)
+    @ConditionalOnBean({TargetLogRepository.class, ProviderRepository.class})
     @ConditionalOnProperty(prefix = "dispatcher", value = "notice_sms_ali", havingValue = "true")
-    public SmsAliNoticeDispatcher smsAliNoticeDispatcher(Json json, TargetLogRepository targetLogRepository, Client client) {
+    public SmsAliNoticeDispatcher smsAliNoticeDispatcher(Json json, TargetLogRepository targetLogRepository,
+        ProviderRepository providerRepository, Client smsAliClient) {
+        ProviderClientConfig providerClientConfig = providerRepository.getClientConfig(this.pigeonAliProviderCode);
         SmsAliNoticeDispatcher aliNoticeDispatcher = new SmsAliNoticeDispatcher();
         aliNoticeDispatcher.setJsonProvider(json);
         aliNoticeDispatcher.setTargetLogRepository(targetLogRepository);
-        aliNoticeDispatcher.setAliTemplateCode(this.aliTemplateCode);
-        aliNoticeDispatcher.setAliSmsClient(client);
+        aliNoticeDispatcher.setAliTemplateCode(providerClientConfig.getDefaultTemplate());
+        aliNoticeDispatcher.setAliSmsClient(smsAliClient);
         return aliNoticeDispatcher;
     }
 
     @Bean
-    @ConditionalOnMissingBean(SmsAliNoticeDispatcher.class)
+    @ConditionalOnMissingBean(EmailAliNoticeDispatcher.class)
+    @ConditionalOnBean({TargetLogRepository.class})
     @ConditionalOnProperty(prefix = "dispatcher", value = "notice_email_ali", havingValue = "true")
     public EmailAliNoticeDispatcher emailAliNoticeDispatcher(Json json, TargetLogRepository targetLogRepository) {
         EmailAliNoticeDispatcher emailAliNoticeDispatcher = new EmailAliNoticeDispatcher();

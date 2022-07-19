@@ -15,27 +15,34 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.enums;
+package com.tarena.mnmp.protocol;
 
-public enum TargetStatus {
-    SENT_FAIL(0, "发送供应商失败"),
-    SENT_TO_PROVIDER(1, "发送供应商成功"),
-    SENT_TARGET_FAIL(2, "发送目标失败"),
-    SENT_TO_TARGET(3, "发送目标成功");
+public class ProviderClientConfig {
+    private String accessKeyId;
+    private String accessKeySecret;
+    private String defaultTemplate;
 
-    private int status;
-    private String msg;
-
-    TargetStatus(int status, String msg) {
-        this.status = status;
-        this.msg = msg;
+    public String getAccessKeyId() {
+        return accessKeyId;
     }
 
-    public int status() {
-        return this.status;
+    public void setAccessKeyId(String accessKeyId) {
+        this.accessKeyId = accessKeyId;
     }
 
-    public String msg() {
-        return this.msg;
+    public String getAccessKeySecret() {
+        return accessKeySecret;
+    }
+
+    public void setAccessKeySecret(String accessKeySecret) {
+        this.accessKeySecret = accessKeySecret;
+    }
+
+    public String getDefaultTemplate() {
+        return defaultTemplate;
+    }
+
+    public void setDefaultTemplate(String defaultTemplate) {
+        this.defaultTemplate = defaultTemplate;
     }
 }

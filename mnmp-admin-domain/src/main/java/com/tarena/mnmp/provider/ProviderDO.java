@@ -17,7 +17,6 @@
 
 package com.tarena.mnmp.provider;
 
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 public class ProviderDO {

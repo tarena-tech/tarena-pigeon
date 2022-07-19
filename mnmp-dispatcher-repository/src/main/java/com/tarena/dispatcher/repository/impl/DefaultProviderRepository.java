@@ -15,27 +15,24 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.enums;
+package com.tarena.dispatcher.repository.impl;
 
-public enum TargetStatus {
-    SENT_FAIL(0, "发送供应商失败"),
-    SENT_TO_PROVIDER(1, "发送供应商成功"),
-    SENT_TARGET_FAIL(2, "发送目标失败"),
-    SENT_TO_TARGET(3, "发送目标成功");
+import com.tarena.dispatcher.respository.ProviderRepository;
+import com.tarena.dispatcher.storage.mapper.ProviderDao;
+import com.tarena.mnmp.commons.json.Json;
+import com.tarena.mnmp.protocol.ProviderClientConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-    private int status;
-    private String msg;
+@Repository
+public class DefaultProviderRepository implements ProviderRepository {
+    @Autowired
+    private ProviderDao providerDao;
+    @Autowired
+    private Json jsonProvider;
 
-    TargetStatus(int status, String msg) {
-        this.status = status;
-        this.msg = msg;
-    }
-
-    public int status() {
-        return this.status;
-    }
-
-    public String msg() {
-        return this.msg;
+    @Override public ProviderClientConfig getClientConfig(String providerCode) {
+        String clientConfig = this.providerDao.getClientConfig(providerCode);
+        return this.jsonProvider.parse(clientConfig, ProviderClientConfig.class);
     }
 }

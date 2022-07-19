@@ -17,7 +17,6 @@
 
 package com.tarena.dispatcher.imp;
 
-
 import com.tarena.dispatcher.bo.SmsSignBO;
 import com.tarena.dispatcher.bo.TaskBO;
 import com.tarena.dispatcher.bo.TaskTargetBO;
@@ -60,7 +59,6 @@ public class TaskRepositoryImpl implements TaskRepository {
         return taskDao.updateNextTriggerTime(taskId, nextTriggerTime, taskStatus);
     }
 
-
     /**
      * 任务结束
      *
@@ -71,6 +69,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     @Override public Integer finishTask(Long taskId, Integer taskStatus) {
         return taskDao.finishTask(taskStatus, taskId);
     }
+
     /**
      * 获取要执行的任务列表
      *
@@ -78,10 +77,10 @@ public class TaskRepositoryImpl implements TaskRepository {
      */
     @Override public List<TaskBO> queryTriggers() {
         List<TaskDO> resList = taskDao.queryTriggers();
-        if(!CollectionUtils.isEmpty(resList)){
-            List<TaskBO> triggers = resList.stream().map(task ->{
+        if (!CollectionUtils.isEmpty(resList)) {
+            List<TaskBO> triggers = resList.stream().map(task -> {
                 TaskBO bo = new TaskBO();
-                BeanUtils.copyProperties(task,bo);
+                BeanUtils.copyProperties(task, bo);
                 return bo;
             }).collect(Collectors.toList());
             return triggers;
@@ -96,10 +95,10 @@ public class TaskRepositoryImpl implements TaskRepository {
      */
     @Override public List<TaskTargetBO> getTargets(Long taskId) {
         List<TaskTargetDO> resList = taskTargetDao.queryListByTask(taskId);
-        if(!CollectionUtils.isEmpty(resList)){
-            List<TaskTargetBO> targets = resList.stream().map(target ->{
+        if (!CollectionUtils.isEmpty(resList)) {
+            List<TaskTargetBO> targets = resList.stream().map(target -> {
                 TaskTargetBO bo = new TaskTargetBO();
-                BeanUtils.copyProperties(target,bo);
+                BeanUtils.copyProperties(target, bo);
                 return bo;
             }).collect(Collectors.toList());
             return targets;
@@ -110,14 +109,14 @@ public class TaskRepositoryImpl implements TaskRepository {
     @Override public TemplateBO queryTemplate(Long templateId) {
         TemplateBO template = new TemplateBO();
         BeanUtils.copyProperties(
-            templateDao.selectById(templateId),template);
+            templateDao.selectById(templateId), template);
         return template;
     }
 
     @Override public SmsSignBO querySign(Long signId) {
         SmsSignBO sign = new SmsSignBO();
         BeanUtils.copyProperties(
-            smsSignDao.selectById(signId),sign);
+            smsSignDao.selectById(signId), sign);
         return sign;
     }
 }

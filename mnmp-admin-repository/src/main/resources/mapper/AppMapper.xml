@@ -16,8 +16,7 @@
     </resultMap>
 
     <sql id="AppAllFields">
-        id
-        ,
+        id,
         code,
         name,
         leader,
