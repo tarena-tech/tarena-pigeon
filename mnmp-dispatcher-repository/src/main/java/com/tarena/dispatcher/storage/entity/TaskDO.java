@@ -23,7 +23,6 @@ import lombok.Data;
 
 @Data
 public class TaskDO implements Serializable {
-
     /**
      * 主键
      */

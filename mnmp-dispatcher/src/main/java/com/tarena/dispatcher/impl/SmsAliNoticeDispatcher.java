@@ -24,7 +24,7 @@ import com.aliyun.dysmsapi20170525.models.QuerySendDetailsResponseBody;
 import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
 import com.tarena.dispatcher.SmsTarget;
-import com.tarena.dispatcher.bo.PhoneBizIdReceipt;
+import com.tarena.dispatcher.bo.PhoneBizIdReceiptBO;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.mnmp.commons.utils.SmsUtils;
 import com.tarena.mnmp.constant.Constant;
@@ -42,11 +42,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
 public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEvent> {
     private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
@@ -117,23 +119,23 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
      * @param receipts
      * @return
      */
-    private List<PhoneBizIdReceipt> fetchReceipt(List<PhoneBizIdReceipt> receipts){
-        List<PhoneBizIdReceipt> receiptedList=new ArrayList<>(receipts.size());
-        for (PhoneBizIdReceipt phoneBizIdPair : receipts) {
+    private List<PhoneBizIdReceiptBO> fetchReceipt(List<PhoneBizIdReceiptBO> receipts){
+        List<PhoneBizIdReceiptBO> receiptedList=new ArrayList<>(receipts.size());
+        for (PhoneBizIdReceiptBO phoneReceipt : receipts) {
             try {
                 QuerySendDetailsRequest querySendDetailsRequest=new QuerySendDetailsRequest();
-                querySendDetailsRequest.setBizId(phoneBizIdPair.getBizId());
-                querySendDetailsRequest.setPhoneNumber(phoneBizIdPair.getPhone());
+                querySendDetailsRequest.setBizId(phoneReceipt.getBizId());
+                querySendDetailsRequest.setPhoneNumber(phoneReceipt.getPhone());
                 querySendDetailsRequest.setCurrentPage(1L);
                 querySendDetailsRequest.setPageSize(1L);
                 querySendDetailsRequest.setSendDate(DateFormatUtils.format(new Date(),Constant.DATE_FORMAT_YYYYMMDD));
                 QuerySendDetailsResponse querySendDetailsResponse =
                     this.aliSmsClient.querySendDetails(querySendDetailsRequest);
                 QuerySendDetailsResponseBody querySendDetailsResponseBody= querySendDetailsResponse.getBody();
-                if(Constant.OK.equals(querySendDetailsResponseBody.getCode())){
-                    QuerySendDetailsResponseBody.QuerySendDetailsResponseBodySmsSendDetailDTOs querySendDetailsResponseBodySmsSendDetailDTOs= querySendDetailsResponseBody.getSmsSendDetailDTOs();
-                    List<QuerySendDetailsResponseBody.QuerySendDetailsResponseBodySmsSendDetailDTOsSmsSendDetailDTO> details= querySendDetailsResponseBodySmsSendDetailDTOs.getSmsSendDetailDTO();
-                    for(QuerySendDetailsResponseBody.QuerySendDetailsResponseBodySmsSendDetailDTOsSmsSendDetailDTO detail:details){
+                if(Constant.OK.equals(querySendDetailsResponseBody.getCode())) {
+                    QuerySendDetailsResponseBody.QuerySendDetailsResponseBodySmsSendDetailDTOs querySendDetailsResponseBodySmsSendDetailDTOs = querySendDetailsResponseBody.getSmsSendDetailDTOs();
+                    List<QuerySendDetailsResponseBody.QuerySendDetailsResponseBodySmsSendDetailDTOsSmsSendDetailDTO> details = querySendDetailsResponseBodySmsSendDetailDTOs.getSmsSendDetailDTO();
+                    for (QuerySendDetailsResponseBody.QuerySendDetailsResponseBodySmsSendDetailDTOsSmsSendDetailDTO detail : details) {
                         /**
                          * 短信发送状态，包括：
                          *
@@ -142,40 +144,49 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
                          * 3：发送成功
                          */
                         if (detail.getSendStatus().equals(3L)) {
-                            phoneBizIdPair.setSuccess(true);
-                            phoneBizIdPair.setCostNumbers(SmsUtils.smsCostCount(detail.getContent().length()));
-                            receiptedList.add(phoneBizIdPair);
+                            phoneReceipt.setSuccess(true);
+                            if (StringUtils.isNotBlank(detail.getSendDate())) {
+                                phoneReceipt.setSendTime(DateUtils.parseDate(detail.getSendDate(), Constant.DATE_FORMAT_SECOND));
+                            }
+                            if (StringUtils.isNotBlank(detail.getReceiveDate())) {
+                                phoneReceipt.setReceiveDate(DateUtils.parseDate(detail.getReceiveDate(), Constant.DATE_FORMAT_SECOND));
+                            }
+                            phoneReceipt.setCostNumbers(SmsUtils.smsCostCount(detail.getContent().length()));
+                            receiptedList.add(phoneReceipt);
                         } else if (detail.getSendStatus().equals(2L)) {
-                            phoneBizIdPair.setSuccess(false);
-                            receiptedList.add(phoneBizIdPair);
+                            phoneReceipt.setSuccess(false);
+                            receiptedList.add(phoneReceipt);
                         } else {
-                            logger.error(" receipting {}",phoneBizIdPair.getPhone());
+                            logger.error(" receipting {}", phoneReceipt.getPhone());
                         }
                     }
                 }
                 return receiptedList;
             } catch (Exception e) {
-                logger.error("NoticeServiceImpl insertAliTargetData is error; recordId:{} phone:{}", phoneBizIdPair.getBizId(),phoneBizIdPair.getPhone(),e);
+                logger.error("NoticeServiceImpl insertAliTargetData is error; recordId:{} phone:{}", phoneReceipt.getBizId(),phoneReceipt.getPhone(),e);
             }
         }
         return receiptedList;
     }
     private void doReceipt() {
         try {
-            List<PhoneBizIdReceipt> bizIds = targetLogRepository.queryNotReceiptBizIds(Provider.ALI_SMS);
-            List<PhoneBizIdReceipt> receiptedList = null;
-            if (this.mock) {
-                receiptedList =bizIds;
-            } else {
+            List<PhoneBizIdReceiptBO> bizIds = targetLogRepository.queryNotReceiptBizIds(Provider.ALI_SMS);
+            if(CollectionUtils.isEmpty(bizIds)){
+                //空则延迟100ms
+                Thread.sleep(100);
+                return;
+            }
+            List<PhoneBizIdReceiptBO> receiptedList = bizIds;
+            if (!this.mock) {
                 receiptedList = this.fetchReceipt(bizIds);
             }
-            targetLogRepository.modifyTarget2Success(Provider.ALI_SMS, receiptedList);
+            targetLogRepository.modifyTargetReceiptStatus(Provider.ALI_SMS, receiptedList);
         } catch (Throwable e) {
             logger.error("ali sms receipt error", e);
         }
     }
 
-    @Override public void receipt() {
+   public void receipt() {
         if (this.receipt) {
             return;
         }
@@ -189,5 +200,10 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
                 }
             }
         });
+    }
+
+    @Override public void afterPropertiesSet() throws Exception {
+        super.afterPropertiesSet();
+        this.receipt();
     }
 }

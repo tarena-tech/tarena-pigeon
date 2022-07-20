@@ -17,7 +17,9 @@
 
 package com.tarena.dispatcher.bo;
 
-public class PhoneBizIdReceipt {
+import java.util.Date;
+
+public class PhoneBizIdReceiptBO {
     /**
      * phone number
      */
@@ -32,13 +34,23 @@ public class PhoneBizIdReceipt {
     private Integer costNumbers;
 
     /**
+     * 发送时间
+     */
+    private Date sendTime;
+
+    /**
+     * 接收时间
+     */
+    private Date receiveDate;
+
+    /**
      * 回执状态
      */
     private Boolean success;
 
 
 
-    public PhoneBizIdReceipt(String phone, String bizId) {
+    public PhoneBizIdReceiptBO(String phone, String bizId) {
         this.phone = phone;
         this.bizId = bizId;
     }
@@ -73,5 +85,21 @@ public class PhoneBizIdReceipt {
 
     public void setSuccess(Boolean success) {
         this.success = success;
+    }
+
+    public Date getSendTime() {
+        return sendTime;
+    }
+
+    public void setSendTime(Date sendTime) {
+        this.sendTime = sendTime;
+    }
+
+    public Date getReceiveDate() {
+        return receiveDate;
+    }
+
+    public void setReceiveDate(Date receiveDate) {
+        this.receiveDate = receiveDate;
     }
 }

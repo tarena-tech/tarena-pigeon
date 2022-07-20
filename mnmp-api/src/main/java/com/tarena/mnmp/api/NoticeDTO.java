@@ -17,13 +17,14 @@
 
 package com.tarena.mnmp.api;
 
+import com.tarena.mnmp.constant.Constant;
 import com.tarena.mnmp.enums.NoticeType;
 import com.tarena.mnmp.enums.SendType;
 import java.io.Serializable;
 import java.util.List;
 
 public class NoticeDTO implements Serializable {
-    private Long taskId;
+    private Long taskId= Constant.CLIENT_NOTICE_TYPE;
     private String triggerTime;
     private SendType sendType;
     private NoticeType noticeType;

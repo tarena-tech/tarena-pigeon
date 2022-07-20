@@ -26,7 +26,6 @@ public class SmsSignDO implements Serializable {
     /**
      * 主键
      */
-
     private Long id;
     /**
      * 签名全称
@@ -36,5 +35,4 @@ public class SmsSignDO implements Serializable {
      * 描述
      */
     private String remark;
-
 }

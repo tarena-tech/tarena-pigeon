@@ -18,7 +18,7 @@
 package com.tarena.dispatcher.imp;
 
 import com.tarena.dispatcher.SmsTarget;
-import com.tarena.dispatcher.bo.PhoneBizIdReceipt;
+import com.tarena.dispatcher.bo.PhoneBizIdReceiptBO;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.dispatcher.respository.TargetLogRepository;
 import com.tarena.dispatcher.storage.entity.NoticeSmsRecordTargetDO;
@@ -41,7 +41,7 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
     @Override public TargetStatus getSmsStatus(NoticeEvent noticeEvent, String target) {
         Integer status = recordTargetDao.queryByParam(noticeEvent.getTaskId(), noticeEvent.getTriggerTime(), target);
         if (status != null) {
-            return TargetStatus.getStatusEnum(status.intValue());
+            return TargetStatus.getStatusEnum(status);
         }
         return null;
     }
@@ -60,17 +60,17 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
         addSmsTargetByTask(event, target, targetStatus.status(), null);
     }
 
-    @Override public List<PhoneBizIdReceipt> queryNotReceiptBizIds(Provider provider) {
+    @Override public List<PhoneBizIdReceiptBO> queryNotReceiptBizIds(Provider provider) {
         List<NoticeSmsRecordTargetDO> targets = this.recordTargetDao.queryNotReceiptBizIds();
-        List<PhoneBizIdReceipt> phoneBizIdPairs = new ArrayList<>(targets.size());
+        List<PhoneBizIdReceiptBO> phoneBizIdPairs = new ArrayList<>(targets.size());
         for (NoticeSmsRecordTargetDO target : targets) {
-            PhoneBizIdReceipt phoneBizIdPair = new PhoneBizIdReceipt(target.getTarget(), target.getBizId());
+            PhoneBizIdReceiptBO phoneBizIdPair = new PhoneBizIdReceiptBO(target.getTarget(), target.getBizId());
             phoneBizIdPairs.add(phoneBizIdPair);
         }
         return phoneBizIdPairs;
     }
 
-    @Override public void modifyTargetReceiptStatus(Provider provider,List<PhoneBizIdReceipt> receiptedList) {
+    @Override public void modifyTargetReceiptStatus(Provider provider,List<PhoneBizIdReceiptBO> receiptedList) {
       //todo 更新回执状态
     }
 

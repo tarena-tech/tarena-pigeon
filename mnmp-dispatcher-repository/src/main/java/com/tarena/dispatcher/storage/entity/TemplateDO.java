@@ -47,6 +47,9 @@ public class TemplateDO implements Serializable {
      * 所属应用
      */
     private Long appId;
+    /**
+     *应用编码
+     */
     private String appCode;
 
 }

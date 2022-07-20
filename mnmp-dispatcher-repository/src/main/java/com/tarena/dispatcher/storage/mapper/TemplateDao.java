@@ -27,6 +27,5 @@ public interface TemplateDao {
 
     @Select("select code,content,app_code as appCode from notice_template where id = #{templateId}")
     TemplateDO selectById(@Param("templateId") Long templateId);
-
 }
 

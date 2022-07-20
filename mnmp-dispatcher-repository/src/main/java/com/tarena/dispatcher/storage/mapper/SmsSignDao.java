@@ -23,8 +23,7 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface SmsSignDao {
-
-    @Select("select id , name from notice_sms_sign where id = #{signId}")
+    @Select("select id,name from notice_sms_sign where id = #{signId}")
     SmsSignDO selectById(@Param("signId") Long signId);
 }
 
