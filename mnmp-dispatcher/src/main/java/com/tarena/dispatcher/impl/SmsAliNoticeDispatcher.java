@@ -22,27 +22,30 @@ import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
+import com.tarena.mnmp.constant.Constant;
 import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.enums.NoticeType;
 import com.tarena.mnmp.enums.TargetStatus;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.NoticeEvent;
 import java.util.List;
+import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEvent> {
     private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
-
-    private static final String OK = "OK";
-
     private String aliTemplateCode;
+    private Client aliSmsClient;
+    private Boolean mock = true;
+
+    public void setMock(Boolean mock) {
+        this.mock = mock;
+    }
 
     public void setAliTemplateCode(String aliTemplateCode) {
         this.aliTemplateCode = aliTemplateCode;
     }
-
-    private Client aliSmsClient;
 
     public void setAliSmsClient(Client aliSmsClient) {
         this.aliSmsClient = aliSmsClient;
@@ -53,13 +56,18 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
     }
 
     protected String doDispatcher(SmsNoticeEvent notice, SmsTarget smsTarget) throws Exception {
+        if (this.mock) {
+            int delayTime = new Random().nextInt(200);
+            Thread.sleep(delayTime);
+            return delayTime + "-" + System.currentTimeMillis();
+        }
         SendSmsRequest sendReq = new SendSmsRequest()
             .setPhoneNumbers(smsTarget.getTarget())
             .setSignName(smsTarget.getSignName())
             .setTemplateCode(this.aliTemplateCode)
             .setTemplateParam("{\"content\":\"" + smsTarget.getContent() + "\"}");
         SendSmsResponse sendResp = this.aliSmsClient.sendSms(sendReq);
-        if (!OK.equals(sendResp.body.code)) {
+        if (!Constant.OK.equals(sendResp.body.code)) {
             logger.error("错误信息: " + sendResp.body.message + "");
             throw new BusinessException(ErrorCode.SEND_ALI_SMS_ERROR, sendResp.body.message);
         }

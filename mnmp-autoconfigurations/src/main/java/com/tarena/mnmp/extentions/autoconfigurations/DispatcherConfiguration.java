@@ -41,6 +41,9 @@ public class DispatcherConfiguration {
     @Value("${dispatcher.sms_ali_pigeon_provider_code}")
     private String pigeonAliProviderCode;
 
+    @Value("${dispatcher.mock}")
+    private Boolean mock;
+
     @Bean
     @ConditionalOnMissingBean(DollarPlaceholderReplacer.class)
     public DollarPlaceholderReplacer dollarPlaceholderReplacer() {
@@ -88,6 +91,7 @@ public class DispatcherConfiguration {
         aliNoticeDispatcher.setTargetLogRepository(targetLogRepository);
         aliNoticeDispatcher.setAliTemplateCode(providerClientConfig.getDefaultTemplate());
         aliNoticeDispatcher.setAliSmsClient(smsAliClient);
+        aliNoticeDispatcher.setMock(this.mock);
         return aliNoticeDispatcher;
     }
 

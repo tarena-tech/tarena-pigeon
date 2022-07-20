@@ -21,4 +21,6 @@ public interface NoticeDispatcher<T extends NoticeEventGetter> {
     String getNoticeType();
 
     void dispatcher(T notice);
+
+    boolean
 }
