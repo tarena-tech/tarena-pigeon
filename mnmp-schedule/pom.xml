@@ -46,5 +46,10 @@
             <groupId>com.tarena.mnmp</groupId>
             <artifactId>mnmp-autoconfigurations</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
+        </dependency>
     </dependencies>
 </project>

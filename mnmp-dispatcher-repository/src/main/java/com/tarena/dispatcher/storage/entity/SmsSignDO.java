@@ -20,7 +20,6 @@ package com.tarena.dispatcher.storage.entity;
 import java.io.Serializable;
 import lombok.Data;
 
-
 @Data
 public class SmsSignDO implements Serializable {
     private static final long serialVersionUID = 988125165135024152L;

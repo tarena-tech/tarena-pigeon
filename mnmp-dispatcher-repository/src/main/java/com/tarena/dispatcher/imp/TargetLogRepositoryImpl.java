@@ -20,13 +20,25 @@ package com.tarena.dispatcher.imp;
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.dispatcher.respository.TargetLogRepository;
+import com.tarena.dispatcher.storage.entity.NoticeSmsRecordTargetDO;
+import com.tarena.dispatcher.storage.mapper.NoticeSmsRecordTargetDao;
 import com.tarena.mnmp.enums.TargetStatus;
 import com.tarena.mnmp.protocol.NoticeEvent;
+import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TargetLogRepositoryImpl implements TargetLogRepository {
+
+    @Autowired
+    private NoticeSmsRecordTargetDao recordTargetDao;
+
     @Override public TargetStatus getSmsStatus(NoticeEvent noticeEvent, String target) {
+        Integer status = recordTargetDao.queryByParam(noticeEvent.getTaskId(), noticeEvent.getTriggerTime(), target);
+        if (status != null) {
+            return TargetStatus.getStatusEnum(status.intValue());
+        }
         return null;
     }
 
@@ -36,11 +48,24 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
 
     @Override public void newSuccessSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus,
         String bizId) {
-
+        addSmsTargetByTask(event, target, targetStatus.status(), bizId);
     }
 
     @Override public void newFailSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus,
         String errorMsg) {
+        addSmsTargetByTask(event, target, targetStatus.status(), null);
+    }
 
+    private void addSmsTargetByTask(SmsNoticeEvent event, SmsTarget target, Integer targetStatus,
+        String bizId) {
+        NoticeSmsRecordTargetDO insertData = new NoticeSmsRecordTargetDO();
+        insertData.setTaskId(event.getNoticeEvent().getTaskId());
+        insertData.setTarget(target.getTarget());
+        insertData.setTriggerTime(event.getNoticeEvent().getTriggerTime());
+        insertData.setPushTime(new Date());
+        insertData.setContent(target.getContent());
+        insertData.setStatus(targetStatus);
+        insertData.setBizId(bizId);
+        recordTargetDao.insert(insertData);
     }
 }

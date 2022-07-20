@@ -34,7 +34,6 @@ public enum Deleted {
         return val;
     }
 
-
     public String getDescription() {
         return description;
     }
