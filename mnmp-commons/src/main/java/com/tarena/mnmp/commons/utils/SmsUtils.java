@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-package com.tarena.dispatcher;
+package com.tarena.mnmp.commons.utils;
 
-public interface NoticeDispatcher<T extends NoticeEventGetter> {
-    String getNoticeType();
-
-    void dispatcher(T notice);
-
-    void receipt();
+public class SmsUtils {
+    public static final int SMS_COST_MEMBER = 69;
+    /**
+     * 短信计费条数
+     */
+    public static int smsCostCount(int length) {
+        return (length / SMS_COST_MEMBER) + 1;
+    }
 }

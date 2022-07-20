@@ -18,9 +18,12 @@
 package com.tarena.dispatcher.respository;
 
 import com.tarena.dispatcher.SmsTarget;
+import com.tarena.dispatcher.bo.PhoneBizIdReceipt;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
+import com.tarena.mnmp.enums.Provider;
 import com.tarena.mnmp.enums.TargetStatus;
 import com.tarena.mnmp.protocol.NoticeEvent;
+import java.util.List;
 
 public interface TargetLogRepository {
 
@@ -31,5 +34,9 @@ public interface TargetLogRepository {
     void newSuccessSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus, String bizId);
 
     void newFailSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus, String errorMsg);
+
+    List<PhoneBizIdReceipt> queryNotReceiptBizIds(Provider provider);
+
+    void modifyTargetReceiptStatus(Provider provider,List<PhoneBizIdReceipt> receiptedList);
 
 }

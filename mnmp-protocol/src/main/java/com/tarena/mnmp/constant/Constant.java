@@ -21,6 +21,8 @@ public class Constant {
     public static final String OK = "OK";
     public static final String DATE_FORMAT_SECOND = "yyyy-MM-dd HH:mm:ss";
     public static final String DATE_FORMAT_MIN = "yyyy-MM-dd HH:mm";
+    public static final String DATE_FORMAT_YYYYMMDD= "yyyyMMdd";
+
 
     public static final String DEFAULT = "default";
     public static final String ERROR = "error";

@@ -18,13 +18,17 @@
 package com.tarena.dispatcher.imp;
 
 import com.tarena.dispatcher.SmsTarget;
+import com.tarena.dispatcher.bo.PhoneBizIdReceipt;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.dispatcher.respository.TargetLogRepository;
 import com.tarena.dispatcher.storage.entity.NoticeSmsRecordTargetDO;
 import com.tarena.dispatcher.storage.mapper.NoticeSmsRecordTargetDao;
+import com.tarena.mnmp.enums.Provider;
 import com.tarena.mnmp.enums.TargetStatus;
 import com.tarena.mnmp.protocol.NoticeEvent;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +58,20 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
     @Override public void newFailSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus,
         String errorMsg) {
         addSmsTargetByTask(event, target, targetStatus.status(), null);
+    }
+
+    @Override public List<PhoneBizIdReceipt> queryNotReceiptBizIds(Provider provider) {
+        List<NoticeSmsRecordTargetDO> targets = this.recordTargetDao.queryNotReceiptBizIds();
+        List<PhoneBizIdReceipt> phoneBizIdPairs = new ArrayList<>(targets.size());
+        for (NoticeSmsRecordTargetDO target : targets) {
+            PhoneBizIdReceipt phoneBizIdPair = new PhoneBizIdReceipt(target.getTarget(), target.getBizId());
+            phoneBizIdPairs.add(phoneBizIdPair);
+        }
+        return phoneBizIdPairs;
+    }
+
+    @Override public void modifyTargetReceiptStatus(Provider provider,List<PhoneBizIdReceipt> receiptedList) {
+      //todo 更新回执状态
     }
 
     private void addSmsTargetByTask(SmsNoticeEvent event, SmsTarget target, Integer targetStatus,
