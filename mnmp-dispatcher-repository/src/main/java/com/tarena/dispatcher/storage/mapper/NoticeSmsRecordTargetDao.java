@@ -31,6 +31,6 @@ public interface NoticeSmsRecordTargetDao {
 
     @Select("select status from notice_sms_record_target where task_id = #{taskId} " +
         "and trigger_time = #{triggerTime} and target = #{target}")
-    Integer queryByParam(@Param("taskId") Long taskId, @Param("triggerTime") String triggerTime,
+    Integer getStatusByTaskAndTriggerTime(@Param("taskId") Long taskId, @Param("triggerTime") String triggerTime,
         @Param("target") String target);
 }
