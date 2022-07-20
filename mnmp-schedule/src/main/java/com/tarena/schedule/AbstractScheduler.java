@@ -146,7 +146,6 @@ public abstract class AbstractScheduler {
         taskTargetList.forEach(target -> {
             targets.add(new TargetDTO(target.getTarget(), this.json.parse(target.getParams())));
         });
-        List<List<TargetDTO>> targetsList = Lists.partition(targets, 1000);
-        return targetsList;
+        return Lists.partition(targets, 1000);
     }
 }

@@ -78,8 +78,7 @@
     </select>
     <update id="disable">
         update notice_provider
-        set
-            enabled=0,update_time=now()
+        set enabled=0,update_time=now()
         where id=#{id}
     </update>
     <update id="enable">

@@ -27,7 +27,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class SmsDispatchConsumerHandler extends AbstractMQHandler<SmsNoticeEvent> {
     private static Logger logger = LoggerFactory.getLogger(SmsDispatchConsumerHandler.class);
-
     @Override public void handle(SmsNoticeEvent event) throws Throwable {
         DispatcherRegistry.getInstance().dispatcher(event);
     }

@@ -20,6 +20,7 @@ package com.tarena.mnmp.app;
 import java.util.Date;
 
 public class AppDO {
+
     private Long id;
 
     private String code;
@@ -31,8 +32,6 @@ public class AppDO {
     private String teamMembers;
 
     private String remarks;
-
-
 
     private Integer enabled;
 
