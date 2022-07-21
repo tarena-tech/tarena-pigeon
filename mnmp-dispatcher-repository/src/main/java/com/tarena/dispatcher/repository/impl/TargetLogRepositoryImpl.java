@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-package com.tarena.dispatcher.imp;
+package com.tarena.dispatcher.repository.impl;
 
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.bo.PhoneBizIdReceiptBO;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.dispatcher.respository.TargetLogRepository;
-import com.tarena.dispatcher.storage.entity.NoticeSmsRecordTargetDO;
 import com.tarena.dispatcher.storage.mapper.NoticeSmsRecordTargetDao;
+import com.tarena.mnmp.domain.NoticeSmsRecordTargetDO;
 import com.tarena.mnmp.enums.Provider;
 import com.tarena.mnmp.enums.TargetStatus;
 import com.tarena.mnmp.protocol.NoticeEvent;

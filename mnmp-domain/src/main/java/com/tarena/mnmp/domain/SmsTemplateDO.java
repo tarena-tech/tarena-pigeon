@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.domain.template;
+package com.tarena.mnmp.domain;
 
 import java.util.Date;
 
@@ -27,11 +27,11 @@ public class SmsTemplateDO {
 
     private Long appId;
 
-    private String appCode;
-
     private String name;
 
     private Integer templateType;
+
+    private Integer noticeType;
 
     private String content;
 
@@ -54,8 +54,6 @@ public class SmsTemplateDO {
     private Integer createUserId;
 
     private String createUserName;
-
-    private String createEmail;
 
 
     public Long getId() {
@@ -80,14 +78,6 @@ public class SmsTemplateDO {
 
     public void setAppId(Long appId) {
         this.appId = appId;
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public void setAppCode(String appCode) {
-        this.appCode = appCode;
     }
 
     public String getName() {
@@ -186,19 +176,19 @@ public class SmsTemplateDO {
         this.createUserName = createUserName;
     }
 
-    public String getCreateEmail() {
-        return createEmail;
-    }
-
-    public void setCreateEmail(String createEmail) {
-        this.createEmail = createEmail;
-    }
-
     public Date getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getNoticeType() {
+        return noticeType;
+    }
+
+    public void setNoticeType(Integer noticeType) {
+        this.noticeType = noticeType;
     }
 }

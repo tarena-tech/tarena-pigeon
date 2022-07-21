@@ -21,7 +21,7 @@ import com.tarena.mnmp.admin.codegen.api.template.TemplateApi;
 import com.tarena.mnmp.admin.codegen.api.template.TemplateView;
 import com.tarena.mnmp.admin.view.template.WecomTemplateVO;
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.domain.template.SmsTemplateDO;
+import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.domain.template.WecomTemplate;
 import com.tarena.mnmp.domain.template.WecomTemplatePage;

@@ -17,7 +17,7 @@
 
 package com.tarena.dispatcher.storage.mapper;
 
-import com.tarena.dispatcher.storage.entity.TaskTargetDO;
+import com.tarena.mnmp.domain.TaskTargetDO;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

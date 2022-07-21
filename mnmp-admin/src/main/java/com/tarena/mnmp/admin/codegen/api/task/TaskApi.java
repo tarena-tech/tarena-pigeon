@@ -19,7 +19,7 @@ package com.tarena.mnmp.admin.codegen.api.task;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.view.task.TaskVO;
-import com.tarena.mnmp.domain.task.Task;
+import com.tarena.mnmp.domain.TaskDO;
 import com.tarena.mnmp.domain.task.TaskPage;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskStatistics;
@@ -86,13 +86,13 @@ public interface TaskApi {
         value = "查看任务详情",
         nickname = "queryTaskDetail",
         notes = "",
-        response = Task.class
+        response = TaskDO.class
     )
     @GetMapping(
         value = {"/{id}"},
         produces = {"application/json"}
     )
-    Task queryTaskDetail(@ApiParam(value = "任务id", required = true) @PathVariable("id") Long id);
+    TaskDO queryTaskDetail(@ApiParam(value = "任务id", required = true) @PathVariable("id") Long id);
 
     @ApiOperationSupport(order = 5005)
     @ApiOperation(

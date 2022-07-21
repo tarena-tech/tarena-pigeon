@@ -28,6 +28,10 @@ public class SmsSignBO {
      */
     private String name;
     /**
+     * 签名编码
+     */
+    private String code;
+    /**
      * 描述
      */
     private String remark;
@@ -54,5 +58,13 @@ public class SmsSignBO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

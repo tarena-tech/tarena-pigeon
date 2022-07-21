@@ -17,7 +17,7 @@
 
 package com.tarena.dispatcher.storage.mapper;
 
-import com.tarena.dispatcher.storage.entity.NoticeSmsRecordTargetDO;
+import com.tarena.mnmp.domain.NoticeSmsRecordTargetDO;
 import com.tarena.mnmp.enums.TargetStatus;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;

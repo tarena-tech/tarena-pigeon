@@ -17,7 +17,7 @@
 
 package com.tarena.dispatcher.storage.mapper;
 
-import com.tarena.dispatcher.storage.entity.TaskDO;
+import com.tarena.mnmp.domain.TaskDO;
 import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
@@ -39,6 +39,10 @@ public interface TaskDao {
     @Update("update notice_task set task_status = #{taskStatus},next_trigger_time = null, update_time = now()" +
         " where id = #{id}")
     int finishTask(@Param("taskStatus") Integer taskStatus, @Param("id") Long id);
+
+
+    @Update("update notice_task set task_status = #{taskStatus},error=#{error}, update_time = now() where id = #{id}")
+    int errorTask(@Param("taskStatus") Integer taskStatus,@Param("error") String error, @Param("id") Long id);
 
     @Update("update notice_task set task_status = #{taskStatus} , update_time = now()" +
         " where id = #{id}")

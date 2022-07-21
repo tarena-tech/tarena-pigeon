@@ -15,41 +15,67 @@
  * limitations under the License.
  */
 
-package com.tarena.dispatcher.storage.entity;
+package com.tarena.mnmp.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import lombok.Data;
 
 @Data
-public class TemplateDO implements Serializable {
+public class NoticeSmsRecordTargetDO implements Serializable {
     /**
      * 主键
      */
     private Long id;
     /**
-     * 模板全称
+     * 消息记录ID
      */
-    private String name;
-    /**
-     * 模板CODE码
-     */
-    private String code;
-    /**
-     * 模板内容
-     */
-    private String content;
-
-    /**
-     * 消息类型
-     */
-    private Integer noticeType;
+    private Integer recordId;
     /**
      * 所属应用
      */
     private Long appId;
     /**
-     *应用编码
+     * 任务ID
      */
-    private String appCode;
+    private Long taskId;
+    /**
+     * 目标
+     */
+    private String target;
+    /**
+     * 短信具体内容
+     */
+    private String content;
+    /**
+     * 消息发送状态
+     */
+    private Integer status;
+    private String triggerTime;
+    /**
+     * 发送时间
+     */
+    private Date pushTime;
+
+    /**
+     * 到达时间
+     */
+    private Date pushReceiveTime;
+    /**
+     * 发送回执码
+     */
+    private String bizId;
+    /**
+     * 发送结果/失败原因
+     */
+    private String sendResult;
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+    /**
+     * 修改时间
+     */
+    private Date updateTime;
 
 }

@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.domain.sign;
 
+import com.tarena.mnmp.domain.SignDO;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

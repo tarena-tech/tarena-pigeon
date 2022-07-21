@@ -19,7 +19,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tarena.dispatcher.storage.mapper.TaskTargetDao">
 
-    <resultMap type="com.tarena.dispatcher.storage.entity.TaskTargetDO" id="NoticeTaskTargetMap">
+    <resultMap type="com.tarena.mnmp.domain.TaskTargetDO" id="NoticeTaskTargetMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="taskId" column="task_id" jdbcType="INTEGER"/>
         <result property="target" column="target" jdbcType="VARCHAR"/>

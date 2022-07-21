@@ -20,7 +20,7 @@ package com.tarena.mnmp.admin.codegen.api.template;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.view.template.WecomTemplateVO;
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.domain.template.SmsTemplateDO;
+import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.domain.template.WecomTemplate;
 import com.tarena.mnmp.domain.template.WecomTemplatePage;

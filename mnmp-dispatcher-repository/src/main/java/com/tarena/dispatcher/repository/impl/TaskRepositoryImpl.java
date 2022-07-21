@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-package com.tarena.dispatcher.imp;
+package com.tarena.dispatcher.repository.impl;
 
 import com.tarena.dispatcher.bo.SmsSignBO;
 import com.tarena.dispatcher.bo.TaskBO;
 import com.tarena.dispatcher.bo.TaskTargetBO;
 import com.tarena.dispatcher.bo.TemplateBO;
 import com.tarena.dispatcher.respository.TaskRepository;
-import com.tarena.dispatcher.storage.entity.TaskDO;
-import com.tarena.dispatcher.storage.entity.TaskTargetDO;
 import com.tarena.dispatcher.storage.mapper.SmsSignDao;
 import com.tarena.dispatcher.storage.mapper.TaskDao;
 import com.tarena.dispatcher.storage.mapper.TaskTargetDao;
 import com.tarena.dispatcher.storage.mapper.TemplateDao;
+import com.tarena.mnmp.domain.TaskDO;
+import com.tarena.mnmp.domain.TaskTargetDO;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,6 +70,10 @@ public class TaskRepositoryImpl implements TaskRepository {
         return taskDao.finishTask(taskStatus, taskId);
     }
 
+    @Override public Integer errorTask(Long taskId, Integer status, String error) {
+        return taskDao.errorTask(status, error,taskId);
+    }
+
     /**
      * 获取要执行的任务列表
      *
@@ -110,6 +114,7 @@ public class TaskRepositoryImpl implements TaskRepository {
         TemplateBO template = new TemplateBO();
         BeanUtils.copyProperties(
             templateDao.selectById(templateId), template);
+
         return template;
     }
 

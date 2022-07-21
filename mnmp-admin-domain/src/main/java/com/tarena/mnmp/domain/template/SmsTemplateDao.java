@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.domain.template;
 
+import com.tarena.mnmp.domain.SmsTemplateDO;
 import java.util.List;
 
 public interface SmsTemplateDao {

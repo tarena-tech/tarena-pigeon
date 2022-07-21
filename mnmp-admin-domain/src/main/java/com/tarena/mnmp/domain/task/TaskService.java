@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.domain.task;
 
+import com.tarena.mnmp.domain.TaskDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class TaskService {
         //todo 审核逻辑处理 修改任务状态,备注说明等
 
         //审核通过后初始化执行时间
-        if (AUDIT_STATUS_PASS == status.intValue()) {
+        if (AUDIT_STATUS_PASS == status) {
             taskDO.setNextTriggerTime(taskDO.getFirstTriggerTime());
         }
         taskDao.update(taskDO);

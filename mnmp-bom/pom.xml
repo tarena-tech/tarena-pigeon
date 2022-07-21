@@ -40,6 +40,7 @@
         <mnmp_schedule_version>1.0.0-SNAPSHOT</mnmp_schedule_version>
         <mnmp_configuration_version>1.0.0-SNAPSHOT</mnmp_configuration_version>
         <mnmp_consumer_version>1.0.0-SNAPSHOT</mnmp_consumer_version>
+        <mnmp_domain_version>1.0.0-SNAPSHOT</mnmp_domain_version>
 
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -83,6 +84,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-domain</artifactId>
+                <version>${mnmp_domain_version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.tarena.mnmp</groupId>
                 <artifactId>mnmp-commons</artifactId>

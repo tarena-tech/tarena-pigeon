@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tarena.dispatcher.storage.mapper.NoticeSmsRecordTargetDao">
 
-    <resultMap type="com.tarena.dispatcher.storage.entity.NoticeSmsRecordTargetDO" id="NoticeSmsRecordTargetMap">
+    <resultMap type="com.tarena.mnmp.domain.NoticeSmsRecordTargetDO" id="NoticeSmsRecordTargetMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="recordId" column="record_id" jdbcType="INTEGER"/>
         <result property="appId" column="app_id" jdbcType="INTEGER"/>

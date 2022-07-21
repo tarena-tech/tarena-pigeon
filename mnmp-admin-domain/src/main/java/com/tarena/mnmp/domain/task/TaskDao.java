@@ -17,7 +17,7 @@
 
 package com.tarena.mnmp.domain.task;
 
-
+import com.tarena.mnmp.domain.TaskDO;
 
 public interface TaskDao {
 

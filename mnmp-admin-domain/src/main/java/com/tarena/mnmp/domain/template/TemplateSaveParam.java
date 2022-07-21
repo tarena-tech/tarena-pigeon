@@ -53,6 +53,11 @@ public class TemplateSaveParam {
     private Integer templateType;
 
     @ApiModelProperty(
+        value = "通知类型",
+        name = "noticeType")
+    private Integer noticeType;
+
+    @ApiModelProperty(
         value = "模板内容",
         name = "content")
     private String content;

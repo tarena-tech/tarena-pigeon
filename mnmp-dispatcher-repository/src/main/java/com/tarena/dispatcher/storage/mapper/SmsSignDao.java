@@ -16,14 +16,14 @@
  */
 package com.tarena.dispatcher.storage.mapper;
 
-import com.tarena.dispatcher.storage.entity.SmsSignDO;
+import com.tarena.mnmp.domain.SignDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface SmsSignDao {
-    @Select("select id,name from notice_sms_sign where id = #{signId}")
-    SmsSignDO selectById(@Param("signId") Long signId);
+    @Select("select id,name,code from notice_sms_sign where id = #{signId}")
+    SignDO selectById(@Param("signId") Long signId);
 }
 

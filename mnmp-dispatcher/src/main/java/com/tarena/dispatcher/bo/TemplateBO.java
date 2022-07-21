@@ -43,7 +43,12 @@ public class TemplateBO {
      * 所属应用
      */
     private Long appId;
+
     private String appCode;
+    /**
+     * 模型类型
+     */
+    private Integer templateType;
 
     public Long getId() {
         return id;
@@ -99,5 +104,13 @@ public class TemplateBO {
 
     public void setAppCode(String appCode) {
         this.appCode = appCode;
+    }
+
+    public Integer getTemplateType() {
+        return templateType;
+    }
+
+    public void setTemplateType(Integer templateType) {
+        this.templateType = templateType;
     }
 }

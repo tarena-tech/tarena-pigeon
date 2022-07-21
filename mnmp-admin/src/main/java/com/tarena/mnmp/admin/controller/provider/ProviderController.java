@@ -20,7 +20,7 @@ package com.tarena.mnmp.admin.controller.provider;
 import com.tarena.mnmp.admin.codegen.api.provider.ProviderApi;
 import com.tarena.mnmp.admin.codegen.api.provider.ProviderView;
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.domain.provider.ProviderDO;
+import com.tarena.mnmp.domain.ProviderDO;
 import com.tarena.mnmp.domain.provider.ProviderSaveParam;
 import com.tarena.mnmp.domain.provider.ProviderService;
 import java.util.ArrayList;

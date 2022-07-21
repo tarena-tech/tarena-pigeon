@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.domain.sign;
+package com.tarena.mnmp.domain;
 
 import java.util.Date;
 

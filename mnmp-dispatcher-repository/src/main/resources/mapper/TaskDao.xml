@@ -78,7 +78,7 @@
           create_time,
           update_time
         from notice_task
-        where next_trigger_time &lt; now()
+        where task_status in(0,1) and next_trigger_time &lt; now()
     </select>
 
 

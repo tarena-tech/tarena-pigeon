@@ -20,7 +20,6 @@ package com.tarena.schedule;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.mnmp.commons.mq.MQPublisher;
 import com.tarena.mnmp.constant.AlarmKey;
-import com.tarena.mnmp.monitor.Monitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,9 +27,6 @@ import org.springframework.stereotype.Component;
 public class SpringBootSchedule extends AbstractScheduler {
     @Autowired
     private MQPublisher mqPublisher;
-    @Autowired
-    private Monitor monitor;
-
     @Override boolean stop() {
         return false;
     }

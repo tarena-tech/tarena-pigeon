@@ -19,7 +19,7 @@ package com.tarena.mnmp.admin.controller.sign;
 
 import com.tarena.mnmp.admin.codegen.api.sign.SignApi;
 import com.tarena.mnmp.admin.codegen.api.sign.SignView;
-import com.tarena.mnmp.domain.sign.SignDO;
+import com.tarena.mnmp.domain.SignDO;
 import com.tarena.mnmp.domain.sign.SignQuery;
 import com.tarena.mnmp.domain.sign.SignSaveParam;
 import com.tarena.mnmp.domain.sign.SignService;

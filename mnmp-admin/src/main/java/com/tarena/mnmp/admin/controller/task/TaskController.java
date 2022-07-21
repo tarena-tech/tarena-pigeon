@@ -19,7 +19,7 @@ package com.tarena.mnmp.admin.controller.task;
 
 import com.tarena.mnmp.admin.codegen.api.task.TaskApi;
 import com.tarena.mnmp.admin.view.task.TaskVO;
-import com.tarena.mnmp.domain.task.Task;
+import com.tarena.mnmp.domain.TaskDO;
 import com.tarena.mnmp.domain.task.TaskPage;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskService;
@@ -45,7 +45,7 @@ public class TaskController implements TaskApi {
         return null;
     }
 
-    @Override public Task queryTaskDetail(Long id) {
+    @Override public TaskDO queryTaskDetail(Long id) {
         return null;
     }
 

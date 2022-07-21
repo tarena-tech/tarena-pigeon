@@ -30,6 +30,8 @@ public interface TaskRepository {
 
     Integer finishTask(Long taskId, Integer taskStatus);
 
+    Integer errorTask(Long taskId,Integer status,String remark);
+
     List<TaskBO> queryTriggers();
 
     List<TaskTargetBO> getTargets(Long taskId);

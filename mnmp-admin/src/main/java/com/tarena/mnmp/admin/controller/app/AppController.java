@@ -20,7 +20,7 @@ package com.tarena.mnmp.admin.controller.app;
 import com.tarena.mnmp.admin.codegen.api.app.AppApi;
 import com.tarena.mnmp.admin.codegen.api.app.AppView;
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.domain.app.AppDO;
+import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.domain.app.AppService;
 import java.util.ArrayList;
@@ -72,6 +72,6 @@ public class AppController implements AppApi {
     }
 
     @Override public void auditApp(Long id, Integer auditStatus) {
-        appService.auditApp(id,auditStatus);
+        appService.auditApp(id, auditStatus);
     }
 }

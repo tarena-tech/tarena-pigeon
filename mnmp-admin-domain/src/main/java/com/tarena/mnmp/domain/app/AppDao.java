@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.domain.app;
 
+import com.tarena.mnmp.domain.AppDO;
 import java.util.List;
 
 public interface AppDao {
