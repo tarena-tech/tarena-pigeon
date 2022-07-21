@@ -39,7 +39,7 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
     private NoticeSmsRecordTargetDao recordTargetDao;
 
     @Override public TargetStatus getSmsStatus(NoticeEvent noticeEvent, String target) {
-        Integer status = recordTargetDao.queryByParam(noticeEvent.getTaskId(), noticeEvent.getTriggerTime(), target);
+        Integer status = recordTargetDao.getStatusByTaskAndTriggerTime(noticeEvent.getTaskId(), noticeEvent.getTriggerTime(), target);
         if (status != null) {
             return TargetStatus.getStatusEnum(status);
         }
