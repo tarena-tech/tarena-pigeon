@@ -24,7 +24,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class NoticeDTO implements Serializable {
-    private Long taskId= Constant.CLIENT_NOTICE_TYPE;
+    private Long taskId = Constant.CLIENT_NOTICE_TYPE;
     private String triggerTime;
     private SendType sendType;
     private NoticeType noticeType;

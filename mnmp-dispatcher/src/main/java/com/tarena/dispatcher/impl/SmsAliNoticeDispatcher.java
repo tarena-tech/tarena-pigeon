@@ -55,7 +55,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
     private String aliTemplateCode;
     private Client aliSmsClient;
     private Boolean mock = true;
-    private Boolean receipt=false;
+    private Boolean receipt = false;
 
     public void setMock(Boolean mock) {
         this.mock = mock;
@@ -114,25 +114,25 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
     }
 
     /**
-     * ali yun sms 参考文档
-     * https://next.api.aliyun.com/document/Dysmsapi/2017-05-25/QuerySendDetails
+     * ali yun sms 参考文档 https://next.api.aliyun.com/document/Dysmsapi/2017-05-25/QuerySendDetails
+     *
      * @param receipts
      * @return
      */
-    private List<PhoneBizIdReceiptBO> fetchReceipt(List<PhoneBizIdReceiptBO> receipts){
-        List<PhoneBizIdReceiptBO> receiptedList=new ArrayList<>(receipts.size());
+    private List<PhoneBizIdReceiptBO> fetchReceipt(List<PhoneBizIdReceiptBO> receipts) {
+        List<PhoneBizIdReceiptBO> receiptedList = new ArrayList<>(receipts.size());
         for (PhoneBizIdReceiptBO phoneReceipt : receipts) {
             try {
-                QuerySendDetailsRequest querySendDetailsRequest=new QuerySendDetailsRequest();
+                QuerySendDetailsRequest querySendDetailsRequest = new QuerySendDetailsRequest();
                 querySendDetailsRequest.setBizId(phoneReceipt.getBizId());
                 querySendDetailsRequest.setPhoneNumber(phoneReceipt.getPhone());
                 querySendDetailsRequest.setCurrentPage(1L);
                 querySendDetailsRequest.setPageSize(1L);
-                querySendDetailsRequest.setSendDate(DateFormatUtils.format(new Date(),Constant.DATE_FORMAT_YYYYMMDD));
+                querySendDetailsRequest.setSendDate(DateFormatUtils.format(new Date(), Constant.DATE_FORMAT_YYYYMMDD));
                 QuerySendDetailsResponse querySendDetailsResponse =
                     this.aliSmsClient.querySendDetails(querySendDetailsRequest);
-                QuerySendDetailsResponseBody querySendDetailsResponseBody= querySendDetailsResponse.getBody();
-                if(Constant.OK.equals(querySendDetailsResponseBody.getCode())) {
+                QuerySendDetailsResponseBody querySendDetailsResponseBody = querySendDetailsResponse.getBody();
+                if (Constant.OK.equals(querySendDetailsResponseBody.getCode())) {
                     QuerySendDetailsResponseBody.QuerySendDetailsResponseBodySmsSendDetailDTOs querySendDetailsResponseBodySmsSendDetailDTOs = querySendDetailsResponseBody.getSmsSendDetailDTOs();
                     List<QuerySendDetailsResponseBody.QuerySendDetailsResponseBodySmsSendDetailDTOsSmsSendDetailDTO> details = querySendDetailsResponseBodySmsSendDetailDTOs.getSmsSendDetailDTO();
                     for (QuerySendDetailsResponseBody.QuerySendDetailsResponseBodySmsSendDetailDTOsSmsSendDetailDTO detail : details) {
@@ -163,15 +163,16 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
                 }
                 return receiptedList;
             } catch (Exception e) {
-                logger.error("NoticeServiceImpl insertAliTargetData is error; recordId:{} phone:{}", phoneReceipt.getBizId(),phoneReceipt.getPhone(),e);
+                logger.error("NoticeServiceImpl insertAliTargetData is error; recordId:{} phone:{}", phoneReceipt.getBizId(), phoneReceipt.getPhone(), e);
             }
         }
         return receiptedList;
     }
+
     private void doReceipt() {
         try {
             List<PhoneBizIdReceiptBO> bizIds = targetLogRepository.queryNotReceiptBizIds(Provider.ALI_SMS);
-            if(CollectionUtils.isEmpty(bizIds)){
+            if (CollectionUtils.isEmpty(bizIds)) {
                 //空则延迟100ms
                 Thread.sleep(100);
                 return;
@@ -186,7 +187,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
         }
     }
 
-   public void receipt() {
+    public void receipt() {
         if (this.receipt) {
             return;
         }
