@@ -18,9 +18,9 @@
 package com.tarena.test.mnmp.admin.service.app;
 
 import com.tarena.mnmp.admin.AdminApplication;
-import com.tarena.mnmp.app.AppDO;
-import com.tarena.mnmp.app.AppSaveParam;
-import com.tarena.mnmp.app.AppService;
+import com.tarena.mnmp.domain.app.AppDO;
+import com.tarena.mnmp.domain.app.AppSaveParam;
+import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.commons.utils.Asserts;
 import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.protocol.BusinessException;

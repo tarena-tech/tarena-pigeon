@@ -23,26 +23,28 @@ import com.tarena.dispatcher.assemble.impl.EmailTargetAssembler;
 import com.tarena.dispatcher.assemble.impl.SmsTargetAssembler;
 import com.tarena.dispatcher.impl.EmailAliNoticeDispatcher;
 import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
+import com.tarena.dispatcher.properties.DispatcherConfig;
 import com.tarena.dispatcher.respository.ProviderRepository;
 import com.tarena.dispatcher.respository.TargetLogRepository;
 import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.utils.DollarPlaceholderReplacer;
 import com.tarena.mnmp.protocol.ProviderClientConfig;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableConfigurationProperties(DispatcherConfig.class)
 public class DispatcherConfiguration {
 
-    @Value("${dispatcher.sms_ali_pigeon_provider_code}")
-    private String pigeonAliProviderCode;
+    private DispatcherConfig dispatcherConfig;
 
-    @Value("${dispatcher.mock}")
-    private Boolean mock;
+    public DispatcherConfiguration(DispatcherConfig dispatcherConfig) {
+        this.dispatcherConfig = dispatcherConfig;
+    }
 
     @Bean
     @ConditionalOnMissingBean(DollarPlaceholderReplacer.class)
@@ -69,10 +71,10 @@ public class DispatcherConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(prefix = "dispatcher", value = "sms_ali_pigeon_provider_id")
+    @ConditionalOnProperty(prefix = "dispatcher", value = "sms_ali_pigeon_provider_code")
     @ConditionalOnBean({ProviderRepository.class})
     public Client smsAliClient(ProviderRepository providerRepository) throws Exception {
-        ProviderClientConfig providerClientConfig = providerRepository.getClientConfig(this.pigeonAliProviderCode);
+        ProviderClientConfig providerClientConfig = providerRepository.getClientConfig(this.dispatcherConfig.getSmsAliPigeonProviderCode());
         Config config = new Config();
         config.setAccessKeyId(providerClientConfig.getAccessKeyId());
         config.setAccessKeySecret(providerClientConfig.getAccessKeySecret());
@@ -85,13 +87,13 @@ public class DispatcherConfiguration {
     @ConditionalOnProperty(prefix = "dispatcher", value = "notice_sms_ali", havingValue = "true")
     public SmsAliNoticeDispatcher smsAliNoticeDispatcher(Json json, TargetLogRepository targetLogRepository,
         ProviderRepository providerRepository, Client smsAliClient) {
-        ProviderClientConfig providerClientConfig = providerRepository.getClientConfig(this.pigeonAliProviderCode);
+        ProviderClientConfig providerClientConfig = providerRepository.getClientConfig(this.dispatcherConfig.getSmsAliPigeonProviderCode());
         SmsAliNoticeDispatcher aliNoticeDispatcher = new SmsAliNoticeDispatcher();
         aliNoticeDispatcher.setJsonProvider(json);
         aliNoticeDispatcher.setTargetLogRepository(targetLogRepository);
         aliNoticeDispatcher.setAliTemplateCode(providerClientConfig.getDefaultTemplate());
         aliNoticeDispatcher.setAliSmsClient(smsAliClient);
-        aliNoticeDispatcher.setMock(this.mock);
+        aliNoticeDispatcher.setMock(this.dispatcherConfig.getMock());
         return aliNoticeDispatcher;
     }
 

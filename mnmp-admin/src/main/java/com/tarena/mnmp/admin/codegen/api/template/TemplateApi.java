@@ -19,17 +19,17 @@ package com.tarena.mnmp.admin.codegen.api.template;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.view.template.WecomTemplateVO;
-import com.tarena.mnmp.template.SmsTemplate;
-import com.tarena.mnmp.template.SmsTemplatePage;
-import com.tarena.mnmp.template.WecomTemplate;
-import com.tarena.mnmp.template.WecomTemplatePage;
-import com.tarena.mnmp.template.WecomTemplatePageQuery;
+import com.tarena.mnmp.commons.pager.PagerResult;
+import com.tarena.mnmp.domain.template.SmsTemplateDO;
+import com.tarena.mnmp.domain.template.TemplateQuery;
+import com.tarena.mnmp.domain.template.WecomTemplate;
+import com.tarena.mnmp.domain.template.WecomTemplatePage;
+import com.tarena.mnmp.domain.template.WecomTemplatePageQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,7 +59,7 @@ public interface TemplateApi {
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    String addSmsTemplate(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplate smsTemplate);
+    String addSmsTemplate(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateDO smsTemplate);
 
     @ApiOperationSupport(order = 4002)
     @ApiOperation(
@@ -86,31 +86,27 @@ public interface TemplateApi {
         value = "查询短信模板信息（分页）",
         nickname = "queryListByPage",
         notes = "",
-        response = SmsTemplatePage.class
+        response = TemplateView.class
     )
     @GetMapping(
         value = {"/sms/queryListByPage"},
         produces = {"application/json"}
     )
-    SmsTemplatePage queryListByPage(
-        @ApiParam("根据模板名称/模板code模糊查询") @Valid @RequestParam(value = "keyword", required = false) String keyword,
-        @ApiParam("根据应用code查询") @Valid @RequestParam(value = "appCode", required = false) String appCode,
-        @Min(1L) @ApiParam("页数（不传默认第一页）") @Valid @RequestParam(value = "pageNum", required = false) Integer pageNum,
-        @Min(0L) @ApiParam("显示条数（不传默认10条）") @Valid @RequestParam(value = "pageSize", required = false) Integer pageSize);
+    PagerResult<TemplateView> queryListByPage(TemplateQuery templateQuery);
 
     @ApiOperationSupport(order = 4005)
     @ApiOperation(
         value = "查询短信模板信息",
         nickname = "queryListByParam",
         notes = "",
-        response = SmsTemplate.class,
+        response = SmsTemplateDO.class,
         responseContainer = "List"
     )
     @GetMapping(
         value = {"/sms/queryListByParam"},
         produces = {"application/json"}
     )
-    List<SmsTemplate> queryListByParam(
+    List<SmsTemplateDO> queryListByParam(
         @ApiParam("根据模板名称/模板code模糊查询") @Valid @RequestParam(value = "keyword", required = false) String keyword,
         @ApiParam("根据应用code查询") @Valid @RequestParam(value = "appCode", required = false) String appCode,
         @ApiParam("根据消息类型查询 1:sms") @Valid @RequestParam(value = "noticeType", required = false) Integer noticeType,
@@ -121,13 +117,13 @@ public interface TemplateApi {
         value = "查看短信模板详情",
         nickname = "querySmsTemplateDetail",
         notes = "",
-        response = SmsTemplate.class
+        response = SmsTemplateDO.class
     )
     @GetMapping(
         value = {"/sms/queryDetail"},
         produces = {"application/json"}
     )
-    SmsTemplate querySmsTemplateDetail(
+    SmsTemplateDO querySmsTemplateDetail(
         @NotNull @ApiParam(value = "模板id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
     @ApiOperationSupport(order = 4007)
@@ -143,7 +139,7 @@ public interface TemplateApi {
         consumes = {"application/json"}
     )
     String updateSmsTemplate(
-        @ApiParam(value = "修改短信模板(未通过审核)", required = true) @Valid @RequestBody SmsTemplate templateSms);
+        @ApiParam(value = "修改短信模板(未通过审核)", required = true) @Valid @RequestBody SmsTemplateDO templateSms);
 
     @ApiOperationSupport(order = 4008)
     @ApiOperation(

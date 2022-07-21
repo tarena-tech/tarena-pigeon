@@ -19,9 +19,10 @@ package com.tarena.mnmp.admin.controller.provider;
 
 import com.tarena.mnmp.admin.codegen.api.provider.ProviderApi;
 import com.tarena.mnmp.admin.codegen.api.provider.ProviderView;
-import com.tarena.mnmp.provider.ProviderDO;
-import com.tarena.mnmp.provider.ProviderSaveParam;
-import com.tarena.mnmp.provider.ProviderService;
+import com.tarena.mnmp.commons.pager.PagerResult;
+import com.tarena.mnmp.domain.provider.ProviderDO;
+import com.tarena.mnmp.domain.provider.ProviderSaveParam;
+import com.tarena.mnmp.domain.provider.ProviderService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
@@ -49,15 +50,18 @@ public class ProviderController implements ProviderApi {
         providerService.openProvider(id);
     }
 
-    @Override public List<ProviderView> queryList() {
+    @Override public PagerResult<ProviderView> queryList() {
         List<ProviderDO> providerDOs = providerService.queryList();
-        List<ProviderView> providerViews = new ArrayList<>();
+        List<ProviderView> providerViews = new ArrayList<>(providerDOs.size());
         for (ProviderDO providerDO : providerDOs) {
             ProviderView providerView = new ProviderView();
             BeanUtils.copyProperties(providerDO, providerView);
             providerViews.add(providerView);
         }
-        return providerViews;
+        PagerResult<ProviderView> pagerResult = new PagerResult<ProviderView>(1000, 1);
+        pagerResult.setList(providerViews);
+        pagerResult.setRecordCount((long)providerViews.size());
+        return pagerResult;
     }
 
     @Override public ProviderView queryProviderDetail(Long id) {

@@ -129,6 +129,7 @@ public abstract class AbstractScheduler {
         List<NoticeTaskTrigger> resList = taskList.stream().map(task -> {
             NoticeTaskTrigger trigger = new NoticeTaskTrigger();
             BeanUtils.copyProperties(task, trigger);
+            trigger.setTaskId(task.getId());
             return trigger;
         }).collect(Collectors.toList());
         return resList;

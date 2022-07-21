@@ -18,8 +18,8 @@
 package com.tarena.mnmp.admin.codegen.api.sign;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.tarena.mnmp.sign.SignSaveParam;
-import com.tarena.mnmp.sign.SignQuery;
+import com.tarena.mnmp.domain.sign.SignSaveParam;
+import com.tarena.mnmp.domain.sign.SignQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

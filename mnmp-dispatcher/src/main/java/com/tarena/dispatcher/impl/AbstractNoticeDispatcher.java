@@ -25,6 +25,7 @@ import com.tarena.mnmp.monitor.Monitor;
 import org.springframework.beans.factory.InitializingBean;
 
 public abstract class AbstractNoticeDispatcher<T extends NoticeEventGetter> implements NoticeDispatcher<T>, InitializingBean {
+
     private DispatcherRegistry dispatcherRegistry = DispatcherRegistry.getInstance();
 
     protected Json jsonProvider;

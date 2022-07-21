@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tarena.mnmp.provider.ProviderDao">
+<mapper namespace="com.tarena.mnmp.domain.provider.ProviderDao">
 
-    <resultMap type="com.tarena.mnmp.provider.ProviderDO" id="ProviderMap">
+    <resultMap type="com.tarena.mnmp.domain.provider.ProviderDO" id="ProviderMap">
         <id column="id" property="id"/>
         <result column="code" property="code"/>
         <result column="name" property="name"/>

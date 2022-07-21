@@ -19,10 +19,10 @@ package com.tarena.mnmp.admin.controller.sign;
 
 import com.tarena.mnmp.admin.codegen.api.sign.SignApi;
 import com.tarena.mnmp.admin.codegen.api.sign.SignView;
-import com.tarena.mnmp.sign.SignDO;
-import com.tarena.mnmp.sign.SignQuery;
-import com.tarena.mnmp.sign.SignSaveParam;
-import com.tarena.mnmp.sign.SignService;
+import com.tarena.mnmp.domain.sign.SignDO;
+import com.tarena.mnmp.domain.sign.SignQuery;
+import com.tarena.mnmp.domain.sign.SignSaveParam;
+import com.tarena.mnmp.domain.sign.SignService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
@@ -62,13 +62,13 @@ public class SignController implements SignApi {
         List<SignView> signViews = new ArrayList<>();
         for (SignDO signDO : signDOs) {
             SignView signView = new SignView();
-            BeanUtils.copyProperties(signDO,signView);
+            BeanUtils.copyProperties(signDO, signView);
             signViews.add(signView);
         }
         return signViews;
     }
 
     @Override public void auditSign(Long id, Integer auditStatus) {
-        signService.auditSign(id,auditStatus);
+        signService.auditSign(id, auditStatus);
     }
 }

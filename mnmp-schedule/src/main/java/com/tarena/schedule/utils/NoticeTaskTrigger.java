@@ -64,10 +64,6 @@ public class NoticeTaskTrigger implements Serializable {
      */
     private Long templateId;
     /**
-     * 消息类型子类型 1:sms-短信通知 2:sms-验证码 3:sms-推广短信
-     */
-    private Integer templateType;
-    /**
      * 签名ID
      */
     private Long signId;
@@ -143,14 +139,6 @@ public class NoticeTaskTrigger implements Serializable {
 
     public void setTemplateId(Long templateId) {
         this.templateId = templateId;
-    }
-
-    public Integer getTemplateType() {
-        return templateType;
-    }
-
-    public void setTemplateType(Integer templateType) {
-        this.templateType = templateType;
     }
 
     public Long getSignId() {

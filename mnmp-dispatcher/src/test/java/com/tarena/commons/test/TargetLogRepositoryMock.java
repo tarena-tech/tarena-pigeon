@@ -18,10 +18,13 @@
 package com.tarena.commons.test;
 
 import com.tarena.dispatcher.SmsTarget;
+import com.tarena.dispatcher.bo.PhoneBizIdReceiptBO;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.dispatcher.respository.TargetLogRepository;
+import com.tarena.mnmp.enums.Provider;
 import com.tarena.mnmp.enums.TargetStatus;
 import com.tarena.mnmp.protocol.NoticeEvent;
+import java.util.List;
 
 public class TargetLogRepositoryMock implements TargetLogRepository {
     @Override public TargetStatus getSmsStatus(NoticeEvent noticeEvent, String target) {
@@ -39,6 +42,14 @@ public class TargetLogRepositoryMock implements TargetLogRepository {
 
     @Override public void newFailSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus,
         String errorMsg) {
+
+    }
+
+    @Override public List<PhoneBizIdReceiptBO> queryNotReceiptBizIds(Provider provider) {
+        return null;
+    }
+
+    @Override public void modifyTargetReceiptStatus(Provider provider, List<PhoneBizIdReceiptBO> receiptedList) {
 
     }
 }

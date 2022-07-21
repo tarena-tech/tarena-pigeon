@@ -17,7 +17,7 @@
 
 package com.tarena.mnmp.admin.view.task;
 
-import com.tarena.mnmp.task.NoticeTargetData;
+import com.tarena.mnmp.domain.task.NoticeTargetData;
 import io.swagger.annotations.ApiModel;
 import java.util.List;
 

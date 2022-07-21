@@ -19,9 +19,10 @@ package com.tarena.mnmp.admin.controller.app;
 
 import com.tarena.mnmp.admin.codegen.api.app.AppApi;
 import com.tarena.mnmp.admin.codegen.api.app.AppView;
-import com.tarena.mnmp.app.AppDO;
-import com.tarena.mnmp.app.AppSaveParam;
-import com.tarena.mnmp.app.AppService;
+import com.tarena.mnmp.commons.pager.PagerResult;
+import com.tarena.mnmp.domain.app.AppDO;
+import com.tarena.mnmp.domain.app.AppSaveParam;
+import com.tarena.mnmp.domain.app.AppService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
@@ -56,7 +57,7 @@ public class AppController implements AppApi {
         return appVO;
     }
 
-    @Override public List<AppView> queryList() {
+    @Override public PagerResult<AppView> queryList() {
         List<AppDO> appDTOs = appService.queryList();
         List<AppView> appVOs = new ArrayList<>();
         for (AppDO appDO : appDTOs) {
@@ -64,11 +65,13 @@ public class AppController implements AppApi {
             BeanUtils.copyProperties(appDO, appVO);
             appVOs.add(appVO);
         }
-        return appVOs;
+        PagerResult<AppView> pagerResult = new PagerResult<AppView>(1000, 1);
+        pagerResult.setList(appVOs);
+        pagerResult.setRecordCount((long) appVOs.size());
+        return pagerResult;
     }
 
     @Override public void auditApp(Long id, Integer auditStatus) {
         appService.auditApp(id,auditStatus);
     }
-
 }

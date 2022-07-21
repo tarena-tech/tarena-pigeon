@@ -18,18 +18,20 @@
 package com.tarena.mnmp.admin.controller.template;
 
 import com.tarena.mnmp.admin.codegen.api.template.TemplateApi;
+import com.tarena.mnmp.admin.codegen.api.template.TemplateView;
 import com.tarena.mnmp.admin.view.template.WecomTemplateVO;
-import com.tarena.mnmp.template.SmsTemplate;
-import com.tarena.mnmp.template.SmsTemplatePage;
-import com.tarena.mnmp.template.WecomTemplate;
-import com.tarena.mnmp.template.WecomTemplatePage;
-import com.tarena.mnmp.template.WecomTemplatePageQuery;
+import com.tarena.mnmp.commons.pager.PagerResult;
+import com.tarena.mnmp.domain.template.SmsTemplateDO;
+import com.tarena.mnmp.domain.template.TemplateQuery;
+import com.tarena.mnmp.domain.template.WecomTemplate;
+import com.tarena.mnmp.domain.template.WecomTemplatePage;
+import com.tarena.mnmp.domain.template.WecomTemplatePageQuery;
 import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TemplateController implements TemplateApi {
-    @Override public String addSmsTemplate(SmsTemplate smsTemplate) {
+    @Override public String addSmsTemplate(SmsTemplateDO smsTemplate) {
         return null;
     }
 
@@ -42,20 +44,20 @@ public class TemplateController implements TemplateApi {
     }
 
     @Override
-    public SmsTemplatePage queryListByPage(String keyword, String appCode, Integer pageNum, Integer pageSize) {
+    public PagerResult<TemplateView> queryListByPage(TemplateQuery templateQuery) {
         return null;
     }
 
-    @Override public List<SmsTemplate> queryListByParam(String keyword, String appCode, Integer noticeType,
+    @Override public List<SmsTemplateDO> queryListByParam(String keyword, String appCode, Integer noticeType,
         Integer templateType) {
         return null;
     }
 
-    @Override public SmsTemplate querySmsTemplateDetail(Long id) {
+    @Override public SmsTemplateDO querySmsTemplateDetail(Long id) {
         return null;
     }
 
-    @Override public String updateSmsTemplate(SmsTemplate templateSms) {
+    @Override public String updateSmsTemplate(SmsTemplateDO templateSms) {
         return null;
     }
 

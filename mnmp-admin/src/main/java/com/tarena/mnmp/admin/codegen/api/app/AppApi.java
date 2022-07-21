@@ -18,11 +18,11 @@
 package com.tarena.mnmp.admin.codegen.api.app;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.tarena.mnmp.app.AppSaveParam;
+import com.tarena.mnmp.domain.app.AppSaveParam;
+import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -145,11 +145,10 @@ public interface AppApi {
         responseContainer = "List"
     )
     @GetMapping(
-        value = {"/queryList"},
         produces = {"application/json"},
-        consumes = {"application/json"}
+        value = {"/queryList"}
     )
-    List<AppView> queryList();
+    PagerResult<AppView> queryList();
 
     /**
      * 审核应用

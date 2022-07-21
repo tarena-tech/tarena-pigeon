@@ -19,11 +19,11 @@ package com.tarena.mnmp.admin.controller.task;
 
 import com.tarena.mnmp.admin.codegen.api.task.TaskApi;
 import com.tarena.mnmp.admin.view.task.TaskVO;
-import com.tarena.mnmp.task.Task;
-import com.tarena.mnmp.task.TaskPage;
-import com.tarena.mnmp.task.TaskQuery;
-import com.tarena.mnmp.task.TaskService;
-import com.tarena.mnmp.task.TaskStatistics;
+import com.tarena.mnmp.domain.task.Task;
+import com.tarena.mnmp.domain.task.TaskPage;
+import com.tarena.mnmp.domain.task.TaskQuery;
+import com.tarena.mnmp.domain.task.TaskService;
+import com.tarena.mnmp.domain.task.TaskStatistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +38,7 @@ public class TaskController implements TaskApi {
     }
 
     @Override public void doAudit(Long id, Integer auditStatus, String auditResult) {
-        taskService.doAudit(id,auditStatus,auditResult);
+        taskService.doAudit(id, auditStatus, auditResult);
     }
 
     @Override public TaskPage queryListByPage(TaskQuery taskQuery) {

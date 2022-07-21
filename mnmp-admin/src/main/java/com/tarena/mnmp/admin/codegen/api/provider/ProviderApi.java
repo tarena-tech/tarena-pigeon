@@ -18,11 +18,11 @@
 package com.tarena.mnmp.admin.codegen.api.provider;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.tarena.mnmp.provider.ProviderSaveParam;
+import com.tarena.mnmp.commons.pager.PagerResult;
+import com.tarena.mnmp.domain.provider.ProviderSaveParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -101,7 +101,7 @@ public interface ProviderApi {
         value = {"/queryList"},
         produces = {"application/json"}
     )
-    List<ProviderView> queryList();
+    PagerResult<ProviderView>  queryList();
 
     @ApiOperationSupport(order = 2006)
     @ApiOperation(
