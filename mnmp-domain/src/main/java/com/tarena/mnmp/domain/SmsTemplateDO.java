@@ -27,6 +27,10 @@ public class SmsTemplateDO {
 
     private Long appId;
 
+    private String appCode;
+
+    private String clientConfig;
+
     private String name;
 
     private Integer templateType;
@@ -190,5 +194,45 @@ public class SmsTemplateDO {
 
     public void setNoticeType(Integer noticeType) {
         this.noticeType = noticeType;
+    }
+
+    public String getAppCode() {
+        return appCode;
+    }
+
+    public void setAppCode(String appCode) {
+        this.appCode = appCode;
+    }
+
+    public String getClientConfig() {
+        return clientConfig;
+    }
+
+    public void setClientConfig(String clientConfig) {
+        this.clientConfig = clientConfig;
+    }
+
+    @Override public String toString() {
+        return "SmsTemplateDO{" +
+            "id=" + id +
+            ", code='" + code + '\'' +
+            ", appId=" + appId +
+            ", appCode='" + appCode + '\'' +
+            ", clientConfig='" + clientConfig + '\'' +
+            ", name='" + name + '\'' +
+            ", templateType=" + templateType +
+            ", noticeType=" + noticeType +
+            ", content='" + content + '\'' +
+            ", remark='" + remark + '\'' +
+            ", auditStatus=" + auditStatus +
+            ", auditResult='" + auditResult + '\'' +
+            ", enabled=" + enabled +
+            ", useCount=" + useCount +
+            ", createTime=" + createTime +
+            ", updateTime=" + updateTime +
+            ", deleted=" + deleted +
+            ", createUserId=" + createUserId +
+            ", createUserName='" + createUserName + '\'' +
+            '}';
     }
 }

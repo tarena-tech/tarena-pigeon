@@ -24,4 +24,6 @@ public interface TaskDao {
     TaskDO queryById(Long id);
 
     Integer update(TaskDO taskDO);
+
+    void sava(TaskDO bo);
 }

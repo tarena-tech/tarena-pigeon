@@ -26,6 +26,8 @@ import java.util.List;
  */
 public class PagerResult<T> extends SimplePager implements Serializable {
 
+    private static final long serialVersionUID = 1779802246517442914L;
+
     public PagerResult() {
     }
 

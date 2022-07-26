@@ -19,11 +19,15 @@ package com.tarena.mnmp.admin.controller.task;
 
 import com.tarena.mnmp.admin.codegen.api.task.TaskApi;
 import com.tarena.mnmp.admin.view.task.TaskVO;
+import com.tarena.mnmp.admin.view.task.TaskView;
+import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.TaskDO;
 import com.tarena.mnmp.domain.task.TaskPage;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.domain.task.TaskStatistics;
+import com.tarena.mnmp.enums.TaskStatus;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,14 +38,16 @@ public class TaskController implements TaskApi {
     private TaskService taskService;
 
     @Override public void addTask(TaskVO taskVO) {
-
+        TaskDO bo = new TaskDO();
+        BeanUtils.copyProperties(taskVO, bo);
+        taskService.addTask(bo);
     }
 
     @Override public void doAudit(Long id, Integer auditStatus, String auditResult) {
         taskService.doAudit(id, auditStatus, auditResult);
     }
 
-    @Override public TaskPage queryListByPage(TaskQuery taskQuery) {
+    @Override public PagerResult<TaskView> queryListByPage(TaskQuery taskQuery) {
         return null;
     }
 
@@ -54,9 +60,12 @@ public class TaskController implements TaskApi {
     }
 
     @Override public void stopTask(Long id) {
+        taskService.action(id, TaskStatus.TASK_STOP.status());
     }
 
     @Override public void updateTask(TaskVO taskVO) {
-
+        TaskDO task = new TaskDO();
+        BeanUtils.copyProperties(taskVO, task);
+        taskService.updateTask(task);
     }
 }

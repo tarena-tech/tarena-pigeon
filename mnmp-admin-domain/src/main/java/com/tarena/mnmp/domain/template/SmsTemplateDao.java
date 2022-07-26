@@ -23,13 +23,13 @@ import java.util.List;
 public interface SmsTemplateDao {
     Integer save(SmsTemplateDO smsTemplate);
 
-    void disable(Long id);
-
     Integer modify(SmsTemplateDO aDo);
-
-    void enable(Long id);
 
     SmsTemplateDO findById(Long id);
 
     List<SmsTemplateDO> queryTemplates(TemplateQuery query);
+
+    List<SmsTemplateDO> search(String keyword, String code, Integer type, Integer templateType);
+
+    Long queryCount(TemplateQuery query);
 }

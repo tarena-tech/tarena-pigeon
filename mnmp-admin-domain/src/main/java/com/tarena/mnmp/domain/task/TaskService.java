@@ -18,6 +18,7 @@
 package com.tarena.mnmp.domain.task;
 
 import com.tarena.mnmp.domain.TaskDO;
+import com.tarena.mnmp.enums.TaskStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +38,21 @@ public class TaskService {
             taskDO.setNextTriggerTime(taskDO.getFirstTriggerTime());
         }
         taskDao.update(taskDO);
+    }
+
+    public void addTask(TaskDO bo) {
+        // TODO audit状态机？ 待定
+        taskDao.sava(bo);
+    }
+
+    public void action(Long id, int status) {
+        TaskDO task = new TaskDO();
+        task.setId(id);
+        task.setTaskStatus(status);
+        taskDao.update(task);
+    }
+
+    public void updateTask(TaskDO task) {
+        taskDao.update(task);
     }
 }

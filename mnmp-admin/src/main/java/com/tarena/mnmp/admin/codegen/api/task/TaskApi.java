@@ -19,6 +19,8 @@ package com.tarena.mnmp.admin.codegen.api.task;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.view.task.TaskVO;
+import com.tarena.mnmp.admin.view.task.TaskView;
+import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.TaskDO;
 import com.tarena.mnmp.domain.task.TaskPage;
 import com.tarena.mnmp.domain.task.TaskQuery;
@@ -79,7 +81,7 @@ public interface TaskApi {
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    TaskPage queryListByPage(@ApiParam(value = "任务查询参数", required = true) @Valid @RequestBody TaskQuery taskQuery);
+    PagerResult<TaskView> queryListByPage(@ApiParam(value = "任务查询参数", required = true) @Valid @RequestBody TaskQuery taskQuery);
 
     @ApiOperationSupport(order = 5004)
     @ApiOperation(

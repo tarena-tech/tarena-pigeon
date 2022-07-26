@@ -17,11 +17,12 @@
 
 package com.tarena.mnmp.domain.template;
 
+import com.tarena.mnmp.commons.pager.SimplePager;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "模板查询入参")
-public class TemplateQuery {
+public class TemplateQuery extends SimplePager {
     @ApiModelProperty(
         value = "应用编码",
         name = "appCode"
@@ -34,10 +35,10 @@ public class TemplateQuery {
     private Integer auditStatus;
 
     @ApiModelProperty(
-        value = "是否生效",
+        value = "是否可用 (0否 1是）",
         name = "enabled"
     )
-    private Boolean enabled;
+    private Integer enabled;
 
     @ApiModelProperty(
         value = "模板编码",
@@ -50,18 +51,6 @@ public class TemplateQuery {
         name = "templateName"
     )
     private String templateName;
-
-    @ApiModelProperty(
-        value = "Page Size",
-        name = "pageSize"
-    )
-    protected Integer pageSize = 10;
-
-    @ApiModelProperty(
-        value = "当前页",
-        name = "currentPageIndex"
-    )
-    protected Integer currentPageIndex;
 
     public String getAppCode() {
         return appCode;
@@ -79,11 +68,11 @@ public class TemplateQuery {
         this.auditStatus = auditStatus;
     }
 
-    public Boolean getEnabled() {
+    public Integer getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(Integer enabled) {
         this.enabled = enabled;
     }
 
@@ -101,21 +90,5 @@ public class TemplateQuery {
 
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public Integer getCurrentPageIndex() {
-        return currentPageIndex;
-    }
-
-    public void setCurrentPageIndex(Integer currentPageIndex) {
-        this.currentPageIndex = currentPageIndex;
     }
 }

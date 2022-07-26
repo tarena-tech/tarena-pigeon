@@ -79,10 +79,10 @@
                 remarks=#{remarks},
             </if>
             <if test="auditStatus!=null">
-                audit_status=#{auditStatus}
+                audit_status=#{auditStatus},
             </if>
             <if test="true">
-                update_time=now()
+                update_time = now()
             </if>
         </set>
         where id=#{id}

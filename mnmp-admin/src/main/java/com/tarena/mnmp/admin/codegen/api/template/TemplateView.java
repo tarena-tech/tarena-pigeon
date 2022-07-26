@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.admin.codegen.api.template;
 
+import com.tarena.mnmp.domain.SmsTemplateDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
@@ -108,4 +109,6 @@ public class TemplateView {
         value = "创建用户名",
         name = "createUserName")
     private String createUserName;
+
+
 }

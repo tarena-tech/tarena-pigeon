@@ -20,6 +20,11 @@ package com.tarena.mnmp.domain;
 import java.util.Date;
 
 public class TaskDO {
+
+    public TaskDO() {
+        // TODO 初始化审核应为待审核，直接在构造中赋值
+    }
+
     /**
      * 主键
      */

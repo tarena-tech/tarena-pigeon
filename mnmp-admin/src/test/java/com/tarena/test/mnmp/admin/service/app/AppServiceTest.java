@@ -18,7 +18,7 @@
 package com.tarena.test.mnmp.admin.service.app;
 
 import com.tarena.mnmp.admin.AdminApplication;
-import com.tarena.mnmp.domain.app.AppDO;
+import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.commons.utils.Asserts;
@@ -70,7 +70,7 @@ public class AppServiceTest {
     public void saveAppTest() throws BusinessException {
         AppSaveParam appSaveParam = new AppSaveParam();
         appSaveParam.setTeamMembers("wang,li,zhang,zhao");
-        appSaveParam.setAuditStatus(0);
+//        appSaveParam.setAuditStatus(0);
         appSaveParam.setEnabled(0);
         appSaveParam.setRemarks("测试程序");
         appSaveParam.setName("达内测试");
@@ -123,7 +123,7 @@ public class AppServiceTest {
         AppSaveParam appSaveParam = new AppSaveParam();
         appSaveParam.setId(1L);
         appSaveParam.setTeamMembers("wang,li,zhang,zhao");
-        appSaveParam.setAuditStatus(0);
+//        appSaveParam.setAuditStatus(0);
         appSaveParam.setEnabled(0);
         appSaveParam.setRemarks("测试程序");
         appSaveParam.setName("达内测试");
