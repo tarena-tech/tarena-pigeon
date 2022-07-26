@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tarena.mnmp.domain.sign.SignDao">
 
-    <resultMap type="com.tarena.mnmp.domain.sign.SignDO" id="SignMap">
+    <resultMap type="com.tarena.mnmp.domain.SignDO" id="SignMap">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="audit_status" property="auditStatus"/>

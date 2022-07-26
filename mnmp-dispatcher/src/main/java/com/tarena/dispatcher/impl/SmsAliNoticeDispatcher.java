@@ -191,7 +191,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
         if (this.receipt) {
             return;
         }
-        ExecutorService receiptService = new ThreadPoolExecutor(1, 1, 0, TimeUnit.MICROSECONDS, new LinkedBlockingQueue<>(0),
+        ExecutorService receiptService = new ThreadPoolExecutor(1, 1, 0, TimeUnit.MICROSECONDS, new LinkedBlockingQueue<>(1),
             new BasicThreadFactory.Builder()
                 .namingPattern("ali-sms-receipt-service-").daemon(true).build());
         receiptService.submit(new Runnable() {
