@@ -29,10 +29,9 @@ import org.springframework.context.event.ContextClosedEvent;
 
 @SpringBootApplication
 @MapperScan(basePackages = {"com.tarena.dispatcher.storage.mapper"})
-@ComponentScan(basePackages = {"com.tarena.dispatcher.imp", "com.tarena.schedule"})
+@ComponentScan(basePackages = {"com.tarena.dispatcher.repository.impl", "com.tarena.schedule"})
 public class Application {
     private static Logger logger = LoggerFactory.getLogger(Application.class);
-
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(Application.class);
         springApplication.addListeners(new ApplicationListener<ApplicationReadyEvent>() {
