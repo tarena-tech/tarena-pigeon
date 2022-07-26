@@ -21,6 +21,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.view.template.WecomTemplateVO;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SmsTemplateDO;
+import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.domain.template.WecomTemplate;
 import com.tarena.mnmp.domain.template.WecomTemplatePage;
@@ -59,7 +60,7 @@ public interface TemplateApi {
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    String addSmsTemplate(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateDO smsTemplate);
+    String addSmsTemplate(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate);
 
     @ApiOperationSupport(order = 4002)
     @ApiOperation(
@@ -139,7 +140,7 @@ public interface TemplateApi {
         consumes = {"application/json"}
     )
     String updateSmsTemplate(
-        @ApiParam(value = "修改短信模板(未通过审核)", required = true) @Valid @RequestBody SmsTemplateDO templateSms);
+        @ApiParam(value = "修改短信模板(未通过审核)", required = true) @Valid @RequestBody SmsTemplateParam templateSms);
 
     @ApiOperationSupport(order = 4008)
     @ApiOperation(

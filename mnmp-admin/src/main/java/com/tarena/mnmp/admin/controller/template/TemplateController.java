@@ -23,6 +23,7 @@ import com.tarena.mnmp.admin.codegen.api.template.TemplateView;
 import com.tarena.mnmp.admin.view.template.WecomTemplateVO;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SmsTemplateDO;
+import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.domain.template.WecomTemplate;
@@ -40,8 +41,10 @@ public class TemplateController implements TemplateApi {
     @Resource
     private TemplateService templateService;
 
-    @Override public String addSmsTemplate(SmsTemplateDO smsTemplate) {
-        return templateService.addSmsTemplate(smsTemplate);
+    @Override public String addSmsTemplate(SmsTemplateParam param) {
+        SmsTemplateDO sms = new SmsTemplateDO();
+        BeanUtils.copyProperties(param, sms);
+        return templateService.addSmsTemplate(sms);
     }
 
     @Override public void closeSmsTemplate(Long id) {
@@ -90,11 +93,13 @@ public class TemplateController implements TemplateApi {
         return view;
     }
 
-    @Override public String updateSmsTemplate(SmsTemplateDO templateSms) {
+    @Override public String updateSmsTemplate(SmsTemplateParam templateSms) {
         if (null == templateSms.getId() || templateSms.getId() < 1) {
             return "fail";
         }
-        return templateService.updateSmsTemplate(templateSms);
+        SmsTemplateDO sms = new SmsTemplateDO();
+        BeanUtils.copyProperties(templateSms, sms);
+        return templateService.updateSmsTemplate(sms);
     }
 
     @Override public void doAuditSmsTemplate(Long id, Integer auditStatus, String auditResult) {
