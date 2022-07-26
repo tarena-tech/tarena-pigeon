@@ -54,4 +54,16 @@ public class SimplePager implements Serializable {
     public void setCurrentPageIndex(Integer currentPageIndex) {
         this.currentPageIndex = currentPageIndex;
     }
+
+    public String getLimitClause() {
+        //no page
+        if (pageSize <= 0) {
+            return "";
+        }
+        if (this.currentPageIndex == null) {
+            this.currentPageIndex = 1;
+        }
+        int offset = pageSize * (this.currentPageIndex <= 1 ? 0 : this.currentPageIndex - 1);
+        return " limit " + offset + "," + this.getPageSize();
+    }
 }
