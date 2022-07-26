@@ -42,7 +42,9 @@ public interface NoticeSmsRecordTargetDao {
      * @return
      * @see TargetStatus SENT_TO_PROVIDER
      */
-    @Select("select id, record_id, app_id,task_id, target, content, status, trigger_time,push_time, biz_id, send_result," +
+//    @Select("select id, record_id, app_id,task_id, target, content, status, trigger_time,push_time, biz_id, send_result," +
+//        " create_time, update_time from notice_sms_record_target where status=1 order by id limit 100")
+    @Select("select id, app_id,task_id, target, content, status, trigger_time,push_time, biz_id, send_result," +
         " create_time, update_time from notice_sms_record_target where status=1 order by id limit 100")
     List<NoticeSmsRecordTargetDO> queryNotReceiptBizIds();
 }

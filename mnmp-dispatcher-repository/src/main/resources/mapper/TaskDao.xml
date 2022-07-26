@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tarena.dispatcher.storage.mapper.TaskDao">
 
-    <resultMap type="com.tarena.dispatcher.storage.entity.TaskDO" id="NoticeTaskMap">
+    <resultMap type="com.tarena.mnmp.domain.TaskDO" id="NoticeTaskMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="taskStatus" column="task_status" jdbcType="INTEGER"/>
