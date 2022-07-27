@@ -18,16 +18,22 @@
 package com.tarena.mnmp.admin.codegen.api.task;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.controller.task.TaskParam;
 import com.tarena.mnmp.admin.view.task.TaskVO;
-import com.tarena.mnmp.admin.view.task.TaskView;
+import com.tarena.mnmp.admin.controller.task.TaskView;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.TaskDO;
 import com.tarena.mnmp.domain.task.TaskPage;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskStatistics;
+import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.Result;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.io.IOException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -38,6 +44,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Validated
 @Api(
@@ -46,6 +53,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 )
 @RequestMapping("/api/task")
 public interface TaskApi {
+
+    @ApiOperationSupport(order = 5001)
+    @ApiOperation(
+        value = "上传文件"
+    )
+    @PostMapping(
+        value = {"uploadFile"}
+    )
+    Result<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException, BusinessException;
+
     @ApiOperationSupport(order = 5001)
     @ApiOperation(
         value = "新增任务",
@@ -53,9 +70,9 @@ public interface TaskApi {
         notes = ""
     )
     @PostMapping(
-        value = {""}
+        value = {"add"}
     )
-    void addTask(@ApiParam(value = "新增任务", required = true) @Valid @RequestBody TaskVO taskVO);
+    void addTask(@Valid @RequestBody TaskParam taskParam);
 
     @ApiOperationSupport(order = 5002)
     @ApiOperation(
@@ -94,7 +111,7 @@ public interface TaskApi {
         value = {"/{id}"},
         produces = {"application/json"}
     )
-    TaskDO queryTaskDetail(@ApiParam(value = "任务id", required = true) @PathVariable("id") Long id);
+    TaskView queryTaskDetail(@ApiParam(value = "任务id", required = true) @PathVariable("id") Long id);
 
     @ApiOperationSupport(order = 5005)
     @ApiOperation(
@@ -125,7 +142,7 @@ public interface TaskApi {
         nickname = "updateTask",
         notes = ""
     )
-    @PutMapping({""})
-    void updateTask(@ApiParam(value = "更新任务", required = true) @Valid @RequestBody TaskVO taskVO);
+    @PutMapping({"modify"})
+    void modify(@ApiParam(value = "更新任务", required = true) @Valid @RequestBody TaskParam taskParam);
 
 }

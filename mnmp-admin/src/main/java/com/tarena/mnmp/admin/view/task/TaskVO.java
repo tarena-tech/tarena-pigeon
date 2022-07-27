@@ -19,13 +19,24 @@ package com.tarena.mnmp.admin.view.task;
 
 import com.tarena.mnmp.domain.task.NoticeTargetData;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
+import javax.validation.constraints.NotBlank;
 
 @ApiModel(value = "任务新增或修改")
 public class TaskVO {
     private Long id;
+
+    @ApiModelProperty(value = "任务名称", required = true)
+    @NotBlank(message = "任务名称为必填项")
     private String name;
+
+    @ApiModelProperty(value = "appId", required = true)
+    @NotBlank(message = "appId为必填项")
     private Long appId;
+
+    @ApiModelProperty(value = "消息类型 1-sms,2-email,3-wechat", required = true)
+    @NotBlank(message = "消息类型为必填项")
     private Integer noticeType;
     private Integer templateType;
     private Long templateId;

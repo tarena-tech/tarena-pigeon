@@ -18,48 +18,24 @@
 
 package com.tarena.mnmp.domain.task;
 
+import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "任务查询入参")
-public class TaskQuery {
+public class TaskQuery extends PagerResult {
 
-    private Long pageNum = 1L;
-
-    private Long pageSize = 10L;
-
+    @ApiModelProperty(value = "任务名 支持模糊")
     private String name;
 
+    @ApiModelProperty(value = "appId")
     private Integer appId;
 
-    private Integer noticeType;
-
-    private Integer templateType;
-
-    private String templateName;
-
+    @ApiModelProperty(value = "任务状态 0:未开启 1:推送中 2:终止 3:已结束 4.失败")
     private Integer taskStatus;
 
-    private String creator;
-
-    private Long createBeginTime;
-
-    private Long createEndTime;
-
-    public Long getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(Long pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public Long getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Long pageSize) {
-        this.pageSize = pageSize;
-    }
+    @ApiModelProperty(value = "审核状态 -1：拒绝， 0：待审核， 1：审核通过")
+    private Integer taskAudit;
 
     public String getName() {
         return name;
@@ -77,30 +53,6 @@ public class TaskQuery {
         this.appId = appId;
     }
 
-    public Integer getNoticeType() {
-        return noticeType;
-    }
-
-    public void setNoticeType(Integer noticeType) {
-        this.noticeType = noticeType;
-    }
-
-    public Integer getTemplateType() {
-        return templateType;
-    }
-
-    public void setTemplateType(Integer templateType) {
-        this.templateType = templateType;
-    }
-
-    public String getTemplateName() {
-        return templateName;
-    }
-
-    public void setTemplateName(String templateName) {
-        this.templateName = templateName;
-    }
-
     public Integer getTaskStatus() {
         return taskStatus;
     }
@@ -109,27 +61,11 @@ public class TaskQuery {
         this.taskStatus = taskStatus;
     }
 
-    public String getCreator() {
-        return creator;
+    public Integer getTaskAudit() {
+        return taskAudit;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public Long getCreateBeginTime() {
-        return createBeginTime;
-    }
-
-    public void setCreateBeginTime(Long createBeginTime) {
-        this.createBeginTime = createBeginTime;
-    }
-
-    public Long getCreateEndTime() {
-        return createEndTime;
-    }
-
-    public void setCreateEndTime(Long createEndTime) {
-        this.createEndTime = createEndTime;
+    public void setTaskAudit(Integer taskAudit) {
+        this.taskAudit = taskAudit;
     }
 }

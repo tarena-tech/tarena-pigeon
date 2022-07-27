@@ -62,6 +62,7 @@
         <logback.version>1.2.9</logback.version>
         <spring.framework.version>5.3.9</spring.framework.version>
         <spring.boot.version>2.5.4</spring.boot.version>
+        <easyexcel.version>3.1.1</easyexcel.version>
     </properties>
 
 
@@ -290,6 +291,13 @@
                 <artifactId>spring-boot-starter-validation</artifactId>
                 <version>2.5.4</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <profiles>

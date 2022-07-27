@@ -23,31 +23,22 @@
         <result property="nextTriggerTime" column="next_trigger_time" jdbcType="TIMESTAMP"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="taskAudit" column="task_audit" jdbcType="INTEGER"/>
+        <result property="taskAuditResult" column="task_audit_result" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, `name`, task_status, task_type, notice_type, template_id, sign_id, app_id, cycle_level,
+        cycle_num, first_trigger_time, trigger_end_time, next_trigger_time, target_type,
+        target_file_name, target_file_url, creator, creator_email, creator_name, dept_id,
+        remark, error, create_time, update_time, task_audit, task_audit_result
+    </sql>
 
     <!--查询单个-->
     <select id="queryById" resultMap="NoticeTaskMap">
-        select id,
-               name,
-               task_status,
-               task_type,
-               notice_type,
-               template_id,
-               sign_id,
-               app_id,
-               target_type,
-               target_file_name,
-               target_file_url,
-               creator,
-               dept_id,
-               remark,
-               cycle_level,
-               cycle_num,
-               first_trigger_time,
-               trigger_end_time,
-               next_trigger_time,
-               create_time,
-               update_time
+        select
+        <include refid="Base_Column_List" />
         from notice_task
         where id = #{id}
     </select>
@@ -111,11 +102,17 @@
             <if test="createTime != null">
                 create_time = #{createTime},
             </if>
+            <if test="taskAudit != null">
+                task_audit = #{taskAudit,jdbcType=INTEGER},
+            </if>
+            <if test="taskAuditResult != null and taskAuditResult != ''">
+                task_audit_result = #{taskAuditResult,jdbcType=VARCHAR},
+            </if>
             update_time = now()
         </set>
         where id = #{id}
     </update>
-    <insert id="sava">
+    <insert id="save">
         <!--@mbg.generated-->
         insert into notice_task
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -167,19 +164,29 @@
             <if test="creator != null">
                 creator,
             </if>
-
+            <if test="creatorEmail != null">
+                creator_email,
+            </if>
+            <if test="creatorName != null">
+                creator_name,
+            </if>
             <if test="deptId != null">
                 dept_id,
             </if>
             <if test="remark != null">
                 remark,
             </if>
-
+            <if test="error != null">
+                error,
+            </if>
             <if test="createTime != null">
                 create_time,
             </if>
             <if test="updateTime != null">
                 update_time,
+            </if>
+            <if test="taskAudit != null">
+                task_audit,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -202,7 +209,7 @@
                 #{signId,jdbcType=INTEGER},
             </if>
             <if test="appId != null">
-                #{appId,jdbcType=INTEGER},
+                #{appId,jdbcType=BIGINT},
             </if>
             <if test="cycleLevel != null">
                 #{cycleLevel,jdbcType=TINYINT},
@@ -231,22 +238,68 @@
             <if test="creator != null">
                 #{creator,jdbcType=INTEGER},
             </if>
-
-
+            <if test="creatorEmail != null">
+                #{creatorEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorName != null">
+                #{creatorName,jdbcType=VARCHAR},
+            </if>
             <if test="deptId != null">
-                #{deptId,jdbcType=INTEGER},
+                #{deptId,jdbcType=BIGINT},
             </if>
             <if test="remark != null">
                 #{remark,jdbcType=VARCHAR},
             </if>
-
+            <if test="error != null">
+                #{error,jdbcType=VARCHAR},
+            </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="updateTime != null">
-                #{updateTime,jdbcType=TIMESTAMP},
+            <if test="taskAudit != null">
+                #{taskAudit,jdbcType=BOOLEAN},
             </if>
+            update_time = now()
         </trim>
     </insert>
+
+    <select id="queryList" resultMap="NoticeTaskMap">
+        select <include refid="Base_Column_List" />
+        from notice_task
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="appId != null">
+                and app_id = #{appId,jdbcType=INTEGER}
+            </if>
+            <if test="taskStatus != null">
+                and task_status = #{taskStatus,jdbcType=INTEGER}
+            </if>
+            <if  test="taskAudit != null">
+                and task_audit = #{taskStatus,jdbcType=INTEGER}
+            </if>
+        </where>
+        ${limitClause}
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Long">
+        select <include refid="Base_Column_List" />
+        from notice_task
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="appId != null">
+                and app_id = #{appId,jdbcType=INTEGER}
+            </if>
+            <if test="taskStatus != null">
+                and task_status = #{taskStatus,jdbcType=INTEGER}
+            </if>
+            <if  test="taskAudit != null">
+                and task_audit = #{taskStatus,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
 </mapper>
 
