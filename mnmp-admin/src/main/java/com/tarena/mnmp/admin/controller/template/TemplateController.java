@@ -17,22 +17,21 @@
 
 package com.tarena.mnmp.admin.controller.template;
 
-import com.tarena.mnmp.admin.codegen.api.app.AppView;
 import com.tarena.mnmp.admin.codegen.api.template.TemplateApi;
 import com.tarena.mnmp.admin.codegen.api.template.TemplateView;
-import com.tarena.mnmp.admin.view.template.WecomTemplateVO;
+import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.domain.template.TemplateService;
-import com.tarena.mnmp.domain.template.WecomTemplate;
-import com.tarena.mnmp.domain.template.WecomTemplatePage;
-import com.tarena.mnmp.domain.template.WecomTemplatePageQuery;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -44,6 +43,7 @@ public class TemplateController implements TemplateApi {
     @Override public String addSmsTemplate(SmsTemplateParam param) {
         SmsTemplateDO sms = new SmsTemplateDO();
         BeanUtils.copyProperties(param, sms);
+
         return templateService.addSmsTemplate(sms);
     }
 
