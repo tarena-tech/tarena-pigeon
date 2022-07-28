@@ -163,7 +163,7 @@ public interface AppApi {
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    public void auditApp(
+    void auditApp(
         @NotNull @ApiParam(value = "应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
         @NotNull @ApiParam(value = "审核结果", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus
         );
