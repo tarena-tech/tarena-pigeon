@@ -140,9 +140,7 @@ public interface AppApi {
     @ApiOperation(
         value = "查询应用管理列表",
         nickname = "queryList",
-        notes = "",
-        response = AppView.class,
-        responseContainer = "List"
+        notes = ""
     )
     @GetMapping(
         produces = {"application/json"},

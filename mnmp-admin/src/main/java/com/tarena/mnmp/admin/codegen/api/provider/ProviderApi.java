@@ -93,9 +93,7 @@ public interface ProviderApi {
     @ApiOperation(
         value = "查询服务商列表",
         nickname = "queryList",
-        notes = "",
-        response = ProviderView.class,
-        responseContainer = "List"
+        notes = ""
     )
     @GetMapping(
         value = {"/queryList"},
