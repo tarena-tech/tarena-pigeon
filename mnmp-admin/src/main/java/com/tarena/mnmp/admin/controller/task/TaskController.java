@@ -66,19 +66,24 @@ public class TaskController implements TaskApi {
     private String excelPath;
 
     @Override public void getExcel(String path, HttpServletResponse response) throws BusinessException {
-        InputStream stream;
+        response.reset();
+        response.setContentType("application/octet-stream");
+        response.setCharacterEncoding("utf-8");
+
         if (StringUtils.isBlank(path)) {
             try {
                 ClassPathResource classPathResource = new ClassPathResource("target.xlsx");
-                //file = classPathResource.getFile();
-                stream = classPathResource.getInputStream();
-                OutputStream out = response.getOutputStream();
-                int len = 0;
-                byte[] b = new byte[1024];
-                while ((len = stream.read(b)) != -1) {
-                    out.write(b, 0, len);
+                InputStream stream = classPathResource.getInputStream();
+                response.setContentLength(stream.available());
+                response.setHeader("Content-Disposition", "attachment;filename=target.xlsx");
+                OutputStream os = response.getOutputStream();
+
+                byte[] buff = new byte[1024];
+                int i;
+                while ((i = stream.read(buff)) != -1) {
+                    os.write(buff, 0, i);
+                    os.flush();
                 }
-                out.flush();
                 return;
             } catch (IOException e) {
                 logger.error("读取resource文件异常", e);
@@ -93,9 +98,7 @@ public class TaskController implements TaskApi {
             throw new BusinessException("202", "文件不存在！！！");
         }
 
-        response.reset();
-        response.setContentType("application/octet-stream");
-        response.setCharacterEncoding("utf-8");
+
         response.setContentLength((int) file.length());
         response.setHeader("Content-Disposition", "attachment;filename=" + file.getName());
 
