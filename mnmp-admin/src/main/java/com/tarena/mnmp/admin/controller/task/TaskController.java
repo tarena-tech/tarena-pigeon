@@ -112,6 +112,10 @@ public class TaskController implements TaskApi {
         taskService.action(id, TaskStatus.TASK_STOP.status());
     }
 
+    @Override public void startTask(Long id) {
+        taskService.action(id, TaskStatus.TASK_NO_OPEN.status());
+    }
+
     @Override public void modify(TaskParam taskParam) {
         TaskDO task = new TaskDO();
         BeanUtils.copyProperties(taskParam, task);

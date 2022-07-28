@@ -68,11 +68,12 @@ public class TaskService {
         taskDao.update(taskDO);
     }
 
-    //TODO 没事务 将来加上
     @Transactional(rollbackFor = Exception.class)
     public void addTask(TaskDO bo, String filePath) {
         bo.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
         bo.setTaskAudit(AuditStatus.WAITING.getStatus());
+
+
         taskDao.save(bo);
         // 就用官方的demo，ReadListener每次必须new 所以说 在哪里写都一样
         EasyExcel.read(filePath, TargetExcelData.class, new ReadListener<TargetExcelData>() {

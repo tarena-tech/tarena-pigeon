@@ -138,6 +138,15 @@ public interface TaskApi {
 
     @ApiOperationSupport(order = 5007)
     @ApiOperation(
+        value = "开始任务",
+        nickname = "stopTask",
+        notes = ""
+    )
+    @PutMapping({"/start/{id}"})
+    void startTask(@ApiParam(value = "任务id", required = true) @PathVariable("id") Long id);
+
+    @ApiOperationSupport(order = 5008)
+    @ApiOperation(
         value = "修改任务",
         nickname = "updateTask",
         notes = ""
