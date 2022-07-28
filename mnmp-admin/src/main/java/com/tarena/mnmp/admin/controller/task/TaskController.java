@@ -31,8 +31,8 @@ import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -64,44 +64,46 @@ public class TaskController implements TaskApi {
     @Value("${excel.path}")
     private String excelPath;
 
+    private void export(HttpServletResponse response, InputStream is, String fileName) throws IOException {
+        response.reset();
+        response.setContentType("application/octet-stream");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+        response.setContentLength(is.available());
+        OutputStream os = response.getOutputStream();
+        byte[] buff = new byte[1024];
+        int i;
+        while ((i = is.read(buff)) != -1) {
+            os.write(buff, 0, i);
+            os.flush();
+        }
+    }
+
     @Override public void getExcel(String path, HttpServletResponse response) throws BusinessException {
-        File file;
+
         if (StringUtils.isBlank(path)) {
-            // 输出默认的
             try {
                 ClassPathResource classPathResource = new ClassPathResource("target.xlsx");
-                file = classPathResource.getFile();
+                InputStream stream = classPathResource.getInputStream();
+                export(response, stream, "target.xlsx");
+                return;
             } catch (IOException e) {
                 logger.error("读取resource文件异常", e);
                 throw new BusinessException("201", "读取文件异常，请稍后再试");
             }
-        } else {
-            String filePath = excelPath + path;
-            file = new File(filePath);
         }
 
+        String filePath = excelPath + path;
+        File file = new File(filePath);
         if (!file.exists() || file.length() == 0) {
             logger.error("找不到文件");
             throw new BusinessException("202", "文件不存在！！！");
         }
-
-        response.reset();
-        response.setContentType("application/octet-stream");
-        response.setCharacterEncoding("utf-8");
-        response.setContentLength((int) file.length());
-        response.setHeader("Content-Disposition", "attachment;filename=" + file.getName());
-
-        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {
-            byte[] buff = new byte[1024];
-            OutputStream os  = response.getOutputStream();
-            int i = 0;
-            while ((i = bis.read(buff)) != -1) {
-                os.write(buff, 0, i);
-                os.flush();
-            }
+        try {
+            export(response, new BufferedInputStream(Files.newInputStream(file.toPath())), file.getName());
         } catch (IOException e) {
-            logger.error("写出文件异常", e);
-            throw new BusinessException("203", "写出文件异常");
+            logger.error("读取流异常", e);
+            throw new BusinessException("201", "读取文件异常，请稍后再试");
         }
 
     }
@@ -113,16 +115,17 @@ public class TaskController implements TaskApi {
         if (!ExcelUtils.checkExcel(file.getOriginalFilename())) {
             throw new BusinessException("202", "上传文件不是excel格式");
         }
+        String dir = DateUtils.dateStr(new Date(), "yyyy/MM/dd/");
         String name = UUID.randomUUID() + "." + ExcelUtils.suffixName(file.getOriginalFilename());
         StringBuilder newPath = new StringBuilder();
-        newPath.append(excelPath).append(DateUtils.dateStr(new Date(), "yyyy/MM/dd/"));
+        newPath.append(excelPath).append(dir);
         File f = new File(newPath.toString());
         if (!f.exists() && !f.mkdirs()) {
             throw new BusinessException("203", "目录创建失败，请检查权限");
         }
         newPath.append(name);
         Streams.copy(file.getInputStream(), Files.newOutputStream(Paths.get(newPath.toString())), true);
-        return new Result<>(newPath.toString());
+        return new Result<>(dir + name);
     }
 
     @Transactional
