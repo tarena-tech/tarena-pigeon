@@ -19,18 +19,13 @@ package com.tarena.mnmp.admin.codegen.api.task;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.controller.task.TaskParam;
-import com.tarena.mnmp.admin.view.task.TaskVO;
 import com.tarena.mnmp.admin.controller.task.TaskView;
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.domain.TaskDO;
-import com.tarena.mnmp.domain.task.TaskPage;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskStatistics;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import java.io.IOException;
