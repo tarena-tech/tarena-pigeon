@@ -51,6 +51,6 @@ public class FastJson implements Json {
 
     @Override
     public Map<String, Object> parse(String json) {
-        return JSON.parseObject(json);
+        return JSON.parseObject(json,Map.class);
     }
 }
