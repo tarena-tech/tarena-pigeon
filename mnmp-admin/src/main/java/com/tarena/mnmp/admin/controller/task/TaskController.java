@@ -43,6 +43,8 @@ import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.util.Streams;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,7 +57,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class TaskController implements TaskApi {
 
 
-
+    Logger logger = LoggerFactory.getLogger(TaskController.class);
 
     @Autowired
     private TaskService taskService;
@@ -70,6 +72,7 @@ public class TaskController implements TaskApi {
             try {
                 file = ResourceUtils.getFile("classpath:target.xlsx");
             } catch (FileNotFoundException e) {
+                logger.error("读取resource文件异常", e);
                 throw new BusinessException("201", "读取文件异常，请稍后再试");
             }
         } else {
@@ -78,6 +81,7 @@ public class TaskController implements TaskApi {
         }
 
         if (!file.exists() || file.length() == 0) {
+            logger.error("找不到文件");
             throw new BusinessException("202", "文件不存在！！！");
         }
 
@@ -96,7 +100,8 @@ public class TaskController implements TaskApi {
                 os.flush();
             }
         } catch (IOException e) {
-            throw new BusinessException("201", "读取文件异常，请稍后再试");
+            logger.error("写出文件异常", e);
+            throw new BusinessException("203", "写出文件异常");
         }
 
     }
