@@ -2,7 +2,7 @@
 <configuration>
 
     <!-- 应用名称：和统一配置中的项目代码保持一致（小写） -->
-    <property name="pigeon-admin" value="app"/>
+    <property name="APP_NAME" value="pigeon-admin"/>
     <contextName>${APP_NAME}</contextName>
     <!--日志文件保留天数 -->
     <property name="LOG_MAX_HISTORY" value="30"/>
