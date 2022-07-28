@@ -11,4 +11,4 @@ spring:
     hikari:
       minimum-idle: 1
 excel:
-  path: "F:/excel/"
+  path: "www/pigeon/excel"
