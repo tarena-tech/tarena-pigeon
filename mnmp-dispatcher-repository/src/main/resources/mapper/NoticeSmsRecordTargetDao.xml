@@ -3,37 +3,34 @@
 <mapper namespace="com.tarena.dispatcher.storage.mapper.NoticeSmsRecordTargetDao">
 
     <resultMap type="com.tarena.mnmp.domain.NoticeSmsRecordTargetDO" id="NoticeSmsRecordTargetMap">
+        <!--@Table notice_sms_record_target-->
         <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="recordId" column="record_id" jdbcType="INTEGER"/>
-        <result property="appId" column="app_id" jdbcType="INTEGER"/>
-        <result property="taskId" column="task_id" jdbcType="INTEGER"/>
+        <result property="appCode" column="app_code" jdbcType="VARCHAR"/>
+        <result property="taskId" column="task_id" jdbcType="BIGINT"/>
         <result property="target" column="target" jdbcType="VARCHAR"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
-        <result property="triggerTime" column="trigger_time" jdbcType="VARCHAR"/>
+        <result property="triggerTime" column="trigger_time" jdbcType="TIMESTAMP"/>
         <result property="pushTime" column="push_time" jdbcType="TIMESTAMP"/>
         <result property="bizId" column="biz_id" jdbcType="VARCHAR"/>
         <result property="sendResult" column="send_result" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
-    
 
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, app_code, task_id, target, content, `status`, trigger_time, push_time, push_receive_time,
+        biz_id, send_result, create_time, update_time
+    </sql>
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="NoticeSmsRecordTargetMap">
         select
-        id, record_id, record_name, app_code, target, content, status, push_time, biz_id, send_result, provider_cost,
-        create_time, update_time
+        <include refid="Base_Column_List" />
         from notice_sms_record_target
         <where>
             <if test="id != null">
                 and id = #{id}
-            </if>
-            <if test="recordId != null">
-                and record_id = #{recordId}
-            </if>
-            <if test="appId != null">
-                and app_id = #{appId}
             </if>
             <if test="taskId != null">
                 and task_id = #{taskId}
@@ -71,9 +68,9 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into notice_sms_record_target(record_id,  app_id, task_id, target, content, status,trigger_time,
+        insert into notice_sms_record_target( task_id, target, content, status,trigger_time,
         push_time,push_receive_time, biz_id, send_result,create_time, update_time)
-        values (#{recordId}, #{appId},#{taskId}, #{target}, #{content}, #{status}, #{triggerTime}, #{pushTime},
+        values (#{taskId}, #{target}, #{content}, #{status}, #{triggerTime}, #{pushTime},
         #{pushReceiveTime},#{bizId},#{sendResult}, now(), #{updateTime})
     </insert>
 
@@ -83,12 +80,6 @@
     <update id="update">
         update notice_sms_record_target
         <set>
-            <if test="recordId != null">
-                 record_id = #{recordId},
-            </if>
-            <if test="appId != null">
-                 app_id = #{appId},
-            </if>
             <if test="taskId != null">
                  task_id = #{taskId},
             </if>
