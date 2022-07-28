@@ -33,6 +33,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -48,6 +49,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,21 +67,28 @@ public class TaskController implements TaskApi {
     private String excelPath;
 
     @Override public void getExcel(String path, HttpServletResponse response) throws BusinessException {
-        File file;
+        InputStream stream;
         if (StringUtils.isBlank(path)) {
-            // 输出默认的
             try {
                 ClassPathResource classPathResource = new ClassPathResource("target.xlsx");
-                file = classPathResource.getFile();
+                //file = classPathResource.getFile();
+                stream = classPathResource.getInputStream();
+                OutputStream out = response.getOutputStream();
+                int len = 0;
+                byte[] b = new byte[1024];
+                while ((len = stream.read(b)) != -1) {
+                    out.write(b, 0, len);
+                }
+                out.flush();
+                return;
             } catch (IOException e) {
                 logger.error("读取resource文件异常", e);
                 throw new BusinessException("201", "读取文件异常，请稍后再试");
             }
-        } else {
-            String filePath = excelPath + path;
-            file = new File(filePath);
         }
 
+        String filePath = excelPath + path;
+        File file = new File(filePath);
         if (!file.exists() || file.length() == 0) {
             logger.error("找不到文件");
             throw new BusinessException("202", "文件不存在！！！");
