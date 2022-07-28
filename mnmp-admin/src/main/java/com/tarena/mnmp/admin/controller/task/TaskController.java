@@ -34,6 +34,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -48,6 +49,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,8 +72,9 @@ public class TaskController implements TaskApi {
         if (StringUtils.isBlank(path)) {
             // 输出默认的
             try {
-                file = ResourceUtils.getFile("classpath:target.xlsx");
-            } catch (FileNotFoundException e) {
+                ClassPathResource classPathResource = new ClassPathResource("target.xlsx");
+                file = classPathResource.getFile();
+            } catch (IOException e) {
                 logger.error("读取resource文件异常", e);
                 throw new BusinessException("201", "读取文件异常，请稍后再试");
             }
