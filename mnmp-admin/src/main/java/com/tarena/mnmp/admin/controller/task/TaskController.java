@@ -17,12 +17,14 @@
 
 package com.tarena.mnmp.admin.controller.task;
 
+import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.util.StringUtils;
 import com.tarena.mnmp.admin.codegen.api.task.TaskApi;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.commons.utils.DateUtils;
 import com.tarena.mnmp.commons.utils.ExcelUtils;
 import com.tarena.mnmp.domain.TaskDO;
+import com.tarena.mnmp.domain.task.TargetExcelData;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.domain.task.TaskStatistics;
@@ -34,6 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -49,6 +52,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -129,10 +133,17 @@ public class TaskController implements TaskApi {
     }
 
     @Transactional
-    @Override public void addTask(TaskParam taskParam) {
+    @Override public void addTask(TaskParam taskParam, HttpServletResponse response) throws IOException {
         TaskDO bo = new TaskDO();
         BeanUtils.copyProperties(taskParam, bo);
-        taskService.addTask(bo, taskParam.getFilePath());
+        List<TargetExcelData> fial = taskService.addTask(bo, taskParam.getFilePath());
+        if (!CollectionUtils.isEmpty(fial)) {
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setCharacterEncoding("utf-8");
+            String fileName = URLEncoder.encode("非法数据", "UTF-8").replaceAll("\\+", "%20");
+            response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+            EasyExcel.write(response.getOutputStream(), TargetExcelData.class).sheet().doWrite(fial);
+        }
     }
 
     @Override public void doAudit(Long id, Integer auditStatus, String auditResult) {

@@ -12,7 +12,6 @@
         <result column="content" jdbcType="VARCHAR" property="content"/>
         <result column="app_id" jdbcType="INTEGER" property="appId"/>
         <result column="app_code" jdbcType="VARCHAR" property="appCode"/>
-        <result column="client_config" jdbcType="VARCHAR" property="clientConfig"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="audit_status" jdbcType="TINYINT" property="auditStatus"/>
         <result column="audit_result" jdbcType="VARCHAR" property="auditResult"/>
@@ -80,9 +79,6 @@
             <if test="appCode != null">
                 app_code,
             </if>
-            <if test="clientConfig != null">
-                client_config,
-            </if>
             <if test="remark != null">
                 remark,
             </if>
@@ -138,9 +134,6 @@
             </if>
             <if test="appCode != null">
                 #{appCode,jdbcType=VARCHAR},
-            </if>
-            <if test="clientConfig != null">
-                #{clientConfig,jdbcType=VARCHAR},
             </if>
             <if test="remark != null">
                 #{remark,jdbcType=VARCHAR},
@@ -198,9 +191,6 @@
             </if>
             <if test="appCode != null">
                 app_code = #{appCode,jdbcType=VARCHAR},
-            </if>
-            <if test="clientConfig != null">
-                client_config = #{clientConfig,jdbcType=VARCHAR},
             </if>
             <if test="remark != null">
                 remark = #{remark,jdbcType=VARCHAR},
@@ -271,7 +261,7 @@
         from notice_sms_template
         <where>
             <if test="param1 != null and param1 != ''">
-                and ( name like concat("%",#{param1,jdbcType=VARBINARY},"%") or code like concat('%', #{param1,jdbcType=VARCHAR}, '%'))
+                and ( name like concat('%',#{param1,jdbcType=VARBINARY},'%') or code like concat('%', #{param1,jdbcType=VARCHAR}, '%'))
             </if>
             <if test="param2 != null and param2 != ''">
                 and app_code = #{param2,jdbcType=VARCHAR}

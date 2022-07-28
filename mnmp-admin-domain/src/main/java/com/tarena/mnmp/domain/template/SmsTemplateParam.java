@@ -41,11 +41,6 @@ public class SmsTemplateParam {
     @NotBlank(message = "appcode为必填项")
     private String appCode;
 
-
-    @ApiModelProperty(value = "clientConfig，前端请设置文本框，让用户自己填写json或者其他形式的数据", required = true)
-    @NotBlank(message = "密钥配置为必填项")
-    private String clientConfig;
-
     @ApiModelProperty(value = "模板名称", required = true)
     @NotBlank(message = "模板名称为必填项")
     private String name;
