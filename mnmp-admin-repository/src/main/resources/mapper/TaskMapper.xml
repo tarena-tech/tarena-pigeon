@@ -112,7 +112,7 @@
         </set>
         where id = #{id}
     </update>
-    <insert id="save">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
         <!--@mbg.generated-->
         insert into notice_task
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -284,7 +284,7 @@
     </select>
 
     <select id="queryCount" resultType="java.lang.Long">
-        select <include refid="Base_Column_List" />
+        select count(1)
         from notice_task
         <where>
             <if test="name != null and name != ''">
