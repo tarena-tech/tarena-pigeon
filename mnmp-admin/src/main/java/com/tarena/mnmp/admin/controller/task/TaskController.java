@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.admin.controller.task;
 
+import com.alibaba.excel.util.StringUtils;
 import com.tarena.mnmp.admin.codegen.api.task.TaskApi;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.commons.utils.DateUtils;
@@ -28,28 +29,78 @@ import com.tarena.mnmp.domain.task.TaskStatistics;
 import com.tarena.mnmp.enums.TaskStatus;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.util.Streams;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class TaskController implements TaskApi {
 
+
+
+
     @Autowired
     private TaskService taskService;
 
-    final static String path = "F:\\excel\\";
+    @Value("${excel.path}")
+    private String excelPath;
+
+    @Override public void getExcel(String path, HttpServletResponse response) throws BusinessException {
+        File file;
+        if (StringUtils.isBlank(path)) {
+            // 输出默认的
+            try {
+                file = ResourceUtils.getFile("classpath:target.xlsx");
+            } catch (FileNotFoundException e) {
+                throw new BusinessException("201", "读取文件异常，请稍后再试");
+            }
+        } else {
+            String filePath = excelPath + path;
+            file = new File(filePath);
+        }
+
+        if (!file.exists() || file.length() == 0) {
+            throw new BusinessException("202", "文件不存在！！！");
+        }
+
+        response.reset();
+        response.setContentType("application/octet-stream");
+        response.setCharacterEncoding("utf-8");
+        response.setContentLength((int) file.length());
+        response.setHeader("Content-Disposition", "attachment;filename=" + file.getName() );
+
+        try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {
+            byte[] buff = new byte[1024];
+            OutputStream os  = response.getOutputStream();
+            int i = 0;
+            while ((i = bis.read(buff)) != -1) {
+                os.write(buff, 0, i);
+                os.flush();
+            }
+        } catch (IOException e) {
+            throw new BusinessException("201", "读取文件异常，请稍后再试");
+        }
+
+    }
 
     @Override public Result<String> uploadFile(MultipartFile file) throws IOException, BusinessException {
         if (null == file) {
@@ -60,7 +111,7 @@ public class TaskController implements TaskApi {
         }
         String name = UUID.randomUUID() + "." + ExcelUtils.suffixName(file.getOriginalFilename());
         StringBuilder newPath = new StringBuilder();
-        newPath.append(path).append(DateUtils.dateStr(new Date(), "yyyy\\MM\\dd\\"));
+        newPath.append(excelPath).append(DateUtils.dateStr(new Date(), "yyyy/MM/dd/"));
         File f = new File(newPath.toString());
         if (!f.exists() && !f.mkdirs()) {
             throw new BusinessException("203", "目录创建失败，请检查权限");

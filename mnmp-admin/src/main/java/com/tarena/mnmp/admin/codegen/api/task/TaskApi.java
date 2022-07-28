@@ -34,6 +34,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -54,6 +55,17 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/task")
 public interface TaskApi {
 
+    @ApiOperationSupport(order = 5000)
+    @ApiOperation(
+        value = "获取excel文件"
+    )
+    @GetMapping(
+        value = {"excel"}
+    )
+    @ApiParam(value = "获取excel， 当path为空表示获取模板")
+    void getExcel(String path, HttpServletResponse response) throws BusinessException;
+
+
     @ApiOperationSupport(order = 5001)
     @ApiOperation(
         value = "上传文件"
@@ -63,7 +75,7 @@ public interface TaskApi {
     )
     Result<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException, BusinessException;
 
-    @ApiOperationSupport(order = 5001)
+    @ApiOperationSupport(order = 5002)
     @ApiOperation(
         value = "新增任务",
         nickname = "addTask",
@@ -74,7 +86,7 @@ public interface TaskApi {
     )
     void addTask(@Valid @RequestBody TaskParam taskParam);
 
-    @ApiOperationSupport(order = 5002)
+    @ApiOperationSupport(order = 5003)
     @ApiOperation(
         value = "任务操作审核",
         nickname = "doAudit",
@@ -86,12 +98,11 @@ public interface TaskApi {
         @ApiParam(value = "审核状态 1通过 2未通过", required = true) @PathVariable("auditStatus") Integer auditStatus,
         @ApiParam("审核意见") @Valid @RequestParam(value = "auditResult", required = false) String auditResult);
 
-    @ApiOperationSupport(order = 5003)
+    @ApiOperationSupport(order = 5004)
     @ApiOperation(
         value = "查询任务列表信息（分页）",
         nickname = "queryListByPage",
-        notes = "",
-        response = TaskPage.class
+        notes = ""
     )
     @PostMapping(
         value = {"/page"},
@@ -100,12 +111,11 @@ public interface TaskApi {
     )
     PagerResult<TaskView> queryListByPage(@ApiParam(value = "任务查询参数", required = true) @Valid @RequestBody TaskQuery taskQuery);
 
-    @ApiOperationSupport(order = 5004)
+    @ApiOperationSupport(order = 5005)
     @ApiOperation(
         value = "查看任务详情",
         nickname = "queryTaskDetail",
-        notes = "",
-        response = TaskDO.class
+        notes = ""
     )
     @GetMapping(
         value = {"/{id}"},
@@ -113,12 +123,11 @@ public interface TaskApi {
     )
     TaskView queryTaskDetail(@ApiParam(value = "任务id", required = true) @PathVariable("id") Long id);
 
-    @ApiOperationSupport(order = 5005)
+    @ApiOperationSupport(order = 5006)
     @ApiOperation(
         value = "查看任务发送统计",
         nickname = "queryTaskStatistics",
-        notes = "",
-        response = TaskStatistics.class
+        notes = ""
     )
     @GetMapping(
         value = {"/taskStatistics"},
@@ -127,7 +136,7 @@ public interface TaskApi {
     TaskStatistics queryTaskStatistics(
         @NotNull @ApiParam(value = "任务id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
-    @ApiOperationSupport(order = 5006)
+    @ApiOperationSupport(order = 5007)
     @ApiOperation(
         value = "终止任务",
         nickname = "stopTask",
@@ -136,7 +145,7 @@ public interface TaskApi {
     @PutMapping({"/stop/{id}"})
     void stopTask(@ApiParam(value = "任务id", required = true) @PathVariable("id") Long id);
 
-    @ApiOperationSupport(order = 5007)
+    @ApiOperationSupport(order = 5008)
     @ApiOperation(
         value = "开始任务",
         nickname = "stopTask",
@@ -145,7 +154,7 @@ public interface TaskApi {
     @PutMapping({"/start/{id}"})
     void startTask(@ApiParam(value = "任务id", required = true) @PathVariable("id") Long id);
 
-    @ApiOperationSupport(order = 5008)
+    @ApiOperationSupport(order = 5009)
     @ApiOperation(
         value = "修改任务",
         nickname = "updateTask",

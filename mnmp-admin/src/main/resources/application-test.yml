@@ -10,3 +10,5 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 1
+excel:
+  path: "F:/excel/"

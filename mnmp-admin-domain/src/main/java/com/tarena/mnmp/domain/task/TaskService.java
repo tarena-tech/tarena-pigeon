@@ -50,7 +50,6 @@ public class TaskService {
     public void doAudit(Long id, Integer status, String result) {
         TaskDO taskDO = taskDao.queryById(id);
         if (null == taskDO) {
-            // TODO 将来处理逻辑
             return;
         }
         taskDO.setId(id);
@@ -61,19 +60,15 @@ public class TaskService {
             return;
         }
 
-
-
         Date date = DateUtils.generateNextTriggerTime(taskDO.getCycleLevel(), taskDO.getCycleNum(), new Date());
         taskDO.setNextTriggerTime(date);
         taskDao.update(taskDO);
     }
 
-    @Transactional(rollbackFor = Exception.class)
     public void addTask(TaskDO bo, String filePath) {
         bo.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
         bo.setTaskAudit(AuditStatus.WAITING.getStatus());
-
-
+        bo.setTargetFileName("todo");
         taskDao.save(bo);
         // 就用官方的demo，ReadListener每次必须new 所以说 在哪里写都一样
         EasyExcel.read(filePath, TargetExcelData.class, new ReadListener<TargetExcelData>() {

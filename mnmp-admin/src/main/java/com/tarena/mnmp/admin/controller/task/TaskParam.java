@@ -9,8 +9,7 @@ import javax.validation.constraints.NotNull;
 @ApiModel(value = "task入参")
 public class TaskParam {
 
-    @ApiModelProperty(value = "主键id", required = false)
-    @NotNull(message = "修改时必填")
+    @ApiModelProperty(value = "主键id, 修改时必填", required = false)
     private Long id;
 
     @ApiModelProperty(value = "任务名称", required = true)

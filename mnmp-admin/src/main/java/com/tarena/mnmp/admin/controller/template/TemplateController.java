@@ -25,6 +25,7 @@ import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.domain.template.TemplateService;
+import com.tarena.mnmp.protocol.Result;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,11 +41,11 @@ public class TemplateController implements TemplateApi {
     @Resource
     private TemplateService templateService;
 
-    @Override public String addSmsTemplate(SmsTemplateParam param) {
+    @Override public Result<String> addSmsTemplate(SmsTemplateParam param) {
         SmsTemplateDO sms = new SmsTemplateDO();
         BeanUtils.copyProperties(param, sms);
-
-        return templateService.addSmsTemplate(sms);
+        String str = templateService.addSmsTemplate(sms);
+        return new Result<>(str);
     }
 
     @Override public void closeSmsTemplate(Long id) {
@@ -93,13 +94,11 @@ public class TemplateController implements TemplateApi {
         return view;
     }
 
-    @Override public String updateSmsTemplate(SmsTemplateParam templateSms) {
-        if (null == templateSms.getId() || templateSms.getId() < 1) {
-            return "fail";
-        }
+    @Override public Result<String> updateSmsTemplate(SmsTemplateParam templateSms) {
         SmsTemplateDO sms = new SmsTemplateDO();
         BeanUtils.copyProperties(templateSms, sms);
-        return templateService.updateSmsTemplate(sms);
+        String str = templateService.updateSmsTemplate(sms);
+        return new Result<>(str);
     }
 
     @Override public void doAuditSmsTemplate(Long id, Integer auditStatus, String auditResult) {

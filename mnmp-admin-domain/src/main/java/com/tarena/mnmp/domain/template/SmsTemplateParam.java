@@ -2,6 +2,7 @@ package com.tarena.mnmp.domain.template;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 public class SmsTemplateParam {
 
 
+    @Min(1)
     private Long id;
 
     @ApiModelProperty(value = "模板编码", required = true)

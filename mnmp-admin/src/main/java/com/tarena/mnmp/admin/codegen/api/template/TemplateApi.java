@@ -21,6 +21,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
+import com.tarena.mnmp.protocol.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -45,15 +46,14 @@ public interface TemplateApi {
     @ApiOperation(
         value = "新增短信模板",
         nickname = "addSmsTemplate",
-        notes = "",
-        response = String.class
+        notes = ""
     )
     @PostMapping(
         value = {"/sms/add"},
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    String addSmsTemplate(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate);
+    Result<String> addSmsTemplate(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate);
 
     @ApiOperationSupport(order = 4002)
     @ApiOperation(
@@ -129,7 +129,7 @@ public interface TemplateApi {
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    String updateSmsTemplate(
+    Result<String> updateSmsTemplate(
         @ApiParam(value = "修改短信模板(未通过审核)", required = true) @Valid @RequestBody SmsTemplateParam templateSms);
 
     @ApiOperationSupport(order = 4008)
