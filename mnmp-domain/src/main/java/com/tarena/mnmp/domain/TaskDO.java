@@ -49,12 +49,12 @@ public class TaskDO {
     /**
      * 消息模板主表ID
      */
-    private Integer templateId;
+    private Long templateId;
 
     /**
      * 签名ID
      */
-    private Integer signId;
+    private Long signId;
 
     /**
      * 所属应用
@@ -195,19 +195,19 @@ public class TaskDO {
         this.noticeType = noticeType;
     }
 
-    public Integer getTemplateId() {
+    public Long getTemplateId() {
         return templateId;
     }
 
-    public void setTemplateId(Integer templateId) {
+    public void setTemplateId(Long templateId) {
         this.templateId = templateId;
     }
 
-    public Integer getSignId() {
+    public Long getSignId() {
         return signId;
     }
 
-    public void setSignId(Integer signId) {
+    public void setSignId(Long signId) {
         this.signId = signId;
     }
 

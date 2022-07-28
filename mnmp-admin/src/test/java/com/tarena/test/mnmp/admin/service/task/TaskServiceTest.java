@@ -68,8 +68,8 @@ public class TaskServiceTest {
         task.setTargetFileName("todo");
         task.setTaskType(1);
         task.setNoticeType(1);
-        task.setTemplateId(1);
-        task.setSignId(1);
+        task.setTemplateId(1L);
+        task.setSignId(1L);
         task.setAppId(1L);
         task.setCycleLevel(1);
         task.setCycleNum(1);
