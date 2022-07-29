@@ -18,6 +18,7 @@
 package com.tarena.mnmp.admin.codegen.api.template;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.controller.template.SmsTemplateChangeParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
@@ -62,8 +63,7 @@ public interface TemplateApi {
         notes = ""
     )
     @PostMapping({"/sms/close"})
-    void closeSmsTemplate(
-        @NotNull @ApiParam(value = "要关闭的模板id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+    void closeSmsTemplate(@Validated @RequestBody SmsTemplateChangeParam param);
 
     @ApiOperationSupport(order = 4003)
     @ApiOperation(
@@ -72,8 +72,7 @@ public interface TemplateApi {
         notes = ""
     )
     @PostMapping({"/sms/open"})
-    void openSmsTemplate(
-        @NotNull @ApiParam(value = "要开启的模板id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+    void openSmsTemplate(@Validated @RequestBody SmsTemplateChangeParam param);
 
     @ApiOperationSupport(order = 4004)
     @ApiOperation(
