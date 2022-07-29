@@ -19,7 +19,6 @@ package com.tarena.mnmp.domain.app;
 
 import com.tarena.mnmp.domain.AppDO;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface AppDao {
 
