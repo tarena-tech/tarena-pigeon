@@ -16,6 +16,7 @@
  */
 package com.tarena.mnmp.admin.controller.template;
 
+import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -23,6 +24,7 @@ public class SmsTemplateChangeParam {
 
     @NotNull(message = "id不能为空")
     @Min(value = 1, message = "参数不合法")
+    @ApiModelProperty(value = "id", required = true)
     private Long id;
 
     public Long getId() {
