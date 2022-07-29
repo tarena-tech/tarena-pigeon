@@ -3,6 +3,7 @@
 <mapper namespace="com.tarena.mnmp.domain.app.AppDao">
 
     <resultMap type="com.tarena.mnmp.domain.AppDO" id="AppMap">
+        <!--@Table notice_app-->
         <id column="id" property="id"/>
         <result column="code" property="code"/>
         <result column="name" property="name"/>
@@ -39,11 +40,23 @@
                                 update_time)
         values (#{code}, #{name}, #{leader}, #{teamMembers}, #{remarks}, #{auditStatus}, #{enabled}, now(), now())
     </insert>
-    <select id="queryAllApps" resultMap="AppMap">
+    <select id="queryByParam" resultMap="AppMap">
         select
         <include refid="AppAllFields"/>
         from notice_app
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ${limitClause}
     </select>
+
+
+
     <select id="findById" resultMap="AppMap">
         select
         <include refid="AppAllFields"/>
@@ -87,5 +100,19 @@
         </set>
         where id=#{id}
     </update>
+
+    <select id="queryCount" resultType="java.lang.Long">
+        select
+        count(1)
+        from notice_app
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
 </mapper>
 

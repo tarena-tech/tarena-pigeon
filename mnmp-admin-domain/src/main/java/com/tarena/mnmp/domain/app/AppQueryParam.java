@@ -14,26 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.tarena.mnmp.domain.app;
 
-import com.tarena.mnmp.domain.AppDO;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import com.tarena.mnmp.commons.pager.PagerResult;
 
-public interface AppDao {
+public class AppQueryParam extends PagerResult {
 
-    Integer save(AppDO appDO);
+    private String name;
 
-    List<AppDO> queryByParam(AppQueryParam param);
+    private String code;
 
-    Long queryCount(AppQueryParam param);
+    public String getName() {
+        return name;
+    }
 
-    AppDO findById(Long appId);
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    void disable(Long appId);
+    public String getCode() {
+        return code;
+    }
 
-    void enable(Long appId);
-
-    Integer modify(AppDO appDO);
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

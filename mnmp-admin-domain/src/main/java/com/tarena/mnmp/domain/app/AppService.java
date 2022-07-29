@@ -19,6 +19,7 @@ package com.tarena.mnmp.domain.app;
 
 import com.tarena.mnmp.domain.AppDO;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,8 +53,8 @@ public class AppService {
         return appDao.findById(id);
     }
 
-    public List<AppDO> queryList() {
-        return appDao.queryAllApps();
+    public List<AppDO> queryList(AppQueryParam param) {
+        return appDao.queryByParam(param);
     }
 
     public void auditApp(Long id, Integer auditStatus) {
@@ -61,5 +62,11 @@ public class AppService {
         appDO.setId(id);
         appDO.setAuditStatus(auditStatus);
         appDao.modify(appDO);
+    }
+
+    public Long queryCount(AppQueryParam param) {
+        Long count = appDao.queryCount(param);
+        return Optional.ofNullable(count).orElse(0L);
+
     }
 }
