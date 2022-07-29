@@ -28,10 +28,6 @@ public class NoticeSmsRecordTargetDO implements Serializable {
      */
     private Long id;
     /**
-     * 消息记录ID
-     */
-    private Integer recordId;
-    /**
      * 所属应用
      */
     private Long appId;

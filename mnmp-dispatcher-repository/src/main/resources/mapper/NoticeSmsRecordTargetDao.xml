@@ -71,9 +71,9 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into notice_sms_record_target(record_id,  app_id, task_id, target, content, status,trigger_time,
+        insert into notice_sms_record_target(app_id, task_id, target, content, status,trigger_time,
         push_time,push_receive_time, biz_id, send_result,create_time, update_time)
-        values (#{recordId}, #{appId},#{taskId}, #{target}, #{content}, #{status}, #{triggerTime}, #{pushTime},
+        values (#{appId},#{taskId}, #{target}, #{content}, #{status}, #{triggerTime}, #{pushTime},
         #{pushReceiveTime},#{bizId},#{sendResult}, now(), #{updateTime})
     </insert>
 

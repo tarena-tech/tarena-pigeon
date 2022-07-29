@@ -17,20 +17,24 @@
 
 package com.tarena.consumer;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.ContextClosedEvent;
 
 @SpringBootApplication
-public class Application {
-    private static Logger logger = LoggerFactory.getLogger(Application.class);
+@MapperScan(basePackages = {"com.tarena.dispatcher.storage.mapper"})
+@ComponentScan(basePackages = {"com.tarena.dispatcher.repository.impl","com.tarena.consumer"})
+public class ConsumerApplication {
+    private static Logger logger = LoggerFactory.getLogger(ConsumerApplication.class);
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(Application.class);
+        SpringApplication springApplication = new SpringApplication(ConsumerApplication.class);
         springApplication.addListeners(new ApplicationListener<ApplicationReadyEvent>() {
             @Override public void onApplicationEvent(ApplicationReadyEvent event) {
                 logger.info("application start at {}", event.getTimestamp());
