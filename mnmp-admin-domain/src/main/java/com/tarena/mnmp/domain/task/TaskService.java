@@ -21,8 +21,10 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.util.ListUtils;
+import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.commons.utils.DateUtils;
+import com.tarena.mnmp.commons.utils.RegexUtils;
 import com.tarena.mnmp.domain.TaskDO;
 import com.tarena.mnmp.domain.TaskTargetDO;
 import com.tarena.mnmp.domain.ttarget.TaskTargetService;
@@ -31,10 +33,13 @@ import com.tarena.mnmp.enums.Deleted;
 import com.tarena.mnmp.enums.TaskStatus;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,6 +50,12 @@ public class TaskService {
 
     @Resource
     private TaskTargetService taskTargetService;
+
+    @Autowired
+    private Json json;
+
+    @Value("${excel.path}")
+    private String excelPath;
 
     public void doAudit(Long id, Integer status, String result) {
         TaskDO taskDO = taskDao.queryById(id);
@@ -64,13 +75,19 @@ public class TaskService {
         taskDao.update(taskDO);
     }
 
-    public void addTask(TaskDO bo, String filePath) {
+    public List<TargetExcelData> addTask(TaskDO bo, String filePath) {
         bo.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
         bo.setTaskAudit(AuditStatus.WAITING.getStatus());
-        bo.setTargetFileName("todo");
+        bo.setTargetFileUrl(filePath);
+        bo.setTargetFileName(filePath.substring(filePath.lastIndexOf("/") + 1));
+        bo.setCreateTime(new Date());
+        bo.setUpdateTime(new Date());
         taskDao.save(bo);
-        // 就用官方的demo，ReadListener每次必须new 所以说 在哪里写都一样
-        EasyExcel.read(filePath, TargetExcelData.class, new ReadListener<TargetExcelData>() {
+        List<TargetExcelData> fails = new ArrayList<>();
+        String fullPath = excelPath + filePath;
+
+        Set<String> set = new HashSet<>();
+        EasyExcel.read(fullPath, TargetExcelData.class, new ReadListener<TargetExcelData>() {
 
             public static final int BATCH_COUNT = 100;
 
@@ -88,20 +105,36 @@ public class TaskService {
 
             private void save() {
                 List<TaskTargetDO> list = new ArrayList<>();
-                cachedDataList.forEach(old -> {
+                for (TargetExcelData old : cachedDataList) {
+                    if (!RegexUtils.checkPhone(old.getPhone())) {
+                        fails.add(old);
+                        continue;
+                    }
+                    try {
+                        json.parse(old.getParams());
+                    } catch (Exception e) {
+                        fails.add(old);
+                        continue;
+                    }
+
+                    if (set.contains(old.getPhone())) {
+                        continue;
+                    }
+
                     TaskTargetDO task = new TaskTargetDO();
                     task.setTaskId(bo.getId());
                     task.setDeleted(Deleted.NO.getVal());
                     task.setParams(old.getParams());
                     task.setTarget(old.getPhone());
                     list.add(task);
-                });
+                    set.add(old.getPhone());
+                }
                 taskTargetService.saveBatch(list);
                 // 存储完成清理 list
                 cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
             }
         }).sheet().doRead();
-
+        return fails;
     }
 
     public void action(Long id, int status) {

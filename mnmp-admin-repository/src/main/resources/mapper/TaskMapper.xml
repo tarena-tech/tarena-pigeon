@@ -113,7 +113,6 @@
         where id = #{id}
     </update>
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        <!--@mbg.generated-->
         insert into notice_task
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null">
@@ -188,6 +187,9 @@
             <if test="taskAudit != null">
                 task_audit,
             </if>
+            <if test="taskAuditResult != null">
+                task_audit_result,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null">
@@ -256,10 +258,15 @@
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
             <if test="taskAudit != null">
                 #{taskAudit,jdbcType=BOOLEAN},
             </if>
-            update_time = now()
+            <if test="taskAuditResult != null">
+                #{taskAuditResult,jdbcType=VARCHAR},
+            </if>
         </trim>
     </insert>
 

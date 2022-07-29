@@ -79,7 +79,7 @@ public interface TaskApi {
     @PostMapping(
         value = {"add"}
     )
-    void addTask(@Valid @RequestBody TaskParam taskParam);
+    void addTask(@Valid @RequestBody TaskParam taskParam, HttpServletResponse response) throws IOException;
 
     @ApiOperationSupport(order = 5003)
     @ApiOperation(
