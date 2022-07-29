@@ -14,27 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.commons.utils;
 
-package com.tarena.mnmp.domain.provider;
+import java.util.regex.Pattern;
 
-import com.tarena.mnmp.domain.ProviderDO;
-import java.util.List;
+public class RegexUtils {
 
-public interface ProviderDao {
 
-    Integer save(ProviderDO aDo);
+    static final String PHONE_REGEX = "^\\d{11}$";
+    static final Pattern PHONE_PATTERN = Pattern.compile(PHONE_REGEX, Pattern.CASE_INSENSITIVE);
 
-    void disable(Long id);
-
-    Integer modify(ProviderDO aDo);
-
-    void enable(Long id);
-
-    List<ProviderDO> queryByParam(ProviderQueryParam param);
-
-    Long queryCount(ProviderQueryParam param);
-
-    ProviderDO findById(Long id);
-
+    public static boolean checkPhone(String phone) {
+        return PHONE_PATTERN.matcher(phone).matches();
+    }
 
 }

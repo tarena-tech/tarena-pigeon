@@ -23,6 +23,8 @@ public class SignDO {
 
     private Long id;
 
+    private String code;
+
     private String name;
 
     private String appName;
@@ -127,5 +129,11 @@ public class SignDO {
         this.enabled = enabled;
     }
 
+    public String getCode() {
+        return code;
+    }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

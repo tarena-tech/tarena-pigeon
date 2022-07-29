@@ -18,6 +18,7 @@
 package com.tarena.mnmp.domain.task;
 
 import com.tarena.mnmp.domain.TaskDO;
+import java.util.List;
 
 public interface TaskDao {
 
@@ -25,5 +26,9 @@ public interface TaskDao {
 
     Integer update(TaskDO taskDO);
 
-    void sava(TaskDO bo);
+    void save(TaskDO taskDO);
+
+    List<TaskDO> queryList(TaskQuery query);
+
+    Long queryCount(TaskQuery query);
 }

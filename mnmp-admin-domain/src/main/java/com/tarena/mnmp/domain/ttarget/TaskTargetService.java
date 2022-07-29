@@ -14,27 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.domain.ttarget;
 
-package com.tarena.mnmp.domain.provider;
-
-import com.tarena.mnmp.domain.ProviderDO;
+import com.tarena.mnmp.domain.TaskTargetDO;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface ProviderDao {
-
-    Integer save(ProviderDO aDo);
-
-    void disable(Long id);
-
-    Integer modify(ProviderDO aDo);
-
-    void enable(Long id);
-
-    List<ProviderDO> queryByParam(ProviderQueryParam param);
-
-    Long queryCount(ProviderQueryParam param);
-
-    ProviderDO findById(Long id);
+@Service
+public class TaskTargetService {
 
 
+    @Autowired
+    private TaskTargetDAO taskTargetDAO;
+
+    public void saveBatch(List<TaskTargetDO> list) {
+        taskTargetDAO.insertBatch(list);
+    }
 }

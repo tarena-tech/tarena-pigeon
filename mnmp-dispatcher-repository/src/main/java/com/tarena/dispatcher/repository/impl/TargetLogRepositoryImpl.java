@@ -84,6 +84,7 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
         insertData.setContent(target.getContent());
         insertData.setStatus(targetStatus);
         insertData.setBizId(bizId);
+        insertData.setAppCode(target.getAppCode());
         recordTargetDao.insert(insertData);
     }
 }

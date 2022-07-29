@@ -14,146 +14,158 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.admin.controller.task;
 
-package com.tarena.mnmp.domain;
-
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
-import java.util.GregorianCalendar;
+import lombok.Data;
 
-public class TaskDO {
+@Data
+public class TaskView {
+
     /**
      * 主键
      */
+    @ApiModelProperty(value = "主键", required = true)
     private Long id;
 
     /**
      * 任务名称
      */
+    @ApiModelProperty(value = "任务名称", required = true)
     private String name;
 
     /**
      * 任务状态 0:未开启 1:推送中 2:终止 3:已结束 4.失败
      */
+    @ApiModelProperty(value = "任务状态 0:未开启 1:推送中 2:终止 3:已结束 4.失败", required = true)
     private Integer taskStatus;
 
     /**
      * 任务类型 0:立即 1:定时 2:周期 3:条件规则触发
      */
+    @ApiModelProperty(value = "任务类型 0:立即 1:定时 2:周期 3:条件规则触发", required = true)
     private Integer taskType;
 
     /**
      * 消息类型
      */
+    @ApiModelProperty(value = "消息类型 1-sms 2-email 3-wechat", required = true)
     private Integer noticeType;
 
     /**
      * 消息模板主表ID
      */
-    private Long templateId;
+    @ApiModelProperty(value = "消息模板主表ID 根据id可查看模板详情", required = true)
+    private Integer templateId;
 
     /**
      * 签名ID
      */
-    private Long signId;
+    @ApiModelProperty(value = "签名ID 根据签名id可查看签名详情", required = true)
+    private Integer signId;
 
     /**
      * 所属应用
      */
+    @ApiModelProperty(value = "所属应用 根据id可查看应用详情", required = true)
     private Long appId;
 
     /**
      * 周期类型 1:小时 2:日 3:周 4:月 5:年
      */
+    @ApiModelProperty(value = "周期类型 1:小时 2:日 3:周 4:月 5:年", required = true)
     private Integer cycleLevel;
 
     /**
      * 周期数
      */
+    @ApiModelProperty(value = "周期数", required = true)
     private Integer cycleNum;
 
     /**
      * 任务首次触发时间
      */
+    @ApiModelProperty(value = "任务首次触发时间", required = true)
     private Date firstTriggerTime;
 
     /**
      * 任务触发结束时间
      */
+    @ApiModelProperty(value = "任务触发结束时间", required = true)
     private Date triggerEndTime;
 
     /**
      * 下次任务触发时间
      */
+    @ApiModelProperty(value = "下次任务触发时间", required = true)
     private Date nextTriggerTime;
-
-    /**
-     * 目标类型 1:文件上传 2.规则匹配
-     */
-    private Integer targetType;
 
     /**
      * 目标文件名称
      */
+    @ApiModelProperty(value = "目标文件名称", required = true)
     private String targetFileName;
 
     /**
      * 目标文件地址
      */
+    @ApiModelProperty(value = "目标文件地址", required = true)
     private String targetFileUrl;
 
     /**
      * 创建人
      */
+    @ApiModelProperty(value = "创建人", required = true)
     private Integer creator;
 
-    /**
-     * 创建人邮箱前缀
-     */
-    private String creatorEmail;
+//    /**
+//     * 创建人邮箱前缀
+//     */
+//    @ApiModelProperty(value = "创建人邮箱前缀", required = true)
+//    private String creatorEmail;
 
     /**
      * 创建人姓名
      */
+    @ApiModelProperty(value = "创建人姓名")
     private String creatorName;
 
-    /**
-     * 所属部门
-     */
-    private Long deptId;
+//    /**
+//     * 所属部门
+//     */
+//    @ApiModelProperty(value = "任务名称", required = true)
+//    private Long deptId;
 
     /**
      * 描述
      */
+    @ApiModelProperty(value = "remark", required = true)
     private String remark;
 
     /**
      * 错误日志
      */
+    @ApiModelProperty(value = "错误日志, 字段可能很长", required = true)
     private String error;
 
     /**
      * 创建时间
      */
+    @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
     /**
      * 更新时间
      */
+    @ApiModelProperty(value = "更新时间", required = true)
     private Date updateTime;
 
+    @ApiModelProperty(value = "审核状态 -1-审核拒绝， 0-待审核， 1-审核通过", required = true)
     private Integer taskAudit;
 
+    @ApiModelProperty(value = "审核时提交的文案", required = true)
     private String taskAuditResult;
-
-    public Date generateNextTriggerTime() {
-
-        GregorianCalendar cal = new GregorianCalendar();
-        cal.setTime(new Date());
-
-        return null;
-    }
-
-
 
     public Long getId() {
         return id;
@@ -195,19 +207,19 @@ public class TaskDO {
         this.noticeType = noticeType;
     }
 
-    public Long getTemplateId() {
+    public Integer getTemplateId() {
         return templateId;
     }
 
-    public void setTemplateId(Long templateId) {
+    public void setTemplateId(Integer templateId) {
         this.templateId = templateId;
     }
 
-    public Long getSignId() {
+    public Integer getSignId() {
         return signId;
     }
 
-    public void setSignId(Long signId) {
+    public void setSignId(Integer signId) {
         this.signId = signId;
     }
 
@@ -259,14 +271,6 @@ public class TaskDO {
         this.nextTriggerTime = nextTriggerTime;
     }
 
-    public Integer getTargetType() {
-        return targetType;
-    }
-
-    public void setTargetType(Integer targetType) {
-        this.targetType = targetType;
-    }
-
     public String getTargetFileName() {
         return targetFileName;
     }
@@ -291,28 +295,12 @@ public class TaskDO {
         this.creator = creator;
     }
 
-    public String getCreatorEmail() {
-        return creatorEmail;
-    }
-
-    public void setCreatorEmail(String creatorEmail) {
-        this.creatorEmail = creatorEmail;
-    }
-
     public String getCreatorName() {
         return creatorName;
     }
 
     public void setCreatorName(String creatorName) {
         this.creatorName = creatorName;
-    }
-
-    public Long getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
     }
 
     public String getRemark() {

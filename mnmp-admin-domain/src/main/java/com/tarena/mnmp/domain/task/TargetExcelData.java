@@ -14,27 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.domain.task;
 
-package com.tarena.mnmp.domain.provider;
+public class TargetExcelData {
 
-import com.tarena.mnmp.domain.ProviderDO;
-import java.util.List;
+    private String phone;
 
-public interface ProviderDao {
+    private String params;
 
-    Integer save(ProviderDO aDo);
+    public String getPhone() {
+        return phone;
+    }
 
-    void disable(Long id);
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-    Integer modify(ProviderDO aDo);
+    public String getParams() {
+        return params;
+    }
 
-    void enable(Long id);
-
-    List<ProviderDO> queryByParam(ProviderQueryParam param);
-
-    Long queryCount(ProviderQueryParam param);
-
-    ProviderDO findById(Long id);
-
-
+    public void setParams(String params) {
+        this.params = params;
+    }
 }

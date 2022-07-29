@@ -17,32 +17,124 @@
 
 package com.tarena.mnmp.domain.task;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.context.AnalysisContext;
+import com.alibaba.excel.read.listener.ReadListener;
+import com.alibaba.excel.util.ListUtils;
+import com.tarena.mnmp.commons.json.Json;
+import com.tarena.mnmp.commons.pager.PagerResult;
+import com.tarena.mnmp.commons.utils.DateUtils;
+import com.tarena.mnmp.commons.utils.RegexUtils;
 import com.tarena.mnmp.domain.TaskDO;
+import com.tarena.mnmp.domain.TaskTargetDO;
+import com.tarena.mnmp.domain.ttarget.TaskTargetService;
+import com.tarena.mnmp.enums.AuditStatus;
+import com.tarena.mnmp.enums.Deleted;
 import com.tarena.mnmp.enums.TaskStatus;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TaskService {
-    private static final int AUDIT_STATUS_PASS = 1;
 
     @Autowired
     private TaskDao taskDao;
 
+    @Resource
+    private TaskTargetService taskTargetService;
+
+    @Autowired
+    private Json json;
+
+    @Value("${excel.path}")
+    private String excelPath;
+
     public void doAudit(Long id, Integer status, String result) {
         TaskDO taskDO = taskDao.queryById(id);
-        //todo 审核逻辑处理 修改任务状态,备注说明等
-
-        //审核通过后初始化执行时间
-        if (AUDIT_STATUS_PASS == status) {
-            taskDO.setNextTriggerTime(taskDO.getFirstTriggerTime());
+        if (null == taskDO) {
+            return;
         }
+        taskDO.setId(id);
+        taskDO.setTaskAudit(status);
+        taskDO.setTaskAuditResult(result);
+        if (AuditStatus.REJECT.getStatus().intValue() == status) {
+            taskDao.update(taskDO);
+            return;
+        }
+
+        Date date = DateUtils.generateNextTriggerTime(taskDO.getCycleLevel(), taskDO.getCycleNum(), new Date());
+        taskDO.setNextTriggerTime(date);
         taskDao.update(taskDO);
     }
 
-    public void addTask(TaskDO bo) {
-        // TODO audit状态机？ 待定
-        taskDao.sava(bo);
+    public List<TargetExcelData> addTask(TaskDO bo, String filePath) {
+        bo.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
+        bo.setTaskAudit(AuditStatus.WAITING.getStatus());
+        bo.setTargetFileUrl(filePath);
+        bo.setTargetFileName(filePath.substring(filePath.lastIndexOf("/") + 1));
+        bo.setCreateTime(new Date());
+        bo.setUpdateTime(new Date());
+        taskDao.save(bo);
+        List<TargetExcelData> fails = new ArrayList<>();
+        String fullPath = excelPath + filePath;
+
+        Set<String> set = new HashSet<>();
+        EasyExcel.read(fullPath, TargetExcelData.class, new ReadListener<TargetExcelData>() {
+
+            public static final int BATCH_COUNT = 100;
+
+            private List<TargetExcelData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+            @Override public void invoke(TargetExcelData data, AnalysisContext context) {
+                cachedDataList.add(data);
+                if (cachedDataList.size() >= BATCH_COUNT) {
+                    save();
+                }
+            }
+
+            @Override public void doAfterAllAnalysed(AnalysisContext context) {
+                save();
+            }
+
+            private void save() {
+                List<TaskTargetDO> list = new ArrayList<>();
+                for (TargetExcelData old : cachedDataList) {
+                    if (!RegexUtils.checkPhone(old.getPhone())) {
+                        fails.add(old);
+                        continue;
+                    }
+                    try {
+                        json.parse(old.getParams());
+                    } catch (Exception e) {
+                        fails.add(old);
+                        continue;
+                    }
+
+                    if (set.contains(old.getPhone())) {
+                        continue;
+                    }
+
+                    TaskTargetDO task = new TaskTargetDO();
+                    task.setTaskId(bo.getId());
+                    task.setDeleted(Deleted.NO.getVal());
+                    task.setParams(old.getParams());
+                    task.setTarget(old.getPhone());
+                    list.add(task);
+                    set.add(old.getPhone());
+                }
+                taskTargetService.saveBatch(list);
+                // 存储完成清理 list
+                cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+            }
+        }).sheet().doRead();
+        return fails;
     }
 
     public void action(Long id, int status) {
@@ -53,6 +145,25 @@ public class TaskService {
     }
 
     public void updateTask(TaskDO task) {
+        task.setTaskAudit(AuditStatus.WAITING.getStatus());
         taskDao.update(task);
+    }
+
+    public PagerResult<TaskDO> queryListByPage(TaskQuery query) {
+
+        List<TaskDO> list = taskDao.queryList(query);
+        Long count = taskDao.queryCount(query);
+
+        PagerResult<TaskDO> res = new PagerResult<>(query.getPageSize(), query.getCurrentPageIndex());
+        res.setList(list);
+        res.setRecordCount(Optional.ofNullable(count).orElse(0L));
+        return res;
+    }
+
+    public TaskDO detailById(Long id) {
+        if (null == id) {
+            return new TaskDO();
+        }
+        return taskDao.queryById(id);
     }
 }

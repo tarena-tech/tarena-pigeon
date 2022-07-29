@@ -14,27 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.admin.controller.template;
 
-package com.tarena.mnmp.domain.provider;
+import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
-import com.tarena.mnmp.domain.ProviderDO;
-import java.util.List;
+public class SmsTemplateChangeParam {
 
-public interface ProviderDao {
+    @NotNull(message = "id不能为空")
+    @Min(value = 1, message = "参数不合法")
+    @ApiModelProperty(value = "id", required = true)
+    private Long id;
 
-    Integer save(ProviderDO aDo);
+    public Long getId() {
+        return id;
+    }
 
-    void disable(Long id);
-
-    Integer modify(ProviderDO aDo);
-
-    void enable(Long id);
-
-    List<ProviderDO> queryByParam(ProviderQueryParam param);
-
-    Long queryCount(ProviderQueryParam param);
-
-    ProviderDO findById(Long id);
-
-
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

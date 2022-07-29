@@ -14,27 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.domain.ttarget;
 
-package com.tarena.mnmp.domain.provider;
-
-import com.tarena.mnmp.domain.ProviderDO;
+import com.tarena.mnmp.domain.TaskTargetDO;
 import java.util.List;
 
-public interface ProviderDao {
+public interface TaskTargetDAO {
+    int deleteByPrimaryKey(Long id);
 
-    Integer save(ProviderDO aDo);
+    int insert(TaskTargetDO record);
 
-    void disable(Long id);
+    int insertSelective(TaskTargetDO record);
 
-    Integer modify(ProviderDO aDo);
+    TaskTargetDO selectByPrimaryKey(Long id);
 
-    void enable(Long id);
+    int updateByPrimaryKeySelective(TaskTargetDO record);
 
-    List<ProviderDO> queryByParam(ProviderQueryParam param);
+    int updateByPrimaryKey(TaskTargetDO record);
 
-    Long queryCount(ProviderQueryParam param);
-
-    ProviderDO findById(Long id);
-
-
+    int insertBatch(List<TaskTargetDO> list);
 }

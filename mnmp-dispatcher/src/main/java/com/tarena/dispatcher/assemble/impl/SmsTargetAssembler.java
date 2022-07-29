@@ -43,9 +43,10 @@ public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> 
             SmsTarget smsTarget = new SmsTarget();
             smsTarget.setTarget(targetDto.getTarget());
             smsTarget.setSignName(notice.getSignName());
+            smsTarget.setAppCode(notice.getAppCode());
             smsTarget.setTemplateCode(notice.getTemplateCode());
             smsTarget.setTemplateParam("{\"code\":\"" + notice.getTemplateContent() + "\"}");
-            smsTarget.setContent(this.dollarPlaceholderReplacer.buildContent(notice.getTemplateCode(), targetDto.getParams()));
+            smsTarget.setContent(this.dollarPlaceholderReplacer.buildContent(notice.getTemplateContent(), targetDto.getParams()));
             targetList.add(smsTarget);
         }
         smsNoticeEvent.setTargets(targetList);

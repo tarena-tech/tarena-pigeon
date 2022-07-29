@@ -53,7 +53,7 @@ public class AppServiceTest {
     )
     public void queryAllAppsTest() throws BusinessException {
         List<AppDO> apps =
-            appService.queryList();
+            appService.queryList(null);
         logger.info("查询app总数:{}", apps.size());
         Asserts.isTrue(apps.size() != 22, new BusinessException(ErrorCode.SYSTEM_ERROR, "查询所有app列表测试持久层mapper失败"));
     }

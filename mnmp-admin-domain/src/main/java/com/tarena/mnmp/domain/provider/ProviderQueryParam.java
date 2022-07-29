@@ -14,27 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.tarena.mnmp.domain.provider;
 
-import com.tarena.mnmp.domain.ProviderDO;
-import java.util.List;
+import com.tarena.mnmp.commons.pager.PagerResult;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-public interface ProviderDao {
+@ApiModel("服务商查询模型")
+public class ProviderQueryParam extends PagerResult {
 
-    Integer save(ProviderDO aDo);
+    @ApiModelProperty("供应商名称")
+    private String name;
 
-    void disable(Long id);
+    @ApiModelProperty("供应商编码")
+    private String code;
 
-    Integer modify(ProviderDO aDo);
+    public String getName() {
+        return name;
+    }
 
-    void enable(Long id);
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    List<ProviderDO> queryByParam(ProviderQueryParam param);
+    public String getCode() {
+        return code;
+    }
 
-    Long queryCount(ProviderQueryParam param);
-
-    ProviderDO findById(Long id);
-
-
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

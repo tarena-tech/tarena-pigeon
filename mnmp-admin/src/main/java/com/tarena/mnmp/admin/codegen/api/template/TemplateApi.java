@@ -18,14 +18,11 @@
 package com.tarena.mnmp.admin.codegen.api.template;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.tarena.mnmp.admin.view.template.WecomTemplateVO;
+import com.tarena.mnmp.admin.controller.template.SmsTemplateChangeParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
-import com.tarena.mnmp.domain.template.WecomTemplate;
-import com.tarena.mnmp.domain.template.WecomTemplatePage;
-import com.tarena.mnmp.domain.template.WecomTemplatePageQuery;
+import com.tarena.mnmp.protocol.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -34,9 +31,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,15 +47,14 @@ public interface TemplateApi {
     @ApiOperation(
         value = "新增短信模板",
         nickname = "addSmsTemplate",
-        notes = "",
-        response = String.class
+        notes = ""
     )
     @PostMapping(
         value = {"/sms/add"},
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    String addSmsTemplate(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate);
+    Result<String> addSmsTemplate(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate);
 
     @ApiOperationSupport(order = 4002)
     @ApiOperation(
@@ -69,8 +63,7 @@ public interface TemplateApi {
         notes = ""
     )
     @PostMapping({"/sms/close"})
-    void closeSmsTemplate(
-        @NotNull @ApiParam(value = "要关闭的模板id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+    void closeSmsTemplate(@Validated @RequestBody SmsTemplateChangeParam param);
 
     @ApiOperationSupport(order = 4003)
     @ApiOperation(
@@ -79,15 +72,13 @@ public interface TemplateApi {
         notes = ""
     )
     @PostMapping({"/sms/open"})
-    void openSmsTemplate(
-        @NotNull @ApiParam(value = "要开启的模板id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+    void openSmsTemplate(@Validated @RequestBody SmsTemplateChangeParam param);
 
     @ApiOperationSupport(order = 4004)
     @ApiOperation(
         value = "查询短信模板信息（分页）",
         nickname = "queryListByPage",
-        notes = "",
-        response = PagerResult.class
+        notes = ""
     )
     @GetMapping(
         value = {"/sms/queryListByPage"},
@@ -95,13 +86,11 @@ public interface TemplateApi {
     )
     PagerResult<TemplateView> queryListByPage(TemplateQuery templateQuery);
 
-    @ApiOperationSupport(order = 4005)
+//    @ApiOperationSupport(order = 4005)
     @ApiOperation(
         value = "查询短信模板信息",
         nickname = "queryListByParam",
-        notes = "",
-        response = TemplateView.class,
-        responseContainer = "List"
+        notes = ""
     )
     @GetMapping(
         value = {"/sms/queryListByParam"},
@@ -139,7 +128,7 @@ public interface TemplateApi {
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    String updateSmsTemplate(
+    Result<String> updateSmsTemplate(
         @ApiParam(value = "修改短信模板(未通过审核)", required = true) @Valid @RequestBody SmsTemplateParam templateSms);
 
     @ApiOperationSupport(order = 4008)

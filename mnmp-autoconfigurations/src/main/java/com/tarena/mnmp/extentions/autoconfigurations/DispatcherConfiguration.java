@@ -28,6 +28,7 @@ import com.tarena.dispatcher.respository.ProviderRepository;
 import com.tarena.dispatcher.respository.TargetLogRepository;
 import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.utils.DollarPlaceholderReplacer;
+import com.tarena.mnmp.monitor.Monitor;
 import com.tarena.mnmp.protocol.ProviderClientConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -85,8 +86,11 @@ public class DispatcherConfiguration {
     @ConditionalOnMissingBean(SmsAliNoticeDispatcher.class)
     @ConditionalOnBean({TargetLogRepository.class, ProviderRepository.class})
     @ConditionalOnProperty(prefix = "dispatcher", value = "notice_sms_ali", havingValue = "true")
-    public SmsAliNoticeDispatcher smsAliNoticeDispatcher(Json json, TargetLogRepository targetLogRepository,
-        ProviderRepository providerRepository, Client smsAliClient) {
+    public SmsAliNoticeDispatcher smsAliNoticeDispatcher(Json json,
+        TargetLogRepository targetLogRepository,
+        ProviderRepository providerRepository,
+        Client smsAliClient,
+        Monitor monitor) {
         ProviderClientConfig providerClientConfig = providerRepository.getClientConfig(this.dispatcherConfig.getSmsAliPigeonProviderCode());
         SmsAliNoticeDispatcher aliNoticeDispatcher = new SmsAliNoticeDispatcher();
         aliNoticeDispatcher.setJsonProvider(json);
@@ -94,6 +98,7 @@ public class DispatcherConfiguration {
         aliNoticeDispatcher.setAliTemplateCode(providerClientConfig.getDefaultTemplate());
         aliNoticeDispatcher.setAliSmsClient(smsAliClient);
         aliNoticeDispatcher.setMock(this.dispatcherConfig.getMock());
+        aliNoticeDispatcher.setMonitor(monitor);
         return aliNoticeDispatcher;
     }
 

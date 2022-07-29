@@ -54,7 +54,7 @@ public class ProviderDaoTest {
     )
     public void queryAllProvidersTest() throws BusinessException {
         List<ProviderDO> providers =
-            providerMapper.queryAllProviders();
+            providerMapper.queryByParam(null);
         logger.info("查询app总数:{}",providers.size());
         Asserts.isTrue(providers.size() != 2, new BusinessException(ErrorCode.SYSTEM_ERROR, "查询所有provider列表测试持久层mapper失败"));
     }

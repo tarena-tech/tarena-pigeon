@@ -24,7 +24,9 @@ public interface AppDao {
 
     Integer save(AppDO appDO);
 
-    List<AppDO> queryAllApps();
+    List<AppDO> queryByParam(AppQueryParam param);
+
+    Long queryCount(AppQueryParam param);
 
     AppDO findById(Long appId);
 

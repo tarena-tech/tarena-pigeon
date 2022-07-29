@@ -58,7 +58,6 @@ public class TemplateServiceTest {
             sms.setUpdateTime(new Date());
             sms.setNoticeType(1);
             sms.setAppCode("2qqq");
-            sms.setClientConfig("{\"accessKeyId\":\"***\",\"accessKeySecret\":\"***\",\"defaultTemplate\":\"文案文案\"}");
 
             templateService.addSmsTemplate(sms);
         }

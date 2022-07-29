@@ -3,11 +3,10 @@
 <mapper namespace="com.tarena.mnmp.domain.provider.ProviderDao">
 
     <resultMap type="com.tarena.mnmp.domain.ProviderDO" id="ProviderMap">
+        <!--@Table notice_provider-->
         <id column="id" property="id"/>
         <result column="code" property="code"/>
         <result column="name" property="name"/>
-        <result column="access_key" property="accessKey"/>
-        <result column="access_key_secret" property="accessKeySecret"/>
         <result column="notice_type" property="noticeType"/>
         <result column="official_website" property="officialWebsite"/>
         <result column="contacts" property="contacts"/>
@@ -22,8 +21,6 @@
         id
         ,name
         ,code
-        ,access_key
-        ,access_key_secret
         ,notice_type
         ,official_website
         ,contacts
@@ -38,8 +35,6 @@
         insert into notice_provider
         ( name
         , code
-        , access_key
-        , access_key_secret
         , notice_type
         , official_website
         , contacts
@@ -52,8 +47,6 @@
         values (
                 #{name},
                 #{code},
-                #{accessKey},
-                #{accessKeySecret},
                 #{noticeType},
                 #{officialWebsite},
                 #{contacts},
@@ -65,11 +58,35 @@
                 now()
                )
     </insert>
-    <select id="queryAllProviders" resultMap="ProviderMap">
+    <select id="queryByParam" resultMap="ProviderMap">
         select
         <include refid="ProviderAllFields"/>
         from notice_provider
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="code != null and code != ''">
+
+            </if>
+        </where>
+        ${limitClause}
     </select>
+
+    <select id="queryCount" resultType="java.lang.Long">
+        select
+        count(1)
+        from notice_provider
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="code != null and code != ''">
+
+            </if>
+        </where>
+    </select>
+
     <select id="findById" resultMap="ProviderMap">
         select
         <include refid="ProviderAllFields"/>
@@ -96,12 +113,6 @@
             <if test="code!=null">
                 code=#{code},
             </if>
-            <if test="accessKey != null and accessKey != ''">
-                access_key=#{accessKey},
-            </if>
-            <if test="accessKeySecret != null and accessKeySecret != ''">
-                access_key_secret=#{accessKeySecret},
-            </if>
             <if test="noticeType!=null">
                 notice_type=#{noticeType},
             </if>
@@ -126,5 +137,7 @@
         </set>
         where id=#{id}
     </update>
+
+
 </mapper>
 

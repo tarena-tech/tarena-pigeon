@@ -14,27 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.commons.utils;
 
-package com.tarena.mnmp.domain.provider;
+import java.util.HashSet;
+import java.util.Set;
+import org.springframework.util.StringUtils;
 
-import com.tarena.mnmp.domain.ProviderDO;
-import java.util.List;
+public class ExcelUtils {
 
-public interface ProviderDao {
+    final static Set<String> EXCEL_SUFFIXS = new HashSet<>();
 
-    Integer save(ProviderDO aDo);
+    static {
+        EXCEL_SUFFIXS.add("xls");
+        EXCEL_SUFFIXS.add("xlsx");
+    }
 
-    void disable(Long id);
 
-    Integer modify(ProviderDO aDo);
+    public static boolean checkExcel(String name) {
+        if (StringUtils.isEmpty(name)) {
+            return false;
+        }
 
-    void enable(Long id);
+        int index = name.indexOf(".");
+        if (index == -1) {
+            return false;
+        }
+        return EXCEL_SUFFIXS.contains(name.substring(index + 1));
+    }
 
-    List<ProviderDO> queryByParam(ProviderQueryParam param);
-
-    Long queryCount(ProviderQueryParam param);
-
-    ProviderDO findById(Long id);
-
+    public static String suffixName(String name) {
+        return name.substring(name.indexOf(".") + 1);
+    }
 
 }

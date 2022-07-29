@@ -21,6 +21,7 @@ import com.tarena.mnmp.admin.codegen.api.app.AppApi;
 import com.tarena.mnmp.admin.codegen.api.app.AppView;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.AppDO;
+import com.tarena.mnmp.domain.app.AppQueryParam;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.domain.app.AppService;
 import java.util.ArrayList;
@@ -57,17 +58,18 @@ public class AppController implements AppApi {
         return appVO;
     }
 
-    @Override public PagerResult<AppView> queryList() {
-        List<AppDO> appDTOs = appService.queryList();
+    @Override public PagerResult<AppView> queryList(AppQueryParam param) {
+        List<AppDO> appDTOs = appService.queryList(param);
+        Long count = appService.queryCount(param);
         List<AppView> appVOs = new ArrayList<>();
         for (AppDO appDO : appDTOs) {
             AppView appVO = new AppView();
             BeanUtils.copyProperties(appDO, appVO);
             appVOs.add(appVO);
         }
-        PagerResult<AppView> pagerResult = new PagerResult<AppView>(1000, 1);
+        PagerResult<AppView> pagerResult = new PagerResult<>(param.getPageSize(), param.getCurrentPageIndex());
         pagerResult.setList(appVOs);
-        pagerResult.setRecordCount((long) appVOs.size());
+        pagerResult.setRecordCount(count);
         return pagerResult;
     }
 
