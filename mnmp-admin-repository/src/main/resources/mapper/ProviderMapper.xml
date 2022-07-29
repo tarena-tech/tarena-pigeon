@@ -3,6 +3,7 @@
 <mapper namespace="com.tarena.mnmp.domain.provider.ProviderDao">
 
     <resultMap type="com.tarena.mnmp.domain.ProviderDO" id="ProviderMap">
+        <!--@Table notice_provider-->
         <id column="id" property="id"/>
         <result column="code" property="code"/>
         <result column="name" property="name"/>
@@ -57,11 +58,35 @@
                 now()
                )
     </insert>
-    <select id="queryAllProviders" resultMap="ProviderMap">
+    <select id="queryByParam" resultMap="ProviderMap">
         select
         <include refid="ProviderAllFields"/>
         from notice_provider
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="code != null and code != ''">
+
+            </if>
+        </where>
+        ${limitClause}
     </select>
+
+    <select id="queryCount" resultType="java.lang.Long">
+        select
+        count(1)
+        from notice_provider
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="code != null and code != ''">
+
+            </if>
+        </where>
+    </select>
+
     <select id="findById" resultMap="ProviderMap">
         select
         <include refid="ProviderAllFields"/>
@@ -112,5 +137,7 @@
         </set>
         where id=#{id}
     </update>
+
+
 </mapper>
 

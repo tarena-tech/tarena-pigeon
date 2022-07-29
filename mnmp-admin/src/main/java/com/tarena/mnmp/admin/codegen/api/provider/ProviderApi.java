@@ -19,6 +19,7 @@ package com.tarena.mnmp.admin.codegen.api.provider;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.commons.pager.PagerResult;
+import com.tarena.mnmp.domain.provider.ProviderQueryParam;
 import com.tarena.mnmp.domain.provider.ProviderSaveParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -99,7 +100,7 @@ public interface ProviderApi {
         value = {"/queryList"},
         produces = {"application/json"}
     )
-    PagerResult<ProviderView>  queryList();
+    PagerResult<ProviderView>  queryList(ProviderQueryParam param);
 
     @ApiOperationSupport(order = 2006)
     @ApiOperation(

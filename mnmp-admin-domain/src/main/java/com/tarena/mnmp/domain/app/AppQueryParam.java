@@ -17,11 +17,16 @@
 package com.tarena.mnmp.domain.app;
 
 import com.tarena.mnmp.commons.pager.PagerResult;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+@ApiModel("app查询模型")
 public class AppQueryParam extends PagerResult {
 
+    @ApiModelProperty("app名字")
     private String name;
 
+    @ApiModelProperty("app code")
     private String code;
 
     public String getName() {
