@@ -57,13 +57,13 @@ public class TaskView {
      * 消息模板主表ID
      */
     @ApiModelProperty(value = "消息模板主表ID 根据id可查看模板详情", required = true)
-    private Integer templateId;
+    private Long templateId;
 
     /**
      * 签名ID
      */
     @ApiModelProperty(value = "签名ID 根据签名id可查看签名详情", required = true)
-    private Integer signId;
+    private Long signId;
 
     /**
      * 所属应用
@@ -207,19 +207,19 @@ public class TaskView {
         this.noticeType = noticeType;
     }
 
-    public Integer getTemplateId() {
+    public Long getTemplateId() {
         return templateId;
     }
 
-    public void setTemplateId(Integer templateId) {
+    public void setTemplateId(Long templateId) {
         this.templateId = templateId;
     }
 
-    public Integer getSignId() {
+    public Long getSignId() {
         return signId;
     }
 
-    public void setSignId(Integer signId) {
+    public void setSignId(Long signId) {
         this.signId = signId;
     }
 

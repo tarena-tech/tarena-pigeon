@@ -160,9 +160,7 @@ public class TaskController implements TaskApi {
         });
         PagerResult<TaskView> result = new PagerResult<>(taskQuery.getPageSize(), taskQuery.getCurrentPageIndex());
         result.setList(list);
-        result.setPageSize(taskQuery.getPageSize());
         result.setRecordCount(res.getRecordCount());
-        result.setCurrentPageIndex(taskQuery.getCurrentPageIndex());
         return result;
     }
 
