@@ -104,7 +104,7 @@ public interface TaskApi {
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    PagerResult<TaskView> queryListByPage(@ApiParam(value = "任务查询参数", required = true) @Valid TaskQuery taskQuery);
+    PagerResult<TaskView> queryListByPage(TaskQuery taskQuery);
 
     @ApiOperationSupport(order = 5005)
     @ApiOperation(
