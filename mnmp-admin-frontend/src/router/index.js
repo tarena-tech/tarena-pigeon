@@ -70,6 +70,20 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/app',
+    component: Layout,
+    redirect: '/app',
+    meta: { title: '应用管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'app',
+        name: 'App',
+        component: () => import('@/views/app-center/app'),
+        meta: { title: '应用', icon: 'table' }
+      }
+    ]
+  },
+  {
     path: '/template',
     component: Layout,
     redirect: '/template/sms',
