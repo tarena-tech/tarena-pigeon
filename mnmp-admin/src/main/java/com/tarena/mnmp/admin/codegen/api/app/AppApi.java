@@ -18,6 +18,7 @@
 package com.tarena.mnmp.admin.codegen.api.app;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.domain.app.AppQueryParam;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.Api;
@@ -146,7 +147,7 @@ public interface AppApi {
         produces = {"application/json"},
         value = {"/queryList"}
     )
-    PagerResult<AppView> queryList();
+    PagerResult<AppView> queryList(AppQueryParam param);
 
     /**
      * 审核应用

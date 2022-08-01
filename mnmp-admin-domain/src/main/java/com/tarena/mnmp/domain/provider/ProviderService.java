@@ -19,6 +19,7 @@ package com.tarena.mnmp.domain.provider;
 
 import com.tarena.mnmp.domain.ProviderDO;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,8 +49,8 @@ public class ProviderService {
         providerDao.enable(id);
     }
 
-    public List<ProviderDO> queryList() {
-        return providerDao.queryAllProviders();
+    public List<ProviderDO> queryList(ProviderQueryParam param) {
+        return providerDao.queryByParam(param);
     }
 
     public ProviderDO queryProviderDetail(Long id) {
@@ -61,5 +62,10 @@ public class ProviderService {
         providerDO.setId(id);
         providerDO.setAuditStatus(auditStatus);
         providerDao.modify(providerDO);
+    }
+
+    public Long queryCount(ProviderQueryParam param) {
+        Long count = providerDao.queryCount(param);
+        return Optional.ofNullable(count).orElse(0L);
     }
 }

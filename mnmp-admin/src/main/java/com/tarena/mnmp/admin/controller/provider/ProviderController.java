@@ -21,6 +21,7 @@ import com.tarena.mnmp.admin.codegen.api.provider.ProviderApi;
 import com.tarena.mnmp.admin.codegen.api.provider.ProviderView;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.ProviderDO;
+import com.tarena.mnmp.domain.provider.ProviderQueryParam;
 import com.tarena.mnmp.domain.provider.ProviderSaveParam;
 import com.tarena.mnmp.domain.provider.ProviderService;
 import java.util.ArrayList;
@@ -50,17 +51,18 @@ public class ProviderController implements ProviderApi {
         providerService.openProvider(id);
     }
 
-    @Override public PagerResult<ProviderView> queryList() {
-        List<ProviderDO> providerDOs = providerService.queryList();
+    @Override public PagerResult<ProviderView> queryList(ProviderQueryParam param) {
+        List<ProviderDO> providerDOs = providerService.queryList(param);
+        Long count = providerService.queryCount(param);
         List<ProviderView> providerViews = new ArrayList<>(providerDOs.size());
         for (ProviderDO providerDO : providerDOs) {
             ProviderView providerView = new ProviderView();
             BeanUtils.copyProperties(providerDO, providerView);
             providerViews.add(providerView);
         }
-        PagerResult<ProviderView> pagerResult = new PagerResult<ProviderView>(1000, 1);
+        PagerResult<ProviderView> pagerResult = new PagerResult<ProviderView>(param.getPageSize(), param.getCurrentPageIndex());
         pagerResult.setList(providerViews);
-        pagerResult.setRecordCount((long)providerViews.size());
+        pagerResult.setRecordCount(count);
         return pagerResult;
     }
 

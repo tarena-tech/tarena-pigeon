@@ -81,7 +81,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
         }
         SendSmsRequest sendReq = new SendSmsRequest()
             .setPhoneNumbers(smsTarget.getTarget())
-            .setSignName(smsTarget.getSignName())
+            .setSignName("阿里云短信测试")
             .setTemplateCode(this.aliTemplateCode)
             .setTemplateParam("{\"content\":\"" + smsTarget.getContent() + "\"}");
         SendSmsResponse sendResp = this.aliSmsClient.sendSms(sendReq);
@@ -197,7 +197,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
         receiptService.submit(new Runnable() {
             @Override public void run() {
                 while (true) {
-                    SmsAliNoticeDispatcher.this.doReceipt();
+                   // SmsAliNoticeDispatcher.this.doReceipt();
                 }
             }
         });

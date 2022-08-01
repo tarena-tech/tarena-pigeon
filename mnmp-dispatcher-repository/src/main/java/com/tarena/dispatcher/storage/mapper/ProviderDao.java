@@ -23,7 +23,7 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface ProviderDao {
-    @Select("select client_config from notice_sms_template where code = #{code}")
+    @Select("select client_config from notice_provider where code = #{code}")
     String getClientConfig(@Param("code") String providerCode);
 }
 
