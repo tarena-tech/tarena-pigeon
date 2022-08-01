@@ -32,11 +32,12 @@
             prop="appCode"
             label="应用"
           >
-            <el-input
+            <!-- <el-input
               v-model="claForm.appCode"
               placeholder=""
               style="width: 120px"
-            />
+            /> -->
+            <com-dict :val.sync="claForm.appCode" dict-name="expOpts" :is-all="true" />
           </el-form-item>
 
           <el-form-item>
