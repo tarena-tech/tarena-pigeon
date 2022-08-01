@@ -37,7 +37,7 @@
               placeholder=""
               style="width: 120px"
             /> -->
-            <com-dict :val.sync="claForm.appCode" dict-name="expOpts" :is-all="true" />
+            <com-dict :val.sync="claForm.appCode" dict-name="auditOpts" :is-all="true" />
           </el-form-item>
 
           <el-form-item>

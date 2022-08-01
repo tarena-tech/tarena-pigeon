@@ -15,10 +15,10 @@
             <el-input v-model.trim="claForm.appId" placeholder="" style="width: 120px"></el-input>
           </el-form-item>
           <el-form-item prop="taskStatus" label="任务状态">
-            <el-input v-model.trim="claForm.taskStatus" placeholder="" style="width: 120px"></el-input>
+            <com-dict :val.sync="claForm.taskStatus" dict-name="taskStatusOpts" :is-all="true" />
           </el-form-item>
-          <el-form-item prop="code" label="审核状态" >
-            <el-input v-model.trim="claForm.taskAudit" placeholder="" style="width: 120px"></el-input>
+          <el-form-item prop="appCode" label="审核" >
+            <com-dict :val.sync="claForm.auditStatus" dict-name="auditOpts" :is-all="true" />
           </el-form-item>
 
           <el-form-item>

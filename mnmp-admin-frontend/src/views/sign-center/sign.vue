@@ -29,14 +29,10 @@
             />
           </el-form-item>
           <el-form-item
-            prop="auditStatus"
-            label="审核状态"
+            prop="appCode"
+            label="审核"
           >
-            <el-input
-              v-model.trim="claForm.auditStatus"
-              placeholder=""
-              style="width: 120px"
-            />
+            <com-dict :val.sync="claForm.auditStatus" dict-name="auditOpts" :is-all="true" />
           </el-form-item>
 
           <el-form-item>
@@ -119,7 +115,7 @@ export default {
     return {
       claForm: {
         appName: null, // 应用名称
-        appCode: '', // 应用code
+        appCode: null, // 应用code
         auditStatus: null// 审核状态
       },
 

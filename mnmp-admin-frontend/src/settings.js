@@ -24,6 +24,42 @@ module.exports = {
         value: '1',
         label: '名称'
       }
+    ],
+    auditOpts: [
+      {
+        value: '0',
+        label: '待审核'
+      },
+      {
+        value: '-1',
+        label: '审核拒绝'
+      },
+      {
+        value: '1',
+        label: '审核通过'
+      }
+    ],
+    taskStatusOpts: [
+      {
+        value: '0',
+        label: '未开启'
+      },
+      {
+        value: '1',
+        label: '推送中'
+      },
+      {
+        value: '2',
+        label: '终止'
+      },
+      {
+        value: '3',
+        label: '已结束'
+      },
+      {
+        value: '4',
+        label: '失败'
+      },
     ]
   }
 }
