@@ -33,7 +33,6 @@
         content,
         app_id,
         app_code,
-        client_config,
         remark,
         audit_status,
         audit_result,
