@@ -113,10 +113,10 @@ public interface TaskApi {
         notes = ""
     )
     @GetMapping(
-        value = {"/{id}"},
+        value = {"detail"},
         produces = {"application/json"}
     )
-    TaskView queryTaskDetail(@ApiParam(value = "任务id", required = true) @PathVariable("id") Long id);
+    TaskView queryTaskDetail(@ApiParam(value = "任务id", required = true)Long id);
 
     @ApiOperationSupport(order = 5006)
     @ApiOperation(
