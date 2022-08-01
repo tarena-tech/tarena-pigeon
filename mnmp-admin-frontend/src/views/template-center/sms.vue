@@ -108,22 +108,26 @@
             <el-button
               type="text"
               size="small"
-              @click="handleClick(scope.row)"
+              @click="showSmsInfo(scope.row)"
             >按钮1</el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
     </div>
+    <!-- 详情弹窗 -->
+    <dialog-sms-info ref="dialogSmsInfo" />
   </div>
 </template>
 
 <script>
 import { queryListByPage } from '@/api/template.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
+import dialogSmsInfo from '@/components/sms/dialog-info.vue'
 export default {
   name: 'DemoTable',
   components: {
-    TmpTablePagination
+    TmpTablePagination,
+    dialogSmsInfo
   },
   data() {
     return {
@@ -180,6 +184,10 @@ export default {
     // 行内编辑
     toEditBtnFn(row) {
       this.$refs['updateSeriesClass'].show(row)
+    },
+    // 详情
+    showSmsInfo(row) {
+      this.$refs['dialogSmsInfo'].show({ name: row.code })
     }
   }
 }
