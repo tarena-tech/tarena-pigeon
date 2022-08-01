@@ -99,12 +99,12 @@ public interface TaskApi {
         nickname = "queryListByPage",
         notes = ""
     )
-    @PostMapping(
+    @GetMapping(
         value = {"/page"},
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    PagerResult<TaskView> queryListByPage(@ApiParam(value = "任务查询参数", required = true) @Valid @RequestBody TaskQuery taskQuery);
+    PagerResult<TaskView> queryListByPage(@ApiParam(value = "任务查询参数", required = true) @Valid TaskQuery taskQuery);
 
     @ApiOperationSupport(order = 5005)
     @ApiOperation(

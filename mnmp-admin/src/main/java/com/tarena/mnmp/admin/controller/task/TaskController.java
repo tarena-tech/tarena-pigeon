@@ -158,7 +158,7 @@ public class TaskController implements TaskApi {
             BeanUtils.copyProperties(task, tv);
             list.add(tv);
         });
-        PagerResult<TaskView> result = new PagerResult<>();
+        PagerResult<TaskView> result = new PagerResult<>(taskQuery.getPageSize(), taskQuery.getCurrentPageIndex());
         result.setList(list);
         result.setPageSize(taskQuery.getPageSize());
         result.setRecordCount(res.getRecordCount());
