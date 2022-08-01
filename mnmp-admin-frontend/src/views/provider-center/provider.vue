@@ -8,25 +8,11 @@
     >
       <div class="form-container">
         <div class="form-left-box">
-          <el-form-item
-            prop="appName"
-            label="应用名称"
-          >
-            <el-input
-              v-model.trim="claForm.appName"
-              placeholder=""
-              style="width: 120px"
-            />
+          <el-form-item prop="name" label="供应商名称">
+            <el-input v-model.trim="claForm.name" placeholder="" style="width: 120px"></el-input>
           </el-form-item>
-          <el-form-item
-            prop="appCode"
-            label="应用Code"
-          >
-            <el-input
-              v-model.trim="claForm.appCode"
-              placeholder=""
-              style="width: 120px"
-            />
+          <el-form-item prop="code" label="供应商code" >
+            <el-input v-model.trim="claForm.code" placeholder="" style="width: 120px"></el-input>
           </el-form-item>
 
           <el-form-item>
@@ -58,12 +44,21 @@
         @callback="getTabelData"
       >
 
-        <el-table-column prop="name" label="模板名称" />
-        <el-table-column prop="code" label="模板code" />
-        <el-table-column prop="leader" label="应用负责人" />
-        <el-table-column prop="teamMembers"  label="应用组员" />
-        <el-table-column prop="remarks" label="应用简介" />
-
+        <el-table-column prop="name" label="供应商名称" />
+        <el-table-column prop="code" label="供应商编码" />
+        <el-table-column prop="noticeType" label="业务类型">
+          <template slot-scope="scope">
+            <span v-if="scope.row.noticeType === 1">SMS</span>
+            <span v-else-if="scope.row.noticeType === 2">EMAIL</span>
+            <span v-else-if="scope.row.noticeType === 3">WECHAT</span>
+            <span v-else>未知</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="officialWebsite"  label="官方网站" />
+        <el-table-column prop="remarks" label="应用简介"/>
+        <el-table-column prop="contacts" label="联系人"/>
+        <el-table-column prop="phone" label="联系电话"/>
+        <el-table-column prop="remarks" label="简介"/>
         <el-table-column prop="auditStatus" label="审核状态">
           <template slot-scope="scope">
             <span v-if="scope.row.auditStatus === 1">通过</span>
@@ -76,8 +71,9 @@
             <span>{{scope.row.enable === 1 ? '启用' : '禁用'}}</span>
           </templat>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" />
-        <el-table-column prop="updateTime" label="修改时间"   />
+        <el-table-column prop="createTime" label="创建时间"/>
+        <el-table-column prop="updateTime" label="更新时间"/>
+
 
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -96,7 +92,7 @@
 </template>
 
 <script>
-import { queryList } from '@/api/app.js'
+import { queryList } from '@/api/provider.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import dialogSmsInfo from '@/components/sms/dialog-info.vue'
 export default {
@@ -108,8 +104,8 @@ export default {
   data() {
     return {
       claForm: {
-        appName: null, // 应用名称
-        appCode: '' // 应用code
+        name: null, // 应用名称
+        code: '' // 应用code
       },
 
       tableData: { recordCount: 0, list: [] },

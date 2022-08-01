@@ -47,7 +47,7 @@ import org.springframework.web.multipart.MultipartFile;
     value = "Task",
     tags = "任务管理"
 )
-@RequestMapping("/api/task")
+@RequestMapping("/task")
 public interface TaskApi {
 
     @ApiOperationSupport(order = 5000)
@@ -100,7 +100,7 @@ public interface TaskApi {
         notes = ""
     )
     @GetMapping(
-        value = {"/page"},
+        value = {"/queryList"},
         produces = {"application/json"},
         consumes = {"application/json"}
     )

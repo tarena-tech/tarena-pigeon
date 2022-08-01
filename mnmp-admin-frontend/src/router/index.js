@@ -84,6 +84,20 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/provider',
+    component: Layout,
+    redirect: '/provider',
+    meta: { title: '供应商管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'provider',
+        name: 'Provider',
+        component: () => import('@/views/provider-center/provider'),
+        meta: { title: '供应商管理', icon: 'table' }
+      }
+    ]
+  },
+  {
     path: '/template',
     component: Layout,
     redirect: '/template/sms',
@@ -94,6 +108,20 @@ export const constantRoutes = [
         name: 'TemplateSms',
         component: () => import('@/views/template-center/sms'),
         meta: { title: '短信', icon: 'table' }
+      }
+    ]
+  },
+  {
+    path: '/task',
+    component: Layout,
+    redirect: '/task',
+    meta: { title: '任务管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'task',
+        name: 'task',
+        component: () => import('@/views/task-center/task'),
+        meta: { title: '任务', icon: 'table' }
       }
     ]
   },
