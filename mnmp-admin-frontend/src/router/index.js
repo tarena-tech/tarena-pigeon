@@ -112,6 +112,20 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/sign',
+    component: Layout,
+    redirect: '/sign',
+    meta: { title: '签名管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'sign',
+        name: 'smsSign',
+        component: () => import('@/views/sign-center/sign'),
+        meta: { title: '签名', icon: 'table' }
+      }
+    ]
+  },
+  {
     path: '/task',
     component: Layout,
     redirect: '/task',

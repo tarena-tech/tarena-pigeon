@@ -17,11 +17,12 @@
 
 package com.tarena.mnmp.domain.sign;
 
+import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "签名查询入参")
-public class SignQuery {
+public class SignQuery extends PagerResult {
     @ApiModelProperty(
         value = "应用编码",
         name = "appCode"

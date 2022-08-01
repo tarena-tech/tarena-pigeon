@@ -100,9 +100,7 @@ public interface TaskApi {
         notes = ""
     )
     @GetMapping(
-        value = {"/queryList"},
-        produces = {"application/json"},
-        consumes = {"application/json"}
+        value = {"/queryList"}
     )
     PagerResult<TaskView> queryListByPage(TaskQuery taskQuery);
 

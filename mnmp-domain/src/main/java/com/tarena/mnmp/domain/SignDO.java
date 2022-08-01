@@ -27,8 +27,6 @@ public class SignDO {
 
     private String name;
 
-    private String appName;
-
     private Long appId;
     private String appCode;
 
@@ -79,14 +77,6 @@ public class SignDO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAppName() {
-        return appName;
-    }
-
-    public void setAppName(String appName) {
-        this.appName = appName;
     }
 
     public Long getAppId() {

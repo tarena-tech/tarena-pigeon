@@ -62,4 +62,8 @@ public class SignService {
         signDO.setAuditStatus(signDO.getAuditStatus());
         signDao.modify(signDO);
     }
+
+    public Long queryCount(SignQuery query) {
+        return signDao.queryCount(query);
+    }
 }

@@ -32,4 +32,6 @@ public interface SignDao {
     SignDO findById(Long id);
 
     List<SignDO> querySigns(SignQuery query);
+
+    Long queryCount(SignQuery query);
 }

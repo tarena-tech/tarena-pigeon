@@ -6,7 +6,6 @@
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="audit_status" property="auditStatus"/>
-        <result column="app_name" property="appName"/>
         <result column="app_id" property="appId"/>
         <result column="app_code" property="appCode"/>
         <result column="enabled" property="enabled"/>
@@ -21,7 +20,6 @@
         ,audit_status
         ,app_id
         ,app_code
-        ,app_name
         ,remarks
         ,enabled
         ,creator
@@ -51,13 +49,32 @@
                 audit_status=#{auditStatus}
             </if>
             <if test="name!=null">
-                and name like concat("%",#{name},"%")
+                and name like concat('%',#{name},'%')
             </if>
             <if test="appCode!=null">
-                and app_code like concat("%",#{appCode},"%")
+                and app_code like concat('%',#{appCode},'%')
+            </if>
+        </where>
+        ${limitClause}
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Long">
+        select
+        count(1)
+        from notice_sms_sign
+        <where>
+            <if test="auditStatus!=null">
+                audit_status=#{auditStatus}
+            </if>
+            <if test="name!=null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="appCode!=null">
+                and app_code like concat('%',#{appCode},'%')
             </if>
         </where>
     </select>
+
     <select id="queryAllApps" resultMap="SignMap">
         select
         <include refid="SignAllFields"/>
@@ -106,5 +123,7 @@
         </set>
         where id=#{id}
     </update>
+
+
 </mapper>
 
