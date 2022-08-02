@@ -68,7 +68,7 @@
         </el-table-column>
         <el-table-column prop="enabled" label="应用状态">
           <templat slot-scope="scope">
-            <span>{{scope.row.enable === 1 ? '启用' : '禁用'}}</span>
+            <span>{{scope.row.enabled === 1 ? '启用' : '禁用'}}</span>
           </templat>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间"/>
@@ -77,11 +77,9 @@
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              size="small"
-              @click="showSmsInfo(scope.row)"
-            >按钮1</el-button>
+            <el-button  type="text" size="small" @click="changeStatus(scope.row.id)" >
+              {{scope.row.enabled === 1 ? '禁用' : '启用'}}
+            </el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
@@ -92,7 +90,7 @@
 </template>
 
 <script>
-import { queryList } from '@/api/provider.js'
+import { queryList, changeEnableStatus } from '@/api/provider.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import dialogSmsInfo from '@/components/sms/dialog-info.vue'
 export default {
@@ -159,6 +157,15 @@ export default {
     // 详情
     showSmsInfo(row) {
       this.$refs['dialogSmsInfo'].show({ name: row.code })
+    },
+    // 修改可用状态
+    changeStatus(_id) {
+      changeEnableStatus(_id)
+        .then(res => {
+          console.dir('change.....', res);
+        }).catch(err => {
+          console.dir('change.....', err);
+      })
     }
   }
 }
