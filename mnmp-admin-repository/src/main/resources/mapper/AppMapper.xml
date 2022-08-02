@@ -84,10 +84,10 @@
                 #{enabled,jdbcType=TINYINT},
             </if>
             <if test="true">
-                #{createTime,jdbcType=TIMESTAMP},
+                now(),
             </if>
             <if test="true">
-                #{updateTime,jdbcType=TIMESTAMP},
+                now(),
             </if>
             <if test="auditStatus != null">
                 #{auditStatus,jdbcType=BIGINT},
