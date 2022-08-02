@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.RequestParam;
     value = "app",
     tags = "应用管理"
 )
-@RequestMapping("api/app")
+@RequestMapping("/app")
 public interface AppApi {
     /**
      * 新增应用

@@ -109,7 +109,7 @@ export default {
     return {
       claForm: {
         appName: null, // 应用名称
-        appCode: '' // 应用code
+        appCode: null // 应用code
       },
 
       tableData: { recordCount: 0, list: [] },
