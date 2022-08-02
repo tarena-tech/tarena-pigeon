@@ -9,21 +9,21 @@
       <div class="form-container">
         <div class="form-left-box">
           <el-form-item
-            prop="appName"
+            prop="name"
             label="应用名称"
           >
             <el-input
-              v-model.trim="claForm.appName"
+              v-model.trim="claForm.name"
               placeholder=""
               style="width: 120px"
             />
           </el-form-item>
           <el-form-item
-            prop="appCode"
+            prop="code"
             label="应用Code"
           >
             <el-input
-              v-model.trim="claForm.appCode"
+              v-model.trim="claForm.code"
               placeholder=""
               style="width: 120px"
             />
@@ -43,7 +43,7 @@
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus">新建</el-button>
+          <el-button type="success" icon="el-icon-plus" @click="$router.push('add')">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -108,8 +108,8 @@ export default {
   data() {
     return {
       claForm: {
-        appName: null, // 应用名称
-        appCode: null // 应用code
+        name: null, // 应用名称
+        code: null // 应用code
       },
 
       tableData: { recordCount: 0, list: [] },
