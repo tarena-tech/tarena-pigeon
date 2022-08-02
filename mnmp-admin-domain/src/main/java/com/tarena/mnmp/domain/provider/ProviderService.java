@@ -68,4 +68,8 @@ public class ProviderService {
         Long count = providerDao.queryCount(param);
         return Optional.ofNullable(count).orElse(0L);
     }
+
+    public void update(ProviderDO up) {
+        providerDao.modify(up);
+    }
 }

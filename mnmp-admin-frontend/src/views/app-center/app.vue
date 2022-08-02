@@ -73,7 +73,7 @@
         </el-table-column>
         <el-table-column prop="enabled" label="应用状态">
           <templat slot-scope="scope">
-            <span>{{scope.row.enable === 1 ? '启用' : '禁用'}}</span>
+            <span>{{scope.row.enabled === 1 ? '启用' : '禁用'}}</span>
           </templat>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间" />
@@ -81,11 +81,13 @@
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              size="small"
-              @click="showSmsInfo(scope.row)"
-            >按钮1</el-button>
+            <el-button  type="text" size="small" @click="changeStatus(scope.row)" >
+              {{scope.row.enabled === 1 ? '禁用' : '启用'}}
+            </el-button>
+            <el-button v-if="scope.row.auditStatus === 0" @click="audit(scope.row.id)" type="text" size="small">
+              审核
+            </el-button>
+
           </template>
         </el-table-column>
       </tmp-table-pagination>
@@ -96,7 +98,7 @@
 </template>
 
 <script>
-import { queryList } from '@/api/app.js'
+import { queryList, changeEnable, audit } from '@/api/app.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import dialogSmsInfo from '@/components/sms/dialog-info.vue'
 export default {
@@ -134,6 +136,9 @@ export default {
     resetForm() {
       this.$refs.claFrom.resetFields()
     },
+    audit(_id) {
+      console.log("audit----", _id)
+    },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)
       const _data = {
@@ -151,6 +156,19 @@ export default {
           this.$refs.tmp_table.loadingState(false)
         })
     },
+    changeStatus(_data) {
+
+      changeEnable(_data.id).then(res => {
+        console.log('list-res:', res)
+      }).catch(err => {
+        console.log('list-err:', err)
+        this.$refs.tmp_table.loadingState(false)
+      })
+      this.getTabelData()
+    },
+
+
+
     // 重置页码并搜索
     toResetPageForList() {
       this.pagination.currentPageIndex = 1
