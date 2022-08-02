@@ -84,7 +84,7 @@
             <el-button  type="text" size="small" @click="changeStatus(scope.row)" >
               {{scope.row.enabled === 1 ? '禁用' : '启用'}}
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0" @click="audit(scope.row.id)" type="text" size="small">
+            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
 
@@ -92,21 +92,29 @@
         </el-table-column>
       </tmp-table-pagination>
     </div>
+
+
+
     <!-- 详情弹窗 -->
     <dialog-sms-info ref="dialogSmsInfo" />
     <dialog-app-create ref="DialogAppCreate" />
+    <dialog-app-audit ref="DialogAppAudit" />
   </div>
+
+
 </template>
 
 <script>
 import { queryList, changeEnable, audit } from '@/api/app.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogAppCreate from "@/components/app/dialog-create";
+import DialogAppAudit from "@/components/app/dialog-audit";
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    DialogAppCreate
+    DialogAppCreate,
+    DialogAppAudit
   },
   data() {
     return {
@@ -138,10 +146,27 @@ export default {
       this.$refs.claFrom.resetFields()
     },
     audit(_id) {
-      console.log("audit----", _id)
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     },
     showAppCreate() {
       this.$refs.DialogAppCreate.show()
+    },
+    showAudit(_id) {
+      this.$refs.DialogAppAudit.show(_id);
     },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)

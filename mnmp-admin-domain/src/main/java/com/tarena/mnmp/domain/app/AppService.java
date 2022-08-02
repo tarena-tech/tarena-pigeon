@@ -57,10 +57,11 @@ public class AppService {
         return appDao.queryByParam(param);
     }
 
-    public void auditApp(Long id, Integer auditStatus) {
+    public void auditApp(Long id, Integer auditStatus, String auditResult) {
         AppDO appDO = new AppDO();
         appDO.setId(id);
         appDO.setAuditStatus(auditStatus);
+        appDO.setAuditResult(auditResult);
         appDao.modify(appDO);
     }
 

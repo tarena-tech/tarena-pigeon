@@ -94,6 +94,9 @@
             <if test="auditStatus!=null">
                 audit_status=#{auditStatus},
             </if>
+            <if test="auditResult != null and auditResult != ''">
+                audit_result = #{auditResult,jdbcType=VARCHAR},
+            </if>
             <if test="enabled != null">
                 enabled = #{enabled,jdbcType=INTEGER},
             </if>

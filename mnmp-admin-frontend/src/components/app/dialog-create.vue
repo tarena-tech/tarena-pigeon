@@ -48,8 +48,6 @@ export default {
       loading: false,
       ruleForm: {
         name: '',
-        name2: '',
-        desc: ''
       },
       rules: {
         name: [
