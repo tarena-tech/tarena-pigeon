@@ -54,7 +54,7 @@
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus">新建</el-button>
+          <el-button type="success" icon="el-icon-plus" @click="showSmsCreate">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -116,18 +116,22 @@
     </div>
     <!-- 详情弹窗 -->
     <dialog-sms-info ref="dialogSmsInfo" />
+    <!-- 创建弹窗 -->
+    <dialog-sms-create ref="DialogSmsCreate" />
   </div>
 </template>
 
 <script>
 import { queryListByPage } from '@/api/template.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import dialogSmsInfo from '@/components/sms/dialog-info.vue'
+import DialogSmsInfo from '@/components/sms/dialog-info.vue'
+import DialogSmsCreate from '@/components/sms/dialog-create.vue'
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    dialogSmsInfo
+    DialogSmsInfo,
+    DialogSmsCreate
   },
   data() {
     return {
@@ -188,6 +192,10 @@ export default {
     // 详情
     showSmsInfo(row) {
       this.$refs['dialogSmsInfo'].show({ name: row.code })
+    },
+    // 创建
+    showSmsCreate() {
+      this.$refs.DialogSmsCreate.show()
     }
   }
 }
