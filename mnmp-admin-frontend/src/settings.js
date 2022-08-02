@@ -60,6 +60,42 @@ module.exports = {
         value: '4',
         label: '失败'
       },
+    ],
+    templateType: [
+      {
+        value: null,
+        label: '请选择'
+      },
+      {
+        value: '1',
+        label: '短信通知'
+      },
+      {
+        value: '2',
+        label: '验证码'
+      },
+      {
+        value: '3',
+        label: '推广短信'
+      },
+    ],
+    noticeType: [
+      {
+        value: null,
+        label: '请选择'
+      },
+      {
+        value: '1',
+        label: 'SMS'
+      },
+      {
+        value: '2',
+        label: 'EMAIL'
+      },
+      {
+        value: '3',
+        label: 'WECHAT'
+      }
     ]
   }
 }

@@ -63,7 +63,7 @@
           <template slot-scope="scope">
             <span v-if="scope.row.auditStatus === 1">通过</span>
             <span v-if="scope.row.auditStatus === 0">待审核</span>
-            <span v-if="scope.row.auditStatus === 1">拒绝</span>
+            <span v-if="scope.row.auditStatus === -1">拒绝</span>
           </template>
         </el-table-column>
         <el-table-column prop="enabled" label="应用状态">
@@ -79,6 +79,9 @@
           <template slot-scope="scope">
             <el-button  type="text" size="small" @click="changeStatus(scope.row.id)" >
               {{scope.row.enabled === 1 ? '禁用' : '启用'}}
+            </el-button>
+            <el-button v-if="scope.row.auditStatus === 0" @click="audit(scope.row.id)" type="text" size="small">
+              审核
             </el-button>
           </template>
         </el-table-column>
@@ -166,6 +169,9 @@ export default {
         }).catch(err => {
           console.dir('change.....', err);
       })
+    },
+    audit(_id) {
+      this.$message('待补充！')
     }
   }
 }

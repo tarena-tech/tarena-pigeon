@@ -14,15 +14,37 @@
   >
     <div class="cus-drawer__content">
       <el-form ref="ruleForm" class="cus-form" :model="ruleForm" :rules="rules" label-width="100px">
-        <el-form-item label="活动名称" prop="name">
+
+        <el-form-item label="模板名称" prop="name">
           <el-input v-model="ruleForm.name" />
         </el-form-item>
-        <el-form-item label="活动区域" prop="region">
-          <el-input v-model="ruleForm.name2" />
+        <el-form-item label="模板编码" prop="code">
+          <el-input v-model="ruleForm.code" />
         </el-form-item>
-        <el-form-item label="活动形式" prop="desc">
-          <el-input v-model="ruleForm.desc" type="textarea" />
+        <el-form-item label="模板类型" prop="templateType">
+          <com-dict :val.sync="ruleForm.templateType" dict-name="templateType" :is-all="false"/>
         </el-form-item>
+        <el-form-item label="通知类型" prop="noticeType">
+          <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false"/>
+        </el-form-item>
+
+        <el-form-item label="应用(做成下拉框赛选)" prop="appId">
+          <el-input v-model="ruleForm.appId" />
+        </el-form-item>
+        <el-form-item label="描述" prop="remark">
+          <el-input v-model="ruleForm.remark" type="textarea" />
+        </el-form-item>
+
+
+<!--        <el-form-item label="活动名称" prop="name">-->
+<!--          <el-input v-model="ruleForm.name" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="活动区域" prop="region">-->
+<!--          <el-input v-model="ruleForm.name2" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="活动形式" prop="desc">-->
+<!--          <el-input v-model="ruleForm.desc" type="textarea" />-->
+<!--        </el-form-item>-->
       </el-form>
       <div class="cus-drawer__footer">
         <el-button @click="cancelForm">取 消</el-button>
@@ -46,13 +68,19 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' }
+          { required: true, message: '请输入模板名称', trigger: 'blur' }
         ],
-        region: [
-          { required: true, message: '请输入活动区域', trigger: 'blur' }
+        code: [
+          { required: true, message: '请输入code码', trigger: 'blur' }
         ],
-        desc: [
-          { required: true, message: '请填写活动形式', trigger: 'blur' }
+        templateType: [
+          { required: true, message: '请选择模板类型', trigger: 'blur' }
+        ],
+        noticeType: [
+          { required: true, message: '请选择通知类型', trigger: 'blur' }
+        ],
+        appId: [
+          { required: true, message: '请选择适用的应用', trigger: 'blur' }
         ]
       }
     }

@@ -67,7 +67,7 @@
                 name like concat('%', #{name,jdbcType=VARCHAR}, '%')
             </if>
             <if test="code != null and code != ''">
-
+                and code = #{code,jdbcType=VARCHAR}
             </if>
         </where>
         ${limitClause}

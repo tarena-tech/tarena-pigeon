@@ -30,14 +30,9 @@
           </el-form-item>
           <el-form-item
             prop="appCode"
-            label="应用"
+            label="审核"
           >
-            <!-- <el-input
-              v-model="claForm.appCode"
-              placeholder=""
-              style="width: 120px"
-            /> -->
-            <com-dict :val.sync="claForm.appCode" dict-name="auditOpts" :is-all="true" />
+            <com-dict :val.sync="claForm.auditStatus" dict-name="auditOpts" :is-all="true"/>
           </el-form-item>
 
           <el-form-item>
@@ -45,16 +40,18 @@
               type="primary"
               icon="el-icon-search"
               @click="toResetPageForList"
-            >查询</el-button>
+            >查询
+            </el-button>
             <el-button
               type="default"
               icon="el-icon-delete"
               @click="resetForm"
-            >重置</el-button>
+            >重置
+            </el-button>
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus" @click="showSmsCreate">新建</el-button>
+          <el-button type="success" icon="el-icon-plus"  @click="showSmsCreate">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -77,44 +74,64 @@
           prop="name"
           label="模板名称"
         />
-        <el-table-column
-          prop="id"
-          label="模板类型"
-        />
-        <el-table-column
-          prop="id"
-          label="应用编码"
-        />
-        <el-table-column
-          prop="id"
-          label="审核状态"
-        >
+        <el-table-column prop="templateType" label="模板类型">
           <template slot-scope="scope">
-            <span class="cus-status" :class="scope.row.auditStatus===1?'success':'danger'" />
-            <span>{{ scope.row.auditStatus }}</span>
+            <span v-if="scope.row.templateType === 0">全部</span>
+            <span v-if="scope.row.templateType === 1">短信通知</span>
+            <span v-if="scope.row.templateType === 2">验证码</span>
+            <span v-if="scope.row.templateType === 3">推广短信</span>
           </template>
         </el-table-column>
+        <el-table-column prop="noticeType" label="通知类型">
+          <template slot-scope="scope">
+            <span v-if="scope.row.noticeType === 1">SMS</span>
+            <span v-if="scope.row.noticeType === 2">EMAIL</span>
+            <span v-if="scope.row.noticeType === 3">WECHAT</span>
+          </template>
+        </el-table-column>
+
         <el-table-column
-          prop="id"
+          prop="useCount"
           label="使用次数"
         />
+
         <el-table-column
-          prop="id"
+          prop="appCode"
+          label="应用编码"
+        />
+        <el-table-column prop="auditStatus" label="审核状态">
+          <template slot-scope="scope">
+            <span v-if="scope.row.auditStatus === 1">通过</span>
+            <span v-if="scope.row.auditStatus === 0">待审核</span>
+            <span v-if="scope.row.auditStatus === -1">拒绝</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="enabled" label="应用状态">
+          <templat slot-scope="scope">
+            <span>{{scope.row.enabled === 1 ? '启用' : '禁用'}}</span>
+          </templat>
+        </el-table-column>
+
+        <el-table-column
+          prop="createTime"
           label="创建时间"
         />
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              size="small"
-              @click="showSmsInfo(scope.row)"
-            >按钮1</el-button>
+            <el-button  type="text" size="small" @click="changeStatus(scope.row.id)" >
+              {{scope.row.enabled === 1 ? '禁用' : '启用'}}
+            </el-button>
+            <el-button v-if="scope.row.auditStatus === 0" @click="audit(scope.row.id)" type="text" size="small">
+              审核
+            </el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
     </div>
     <!-- 详情弹窗 -->
+    <dialog-sms-info ref="dialogSmsInfo"/>
     <dialog-sms-info ref="dialogSmsInfo" />
     <!-- 创建弹窗 -->
     <dialog-sms-create ref="DialogSmsCreate" />
@@ -122,8 +139,10 @@
 </template>
 
 <script>
-import { queryListByPage } from '@/api/template.js'
+import {queryListByPage, changeEnableStatus} from '@/api/template.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
+import dialogSmsInfo from '@/components/sms/dialog-info.vue'
+
 import DialogSmsInfo from '@/components/sms/dialog-info.vue'
 import DialogSmsCreate from '@/components/sms/dialog-create.vue'
 export default {
@@ -137,11 +156,12 @@ export default {
     return {
       claForm: {
         appCode: null, // 应用编码
-        templateCode: '', // 模板编码
-        templateName: '' // 模板名称
+        templateCode: null, // 模板编码
+        templateName: null, // 模板名称
+        auditStatus: null
       },
 
-      tableData: { recordCount: 0, list: [] },
+      tableData: {recordCount: 0, list: []},
       pagination: {
         // 数据表格配置项
         currentPageIndex: 1,
@@ -154,7 +174,8 @@ export default {
   mounted() {
     this.getTabelData()
   },
-  created() {},
+  created() {
+  },
   methods: {
     handleClick(row) {
       this.$message('点击了按钮！')
@@ -180,6 +201,20 @@ export default {
           this.$refs.tmp_table.loadingState(false)
         })
     },
+
+    changeStatus(_id) {
+      changeEnableStatus(_id)
+        .then(res => {
+          console.dir("res:", res);
+        })
+        .catch(err => {
+          console.dir("res:", err);
+        })
+      this.getTabelData();
+    },
+    audit(_id) {
+      this.$message("待实现");
+    },
     // 重置页码并搜索
     toResetPageForList() {
       this.pagination.currentPageIndex = 1
@@ -191,6 +226,7 @@ export default {
     },
     // 详情
     showSmsInfo(row) {
+      this.$refs['dialogSmsInfo'].show({name: row.code})
       this.$refs['dialogSmsInfo'].show({ name: row.code })
     },
     // 创建
@@ -218,18 +254,22 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
+
 .statusCircle {
   width: 8px;
   height: 8px;
   border-radius: 4px;
   display: inline-block;
 }
+
 .statusCircle1 {
   background: #72c040;
 }
+
 .statusCircle2 {
   background: #828282;
 }
+
 .column-status {
   text-align: center;
 }

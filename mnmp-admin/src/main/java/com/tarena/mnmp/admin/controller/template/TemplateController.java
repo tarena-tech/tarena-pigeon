@@ -24,6 +24,7 @@ import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.domain.template.TemplateService;
+import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,19 @@ public class TemplateController implements TemplateApi {
 
     @Override public void openSmsTemplate(SmsTemplateChangeParam param) {
         templateService.openSmsTemplate(param.getId());
+    }
+
+    @Override public void changeEnableStatus(Long id) throws BusinessException {
+        SmsTemplateDO smsTemplateDO = templateService.querySmsTemplateDetail(id);
+        if (null == smsTemplateDO) {
+            throw new BusinessException("100", "模板不存在");
+        }
+
+        SmsTemplateDO up = new SmsTemplateDO();
+        up.setId(id);
+        up.setEnabled(smsTemplateDO.getEnabled() == 1 ? 0 : 1);
+        templateService.updateSmsTemplate(up);
+
     }
 
     @Override

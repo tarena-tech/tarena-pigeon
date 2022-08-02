@@ -93,6 +93,7 @@ public interface AppApi {
         produces = {"application/json"},
         consumes = {"application/json"}
     )
+    @Deprecated
     void closeApp(
         @NotNull @ApiParam(value = "要关闭的应用", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
@@ -112,6 +113,7 @@ public interface AppApi {
         produces = {"application/json"},
         consumes = {"application/json"}
     )
+    @Deprecated
     void openApp(
         @NotNull @ApiParam(value = "要开启的应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
