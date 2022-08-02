@@ -29,7 +29,7 @@
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus">新建</el-button>
+          <el-button type="success" icon="el-icon-plus"  @click="showProviderCreate">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -89,24 +89,26 @@
     </div>
     <!-- 详情弹窗 -->
     <dialog-sms-info ref="dialogSmsInfo" />
+    <dialog-provider-create ref="DialogProviderCreate" />
   </div>
 </template>
 
 <script>
 import { queryList, changeEnableStatus } from '@/api/provider.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import dialogSmsInfo from '@/components/sms/dialog-info.vue'
+// import dialogSmsInfo from '@/components/sms/dialog-info.vue'
+import DialogProviderCreate from "@/components/provider/dialog-create";
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    dialogSmsInfo
+    DialogProviderCreate
   },
   data() {
     return {
       claForm: {
         name: null, // 应用名称
-        code: '' // 应用code
+        code: null // 应用code
       },
 
       tableData: { recordCount: 0, list: [] },
@@ -148,6 +150,9 @@ export default {
           this.$refs.tmp_table.loadingState(false)
         })
     },
+    showProviderCreate() {
+      this.$refs.DialogProviderCreate.show()
+    },
     // 重置页码并搜索
     toResetPageForList() {
       this.pagination.currentPageIndex = 1
@@ -158,9 +163,9 @@ export default {
       this.$refs['updateSeriesClass'].show(row)
     },
     // 详情
-    showSmsInfo(row) {
-      this.$refs['dialogSmsInfo'].show({ name: row.code })
-    },
+    // showSmsInfo(row) {
+    //   this.$refs['dialogSmsInfo'].show({ name: row.code })
+    // },
     // 修改可用状态
     changeStatus(_id) {
       changeEnableStatus(_id)

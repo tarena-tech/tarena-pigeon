@@ -43,7 +43,7 @@
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus" @click="$router.push('add')">新建</el-button>
+          <el-button type="success" icon="el-icon-plus"  @click="showAppCreate">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -94,18 +94,19 @@
     </div>
     <!-- 详情弹窗 -->
     <dialog-sms-info ref="dialogSmsInfo" />
+    <dialog-app-create ref="DialogAppCreate" />
   </div>
 </template>
 
 <script>
 import { queryList, changeEnable, audit } from '@/api/app.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import dialogSmsInfo from '@/components/sms/dialog-info.vue'
+import DialogAppCreate from "@/components/app/dialog-create";
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    dialogSmsInfo
+    DialogAppCreate
   },
   data() {
     return {
@@ -138,6 +139,9 @@ export default {
     },
     audit(_id) {
       console.log("audit----", _id)
+    },
+    showAppCreate() {
+      this.$refs.DialogAppCreate.show()
     },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)
