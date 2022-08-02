@@ -28,7 +28,7 @@
           <el-input v-model="ruleForm.teamMembers" />
         </el-form-item>
         <el-form-item label="描述" prop="remark">
-          <el-input v-model="ruleForm.remark" type="textarea" />
+          <el-input v-model="ruleForm.remarks" type="textarea" />
         </el-form-item>
       </el-form>
       <div class="cus-drawer__footer">
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import {create} from "@/api/app";
+
 export default {
   name: 'AppDialogCreate',
   data() {
@@ -47,7 +49,11 @@ export default {
       dialogVisible: false,
       loading: false,
       ruleForm: {
-        name: '',
+        name: null,
+        code: null,
+        leader: null,
+        teamMembers: null,
+        remarks: null
       },
       rules: {
         name: [
@@ -71,7 +77,13 @@ export default {
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          create(this.ruleForm)
+            .then(res => {
+              console.dir(res);
+            })
+            .catch(err => {
+              console.error("create fail", err);
+            })
         } else {
           console.log('error submit!!')
           return false

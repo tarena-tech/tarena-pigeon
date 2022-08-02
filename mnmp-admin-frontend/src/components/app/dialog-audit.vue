@@ -51,6 +51,7 @@ export default {
           audit(this.ruleForm)
             .then(res => {
               this.dialogFormVisible = false;
+              this.getTabelData();
             })
             .catch(err => {
               console.error('audit fial', err);

@@ -68,7 +68,7 @@
           <template slot-scope="scope">
             <span v-if="scope.row.auditStatus === 1">通过</span>
             <span v-if="scope.row.auditStatus === 0">待审核</span>
-            <span v-if="scope.row.auditStatus === 1">拒绝</span>
+            <span v-if="scope.row.auditStatus === -1">拒绝</span>
           </template>
         </el-table-column>
         <el-table-column prop="enabled" label="应用状态">
@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import { queryList, changeEnable, audit } from '@/api/app.js'
+import { queryList, changeEnable} from '@/api/app.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogAppCreate from "@/components/app/dialog-create";
 import DialogAppAudit from "@/components/app/dialog-audit";
@@ -144,23 +144,6 @@ export default {
     },
     resetForm() {
       this.$refs.claFrom.resetFields()
-    },
-    audit(_id) {
-      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
     },
     showAppCreate() {
       this.$refs.DialogAppCreate.show()
