@@ -21,6 +21,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.provider.ProviderQueryParam;
 import com.tarena.mnmp.domain.provider.ProviderSaveParam;
+import com.tarena.mnmp.protocol.BusinessException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -65,8 +66,25 @@ public interface ProviderApi {
         notes = ""
     )
     @PostMapping({"/close"})
+    @Deprecated
     void closeProvider(
         @NotNull @ApiParam(value = "要关闭的服务商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+
+    @ApiOperationSupport(order = 2004)
+    @ApiOperation(
+        value = "开启服务商",
+        nickname = "openProvider",
+        notes = ""
+    )
+    @PostMapping({"/open"})
+    @Deprecated
+    void openProvider(
+        @NotNull @ApiParam(value = "要开启的服务商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+
+    @ApiOperationSupport(order = 2004)
+    @ApiOperation(value = "切换服务商可用状态")
+    @PostMapping({"/changeEnableStatus"})
+    void changeEnableStatus(@NotNull @ApiParam(value = "服务商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id) throws BusinessException;
 
     @ApiOperationSupport(order = 2003)
     @ApiOperation(
@@ -80,15 +98,7 @@ public interface ProviderApi {
     )
     void editProvider(@ApiParam(value = "修改服务商信息", required = true) @Valid @RequestBody ProviderSaveParam providerSaveParam);
 
-    @ApiOperationSupport(order = 2004)
-    @ApiOperation(
-        value = "开启服务商",
-        nickname = "openProvider",
-        notes = ""
-    )
-    @PostMapping({"/open"})
-    void openProvider(
-        @NotNull @ApiParam(value = "要开启的服务商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+
 
     @ApiOperationSupport(order = 2005)
     @ApiOperation(

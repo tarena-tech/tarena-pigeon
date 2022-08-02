@@ -24,6 +24,7 @@ import com.tarena.mnmp.domain.ProviderDO;
 import com.tarena.mnmp.domain.provider.ProviderQueryParam;
 import com.tarena.mnmp.domain.provider.ProviderSaveParam;
 import com.tarena.mnmp.domain.provider.ProviderService;
+import com.tarena.mnmp.protocol.BusinessException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
@@ -49,6 +50,18 @@ public class ProviderController implements ProviderApi {
 
     @Override public void openProvider(Long id) {
         providerService.openProvider(id);
+    }
+
+    @Override public void changeEnableStatus(Long id) throws BusinessException {
+        ProviderDO aDo = providerService.queryProviderDetail(id);
+        if (null == aDo) {
+            throw new BusinessException("100", "服务商不存在");
+        }
+
+        ProviderDO up = new ProviderDO();
+        up.setId(id);
+        up.setEnabled(up.getEnabled() == 1 ? 0 : 1);
+        providerService.update(up);
     }
 
     @Override public PagerResult<ProviderView> queryList(ProviderQueryParam param) {

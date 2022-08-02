@@ -21,6 +21,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.domain.app.AppQueryParam;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
+import com.tarena.mnmp.protocol.BusinessException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -92,6 +93,7 @@ public interface AppApi {
         produces = {"application/json"},
         consumes = {"application/json"}
     )
+    @Deprecated
     void closeApp(
         @NotNull @ApiParam(value = "要关闭的应用", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
@@ -111,8 +113,20 @@ public interface AppApi {
         produces = {"application/json"},
         consumes = {"application/json"}
     )
+    @Deprecated
     void openApp(
         @NotNull @ApiParam(value = "要开启的应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+
+    @ApiOperationSupport(order = 1004)
+    @ApiOperation(
+        value = "更改可用状态",
+        nickname = "openApp",
+        notes = ""
+    )
+    @PostMapping(
+        value = {"/changeEnableStatus"}
+    )
+    void changeEnableStatus(Long id) throws BusinessException;
 
     /**
      * 查看应用详情

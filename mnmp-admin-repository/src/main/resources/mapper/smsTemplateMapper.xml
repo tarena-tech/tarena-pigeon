@@ -245,7 +245,7 @@
             </if>
 
             <if test="templateName != null and templateName != ''">
-                and name = #{templateName,jdbcType=VARCHAR}
+                and name like concat('%', #{templateName,jdbcType=VARCHAR}, '%')
             </if>
             <if test="true">
                 and deleted = 0

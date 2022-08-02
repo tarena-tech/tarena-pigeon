@@ -69,4 +69,8 @@ public class AppService {
         return Optional.ofNullable(count).orElse(0L);
 
     }
+
+    public void updateById(AppDO up) {
+        appDao.modify(up);
+    }
 }

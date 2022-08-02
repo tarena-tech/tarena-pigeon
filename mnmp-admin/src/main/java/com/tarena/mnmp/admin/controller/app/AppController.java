@@ -24,6 +24,7 @@ import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.app.AppQueryParam;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.protocol.BusinessException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
@@ -49,6 +50,18 @@ public class AppController implements AppApi {
 
     @Override public void openApp(Long id) {
         appService.openApp(id);
+    }
+
+    @Override public void changeEnableStatus(Long id) throws BusinessException {
+        AppDO aDo = appService.queryAppDetail(id);
+        if (aDo == null) {
+            throw new BusinessException("100", "应用不存在");
+        }
+
+        AppDO up = new AppDO();
+        up.setId(id);
+        up.setEnabled(aDo.getEnabled() == 1 ? 0 : 1);
+        appService.updateById(up);
     }
 
     @Override public AppView queryAppDetail(Long id) {

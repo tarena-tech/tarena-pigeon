@@ -94,6 +94,9 @@
             <if test="auditStatus!=null">
                 audit_status=#{auditStatus},
             </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=INTEGER},
+            </if>
             <if test="true">
                 update_time = now()
             </if>

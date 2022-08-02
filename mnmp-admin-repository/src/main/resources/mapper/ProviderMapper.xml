@@ -67,7 +67,7 @@
                 name like concat('%', #{name,jdbcType=VARCHAR}, '%')
             </if>
             <if test="code != null and code != ''">
-
+                and code = #{code,jdbcType=VARCHAR}
             </if>
         </where>
         ${limitClause}
@@ -129,7 +129,10 @@
                 remarks=#{remarks},
             </if>
             <if test="auditStatus!=null">
-                audit_status=#{auditStatus}
+                audit_status=#{auditStatus},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=INTEGER}
             </if>
             <if test="true">
                 update_time=now()

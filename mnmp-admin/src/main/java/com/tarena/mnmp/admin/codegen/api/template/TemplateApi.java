@@ -22,6 +22,7 @@ import com.tarena.mnmp.admin.controller.template.SmsTemplateChangeParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
+import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -63,6 +64,7 @@ public interface TemplateApi {
         notes = ""
     )
     @PostMapping({"/sms/close"})
+    @Deprecated
     void closeSmsTemplate(@Validated @RequestBody SmsTemplateChangeParam param);
 
     @ApiOperationSupport(order = 4003)
@@ -72,7 +74,11 @@ public interface TemplateApi {
         notes = ""
     )
     @PostMapping({"/sms/open"})
+    @Deprecated
     void openSmsTemplate(@Validated @RequestBody SmsTemplateChangeParam param);
+
+    @PostMapping("changeEnableStatus")
+    void changeEnableStatus(Long id) throws BusinessException;
 
     @ApiOperationSupport(order = 4004)
     @ApiOperation(

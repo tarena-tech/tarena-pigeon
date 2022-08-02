@@ -94,6 +94,8 @@ public class TemplateView {
         name = "updateTime")
     private Date updateTime;
 
+    private Date createTime;
+
     @ApiModelProperty(
         value = "是否删除 0:未删除，1：已删除",
         name = "deleted")
