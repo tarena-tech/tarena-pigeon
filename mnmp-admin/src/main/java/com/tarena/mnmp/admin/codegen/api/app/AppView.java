@@ -54,7 +54,7 @@ public class AppView {
     private Integer auditStatus;
     @ApiModelProperty(
         value = "应用开启停用",
-        name = "auditStatus"
+        name = "enabled"
     )
     private Integer enabled;
     @ApiModelProperty(

@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.RequestParam;
     value = "模板管理",
     tags = "模板管理"
 )
-@RequestMapping("/template")
+@RequestMapping("template")
 public interface TemplateApi {
     @ApiOperationSupport(order = 4001)
     @ApiOperation(

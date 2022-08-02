@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.RequestParam;
     value = "Provider",
     tags = "供应商管理"
 )
-@RequestMapping("/provider")
+@RequestMapping("provider")
 public interface ProviderApi {
     /**
      * 新增服务商

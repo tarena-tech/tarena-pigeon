@@ -19,6 +19,7 @@ package com.tarena.mnmp.admin.controller.sign;
 
 import com.tarena.mnmp.admin.codegen.api.sign.SignApi;
 import com.tarena.mnmp.admin.codegen.api.sign.SignView;
+import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SignDO;
 import com.tarena.mnmp.domain.sign.SignQuery;
 import com.tarena.mnmp.domain.sign.SignSaveParam;
@@ -57,15 +58,20 @@ public class SignController implements SignApi {
         return signView;
     }
 
-    @Override public List<SignView> querySignList(SignQuery signQuery) {
+    @Override public PagerResult<SignView> querySignList(SignQuery signQuery) {
         List<SignDO> signDOs = signService.querySignList(signQuery);
+        Long count = signService.queryCount(signQuery);
         List<SignView> signViews = new ArrayList<>();
         for (SignDO signDO : signDOs) {
             SignView signView = new SignView();
             BeanUtils.copyProperties(signDO, signView);
             signViews.add(signView);
         }
-        return signViews;
+
+        PagerResult<SignView> rest = new PagerResult<>(signQuery.getPageSize(), signQuery.getCurrentPageIndex());
+        rest.setList(signViews);
+        rest.setRecordCount(count);
+        return rest;
     }
 
     @Override public void auditSign(Long id, Integer auditStatus) {

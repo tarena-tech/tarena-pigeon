@@ -7,7 +7,7 @@
         <id column="id" property="id"/>
         <result column="code" property="code"/>
         <result column="name" property="name"/>
-        <result column="leader" property="code"/>
+        <result column="leader" property="leader"/>
         <result column="team_members" property="teamMembers"/>
         <result column="remarks" property="remarks"/>
         <result column="enabled" property="enabled"/>

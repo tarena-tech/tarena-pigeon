@@ -18,12 +18,12 @@
 package com.tarena.mnmp.admin.codegen.api.sign;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.sign.SignSaveParam;
 import com.tarena.mnmp.domain.sign.SignQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -114,7 +114,7 @@ public interface SignApi {
         value = {"/queryList"},
         produces = {"application/json"}
     )
-    List<SignView> querySignList(@ApiParam(value = "签名查询入参", required = true) @Valid @RequestBody SignQuery signQuery);
+    PagerResult<SignView> querySignList(@ApiParam(value = "签名查询入参")SignQuery signQuery);
 
     /**
      * 审核签名

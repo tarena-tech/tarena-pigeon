@@ -64,10 +64,11 @@ public class AdminGlobalExceptionHandler {
      */
     @ExceptionHandler({Throwable.class})
     public Result handleSystemError(Throwable e) {
-        logger.debug("出现系统异常，异常类型={}，描述文本={}", e.getClass().getName(), e.getMessage());
-        e.printStackTrace();
+//        logger.debug("出现系统异常，异常类型={}，描述文本={}", e.getClass().getName(), e.getMessage());
+        logger.error("出现系统异常，错误信息", e);
+//        e.printStackTrace();
         Result result = Result.fail();
-        logger.debug("即将返回：{}", result);
+        logger.error("即将返回：{}", result);
         return result;
     }
 }

@@ -17,5 +17,29 @@
 
 package com.tarena.mnmp.admin.codegen.api.sign;
 
+import io.swagger.annotations.ApiModel;
+import java.util.Date;
+import lombok.Data;
+
+@ApiModel(value = "签名模型")
+@Data
 public class SignView {
+
+    private Long id;
+
+    private String code;
+
+    private String name;
+
+    private Long appId;
+    private String appCode;
+
+    private String remarks;
+
+    private String creator;
+
+    private Integer enabled;
+    private Integer auditStatus;
+    private Date createTime;
+    private Date updateTime;
 }

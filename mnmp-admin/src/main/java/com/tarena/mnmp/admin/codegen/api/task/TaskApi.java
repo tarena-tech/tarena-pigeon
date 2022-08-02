@@ -47,7 +47,7 @@ import org.springframework.web.multipart.MultipartFile;
     value = "Task",
     tags = "任务管理"
 )
-@RequestMapping("/api/task")
+@RequestMapping("/task")
 public interface TaskApi {
 
     @ApiOperationSupport(order = 5000)
@@ -99,12 +99,10 @@ public interface TaskApi {
         nickname = "queryListByPage",
         notes = ""
     )
-    @PostMapping(
-        value = {"/page"},
-        produces = {"application/json"},
-        consumes = {"application/json"}
+    @GetMapping(
+        value = {"/queryList"}
     )
-    PagerResult<TaskView> queryListByPage(@ApiParam(value = "任务查询参数", required = true) @Valid @RequestBody TaskQuery taskQuery);
+    PagerResult<TaskView> queryListByPage(TaskQuery taskQuery);
 
     @ApiOperationSupport(order = 5005)
     @ApiOperation(
@@ -113,10 +111,10 @@ public interface TaskApi {
         notes = ""
     )
     @GetMapping(
-        value = {"/{id}"},
+        value = {"detail"},
         produces = {"application/json"}
     )
-    TaskView queryTaskDetail(@ApiParam(value = "任务id", required = true) @PathVariable("id") Long id);
+    TaskView queryTaskDetail(@ApiParam(value = "任务id", required = true)Long id);
 
     @ApiOperationSupport(order = 5006)
     @ApiOperation(

@@ -145,16 +145,6 @@ public class TaskDO {
 
     private String taskAuditResult;
 
-    public Date generateNextTriggerTime() {
-
-        GregorianCalendar cal = new GregorianCalendar();
-        cal.setTime(new Date());
-
-        return null;
-    }
-
-
-
     public Long getId() {
         return id;
     }
