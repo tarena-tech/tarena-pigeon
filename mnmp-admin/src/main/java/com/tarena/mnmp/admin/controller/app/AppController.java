@@ -37,8 +37,8 @@ public class AppController implements AppApi {
     @Autowired
     private AppService appService;
 
-    @Override public void addApp(AppSaveParam appAddParam) {
-        appService.addApp(appAddParam);
+    @Override public void save(AppSaveParam appAddParam) {
+        appService.save(appAddParam);
     }
 
     @Override public void editApp(AppSaveParam appEditParam) {

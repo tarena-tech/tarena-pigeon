@@ -1,8 +1,7 @@
 <template>
   <el-drawer
     ref="drawer"
-    title="创建"
-
+    :title="windowName"
     :visible.sync="dialogVisible"
     direction="rtl"
     :close-on-press-escape="false"
@@ -43,10 +42,11 @@
 import {create} from "@/api/app";
 
 export default {
-  name: 'AppDialogCreate',
+  name: 'AppDialogSave',
   data() {
     return {
       dialogVisible: false,
+      windowName: '创建',
       loading: false,
       ruleForm: {
         name: null,
@@ -80,6 +80,8 @@ export default {
           create(this.ruleForm)
             .then(res => {
               console.dir(res);
+              this.cancelForm();
+              this.$emit('callback')
             })
             .catch(err => {
               console.error("create fail", err);
@@ -93,8 +95,13 @@ export default {
     resetForm() {
       this.$refs['ruleForm'].resetFields()
     },
-    show() {
+    show(data) {
       this.dialogVisible = true
+      if (null != data) {
+        this.windowName = "修改"
+        this.ruleForm = data;
+      }
+
       this.$nextTick(() => {
         // TODO init
       })

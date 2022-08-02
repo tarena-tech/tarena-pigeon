@@ -43,6 +43,13 @@ public class AppDO {
 
     private Date updateTime;
 
+    public void cleanSameData () {
+        this.createTime = null;
+        this.auditResult = null;
+        this.auditStatus = null;
+        this.enabled = null;
+    }
+
     public Long getId() {
         return id;
     }

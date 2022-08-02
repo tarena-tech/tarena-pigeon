@@ -43,7 +43,7 @@
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus"  @click="showAppCreate">新建</el-button>
+          <el-button type="success" icon="el-icon-plus"  @click="save(null)">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -87,7 +87,9 @@
             <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
-
+            <el-button  type="text" size="small" @click="save(scope.row)" >
+              修改
+            </el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
@@ -97,7 +99,7 @@
 
     <!-- 详情弹窗 -->
     <dialog-sms-info ref="dialogSmsInfo" />
-    <dialog-app-create ref="DialogAppCreate" />
+    <dialog-app-save ref="DialogAppSave"  @callback="refresh"/>
     <dialog-app-audit ref="DialogAppAudit" />
   </div>
 
@@ -107,13 +109,13 @@
 <script>
 import { queryList, changeEnable} from '@/api/app.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import DialogAppCreate from "@/components/app/dialog-create";
+import DialogAppSave from "@/components/app/dialog-save";
 import DialogAppAudit from "@/components/app/dialog-audit";
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    DialogAppCreate,
+    DialogAppSave,
     DialogAppAudit
   },
   data() {
@@ -142,11 +144,14 @@ export default {
       this.$message('点击了按钮！')
       console.log('click-row-data:', row)
     },
+    refresh() {
+      this.toResetPageForList();
+    },
     resetForm() {
       this.$refs.claFrom.resetFields()
     },
-    showAppCreate() {
-      this.$refs.DialogAppCreate.show()
+    save(data) {
+      this.$refs.DialogAppSave.show(data)
     },
     showAudit(_id) {
       this.$refs.DialogAppAudit.show(_id);
