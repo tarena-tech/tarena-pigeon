@@ -39,10 +39,10 @@ public class TemplateController implements TemplateApi {
     @Resource
     private TemplateService templateService;
 
-    @Override public Result<String> addSmsTemplate(SmsTemplateParam param) {
+    @Override public Result<String> save(SmsTemplateParam param) {
         SmsTemplateDO sms = new SmsTemplateDO();
         BeanUtils.copyProperties(param, sms);
-        String str = templateService.addSmsTemplate(sms);
+        String str = templateService.save(sms);
         return new Result<>(str);
     }
 

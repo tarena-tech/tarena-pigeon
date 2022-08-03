@@ -32,7 +32,7 @@ public class TemplateService {
     @Resource
     private SmsTemplateDao smsTemplateDao;
 
-    public String addSmsTemplate(SmsTemplateDO template) {
+    public String save(SmsTemplateDO template) {
         Date now = new Date();
         if (null == template.getId()) {
             template.setDeleted(Deleted.NO.getVal());

@@ -1,14 +1,11 @@
 package com.tarena.test.mnmp.admin.service.template;
-import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.test.mnmp.admin.sql.app.AppSqlScript;
 import java.util.Date;
 
 import com.tarena.mnmp.admin.AdminApplication;
 import com.tarena.mnmp.domain.SmsTemplateDO;
-import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.domain.template.TemplateService;
-import com.tarena.test.mnmp.admin.service.app.AppServiceTest;
 import java.util.List;
 import javax.annotation.Resource;
 import jdk.nashorn.internal.ir.annotations.Ignore;
@@ -59,7 +56,7 @@ public class TemplateServiceTest {
             sms.setNoticeType(1);
             sms.setAppCode("2qqq");
 
-            templateService.addSmsTemplate(sms);
+            templateService.save(sms);
         }
 
 

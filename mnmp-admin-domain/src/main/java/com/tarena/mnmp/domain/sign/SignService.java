@@ -28,7 +28,7 @@ public class SignService {
     @Autowired
     private SignDao signDao;
 
-    public void addSign(SignSaveParam signSaveParam) {
+    public void save(SignSaveParam signSaveParam) {
         SignDO signDO = new SignDO();
         BeanUtils.copyProperties(signSaveParam, signDO);
         if (null == signDO.getId()) {

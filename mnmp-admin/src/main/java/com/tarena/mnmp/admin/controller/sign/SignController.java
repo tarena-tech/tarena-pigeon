@@ -37,8 +37,8 @@ public class SignController implements SignApi {
     @Autowired
     private SignService signService;
 
-    @Override public void addSign(SignSaveParam signSaveParam) {
-        signService.addSign(signSaveParam);
+    @Override public void save(SignSaveParam signSaveParam) {
+        signService.save(signSaveParam);
     }
 
     @Override public void editSign(SignSaveParam signSaveParam) {

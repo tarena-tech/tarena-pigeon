@@ -50,9 +50,9 @@ public interface SignApi {
         response = String.class
     )
     @PostMapping(
-        value = {"/add"}
+        value = {"/save"}
     )
-    void addSign(@ApiParam(value = "新增签名", required = true) @Valid @RequestBody SignSaveParam signParam);
+    void save(@ApiParam(value = "新增签名", required = true) @Valid @RequestBody SignSaveParam signParam);
 
 
     @ApiOperationSupport(order = 3003)

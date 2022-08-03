@@ -52,11 +52,9 @@ public interface TemplateApi {
         notes = ""
     )
     @PostMapping(
-        value = {"/sms/add"},
-        produces = {"application/json"},
-        consumes = {"application/json"}
+        value = {"/sms/save"}
     )
-    Result<String> addSmsTemplate(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate);
+    Result<String> save(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate);
 
     @ApiOperationSupport(order = 4002)
     @ApiOperation(
