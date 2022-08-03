@@ -82,7 +82,12 @@ export default {
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          save(this.ruleForm)
+            .then(res => {
+
+            }).catch(err => {
+
+          })
         } else {
           console.log('error submit!!')
           return false

@@ -48,6 +48,12 @@ public class ProviderController implements ProviderApi {
         providerService.editProvider(providerSaveParam);
     }
 
+    @Override public void save(ProviderSaveParam param) {
+        ProviderDO pdo = new ProviderDO();
+        BeanUtils.copyProperties(param, pdo);
+        providerService.save(pdo);
+    }
+
     @Override public void openProvider(Long id) {
         providerService.openProvider(id);
     }

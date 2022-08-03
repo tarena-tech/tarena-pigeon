@@ -89,7 +89,7 @@
     </div>
     <!-- 详情弹窗 -->
     <dialog-sms-info ref="dialogSmsInfo" />
-    <dialog-provider-create ref="DialogProviderCreate" />
+    <dialog-provider-save ref="DialogProviderSave" />
   </div>
 </template>
 
@@ -97,12 +97,12 @@
 import { queryList, changeEnableStatus } from '@/api/provider.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 // import dialogSmsInfo from '@/components/sms/dialog-info.vue'
-import DialogProviderCreate from "@/components/provider/dialog-create";
+import DialogProviderSave from "@/components/provider/dialog-create";
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    DialogProviderCreate
+    DialogProviderSave
   },
   data() {
     return {
@@ -151,7 +151,7 @@ export default {
         })
     },
     showProviderCreate() {
-      this.$refs.DialogProviderCreate.show()
+      this.$refs.DialogProviderSave.show()
     },
     // 重置页码并搜索
     toResetPageForList() {

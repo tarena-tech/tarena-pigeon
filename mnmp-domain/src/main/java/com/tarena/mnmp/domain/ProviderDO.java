@@ -27,6 +27,8 @@ public class ProviderDO {
     private String accessKeySecret;
     private Integer noticeType;
     private String officialWebsite;
+
+    private String clientConfig;
     private String contacts;
     private String phone;
     private String remarks;
@@ -115,7 +117,6 @@ public class ProviderDO {
         this.remarks = remarks;
     }
 
-
     public Date getCreateTime() {
         return createTime;
     }
@@ -147,4 +148,13 @@ public class ProviderDO {
     public void setAccessKeySecret(String accessKeySecret) {
         this.accessKeySecret = accessKeySecret;
     }
+
+    public String getClientConfig() {
+        return clientConfig;
+    }
+
+    public void setClientConfig(String clientConfig) {
+        this.clientConfig = clientConfig;
+    }
 }
+

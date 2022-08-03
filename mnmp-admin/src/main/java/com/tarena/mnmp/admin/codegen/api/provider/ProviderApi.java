@@ -56,8 +56,26 @@ public interface ProviderApi {
         value = {"/add"},
         consumes = {"application/json"}
     )
+    @Deprecated
     void addProvider(
         @ApiParam(value = "新增服务商", required = true) @Valid @RequestBody ProviderSaveParam providerSaveParam);
+
+    @ApiOperationSupport(order = 2003)
+    @ApiOperation(
+        value = "修改服务商信息",
+        nickname = "editProvider",
+        notes = ""
+    )
+    @PostMapping(
+        value = {"/edit"},
+        consumes = {"application/json"}
+    )
+    @Deprecated
+    void editProvider(@ApiParam(value = "修改服务商信息", required = true) @Valid @RequestBody ProviderSaveParam providerSaveParam);
+
+    @ApiOperation(value = "保存服务商 创建/更新")
+    @PostMapping("save")
+    void save(@RequestBody ProviderSaveParam param);
 
     @ApiOperationSupport(order = 2002)
     @ApiOperation(
@@ -85,18 +103,6 @@ public interface ProviderApi {
     @ApiOperation(value = "切换服务商可用状态")
     @PostMapping({"/changeEnableStatus"})
     void changeEnableStatus(@NotNull @ApiParam(value = "服务商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id) throws BusinessException;
-
-    @ApiOperationSupport(order = 2003)
-    @ApiOperation(
-        value = "修改服务商信息",
-        nickname = "editProvider",
-        notes = ""
-    )
-    @PostMapping(
-        value = {"/edit"},
-        consumes = {"application/json"}
-    )
-    void editProvider(@ApiParam(value = "修改服务商信息", required = true) @Valid @RequestBody ProviderSaveParam providerSaveParam);
 
 
 

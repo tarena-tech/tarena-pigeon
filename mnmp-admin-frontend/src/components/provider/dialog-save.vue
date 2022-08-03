@@ -27,7 +27,7 @@
           <el-input v-model="ruleForm.teamMembers" />
         </el-form-item>
         <el-form-item label="描述" prop="remark">
-          <el-input v-model="ruleForm.remarks" type="textarea" />
+          <el-input v-model="ruleForm.remarks" type="textarea" :row="1" />
         </el-form-item>
       </el-form>
       <div class="cus-drawer__footer">
@@ -39,10 +39,10 @@
 </template>
 
 <script>
-import {create} from "@/api/app";
+import {save} from "@/api/provider";
 
 export default {
-  name: 'AppDialogSave',
+  name: 'providerDialogSave',
   data() {
     return {
       dialogVisible: false,

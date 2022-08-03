@@ -72,4 +72,12 @@ public class ProviderService {
     public void update(ProviderDO up) {
         providerDao.modify(up);
     }
+
+    public void save(ProviderDO pdo) {
+        if (null == pdo.getId()) {
+            providerDao.save(pdo);
+        } else {
+            providerDao.modify(pdo);
+        }
+    }
 }

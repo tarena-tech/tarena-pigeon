@@ -177,6 +177,7 @@ export default {
 
       changeEnable(_data.id).then(res => {
         console.log('list-res:', res)
+        this.getTabelData();
       }).catch(err => {
         console.log('list-err:', err)
         this.$refs.tmp_table.loadingState(false)
