@@ -37,9 +37,18 @@ public class AppDO {
 
     private Integer auditStatus;
 
+    private String auditResult;
+
     private Date createTime;
 
     private Date updateTime;
+
+    public void cleanSameData () {
+        this.createTime = null;
+        this.auditResult = null;
+        this.auditStatus = null;
+        this.enabled = null;
+    }
 
     public Long getId() {
         return id;
@@ -118,5 +127,13 @@ public class AppDO {
 
     public void setAuditStatus(Integer auditStatus) {
         this.auditStatus = auditStatus;
+    }
+
+    public String getAuditResult() {
+        return auditResult;
+    }
+
+    public void setAuditResult(String auditResult) {
+        this.auditResult = auditResult;
     }
 }

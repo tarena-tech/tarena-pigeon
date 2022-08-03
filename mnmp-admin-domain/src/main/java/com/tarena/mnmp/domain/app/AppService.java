@@ -29,10 +29,15 @@ public class AppService {
     @Autowired
     private AppDao appDao;
 
-    public void addApp(AppSaveParam appSaveParam) {
+    public void save(AppSaveParam appSaveParam) {
         AppDO appDO = new AppDO();
         BeanUtils.copyProperties(appSaveParam, appDO);
-        appDao.save(appDO);
+        if (null == appSaveParam.getId()) {
+            appDao.save(appDO);
+        } else {
+            appDO.cleanSameData();
+            appDao.modify(appDO);
+        }
     }
 
     public void editApp(AppSaveParam appSaveParam) {
@@ -57,10 +62,11 @@ public class AppService {
         return appDao.queryByParam(param);
     }
 
-    public void auditApp(Long id, Integer auditStatus) {
+    public void auditApp(Long id, Integer auditStatus, String auditResult) {
         AppDO appDO = new AppDO();
         appDO.setId(id);
         appDO.setAuditStatus(auditStatus);
+        appDO.setAuditResult(auditResult);
         appDao.modify(appDO);
     }
 

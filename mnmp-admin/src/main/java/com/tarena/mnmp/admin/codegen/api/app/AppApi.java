@@ -53,11 +53,11 @@ public interface AppApi {
         notes = ""
     )
     @PostMapping(
-        value = {"/add"},
+        value = {"/save"},
         produces = {"application/json"},
         consumes = {"application/json"}
     )
-    void addApp(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody AppSaveParam appSaveParam);
+    void save(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody AppSaveParam appSaveParam);
 
     /**
      * 编辑应用
@@ -172,12 +172,7 @@ public interface AppApi {
         notes = ""
     )
     @PostMapping(
-        value = "audit",
-        produces = {"application/json"},
-        consumes = {"application/json"}
+        value = "audit"
     )
-    void auditApp(
-        @NotNull @ApiParam(value = "应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
-        @NotNull @ApiParam(value = "审核结果", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus
-        );
+    void auditApp(@RequestBody AppAuditParam param);
 }

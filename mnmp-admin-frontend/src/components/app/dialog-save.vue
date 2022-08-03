@@ -1,8 +1,7 @@
 <template>
   <el-drawer
     ref="drawer"
-    title="创建"
-
+    :title="windowName"
     :visible.sync="dialogVisible"
     direction="rtl"
     :close-on-press-escape="false"
@@ -28,7 +27,7 @@
           <el-input v-model="ruleForm.teamMembers" />
         </el-form-item>
         <el-form-item label="描述" prop="remark">
-          <el-input v-model="ruleForm.remark" type="textarea" />
+          <el-input v-model="ruleForm.remarks" type="textarea" />
         </el-form-item>
       </el-form>
       <div class="cus-drawer__footer">
@@ -40,16 +39,21 @@
 </template>
 
 <script>
+import {create} from "@/api/app";
+
 export default {
-  name: 'AppDialogCreate',
+  name: 'AppDialogSave',
   data() {
     return {
       dialogVisible: false,
+      windowName: '创建',
       loading: false,
       ruleForm: {
-        name: '',
-        name2: '',
-        desc: ''
+        name: null,
+        code: null,
+        leader: null,
+        teamMembers: null,
+        remarks: null
       },
       rules: {
         name: [
@@ -73,7 +77,15 @@ export default {
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          create(this.ruleForm)
+            .then(res => {
+              console.dir(res);
+              this.cancelForm();
+              this.$emit('callback')
+            })
+            .catch(err => {
+              console.error("create fail", err);
+            })
         } else {
           console.log('error submit!!')
           return false
@@ -83,8 +95,13 @@ export default {
     resetForm() {
       this.$refs['ruleForm'].resetFields()
     },
-    show() {
+    show(data) {
       this.dialogVisible = true
+      if (null != data) {
+        this.windowName = "修改"
+        this.ruleForm = data;
+      }
+
       this.$nextTick(() => {
         // TODO init
       })

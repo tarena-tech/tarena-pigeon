@@ -43,7 +43,7 @@
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus"  @click="showAppCreate">新建</el-button>
+          <el-button type="success" icon="el-icon-plus"  @click="save(null)">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -68,7 +68,7 @@
           <template slot-scope="scope">
             <span v-if="scope.row.auditStatus === 1">通过</span>
             <span v-if="scope.row.auditStatus === 0">待审核</span>
-            <span v-if="scope.row.auditStatus === 1">拒绝</span>
+            <span v-if="scope.row.auditStatus === -1">拒绝</span>
           </template>
         </el-table-column>
         <el-table-column prop="enabled" label="应用状态">
@@ -84,29 +84,39 @@
             <el-button  type="text" size="small" @click="changeStatus(scope.row)" >
               {{scope.row.enabled === 1 ? '禁用' : '启用'}}
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0" @click="audit(scope.row.id)" type="text" size="small">
+            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
-
+            <el-button  type="text" size="small" @click="save(scope.row)" >
+              修改
+            </el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
     </div>
+
+
+
     <!-- 详情弹窗 -->
     <dialog-sms-info ref="dialogSmsInfo" />
-    <dialog-app-create ref="DialogAppCreate" />
+    <dialog-app-save ref="DialogAppSave"  @callback="refresh"/>
+    <dialog-app-audit ref="DialogAppAudit" />
   </div>
+
+
 </template>
 
 <script>
-import { queryList, changeEnable, audit } from '@/api/app.js'
+import { queryList, changeEnable} from '@/api/app.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import DialogAppCreate from "@/components/app/dialog-create";
+import DialogAppSave from "@/components/app/dialog-save";
+import DialogAppAudit from "@/components/app/dialog-audit";
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    DialogAppCreate
+    DialogAppSave,
+    DialogAppAudit
   },
   data() {
     return {
@@ -134,14 +144,17 @@ export default {
       this.$message('点击了按钮！')
       console.log('click-row-data:', row)
     },
+    refresh() {
+      this.toResetPageForList();
+    },
     resetForm() {
       this.$refs.claFrom.resetFields()
     },
-    audit(_id) {
-      console.log("audit----", _id)
+    save(data) {
+      this.$refs.DialogAppSave.show(data)
     },
-    showAppCreate() {
-      this.$refs.DialogAppCreate.show()
+    showAudit(_id) {
+      this.$refs.DialogAppAudit.show(_id);
     },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)

@@ -77,7 +77,7 @@ public class AppServiceTest {
         appSaveParam.setLeader("ceshiwang");
         appSaveParam.setCode("CODE_TEST_001");
         assertDoesNotThrow(() -> {
-                appService.addApp(appSaveParam);
+                appService.save(appSaveParam);
             }
         );
         logger.info("新增app应用测试业务层service成功");
