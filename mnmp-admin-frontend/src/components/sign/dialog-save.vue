@@ -78,15 +78,17 @@ export default {
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
+          this.ruleForm.appId = 222
           save(this.ruleForm)
             .then(res => {
               console.dir(res);
               this.cancelForm();
+              this.$emit('refresh')
             })
             .catch(err => {
               console.error("create fail", err);
             })
-          this.$emit('refresh')
+
         } else {
           console.log('error submit!!')
           return false

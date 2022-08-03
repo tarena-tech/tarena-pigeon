@@ -116,4 +116,12 @@ public class SignSaveParam {
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }
