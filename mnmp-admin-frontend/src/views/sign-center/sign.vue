@@ -70,7 +70,7 @@
         <el-table-column prop="remarks" label="应用简介" />
         <el-table-column prop="enabled" label="应用状态">
           <templat slot-scope="scope">
-            <span>{{scope.row.enable === 1 ? '启用' : '禁用'}}</span>
+            <span>{{scope.row.enabled === 1 ? '启用' : '禁用'}}</span>
           </templat>
         </el-table-column>
 
@@ -101,7 +101,7 @@
       </tmp-table-pagination>
     </div>
     <dialog-sign-save ref="DialogSignSave"  @refresh="refresh"/>
-    <dialog-sign-audit ref="DialogSignAudit" />
+    <dialog-sign-audit ref="DialogSignAudit" @refresh="refresh"/>
   </div>
 </template>
 
@@ -172,17 +172,21 @@ export default {
     changeStatus(_data) {
       changeEnable(_data.id).then(res => {
         console.log('list-res:', res)
+        this.getTabelData()
       }).catch(err => {
         console.log('list-err:', err)
         this.$refs.tmp_table.loadingState(false)
       })
-      this.getTabelData()
+
     },
     showAudit(_id) {
       this.$refs.DialogSignAudit.show(_id);
     },
     save(data) {
       this.$refs.DialogSignSave.show(data)
+    },
+    refresh() {
+      this.toResetPageForList();
     }
   }
 }

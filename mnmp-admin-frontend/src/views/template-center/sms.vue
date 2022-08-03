@@ -218,11 +218,11 @@ export default {
       changeEnableStatus(_id)
         .then(res => {
           console.dir("res:", res);
+          this.getTabelData()
         })
         .catch(err => {
           console.dir("res:", err);
         })
-      this.getTabelData();
     },
 
     showAudit(_id) {

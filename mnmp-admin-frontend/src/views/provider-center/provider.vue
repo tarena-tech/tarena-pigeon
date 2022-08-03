@@ -178,10 +178,10 @@ export default {
       changeEnableStatus(_id)
         .then(res => {
           console.dir('change.....', res);
+          this.getTabelData()
         }).catch(err => {
           console.dir('change.....', err);
       })
-      this.getTabelData()
     },
     showAudit(_id) {
       this.$refs.DialogProviderAudit.show(_id);

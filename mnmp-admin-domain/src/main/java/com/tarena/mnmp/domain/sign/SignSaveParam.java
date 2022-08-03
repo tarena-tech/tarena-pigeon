@@ -33,14 +33,20 @@ public class SignSaveParam {
 
     @ApiModelProperty(
         value = "签名名称",
-        name = "name",
-        required = false
+        required = true
     )
     @NotBlank(message = "签名名称不能为空")
     private String name;
+
+    @ApiModelProperty(
+        value = "签名编码",
+        required = true
+    )
+    @NotBlank(message = "签名编码不能为空")
+    private String code;
+
     @ApiModelProperty(
         value = "应用主键",
-        name = "appId",
         required = false
     )
     @NotNull(message = "请选择应用")
