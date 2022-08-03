@@ -18,12 +18,13 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
         <result column="audit_status" jdbcType="BIGINT" property="auditStatus" />
+        <result column="audit_result" jdbcType="VARCHAR" property="auditResult" />
     </resultMap>
 
 
     <sql id="ProviderAllFields">
         id, `name`, code, notice_type, official_website, contacts, phone, client_config,
-        remarks, enabled, create_time, update_time, audit_status
+        remarks, enabled, create_time, update_time, audit_status, audit_result
     </sql>
     <insert id="save" keyColumn="id" keyProperty="id" parameterType="com.tarena.mnmp.domain.ProviderDO" useGeneratedKeys="true">
         <!--@mbg.generated-->
@@ -152,7 +153,6 @@
         where id=#{id}
     </update>
     <update id="modify" parameterType="com.tarena.mnmp.domain.ProviderDO">
-        <!--@mbg.generated-->
         update notice_provider
         <set>
             <if test="name != null">
@@ -185,11 +185,14 @@
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            <if test="true">
+                update_time = now(),
             </if>
             <if test="auditStatus != null">
                 audit_status = #{auditStatus,jdbcType=BIGINT},
+            </if>
+            <if test="auditResult != null">
+                audit_result = #{auditResult,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}

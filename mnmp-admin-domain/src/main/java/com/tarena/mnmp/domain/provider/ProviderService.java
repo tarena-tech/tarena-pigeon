@@ -57,10 +57,11 @@ public class ProviderService {
         return providerDao.findById(id);
     }
 
-    public void auditProvider(Long id, Integer auditStatus) {
+    public void auditProvider(Long id, Integer auditStatus, String auditResult) {
         ProviderDO providerDO = new ProviderDO();
         providerDO.setId(id);
         providerDO.setAuditStatus(auditStatus);
+        providerDO.setAuditResult(auditResult);
         providerDao.modify(providerDO);
     }
 
@@ -77,6 +78,9 @@ public class ProviderService {
         if (null == pdo.getId()) {
             providerDao.save(pdo);
         } else {
+            pdo.setEnabled(null);
+            pdo.setAuditStatus(null);
+            pdo.setCreateTime(null);
             providerDao.modify(pdo);
         }
     }

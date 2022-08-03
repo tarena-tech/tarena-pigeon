@@ -18,8 +18,8 @@
 package com.tarena.mnmp.admin.controller.app;
 
 import com.tarena.mnmp.admin.codegen.api.app.AppApi;
-import com.tarena.mnmp.admin.codegen.api.app.AppAuditParam;
 import com.tarena.mnmp.admin.codegen.api.app.AppView;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.app.AppQueryParam;
@@ -87,7 +87,7 @@ public class AppController implements AppApi {
         return pagerResult;
     }
 
-    @Override public void auditApp(AppAuditParam param) {
+    @Override public void auditApp(AuditParam param) {
         appService.auditApp(param.getId(), param.getAuditStatus(), param.getAuditResult());
     }
 }

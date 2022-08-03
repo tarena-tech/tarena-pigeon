@@ -18,6 +18,7 @@
 package com.tarena.mnmp.admin.codegen.api.provider;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.provider.ProviderQueryParam;
 import com.tarena.mnmp.domain.provider.ProviderSaveParam;
@@ -141,13 +142,8 @@ public interface ProviderApi {
         notes = ""
     )
     @PostMapping(
-        value = "/audit",
-        produces = {"application/json"},
-        consumes = {"application/json"}
+        value = "/audit"
     )
-    public void auditProvider(
-        @NotNull @ApiParam(value = "供应商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
-        @NotNull @ApiParam(value = "审核结果", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus
-        );
+    void auditProvider(@RequestBody AuditParam param);
 
 }

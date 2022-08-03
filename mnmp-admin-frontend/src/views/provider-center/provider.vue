@@ -29,7 +29,7 @@
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus"  @click="showProviderCreate">新建</el-button>
+          <el-button type="success" icon="el-icon-plus"  @click="save(null)">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -83,6 +83,9 @@
             <el-button v-if="scope.row.auditStatus === 0" @click="audit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
+            <el-button  type="text" size="small" @click="save(scope.row)" >
+              修改
+            </el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
@@ -90,19 +93,21 @@
     <!-- 详情弹窗 -->
     <dialog-sms-info ref="dialogSmsInfo" />
     <dialog-provider-save ref="DialogProviderSave" />
+    <dialog-provider-audit ref="DialogProviderAudit" />
   </div>
 </template>
 
 <script>
 import { queryList, changeEnableStatus } from '@/api/provider.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-// import dialogSmsInfo from '@/components/sms/dialog-info.vue'
+import DialogProviderAudit from "@/components/app/dialog-provider";
 import DialogProviderSave from "@/components/provider/dialog-create";
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    DialogProviderSave
+    DialogProviderSave,
+    DialogProviderAudit
   },
   data() {
     return {
@@ -150,8 +155,8 @@ export default {
           this.$refs.tmp_table.loadingState(false)
         })
     },
-    showProviderCreate() {
-      this.$refs.DialogProviderSave.show()
+    save(data) {
+      this.$refs.DialogProviderSave.show(data)
     },
     // 重置页码并搜索
     toResetPageForList() {
@@ -162,10 +167,6 @@ export default {
     toEditBtnFn(row) {
       this.$refs['updateSeriesClass'].show(row)
     },
-    // 详情
-    // showSmsInfo(row) {
-    //   this.$refs['dialogSmsInfo'].show({ name: row.code })
-    // },
     // 修改可用状态
     changeStatus(_id) {
       changeEnableStatus(_id)
@@ -175,9 +176,9 @@ export default {
           console.dir('change.....', err);
       })
     },
-    audit(_id) {
-      this.$message('待补充！')
-    }
+    showAudit(_id) {
+      this.$refs.DialogProviderAudit.show(_id);
+    },
   }
 }
 </script>

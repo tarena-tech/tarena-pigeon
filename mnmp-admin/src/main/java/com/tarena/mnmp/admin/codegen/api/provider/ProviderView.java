@@ -64,6 +64,10 @@ public class ProviderView {
         name = "remarks"
     )
     private String remarks;
+
+
+    private String clientConfig;
+
     @ApiModelProperty(
         value = "审核状态",
         name = "auditStatus",
@@ -181,5 +185,13 @@ public class ProviderView {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getClientConfig() {
+        return clientConfig;
+    }
+
+    public void setClientConfig(String clientConfig) {
+        this.clientConfig = clientConfig;
     }
 }

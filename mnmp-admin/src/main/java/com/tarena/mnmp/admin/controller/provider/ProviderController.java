@@ -19,6 +19,7 @@ package com.tarena.mnmp.admin.controller.provider;
 
 import com.tarena.mnmp.admin.codegen.api.provider.ProviderApi;
 import com.tarena.mnmp.admin.codegen.api.provider.ProviderView;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.ProviderDO;
 import com.tarena.mnmp.domain.provider.ProviderQueryParam;
@@ -92,8 +93,8 @@ public class ProviderController implements ProviderApi {
         return providerView;
     }
 
-    @Override public void auditProvider(Long id, Integer auditStatus) {
-        providerService.auditProvider(id,auditStatus);
+    @Override public void auditProvider(AuditParam param) {
+        providerService.auditProvider(param.getId(), param.getAuditStatus(), param.getAuditResult());
     }
 
 }

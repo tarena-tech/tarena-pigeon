@@ -21,7 +21,7 @@
         <el-form-item label="服务商code" prop="code">
           <el-input v-model="ruleForm.code" />
         </el-form-item>
-        <el-form-item label="支持消息类型" prop="noticeType">
+        <el-form-item label="消息类型" prop="noticeType">
           <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false"/>
         </el-form-item>
         <el-form-item label="官网地址" prop="officialWebsite">
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { save } from '@/api/provider.js'
 export default {
   name: 'DialogProviderCreate',
   data() {
@@ -56,16 +57,36 @@ export default {
       dialogVisible: false,
       loading: false,
       ruleForm: {
-        name: '',
-        name2: '',
-        desc: ''
+        name: null,
+        code: null,
+        noticeType: null,
+        officialWebsite: null,
+        contacts: null,
+        phone: null,
+        clientConfig: null,
+        remarks: null
       },
       rules: {
         name: [
-          { required: true, message: '请输入模板名称', trigger: 'blur' }
+          { required: true, message: '请输入服务商名称', trigger: 'blur' }
         ],
         code: [
           { required: true, message: '请输入code码', trigger: 'blur' }
+        ],
+        noticeType: [
+          { required: true, message: '请选择消息类型', trigger: 'blur' }
+        ],
+        officialWebsite: [
+          { required: true, message: '请输入官网地址', trigger: 'blur' }
+        ],
+        contacts: [
+          { required: true, message: '请输入联系人', trigger: 'blur' }
+        ],
+        phone: [
+          { required: true, message: '请输入联系电话', trigger: 'blur' }
+        ],
+        clientConfig: [
+          { required: true, message: '请输入配置项', trigger: 'blur' }
         ]
       }
     }
@@ -84,9 +105,9 @@ export default {
         if (valid) {
           save(this.ruleForm)
             .then(res => {
-
+              console.dir(res)
             }).catch(err => {
-
+            console.dir(err)
           })
         } else {
           console.log('error submit!!')
@@ -97,8 +118,9 @@ export default {
     resetForm() {
       this.$refs['ruleForm'].resetFields()
     },
-    show() {
+    show(data) {
       this.dialogVisible = true
+      this.ruleForm = data
       this.$nextTick(() => {
         // TODO init
       })

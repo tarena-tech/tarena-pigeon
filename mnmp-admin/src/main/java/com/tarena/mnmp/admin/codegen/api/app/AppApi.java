@@ -18,6 +18,7 @@
 package com.tarena.mnmp.admin.codegen.api.app;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.domain.app.AppQueryParam;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
@@ -174,5 +175,5 @@ public interface AppApi {
     @PostMapping(
         value = "audit"
     )
-    void auditApp(@RequestBody AppAuditParam param);
+    void auditApp(@RequestBody AuditParam param);
 }

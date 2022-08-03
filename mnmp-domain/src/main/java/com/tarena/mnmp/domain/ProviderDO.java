@@ -23,8 +23,6 @@ public class ProviderDO {
     private Long id;
     private String code;
     private String name;
-    private String accessKey;
-    private String accessKeySecret;
     private Integer noticeType;
     private String officialWebsite;
 
@@ -33,6 +31,8 @@ public class ProviderDO {
     private String phone;
     private String remarks;
     private Integer auditStatus;
+
+    private String auditResult;
     private Integer enabled;
     private Date createTime;
     private Date updateTime;
@@ -133,28 +133,20 @@ public class ProviderDO {
         this.updateTime = updateTime;
     }
 
-    public String getAccessKey() {
-        return accessKey;
-    }
-
-    public void setAccessKey(String accessKey) {
-        this.accessKey = accessKey;
-    }
-
-    public String getAccessKeySecret() {
-        return accessKeySecret;
-    }
-
-    public void setAccessKeySecret(String accessKeySecret) {
-        this.accessKeySecret = accessKeySecret;
-    }
-
     public String getClientConfig() {
         return clientConfig;
     }
 
     public void setClientConfig(String clientConfig) {
         this.clientConfig = clientConfig;
+    }
+
+    public String getAuditResult() {
+        return auditResult;
+    }
+
+    public void setAuditResult(String auditResult) {
+        this.auditResult = auditResult;
     }
 }
 
