@@ -19,6 +19,7 @@ package com.tarena.mnmp.admin.codegen.api.template;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.controller.template.SmsTemplateChangeParam;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
@@ -144,10 +145,7 @@ public interface TemplateApi {
         notes = ""
     )
     @PostMapping({"/sms/doAudit"})
-    void doAuditSmsTemplate(
-        @NotNull @ApiParam(value = "要审核的模板id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
-        @NotNull @ApiParam(value = "审核状态 -1未通过 1通过", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus,
-        @ApiParam("审核意见") @Valid @RequestParam(value = "auditResult", required = false) String auditResult);
+    void doAuditSmsTemplate(@RequestBody AuditParam param);
 
 //    @ApiOperationSupport(order = 4101)
 //    @ApiOperation(

@@ -181,6 +181,7 @@ export default {
         }).catch(err => {
           console.dir('change.....', err);
       })
+      this.getTabelData()
     },
     showAudit(_id) {
       this.$refs.DialogProviderAudit.show(_id);
