@@ -32,7 +32,15 @@ public class ProviderService {
     public void addProvider(ProviderSaveParam providerSaveParam) {
         ProviderDO providerDO = new ProviderDO();
         BeanUtils.copyProperties(providerSaveParam, providerDO);
-        providerDao.save(providerDO);
+        if (null == providerDO.getId()) {
+            providerDao.save(providerDO);
+        } else {
+            providerDO.setAuditResult(null);
+            providerDO.setEnabled(null);
+            providerDO.setAuditStatus(null);
+            providerDO.setCreateTime(null);
+            providerDao.modify(providerDO);
+        }
     }
 
     public void closeProvider(Long id) {
