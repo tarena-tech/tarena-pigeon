@@ -33,15 +33,22 @@ public class TemplateService {
     private SmsTemplateDao smsTemplateDao;
 
     public String addSmsTemplate(SmsTemplateDO template) {
-
-
         Date now = new Date();
-        template.setDeleted(Deleted.NO.getVal());
-        template.setEnabled(Enabled.YES.getVal());
-        template.setAuditStatus(0);
-        template.setCreateTime(now);
-        template.setUpdateTime(now);
-        smsTemplateDao.save(template);
+        if (null == template.getId()) {
+            template.setDeleted(Deleted.NO.getVal());
+            template.setEnabled(Enabled.YES.getVal());
+            template.setAuditStatus(0);
+            template.setCreateTime(now);
+            template.setUpdateTime(now);
+            smsTemplateDao.save(template);
+        } else {
+            template.setCreateTime(null);
+            template.setEnabled(null);
+            template.setAuditStatus(null);
+            template.setAuditResult(null);
+            template.setUseCount(null);
+            smsTemplateDao.modify(template);
+        }
         return "ok";
     }
 
