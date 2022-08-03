@@ -31,7 +31,14 @@ public class SignService {
     public void addSign(SignSaveParam signSaveParam) {
         SignDO signDO = new SignDO();
         BeanUtils.copyProperties(signSaveParam, signDO);
-        signDao.save(signDO);
+        if (null == signDO.getId()) {
+            signDao.save(signDO);
+        } else {
+            signDO.setEnabled(null);
+            signDO.setAuditStatus(null);
+            signDO.setCreateTime(null);
+            signDao.modify(signDO);
+        }
     }
 
     public void closeSign(Long id) {
