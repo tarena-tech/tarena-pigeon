@@ -25,8 +25,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SpringBootSchedule extends AbstractScheduler {
+
     @Autowired
     private MQPublisher mqPublisher;
+
     @Override boolean stop() {
         return false;
     }
