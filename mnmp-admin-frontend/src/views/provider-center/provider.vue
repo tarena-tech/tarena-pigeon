@@ -92,8 +92,8 @@
     </div>
     <!-- 详情弹窗 -->
     <dialog-sms-info ref="dialogSmsInfo" />
-    <dialog-provider-save ref="DialogProviderSave"  @reload="reload" />
-    <dialog-provider-audit ref="DialogProviderAudit"  @reload="reload" />
+    <dialog-provider-save ref="DialogProviderSave"  @refresh="refresh" />
+    <dialog-provider-audit ref="DialogProviderAudit"  @refresh="refresh" />
   </div>
 </template>
 

@@ -246,4 +246,12 @@ public class TemplateView {
     public void setCreateUserName(String createUserName) {
         this.createUserName = createUserName;
     }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 }

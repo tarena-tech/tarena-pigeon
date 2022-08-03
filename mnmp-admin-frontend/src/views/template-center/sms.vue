@@ -89,6 +89,17 @@
             <span v-if="scope.row.noticeType === 3">WECHAT</span>
           </template>
         </el-table-column>
+        <el-table-column prop="content" label="模板内容">
+          <template slot-scope="scope">
+            <el-popover trigger="hover" placement="top">
+              <p>{{ scope.row.content }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">模板内容</el-tag>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
+
 
         <el-table-column
           prop="useCount"
@@ -134,8 +145,8 @@
     <dialog-sms-info ref="dialogSmsInfo"/>
     <dialog-sms-info ref="dialogSmsInfo" />
     <!-- 创建弹窗 -->
-    <dialog-sms-save ref="DialogSmsSave" @callback="refresh"/>
-    <dialog-sms-audit ref="DialogSmsAudit" />
+    <dialog-sms-save ref="DialogSmsSave" @refresh="refresh"/>
+    <dialog-sms-audit ref="DialogSmsAudit" @refresh="refresh" />
   </div>
 </template>
 

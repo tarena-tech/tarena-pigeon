@@ -4,4 +4,4 @@ import {
 
 export const queryListByPage = (data) => get('/template/sms/queryListByPage', data)
 export const changeEnableStatus = (data) => post('/template/changeEnableStatus?id='+ data, null, null)
-export const audit = (data) => post('', data, null)
+export const audit = (data) => post('/template/sms/doAudit', data, null)

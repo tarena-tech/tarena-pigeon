@@ -99,8 +99,8 @@
 
     <!-- 详情弹窗 -->
     <dialog-sms-info ref="dialogSmsInfo" />
-    <dialog-app-save ref="DialogAppSave"  @callback="refresh"/>
-    <dialog-app-audit ref="DialogAppAudit" />
+    <dialog-app-save ref="DialogAppSave"  @refresh="refresh"/>
+    <dialog-app-audit ref="DialogAppAudit" @refresh="refresh" />
   </div>
 
 
