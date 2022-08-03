@@ -94,13 +94,15 @@ export default {
       this.loading = false
       // this.dialogVisible = false
       this.$refs.drawer.closeDrawer()
-      this.$emit('callback')
+      this.$emit('refresh')
 
     },
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
+          // TODO 假数据
           this.ruleForm.appCode = 333
+          this.ruleForm.appId = 333
           save(this.ruleForm)
             .then(res => {
               console.dir(res);

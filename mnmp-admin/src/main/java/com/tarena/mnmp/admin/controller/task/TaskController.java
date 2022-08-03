@@ -175,17 +175,13 @@ public class TaskController implements TaskApi {
         return null;
     }
 
-    @Override public void stopTask(Long id) {
-        taskService.action(id, TaskStatus.TASK_STOP.status());
-    }
-
-    @Override public void startTask(Long id) {
-        taskService.action(id, TaskStatus.TASK_NO_OPEN.status());
-    }
-
     @Override public void modify(TaskParam taskParam) {
         TaskDO task = new TaskDO();
         BeanUtils.copyProperties(taskParam, task);
         taskService.updateTask(task);
+    }
+
+    @Override public void changeTaskStatus(Long id) throws BusinessException {
+        taskService.changeTaskStatus(id);
     }
 }

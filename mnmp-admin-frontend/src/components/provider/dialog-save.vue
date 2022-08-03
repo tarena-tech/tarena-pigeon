@@ -98,7 +98,7 @@ export default {
       this.loading = false
       // this.dialogVisible = false
       this.$refs.drawer.closeDrawer()
-      this.$emit('callback')
+      this.$emit('refresh')
 
     },
     submitForm() {
@@ -112,7 +112,7 @@ export default {
             .catch(err => {
               console.error("create fail", err);
             })
-          this.$emit('reload')
+
         } else {
           console.log('error submit!!')
           return false

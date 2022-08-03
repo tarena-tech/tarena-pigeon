@@ -31,10 +31,12 @@ import com.tarena.mnmp.domain.ttarget.TaskTargetService;
 import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Deleted;
 import com.tarena.mnmp.enums.TaskStatus;
+import com.tarena.mnmp.protocol.BusinessException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import javax.annotation.Resource;
@@ -161,9 +163,29 @@ public class TaskService {
     }
 
     public TaskDO detailById(Long id) {
-        if (null == id) {
-            return new TaskDO();
-        }
         return taskDao.queryById(id);
+    }
+
+    public void changeTaskStatus(Long id) throws BusinessException {
+        TaskDO aDo = detailById(id);
+        if (null == aDo) {
+            throw new BusinessException("100", "任务不存在");
+        }
+        int open = 0;
+        if (Objects.equals(TaskStatus.TASK_STOP.status(), aDo.getTaskStatus())
+            || Objects.equals(TaskStatus.TASK_END.status(), aDo.getTaskStatus())) {
+            open = 1;
+        }
+
+        TaskDO up = new TaskDO();
+        up.setId(id);
+        if (open == 1) {
+            up.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
+            up.setNextTriggerTime(DateUtils.generateNextTriggerTime(up.getCycleLevel(), up.getCycleNum(), new Date()));
+        } else {
+            up.setTaskStatus(TaskStatus.TASK_END.status());
+            up.setTriggerEndTime(new Date());
+        }
+        taskDao.update(up);
     }
 }

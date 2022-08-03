@@ -35,7 +35,7 @@
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus">新建</el-button>
+          <el-button type="success" icon="el-icon-plus" @click="save(null)">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -50,9 +50,16 @@
         @callback="getTabelData"
       >
 
-        <el-table-column prop="name" label="供应商名称" />
-        <el-table-column prop="code" label="供应商编码" />
-        <el-table-column prop="noticeType" label="业务类型">
+        <el-table-column prop="name" label="内务名称" />
+        <el-table-column prop="taskStatus" label="任务类型">
+          <template slot-scope="scope">
+            <span v-if="scope.row.taskStatus === 0">立即</span>
+            <span v-if="scope.row.taskStatus === 1">定时</span>
+            <span v-if="scope.row.taskStatus === 2">周期</span>
+            <span v-if="scope.row.taskStatus === 3">条件规则触发</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="noticeType" label="消息类型">
           <template slot-scope="scope">
             <span v-if="scope.row.noticeType === 1">SMS</span>
             <span v-else-if="scope.row.noticeType === 2">EMAIL</span>
@@ -60,11 +67,28 @@
             <span v-else>未知</span>
           </template>
         </el-table-column>
-        <el-table-column prop="officialWebsite"  label="官方网站" />
-        <el-table-column prop="remarks" label="应用简介"/>
-        <el-table-column prop="contacts" label="联系人"/>
-        <el-table-column prop="phone" label="联系电话"/>
-        <el-table-column prop="remarks" label="简介"/>
+        <el-table-column prop="templateId"  label="消息模板" />
+        <el-table-column prop="signId" label="短信签名"/>
+        <el-table-column prop="appId" label="所属应用"/>
+        <el-table-column prop="cycleLvel" label="周期类型">
+          <template slot-scope="scope">
+            <span v-if="scope.row.cycleLvel === 1">小时</span>
+            <span v-if="scope.row.cycleLvel === 2">日</span>
+            <span v-if="scope.row.cycleLvel === 3">周</span>
+            <span v-if="scope.row.cycleLvel === 4">月</span>
+            <span v-if="scope.row.cycleLvel === 5">年</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="cycleNum" label="周期数"/>
+        <el-table-column prop="firstTriggerTime" label="任务首次触发时间"/>
+        <el-table-column prop="triggerEndTime" label="任务触发结束时间"/>
+        <el-table-column prop="nextTriggerTime" label="下次任务触发时间"/>
+        <el-table-column prop="targetFileUrl" label="目标文件地址"/>
+        <el-table-column prop="remark" label="描述"/>
+        <el-table-column prop="error" label="错误日志"/>
+
+
+
         <el-table-column prop="auditStatus" label="审核状态">
           <template slot-scope="scope">
             <span v-if="scope.row.auditStatus === 1">通过</span>
@@ -72,9 +96,13 @@
             <span v-if="scope.row.auditStatus === 1">拒绝</span>
           </template>
         </el-table-column>
-        <el-table-column prop="enabled" label="应用状态">
+        <el-table-column prop="taskStatus" label="当前状态">
           <templat slot-scope="scope">
-            <span>{{scope.row.enable === 1 ? '启用' : '禁用'}}</span>
+            <span v-if="scope.row.taskStatus === 0">未开启</span>
+            <span v-if="scope.row.taskStatus === 1">推送中</span>
+            <span v-if="scope.row.taskStatus === 2">终止</span>
+            <span v-if="scope.row.taskStatus === 3">已结束</span>
+            <span v-if="scope.row.taskStatus === 4">失败</span>
           </templat>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间"/>
@@ -83,29 +111,32 @@
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              size="small"
-              @click="showSmsInfo(scope.row)"
-            >按钮1</el-button>
+            <el-button v-if="scope.row.taskStatus === 0 || scope.row.taskStatus === 1"  type="text" size="small" @click="changeStatus(scope.row)" >
+              终止
+            </el-button>
+            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
+              审核
+            </el-button>
+            <el-button  type="text" size="small" @click="save(scope.row)" >
+              修改
+            </el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
     </div>
-    <!-- 详情弹窗 -->
-    <dialog-sms-info ref="dialogSmsInfo" />
+    <dialog-app-audit ref="DialogTaskAudit" @refresh="refresh" />
   </div>
 </template>
 
 <script>
-import { queryList } from '@/api/task.js'
+import {queryList, changeStatus} from '@/api/task.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import dialogSmsInfo from '@/components/sms/dialog-info.vue'
+import DialogTaskAudit from '@/components/task/dialog-audit'
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    dialogSmsInfo
+    DialogTaskAudit
   },
   data() {
     return {
@@ -138,6 +169,9 @@ export default {
     resetForm() {
       this.$refs.claFrom.resetFields()
     },
+    refresh() {
+      this.toResetPageForList();
+    },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)
       const _data = {
@@ -155,19 +189,27 @@ export default {
           this.$refs.tmp_table.loadingState(false)
         })
     },
+    changeStatus(data) {
+      changeStatus(data.id).then(res => {
+        console.log('list-res:', res)
+        this.getTabelData()
+      }).catch(err => {
+        console.log('list-err:', err)
+        this.$refs.tmp_table.loadingState(false)
+      })
+    },
+    showAudit(_id) {
+      this.$refs.DialogTaskAudit.show(_id);
+    },
+    save(data) {
+
+    },
+
     // 重置页码并搜索
     toResetPageForList() {
       this.pagination.currentPageIndex = 1
       this.getTabelData()
     },
-    // 行内编辑
-    toEditBtnFn(row) {
-      this.$refs['updateSeriesClass'].show(row)
-    },
-    // 详情
-    showSmsInfo(row) {
-      this.$refs['dialogSmsInfo'].show({ name: row.code })
-    }
   }
 }
 </script>

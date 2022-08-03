@@ -78,17 +78,17 @@ export default {
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
+          // TODO 假数据
           this.ruleForm.appId = 222
+          this.ruleForm.appCode = 222
           save(this.ruleForm)
             .then(res => {
               console.dir(res);
               this.cancelForm();
-              this.$emit('refresh')
             })
             .catch(err => {
               console.error("create fail", err);
             })
-
         } else {
           console.log('error submit!!')
           return false
