@@ -92,16 +92,16 @@
     </div>
     <!-- 详情弹窗 -->
     <dialog-sms-info ref="dialogSmsInfo" />
-    <dialog-provider-save ref="DialogProviderSave" />
-    <dialog-provider-audit ref="DialogProviderAudit" />
+    <dialog-provider-save ref="DialogProviderSave"  @reload="reload" />
+    <dialog-provider-audit ref="DialogProviderAudit"  @reload="reload" />
   </div>
 </template>
 
 <script>
 import { queryList, changeEnableStatus } from '@/api/provider.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import DialogProviderAudit from "@/components/app/dialog-audit";
-import DialogProviderSave from "@/components/provider/dialog-create";
+import DialogProviderAudit from "@/components/provider/dialog-audit";
+import DialogProviderSave from "@/components/provider/dialog-save";
 export default {
   name: 'DemoTable',
   components: {
@@ -137,6 +137,12 @@ export default {
     },
     resetForm() {
       this.$refs.claFrom.resetFields()
+    },
+    refresh() {
+      this.toResetPageForList();
+    },
+    reload() {
+      this.getTabelData();
     },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)

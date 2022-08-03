@@ -13,21 +13,29 @@
   >
     <div class="cus-drawer__content">
       <el-form ref="ruleForm" class="cus-form" :model="ruleForm" :rules="rules" label-width="100px">
-
-        <el-form-item label="应用名称" prop="name">
+        <el-form-item label="服务商名称" prop="name">
           <el-input v-model="ruleForm.name" />
         </el-form-item>
-        <el-form-item label="code" prop="code">
+        <el-form-item label="服务商code" prop="code">
           <el-input v-model="ruleForm.code" />
         </el-form-item>
-        <el-form-item label="负责人" prop="leader">
-          <el-input v-model="ruleForm.leader" />
+        <el-form-item label="消息类型" prop="noticeType">
+          <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false"/>
         </el-form-item>
-        <el-form-item label="组内成员" prop="teamMembers">
-          <el-input v-model="ruleForm.teamMembers" />
+        <el-form-item label="官网地址" prop="officialWebsite">
+          <el-input v-model="ruleForm.officialWebsite" />
         </el-form-item>
-        <el-form-item label="描述" prop="remark">
-          <el-input v-model="ruleForm.remarks" type="textarea" :row="1" />
+        <el-form-item label="联系人" prop="contacts">
+          <el-input v-model="ruleForm.contacts" />
+        </el-form-item>
+        <el-form-item label="联系电话" prop="phone">
+          <el-input v-model="ruleForm.phone" />
+        </el-form-item>
+        <el-form-item label="JSON配置" prop="clientConfig">
+          <el-input v-model="ruleForm.clientConfig" type="textarea" />
+        </el-form-item>
+        <el-form-item label="备注" prop="remarks">
+          <el-input v-model="ruleForm.remarks" type="textarea" />
         </el-form-item>
       </el-form>
       <div class="cus-drawer__footer">
@@ -42,25 +50,42 @@
 import {save} from "@/api/provider";
 
 export default {
-  name: 'providerDialogSave',
+  name: 'DialogProviderSave',
   data() {
     return {
       dialogVisible: false,
-      windowName: '创建',
       loading: false,
       ruleForm: {
         name: null,
         code: null,
-        leader: null,
-        teamMembers: null,
+        noticeType: null,
+        officialWebsite: null,
+        contacts: null,
+        phone: null,
+        clientConfig: null,
         remarks: null
       },
       rules: {
         name: [
-          { required: true, message: '请输入模板名称', trigger: 'blur' }
+          { required: true, message: '请输入服务商名称', trigger: 'blur' }
         ],
         code: [
           { required: true, message: '请输入code码', trigger: 'blur' }
+        ],
+        noticeType: [
+          { required: true, message: '请选择消息类型', trigger: 'blur' }
+        ],
+        officialWebsite: [
+          { required: true, message: '请输入官网地址', trigger: 'blur' }
+        ],
+        contacts: [
+          { required: true, message: '请输入联系人', trigger: 'blur' }
+        ],
+        phone: [
+          { required: true, message: '请输入联系电话', trigger: 'blur' }
+        ],
+        clientConfig: [
+          { required: true, message: '请输入配置项', trigger: 'blur' }
         ]
       }
     }
@@ -79,7 +104,7 @@ export default {
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          create(this.ruleForm)
+          save(this.ruleForm)
             .then(res => {
               console.dir(res);
               this.cancelForm();
@@ -87,7 +112,7 @@ export default {
             .catch(err => {
               console.error("create fail", err);
             })
-          this.$emit('callback')
+          this.$emit('reload')
         } else {
           console.log('error submit!!')
           return false

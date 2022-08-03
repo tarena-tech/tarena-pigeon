@@ -67,7 +67,7 @@ public class ProviderController implements ProviderApi {
 
         ProviderDO up = new ProviderDO();
         up.setId(id);
-        up.setEnabled(up.getEnabled() == 1 ? 0 : 1);
+        up.setEnabled(aDo.getEnabled() == 1 ? 0 : 1);
         providerService.update(up);
     }
 
