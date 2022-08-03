@@ -87,7 +87,7 @@ public interface TaskApi {
         nickname = "doAudit",
         notes = ""
     )
-    @PutMapping({"/audit"})
+    @PostMapping({"/audit"})
     void doAudit(@RequestBody AuditParam param) throws BusinessException;
 
     @ApiOperationSupport(order = 5004)
