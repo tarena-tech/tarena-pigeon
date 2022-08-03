@@ -20,6 +20,7 @@ package com.tarena.mnmp.admin.codegen.api.task;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.controller.task.TaskParam;
 import com.tarena.mnmp.admin.controller.task.TaskView;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskStatistics;
@@ -34,7 +35,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -87,11 +87,8 @@ public interface TaskApi {
         nickname = "doAudit",
         notes = ""
     )
-    @PutMapping({"/{id}/audit/{auditStatus}"})
-    void doAudit(
-        @ApiParam(value = "要审核的任务id", required = true) @PathVariable("id") Long id,
-        @ApiParam(value = "审核状态 1通过 2未通过", required = true) @PathVariable("auditStatus") Integer auditStatus,
-        @ApiParam("审核意见") @Valid @RequestParam(value = "auditResult", required = false) String auditResult);
+    @PutMapping({"/audit"})
+    void doAudit(@RequestBody AuditParam param) throws BusinessException;
 
     @ApiOperationSupport(order = 5004)
     @ApiOperation(

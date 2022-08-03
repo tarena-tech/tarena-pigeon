@@ -162,10 +162,10 @@ public class TaskView {
     private Date updateTime;
 
     @ApiModelProperty(value = "审核状态 -1-审核拒绝， 0-待审核， 1-审核通过", required = true)
-    private Integer taskAudit;
+    private Integer auditStatus;
 
     @ApiModelProperty(value = "审核时提交的文案", required = true)
-    private String taskAuditResult;
+    private String auditResult;
 
     public Long getId() {
         return id;
@@ -335,19 +335,19 @@ public class TaskView {
         this.updateTime = updateTime;
     }
 
-    public Integer getTaskAudit() {
-        return taskAudit;
+    public Integer getAuditStatus() {
+        return auditStatus;
     }
 
-    public void setTaskAudit(Integer taskAudit) {
-        this.taskAudit = taskAudit;
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
     }
 
-    public String getTaskAuditResult() {
-        return taskAuditResult;
+    public String getAuditResult() {
+        return auditResult;
     }
 
-    public void setTaskAuditResult(String taskAuditResult) {
-        this.taskAuditResult = taskAuditResult;
+    public void setAuditResult(String auditResult) {
+        this.auditResult = auditResult;
     }
 }

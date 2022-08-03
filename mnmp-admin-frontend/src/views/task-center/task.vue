@@ -67,9 +67,6 @@
             <span v-else>未知</span>
           </template>
         </el-table-column>
-        <el-table-column prop="templateId"  label="消息模板" />
-        <el-table-column prop="signId" label="短信签名"/>
-        <el-table-column prop="appId" label="所属应用"/>
         <el-table-column prop="cycleLvel" label="周期类型">
           <template slot-scope="scope">
             <span v-if="scope.row.cycleLvel === 1">小时</span>
@@ -80,14 +77,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="cycleNum" label="周期数"/>
-        <el-table-column prop="firstTriggerTime" label="任务首次触发时间"/>
-        <el-table-column prop="triggerEndTime" label="任务触发结束时间"/>
-        <el-table-column prop="nextTriggerTime" label="下次任务触发时间"/>
         <el-table-column prop="targetFileUrl" label="目标文件地址"/>
         <el-table-column prop="remark" label="描述"/>
         <el-table-column prop="error" label="错误日志"/>
-
-
 
         <el-table-column prop="auditStatus" label="审核状态">
           <template slot-scope="scope">
@@ -124,7 +116,8 @@
         </el-table-column>
       </tmp-table-pagination>
     </div>
-    <dialog-app-audit ref="DialogTaskAudit" @refresh="refresh" />
+    <dialog-task-audit ref="DialogTaskAudit" @refresh="refresh" />
+    <dialog-task-save ref="DialogTaskSave" @refresh="refresh"/>
   </div>
 </template>
 
@@ -132,11 +125,13 @@
 import {queryList, changeStatus} from '@/api/task.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogTaskAudit from '@/components/task/dialog-audit'
+import DialogTaskSave from '@/components/task/dialog-save'
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    DialogTaskAudit
+    DialogTaskAudit,
+    DialogTaskSave
   },
   data() {
     return {
@@ -202,7 +197,7 @@ export default {
       this.$refs.DialogTaskAudit.show(_id);
     },
     save(data) {
-
+      this.$refs.DialogTaskSave.show(data)
     },
 
     // 重置页码并搜索

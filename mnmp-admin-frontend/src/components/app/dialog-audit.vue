@@ -43,6 +43,13 @@ export default {
       this.dialogFormVisible = true
       this.ruleForm.id = _id;
     },
+    cancelForm() {
+      this.loading = false
+      // this.dialogVisible = false
+      this.$refs.drawer.closeDrawer()
+      this.$emit('refresh')
+
+    },
     auditing(status) {
       this.ruleForm.auditStatus = status;
       console.dir(this.ruleForm)
@@ -51,7 +58,7 @@ export default {
           audit(this.ruleForm)
             .then(res => {
               this.dialogFormVisible = false;
-              this.$emit('refresh')
+              this.cancelForm();
             })
             .catch(err => {
               console.error('audit fial', err);

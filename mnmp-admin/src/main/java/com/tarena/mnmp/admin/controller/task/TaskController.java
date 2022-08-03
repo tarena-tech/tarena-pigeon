@@ -20,6 +20,7 @@ package com.tarena.mnmp.admin.controller.task;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.util.StringUtils;
 import com.tarena.mnmp.admin.codegen.api.task.TaskApi;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.commons.utils.DateUtils;
 import com.tarena.mnmp.commons.utils.ExcelUtils;
@@ -28,7 +29,6 @@ import com.tarena.mnmp.domain.task.TargetExcelData;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.domain.task.TaskStatistics;
-import com.tarena.mnmp.enums.TaskStatus;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
 import java.io.BufferedInputStream;
@@ -146,8 +146,8 @@ public class TaskController implements TaskApi {
         }
     }
 
-    @Override public void doAudit(Long id, Integer auditStatus, String auditResult) {
-        taskService.doAudit(id, auditStatus, auditResult);
+    @Override public void doAudit(AuditParam param) throws BusinessException {
+        taskService.doAudit(param.getId(), param.getAuditStatus(), param.getAuditResult());
     }
 
     @Override public PagerResult<TaskView> queryListByPage(TaskQuery taskQuery) {

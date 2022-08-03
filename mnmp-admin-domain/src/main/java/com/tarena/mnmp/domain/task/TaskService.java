@@ -59,14 +59,14 @@ public class TaskService {
     @Value("${excel.path}")
     private String excelPath;
 
-    public void doAudit(Long id, Integer status, String result) {
+    public void doAudit(Long id, Integer status, String result) throws BusinessException {
         TaskDO taskDO = taskDao.queryById(id);
         if (null == taskDO) {
-            return;
+            throw new BusinessException("100", "任务不存在");
         }
         taskDO.setId(id);
-        taskDO.setTaskAudit(status);
-        taskDO.setTaskAuditResult(result);
+        taskDO.setAuditStatus(status);
+        taskDO.setAuditResult(result);
         if (AuditStatus.REJECT.getStatus().intValue() == status) {
             taskDao.update(taskDO);
             return;
@@ -79,7 +79,7 @@ public class TaskService {
 
     public List<TargetExcelData> addTask(TaskDO bo, String filePath) {
         bo.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
-        bo.setTaskAudit(AuditStatus.WAITING.getStatus());
+        bo.setAuditStatus(AuditStatus.WAITING.getStatus());
         bo.setTargetFileUrl(filePath);
         bo.setTargetFileName(filePath.substring(filePath.lastIndexOf("/") + 1));
         bo.setCreateTime(new Date());
@@ -147,7 +147,7 @@ public class TaskService {
     }
 
     public void updateTask(TaskDO task) {
-        task.setTaskAudit(AuditStatus.WAITING.getStatus());
+        task.setAuditStatus(AuditStatus.WAITING.getStatus());
         taskDao.update(task);
     }
 
