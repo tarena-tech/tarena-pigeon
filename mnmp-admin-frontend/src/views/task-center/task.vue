@@ -77,9 +77,34 @@
           </template>
         </el-table-column>
         <el-table-column prop="cycleNum" label="周期数"/>
-        <el-table-column prop="targetFileUrl" label="目标文件地址"/>
-        <el-table-column prop="remark" label="描述"/>
-        <el-table-column prop="error" label="错误日志"/>
+        <el-table-column prop="targetFileUrl" label="文件地址">
+          <template slot-scope="scope" v-if="scope.row.targetFileUrl">
+            <i class="el-icon-download" @click="downExcel(scope.row.targetFileUrl)"></i>
+          </template>
+        </el-table-column>
+
+
+        <el-table-column prop="error" label="描述">
+          <template slot-scope="scope">
+            <el-popover v-if="scope.row.remark" trigger="hover" placement="top">
+              <p>{{ scope.row.remark }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">描述</el-tag>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="error" label="错误日志">
+          <template slot-scope="scope">
+            <el-popover v-if="scope.row.error" trigger="hover" placement="top">
+              <p>{{ scope.row.error }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">错误日志</el-tag>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
 
         <el-table-column prop="auditStatus" label="审核状态">
           <template slot-scope="scope">
@@ -122,7 +147,7 @@
 </template>
 
 <script>
-import {queryList, changeStatus} from '@/api/task.js'
+import {queryList, changeStatus , downExcel} from '@/api/task.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogTaskAudit from '@/components/task/dialog-audit'
 import DialogTaskSave from '@/components/task/dialog-save'
@@ -198,6 +223,13 @@ export default {
     },
     save(data) {
       this.$refs.DialogTaskSave.show(data)
+    },
+    downExcel(path) {
+      var url = process.env.VUE_APP_BASE_API + '/task/excel';
+      if (path) {
+        url += '?path=' + path;
+      }
+      window.open(url)
     },
 
     // 重置页码并搜索
