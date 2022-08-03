@@ -51,7 +51,7 @@
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus"  @click="showSmsCreate">新建</el-button>
+          <el-button type="success" icon="el-icon-plus"  @click="save(null)">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -154,11 +154,13 @@
 import {queryListByPage, changeEnableStatus} from '@/api/sms.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogSmsAudit from "@/components/sms/dialog-audit";
+import DialogSmsSave from "@/components/sms/dialog-save"
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    DialogSmsAudit
+    DialogSmsAudit,
+    DialogSmsSave
   },
   data() {
     return {
@@ -242,8 +244,8 @@ export default {
       this.$refs['dialogSmsInfo'].show({ name: row.code })
     },
     // 创建
-    showSmsCreate() {
-      this.$refs.DialogSmsCreate.show()
+    save(data) {
+      this.$refs.DialogSmsSave.show(data)
     }
   }
 }

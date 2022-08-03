@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import {create} from "@/api/app";
+import {create, save} from "@/api/app";
 
 export default {
   name: 'AppDialogSave',
@@ -79,7 +79,7 @@ export default {
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          create(this.ruleForm)
+          save(this.ruleForm)
             .then(res => {
               console.dir(res);
               this.cancelForm();

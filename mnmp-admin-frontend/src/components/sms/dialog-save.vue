@@ -1,8 +1,7 @@
 <template>
   <el-drawer
     ref="drawer"
-    title="创建"
-
+    :title="windowName"
     :visible.sync="dialogVisible"
     direction="rtl"
     :close-on-press-escape="false"
@@ -27,27 +26,19 @@
         <el-form-item label="通知类型" prop="noticeType">
           <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false"/>
         </el-form-item>
-
-        <el-form-item label="应用(做成下拉框赛选)" prop="appId">
+        <el-form-item label="应用" prop="appId">
           <el-input v-model="ruleForm.appId" />
         </el-form-item>
-        <el-form-item label="描述" prop="remark">
-          <el-input v-model="ruleForm.remark" type="textarea" />
+        <el-form-item label="模板内容" prop="content">
+          <el-input v-model="ruleForm.content" type="textarea"/>
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="ruleForm.remark" type="textarea"/>
         </el-form-item>
 
-
-<!--        <el-form-item label="活动名称" prop="name">-->
-<!--          <el-input v-model="ruleForm.name" />-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="活动区域" prop="region">-->
-<!--          <el-input v-model="ruleForm.name2" />-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="活动形式" prop="desc">-->
-<!--          <el-input v-model="ruleForm.desc" type="textarea" />-->
-<!--        </el-form-item>-->
       </el-form>
       <div class="cus-drawer__footer">
-        <el-button @click="cancelForm">取 消</el-button>
+        <el-button @click="cancelForm()">取 消</el-button>
         <el-button type="primary" :loading="loading" @click="submitForm()">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
       </div>
     </div>
@@ -55,16 +46,23 @@
 </template>
 
 <script>
+import {save} from "@/api/sms";
+
 export default {
-  name: 'SmsDialogCreate',
+  name: 'DialogSmsSave',
   data() {
     return {
       dialogVisible: false,
+      windowName: '创建',
       loading: false,
       ruleForm: {
-        name: '',
-        name2: '',
-        desc: ''
+        name: null,
+        code: null,
+        appId: null,
+        noticeType: null,
+        content: null,
+        templateType: null,
+        remark: null
       },
       rules: {
         name: [
@@ -73,16 +71,19 @@ export default {
         code: [
           { required: true, message: '请输入code码', trigger: 'blur' }
         ],
-        templateType: [
-          { required: true, message: '请选择模板类型', trigger: 'blur' }
+        appId: [
+          { required: true, message: '请选择应用', trigger: 'blur' }
         ],
         noticeType: [
           { required: true, message: '请选择通知类型', trigger: 'blur' }
         ],
-        appId: [
-          { required: true, message: '请选择适用的应用', trigger: 'blur' }
+        content: [
+          { required: true, message: '请填写模板内容', trigger: 'blur' }
+        ],
+        templateType: [
+          { required: true, message: '请选择模板类型', trigger: 'blur' }
         ]
-      }
+     }
     }
   },
   methods: {
@@ -93,11 +94,21 @@ export default {
       this.loading = false
       // this.dialogVisible = false
       this.$refs.drawer.closeDrawer()
+      this.$emit('callback')
+
     },
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          save(this.ruleForm)
+            .then(res => {
+              console.dir(res);
+              this.cancelForm();
+            })
+            .catch(err => {
+              console.error("create fail", err);
+            })
+          this.$emit('callback')
         } else {
           console.log('error submit!!')
           return false
@@ -107,11 +118,13 @@ export default {
     resetForm() {
       this.$refs['ruleForm'].resetFields()
     },
-    show() {
+    show(data) {
       this.dialogVisible = true
-      this.$nextTick(() => {
-        // TODO init
-      })
+      if (null != data) {
+        this.windowName = "修改"
+        this.ruleForm = data;
+      }
+
     }
   }
 }
