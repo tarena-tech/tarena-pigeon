@@ -56,14 +56,19 @@ public class SignService {
         return signDao.querySigns(signQuery);
     }
 
-    public void auditSign(Long id, Integer status) {
+    public void auditSign(Long id, Integer status, String auditResult) {
         SignDO signDO = new SignDO();
         signDO.setId(id);
-        signDO.setAuditStatus(signDO.getAuditStatus());
+        signDO.setAuditStatus(status);
+        signDO.setAuditResult(auditResult);
         signDao.modify(signDO);
     }
 
     public Long queryCount(SignQuery query) {
         return signDao.queryCount(query);
+    }
+
+    public void modify(SignDO up) {
+        signDao.modify(up);
     }
 }

@@ -251,6 +251,7 @@
                 and deleted = 0
             </if>
         </where>
+        group by id desc
         ${limitClause};
     </select>
 

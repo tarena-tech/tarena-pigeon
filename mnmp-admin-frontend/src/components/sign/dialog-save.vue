@@ -14,28 +14,18 @@
     <div class="cus-drawer__content">
       <el-form ref="ruleForm" class="cus-form" :model="ruleForm" :rules="rules" label-width="100px">
 
-        <el-form-item label="模板名称" prop="name">
+        <el-form-item label="签名名称" prop="name">
           <el-input v-model="ruleForm.name" />
         </el-form-item>
-        <el-form-item label="模板编码" prop="code">
+        <el-form-item label="签名编码" prop="code">
           <el-input v-model="ruleForm.code" />
-        </el-form-item>
-        <el-form-item label="模板类型" prop="templateType">
-          <com-dict :val.sync="ruleForm.templateType" dict-name="templateType" :is-all="false"/>
-        </el-form-item>
-        <el-form-item label="通知类型" prop="noticeType">
-          <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false"/>
         </el-form-item>
         <el-form-item label="应用" prop="appId">
           <el-input v-model="ruleForm.appId" />
         </el-form-item>
-        <el-form-item label="模板内容" prop="content">
-          <el-input v-model="ruleForm.content" type="textarea"/>
+        <el-form-item label="描述" prop="remark">
+          <el-input v-model="ruleForm.remarks" type="textarea" />
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="ruleForm.remark" type="textarea"/>
-        </el-form-item>
-
       </el-form>
       <div class="cus-drawer__footer">
         <el-button @click="cancelForm()">取 消</el-button>
@@ -46,10 +36,10 @@
 </template>
 
 <script>
-import {save} from "@/api/sms";
+import {save} from "@/api/sign";
 
 export default {
-  name: 'DialogSmsSave',
+  name: 'DialogSignSave',
   data() {
     return {
       dialogVisible: false,
@@ -59,10 +49,7 @@ export default {
         name: null,
         code: null,
         appId: null,
-        noticeType: null,
-        content: null,
-        templateType: null,
-        remark: null
+        remarks: null
       },
       rules: {
         name: [
@@ -73,17 +60,8 @@ export default {
         ],
         appId: [
           { required: true, message: '请选择应用', trigger: 'blur' }
-        ],
-        noticeType: [
-          { required: true, message: '请选择通知类型', trigger: 'blur' }
-        ],
-        content: [
-          { required: true, message: '请填写模板内容', trigger: 'blur' }
-        ],
-        templateType: [
-          { required: true, message: '请选择模板类型', trigger: 'blur' }
         ]
-     }
+      }
     }
   },
   methods: {
@@ -94,13 +72,12 @@ export default {
       this.loading = false
       // this.dialogVisible = false
       this.$refs.drawer.closeDrawer()
-      this.$emit('callback')
+      this.$emit('refresh')
 
     },
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          this.ruleForm.appCode = 333
           save(this.ruleForm)
             .then(res => {
               console.dir(res);
@@ -109,7 +86,7 @@ export default {
             .catch(err => {
               console.error("create fail", err);
             })
-          this.$emit('callback')
+          this.$emit('refresh')
         } else {
           console.log('error submit!!')
           return false
@@ -125,7 +102,9 @@ export default {
         this.windowName = "修改"
         this.ruleForm = data;
       }
-
+      this.$nextTick(() => {
+        // TODO init
+      })
     }
   }
 }

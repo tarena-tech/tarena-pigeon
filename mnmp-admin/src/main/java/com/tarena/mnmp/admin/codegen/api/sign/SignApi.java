@@ -18,9 +18,11 @@
 package com.tarena.mnmp.admin.codegen.api.sign;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.sign.SignSaveParam;
 import com.tarena.mnmp.domain.sign.SignQuery;
+import com.tarena.mnmp.protocol.BusinessException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -48,21 +50,10 @@ public interface SignApi {
         response = String.class
     )
     @PostMapping(
-        value = {"/add"},
-        produces = {"application/json"},
-        consumes = {"application/json"}
+        value = {"/add"}
     )
     void addSign(@ApiParam(value = "新增签名", required = true) @Valid @RequestBody SignSaveParam signParam);
 
-    @ApiOperationSupport(order = 3002)
-    @ApiOperation(
-        value = "关闭签名",
-        nickname = "closeSign",
-        notes = ""
-    )
-    @PostMapping({"/close"})
-    void closeSign(
-        @NotNull @ApiParam(value = "要关闭的签名", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
     @ApiOperationSupport(order = 3003)
     @ApiOperation(
@@ -78,15 +69,9 @@ public interface SignApi {
     )
     void editSign(@ApiParam(value = "编辑签名", required = true) @Valid @RequestBody SignSaveParam signParam);
 
-    @ApiOperationSupport(order = 3004)
-    @ApiOperation(
-        value = "开启签名",
-        nickname = "openSign",
-        notes = ""
-    )
-    @PostMapping({"/open"})
-    void openSign(
-        @NotNull @ApiParam(value = "要开启的签名id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+
+    @PostMapping("change/enable/status")
+    void changeEnableStatus(Long id) throws BusinessException;
 
     @ApiOperationSupport(order = 3005)
     @ApiOperation(
@@ -118,11 +103,7 @@ public interface SignApi {
 
     /**
      * 审核签名
-     * @param id
-     * @param auditStatus
      */
-    public void auditSign(
-        @NotNull @ApiParam(value = "签名id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
-        @NotNull @ApiParam(value = "审核结果", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus
-    );
+    @PostMapping("audit")
+    void auditSign(@RequestBody AuditParam param);
 }

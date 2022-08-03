@@ -19,6 +19,8 @@ package com.tarena.mnmp.domain.sign;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @ApiModel(value = "签名新增入参")
 public class SignSaveParam {
@@ -34,24 +36,21 @@ public class SignSaveParam {
         name = "name",
         required = false
     )
+    @NotBlank(message = "签名名称不能为空")
     private String name;
-    @ApiModelProperty(
-        value = "应用名称",
-        name = "appName",
-        required = false
-    )
-    private String appName;
     @ApiModelProperty(
         value = "应用主键",
         name = "appId",
         required = false
     )
+    @NotNull(message = "请选择应用")
     private Long appId;
     @ApiModelProperty(
         value = "应用编码",
         name = "appCode",
         required = false
     )
+    @NotBlank(message = "请选择应用")
     private String appCode;
     @ApiModelProperty(
         value = "简介",
@@ -86,14 +85,6 @@ public class SignSaveParam {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAppName() {
-        return appName;
-    }
-
-    public void setAppName(String appName) {
-        this.appName = appName;
     }
 
     public Long getAppId() {
