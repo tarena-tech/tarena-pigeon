@@ -28,7 +28,7 @@ public class ProviderView {
         value = "主键",
         name = "id"
     )
-    private Integer id;
+    private Long id;
     @ApiModelProperty(
         value = "供应商名称",
         name = "name"
@@ -91,11 +91,11 @@ public class ProviderView {
     )
     private Date updateTime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

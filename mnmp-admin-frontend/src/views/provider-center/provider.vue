@@ -80,7 +80,7 @@
             <el-button  type="text" size="small" @click="changeStatus(scope.row.id)" >
               {{scope.row.enabled === 1 ? '禁用' : '启用'}}
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0" @click="audit(scope.row.id)" type="text" size="small">
+            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
             <el-button  type="text" size="small" @click="save(scope.row)" >
@@ -100,7 +100,7 @@
 <script>
 import { queryList, changeEnableStatus } from '@/api/provider.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import DialogProviderAudit from "@/components/app/dialog-provider";
+import DialogProviderAudit from "@/components/app/dialog-audit";
 import DialogProviderSave from "@/components/provider/dialog-create";
 export default {
   name: 'DemoTable',

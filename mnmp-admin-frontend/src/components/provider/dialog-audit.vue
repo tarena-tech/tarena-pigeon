@@ -16,7 +16,7 @@
 import {audit} from "@/api/provider";
 
 export default {
-  name: 'DialogAppAudit',
+  name: 'DialogProviderAudit',
   data() {
     return {
       dialogFormVisible: false,
