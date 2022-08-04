@@ -118,6 +118,24 @@ module.exports = {
         value: '3',
         label: 'WECHAT'
       }
+    ],
+    taskType: [
+      {
+        value: '0',
+        label: '立即'
+      },
+      {
+        value: '1',
+        label: '定时'
+      },
+      {
+        value: '2',
+        label: '周期'
+      },
+      {
+        value: '3',
+        label: '条件规则触发'
+      },
     ]
   }
 }

@@ -14,24 +14,28 @@
     <div class="cus-drawer__content">
       <el-scrollbar class="cus-scrollbar">
         <el-form ref="ruleForm" class="cus-form" :model="ruleForm" :rules="rules" label-width="100px">
-          <el-upload
-            class="upload-demo"
-            ref="upload"
-            action=""
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :file-list="fileList"
-            :multiple="false"
-            :on-change="fileCallback"
-            :limit="1"
-            :auto-upload="false">
-            <el-button slot="trigger" size="small" type="primary">选取Excel文件</el-button>
-            <el-button prop="filePath" v-model="ruleForm.filePath" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-          </el-upload>
-
-
+          <el-form-item>
+            <el-upload
+              class="upload-demo"
+              ref="upload"
+              action="上传地址"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :file-list="fileList"
+              :multiple="false"
+              :on-change="fileCallback"
+              :limit="1"
+              :auto-upload="false">
+              <el-button size="small"  style="margin-left: 10px;" type="primary" @click="downExcel(null)" >下载Excel模板</el-button>
+              <el-button slot="trigger" size="small" type="primary" >选取Excel文件</el-button>
+              <el-button prop="filePath" v-model="ruleForm.filePath" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+            </el-upload>
+          </el-form-item>
           <el-form-item label="任务名称" prop="name">
             <el-input v-model="ruleForm.name" />
+          </el-form-item>
+          <el-form-item label="任务类型" prop="taskType">
+            <com-dict :val.sync="ruleForm.taskType" dict-name="taskType" :is-all="false" />
           </el-form-item>
           <el-form-item label="模板类型" prop="templateType">
             <com-dict :val.sync="ruleForm.templateType" dict-name="templateType" :is-all="false" />
@@ -184,6 +188,10 @@ export default {
         triggerEndTime: [
           { required: true, message: '请选择结束时间', trigger: 'blur' }
         ],
+        taskType: [
+          { required: true, message: '请选择任务类型', trigger: 'blur' }
+        ],
+
 
       }
     }
@@ -250,7 +258,13 @@ export default {
       console.dir(file)
       console.dir(list)
     },
-
+    downExcel(path) {
+      var url = process.env.VUE_APP_BASE_API + '/task/excel';
+      if (path) {
+        url += '?path=' + path;
+      }
+      window.open(url)
+    },
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
