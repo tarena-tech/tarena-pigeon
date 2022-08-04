@@ -101,11 +101,7 @@ public interface TemplateApi {
         value = {"/sms/queryListByParam"},
         produces = {"application/json"}
     )
-    List<TemplateView> queryListByParam(
-        @ApiParam("根据模板名称/模板code模糊查询") @Valid @RequestParam(value = "keyword", required = false) String keyword,
-        @ApiParam("根据应用code查询") @Valid @RequestParam(value = "appCode", required = false) String appCode,
-        @ApiParam("根据消息类型查询 1:sms") @Valid @RequestParam(value = "noticeType", required = false) Integer noticeType,
-        @ApiParam("根据消息子类型查询 1:sms-短信通知 2:sms-验证码 3:sms-推广短信") @Valid @RequestParam(value = "templateType", required = false) Integer templateType);
+    List<TemplateView> queryListByParam(TemplateQuery templateQuery);
 
     @ApiOperationSupport(order = 4006)
     @ApiOperation(

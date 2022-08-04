@@ -26,6 +26,7 @@ import com.tarena.mnmp.protocol.BusinessException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -96,10 +97,14 @@ public interface SignApi {
         responseContainer = "List"
     )
     @GetMapping(
-        value = {"/queryList"},
-        produces = {"application/json"}
+        value = {"/queryPage"}
     )
-    PagerResult<SignView> querySignList(@ApiParam(value = "签名查询入参")SignQuery signQuery);
+    PagerResult<SignView> queryPage(@ApiParam(value = "签名查询入参")SignQuery signQuery);
+
+    @GetMapping(
+        value = {"/queryList"}
+    )
+    List<SignView> queryList(@ApiParam(value = "签名查询入参")SignQuery signQuery);
 
     /**
      * 审核签名

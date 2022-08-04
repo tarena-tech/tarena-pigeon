@@ -65,7 +65,7 @@ public class SignController implements SignApi {
         return signView;
     }
 
-    @Override public PagerResult<SignView> querySignList(SignQuery signQuery) {
+    @Override public PagerResult<SignView> queryPage(SignQuery signQuery) {
         List<SignDO> signDOs = signService.querySignList(signQuery);
         Long count = signService.queryCount(signQuery);
         List<SignView> signViews = new ArrayList<>();
@@ -79,6 +79,17 @@ public class SignController implements SignApi {
         rest.setList(signViews);
         rest.setRecordCount(count);
         return rest;
+    }
+
+    @Override public List<SignView> queryList(SignQuery signQuery) {
+        List<SignDO> signDOs = signService.querySignList(signQuery);
+        List<SignView> signViews = new ArrayList<>();
+        for (SignDO signDO : signDOs) {
+            SignView signView = new SignView();
+            BeanUtils.copyProperties(signDO, signView);
+            signViews.add(signView);
+        }
+        return signViews;
     }
 
     @Override public void auditSign(AuditParam param) {

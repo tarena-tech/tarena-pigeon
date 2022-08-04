@@ -66,17 +66,13 @@ public class TemplateService {
         smsTemplateDao.modify(sms);
     }
 
-    public List<SmsTemplateDO> queryListPage(TemplateQuery query) {
+    public List<SmsTemplateDO> queryList(TemplateQuery query) {
         return smsTemplateDao.queryTemplates(query);
     }
 
     public Long queryCount(TemplateQuery query) {
         Long count = smsTemplateDao.queryCount(query);
         return Optional.ofNullable(count).orElse(0L);
-    }
-
-    public List<SmsTemplateDO> queryListByParam(String keyword, String code, Integer type, Integer templateType) {
-        return smsTemplateDao.search(keyword, code, type, templateType);
     }
 
     public SmsTemplateDO querySmsTemplateDetail(Long id) {

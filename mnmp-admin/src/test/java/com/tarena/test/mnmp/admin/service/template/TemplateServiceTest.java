@@ -107,7 +107,7 @@ public class TemplateServiceTest {
         query.setPageSize(10);
         query.setCurrentPageIndex(1);
 
-        List<SmsTemplateDO> dos = templateService.queryListPage(query);
+        List<SmsTemplateDO> dos = templateService.queryList(query);
         Long count = templateService.queryCount(query);
         logger.info("page:{}", dos.size());
 
@@ -123,7 +123,7 @@ public class TemplateServiceTest {
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
     public void queryListByParam() {
-        List<SmsTemplateDO> dos = templateService.queryListByParam(null, null, null, null);
+        List<SmsTemplateDO> dos = templateService.queryList(null);
         logger.info("size:{}", dos.size());
     }
 

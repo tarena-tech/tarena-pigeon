@@ -69,7 +69,7 @@ public class TemplateController implements TemplateApi {
 
     @Override
     public PagerResult<TemplateView> queryListByPage(TemplateQuery templateQuery) {
-        List<SmsTemplateDO> dos = templateService.queryListPage(templateQuery);
+        List<SmsTemplateDO> dos = templateService.queryList(templateQuery);
         PagerResult<TemplateView> page = new PagerResult<>(templateQuery.getPageSize(), templateQuery.getCurrentPageIndex());
 
         List<TemplateView> list = new ArrayList<>();
@@ -84,9 +84,8 @@ public class TemplateController implements TemplateApi {
         return page;
     }
 
-    @Override public List<TemplateView> queryListByParam(String keyword, String appCode, Integer noticeType,
-        Integer templateType) {
-        List<SmsTemplateDO> dos = templateService.queryListByParam(keyword, appCode, noticeType, templateType);
+    @Override public List<TemplateView> queryListByParam(TemplateQuery templateQuery) {
+        List<SmsTemplateDO> dos = templateService.queryList(templateQuery);
         List<TemplateView> list = new ArrayList<>();
         dos.forEach(l -> {
             TemplateView view = new TemplateView();

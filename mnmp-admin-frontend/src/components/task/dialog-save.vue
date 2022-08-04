@@ -47,9 +47,9 @@
               <el-select v-model="ruleForm.appId" filterable placeholder="请选择" :filter-method="queryApps">
                 <el-option
                   v-for="item in apps"
-                  :key="item.value"
+                  :key="item.id"
                   :label="item.name"
-                  :value="item.appId">
+                  :value="item.name">
                 </el-option>
               </el-select>
             </template>
@@ -60,9 +60,9 @@
               <el-select v-model="sign" filterable placeholder="请选择" :filter-method="querySigns">
                 <el-option
                   v-for="item in signs"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.name">
                 </el-option>
               </el-select>
             </template>
@@ -100,7 +100,10 @@
 
 <script>
 import { save } from '@/api/task'
-import { queryList } from '@/api/app'
+import { queryAppList } from '@/api/app'
+import { querySignList } from '@/api/sign'
+import { querySmsTemplateList } from '@/api/sms'
+
 
 export default {
   name: 'DialogTaskSave',
@@ -163,18 +166,35 @@ export default {
       this.$emit('refresh')
     },
     queryApps(param) {
-      queryList({name: param})
+      queryAppList({name: param})
         .then(res => {
-        this.apps = res
-      }).then(err => {
-
+          this.apps = res
+          console.dir(res)
+      }).catch(err => {
+        console.log(err);
       })
     },
     querySigns(param) {
       console.log("333333", param)
+      querySignList({name: param})
+        .then(res => {
+          this.signs = res
+          console.dir(res)
+        })
+        .catch(err => {
+          console.log(err);
+        })
     },
     queryTemplates(param) {
       console.log("333333", param)
+      querySmsTemplateList({templateName: param})
+        .then(res => {
+          console.dir(res)
+          this.template = res
+        })
+        .catch(err => {
+          console.log(err);
+        })
     },
 
 

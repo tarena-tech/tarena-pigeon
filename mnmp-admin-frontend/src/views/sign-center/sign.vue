@@ -106,7 +106,7 @@
 </template>
 
 <script>
-import { queryList, changeEnable } from '@/api/sign.js'
+import { queryPage, changeEnable } from '@/api/sign.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogSignSave from "@/components/sign/dialog-save";
 import DialogSignAudit from "@/components/sign/dialog-audit";
@@ -153,7 +153,7 @@ export default {
         ...this.claForm,
         ...this.pagination
       }
-      queryList(_data)
+      queryPage(_data)
         .then(res => {
           console.log('list-res:', res)
           this.$refs.tmp_table.loadingState(false)

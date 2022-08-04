@@ -6,3 +6,4 @@ export const queryListByPage = (data) => get('/template/sms/queryListByPage', da
 export const changeEnableStatus = (data) => post('/template/changeEnableStatus?id='+ data, null, null)
 export const audit = (data) => post('/template/sms/doAudit', data, null)
 export const save = (data) => post('/template/sms/save', data, null)
+export const querySmsTemplateList = (params) => get('/template/sms/queryListByParam', params, null)
