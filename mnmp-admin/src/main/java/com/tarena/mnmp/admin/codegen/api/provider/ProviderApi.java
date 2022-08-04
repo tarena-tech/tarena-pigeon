@@ -102,22 +102,19 @@ public interface ProviderApi {
 
     @ApiOperationSupport(order = 2004)
     @ApiOperation(value = "切换服务商可用状态")
-    @PostMapping({"/changeEnableStatus"})
+    @PostMapping({"/change/enable/status"})
     void changeEnableStatus(@NotNull @ApiParam(value = "服务商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id) throws BusinessException;
 
 
 
     @ApiOperationSupport(order = 2005)
     @ApiOperation(
-        value = "查询服务商列表",
-        nickname = "queryList",
+        value = "查询服务分页商列表",
+        nickname = "queryPage",
         notes = ""
     )
-    @GetMapping(
-        value = {"/queryList"},
-        produces = {"application/json"}
-    )
-    PagerResult<ProviderView>  queryList(ProviderQueryParam param);
+    @GetMapping(value = {"/queryPage"})
+    PagerResult<ProviderView> queryPage(ProviderQueryParam param);
 
     @ApiOperationSupport(order = 2006)
     @ApiOperation(

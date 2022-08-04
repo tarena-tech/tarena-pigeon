@@ -26,7 +26,6 @@ import com.tarena.mnmp.domain.app.AppQueryParam;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.protocol.BusinessException;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,27 +74,18 @@ public class AppController implements AppApi {
     @Override public PagerResult<AppView> queryPage(AppQueryParam param) {
         List<AppDO> appDTOs = appService.queryList(param);
         Long count = appService.queryCount(param);
-        List<AppView> appVOs = new ArrayList<>();
-        for (AppDO appDO : appDTOs) {
-            AppView appVO = new AppView();
-            BeanUtils.copyProperties(appDO, appVO);
-            appVOs.add(appVO);
-        }
         PagerResult<AppView> pagerResult = new PagerResult<>(param.getPageSize(), param.getCurrentPageIndex());
-        pagerResult.setList(appVOs);
+        pagerResult.setList(AppView.convert(appDTOs));
         pagerResult.setRecordCount(count);
         return pagerResult;
     }
 
     @Override public List<AppView> queryList(AppQueryParam param) {
+        param.setOrder(false);
+        param.setCurrentPageIndex(1);
+        param.setPageSize(100);
         List<AppDO> dos = appService.queryList(param);
-        List<AppView> appVOs = new ArrayList<>();
-        for (AppDO appDO : dos) {
-            AppView appVO = new AppView();
-            BeanUtils.copyProperties(appDO, appVO);
-            appVOs.add(appVO);
-        }
-        return appVOs;
+        return AppView.convert(dos);
     }
 
     @Override public void auditApp(AuditParam param) {

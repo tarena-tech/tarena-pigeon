@@ -71,7 +71,7 @@ public class ProviderController implements ProviderApi {
         providerService.update(up);
     }
 
-    @Override public PagerResult<ProviderView> queryList(ProviderQueryParam param) {
+    @Override public PagerResult<ProviderView> queryPage(ProviderQueryParam param) {
         List<ProviderDO> providerDOs = providerService.queryList(param);
         Long count = providerService.queryCount(param);
         List<ProviderView> providerViews = new ArrayList<>(providerDOs.size());

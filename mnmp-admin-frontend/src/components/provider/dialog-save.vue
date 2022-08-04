@@ -55,6 +55,7 @@ export default {
     return {
       dialogVisible: false,
       loading: false,
+      windowName: '创建',
       ruleForm: {
         name: null,
         code: null,

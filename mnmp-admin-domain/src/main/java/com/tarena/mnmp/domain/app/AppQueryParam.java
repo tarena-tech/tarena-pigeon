@@ -23,11 +23,19 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("app查询模型")
 public class AppQueryParam extends PagerResult {
 
+    public AppQueryParam() {
+        super();
+        this.order = true;
+    }
+
     @ApiModelProperty("app名字")
     private String name;
 
     @ApiModelProperty("app code")
     private String code;
+
+    @ApiModelProperty("是否需要排序")
+    private Boolean order;
 
     public String getName() {
         return name;
@@ -43,5 +51,13 @@ public class AppQueryParam extends PagerResult {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Boolean getOrder() {
+        return order;
+    }
+
+    public void setOrder(Boolean order) {
+        this.order = order;
     }
 }
