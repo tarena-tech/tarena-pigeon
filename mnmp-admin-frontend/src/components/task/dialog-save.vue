@@ -14,6 +14,21 @@
     <div class="cus-drawer__content">
       <el-scrollbar class="cus-scrollbar">
         <el-form ref="ruleForm" class="cus-form" :model="ruleForm" :rules="rules" label-width="100px">
+          <el-upload
+            class="upload-demo"
+            ref="upload"
+            action=""
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :file-list="fileList"
+            :multiple="false"
+            :on-change="fileCallback"
+            :limit="1"
+            :auto-upload="false">
+            <el-button slot="trigger" size="small" type="primary">选取Excel文件</el-button>
+            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+          </el-upload>
+
 
           <el-form-item label="模板名称" prop="name">
             <el-input v-model="ruleForm.name" />
@@ -28,8 +43,44 @@
             <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false" />
           </el-form-item>
           <el-form-item label="应用" prop="appId">
-            <el-input v-model="ruleForm.appId" />
+            <template>
+              <el-select v-model="ruleForm.appId" filterable placeholder="请选择" :filter-method="queryApps">
+                <el-option
+                  v-for="item in apps"
+                  :key="item.value"
+                  :label="item.name"
+                  :value="item.appId">
+                </el-option>
+              </el-select>
+            </template>
           </el-form-item>
+
+          <el-form-item label="签名" prop="sign">
+            <template>
+              <el-select v-model="sign" filterable placeholder="请选择" :filter-method="querySigns">
+                <el-option
+                  v-for="item in signs"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </template>
+          </el-form-item>
+
+          <el-form-item label="模板" prop="template">
+            <template>
+              <el-select v-model="template" filterable placeholder="请选择" :filter-method="queryTemplates">
+                <el-option
+                  v-for="item in templates"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </template>
+          </el-form-item>
+
           <el-form-item label="模板内容" prop="content">
             <el-input v-model="ruleForm.content" type="textarea" />
           </el-form-item>
@@ -49,6 +100,7 @@
 
 <script>
 import { save } from '@/api/task'
+import { queryList } from '@/api/app'
 
 export default {
   name: 'DialogTaskSave',
@@ -66,6 +118,18 @@ export default {
         templateType: null,
         remark: null
       },
+      apps: {
+
+      },
+      signs: {
+
+      },
+      templates: {
+
+      },
+      sign: null,
+      app: null,
+      template: null,
       rules: {
         name: [
           { required: true, message: '请输入模板名称', trigger: 'blur' }
@@ -98,6 +162,37 @@ export default {
       this.$refs.drawer.closeDrawer()
       this.$emit('refresh')
     },
+    queryApps(param) {
+      queryList({name: param})
+        .then(res => {
+        this.apps = res
+      }).then(err => {
+
+      })
+    },
+    querySigns(param) {
+      console.log("333333", param)
+    },
+    queryTemplates(param) {
+      console.log("333333", param)
+    },
+
+
+    submitUpload() {
+      this.$refs.upload.submit();
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+
+    fileCallback(file, list) {
+      console.dir(file)
+      console.dir(list)
+    },
+
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {

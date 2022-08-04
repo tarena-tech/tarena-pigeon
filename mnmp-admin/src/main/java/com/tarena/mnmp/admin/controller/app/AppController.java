@@ -72,7 +72,7 @@ public class AppController implements AppApi {
         return appVO;
     }
 
-    @Override public PagerResult<AppView> queryList(AppQueryParam param) {
+    @Override public PagerResult<AppView> queryPage(AppQueryParam param) {
         List<AppDO> appDTOs = appService.queryList(param);
         Long count = appService.queryCount(param);
         List<AppView> appVOs = new ArrayList<>();
@@ -85,6 +85,17 @@ public class AppController implements AppApi {
         pagerResult.setList(appVOs);
         pagerResult.setRecordCount(count);
         return pagerResult;
+    }
+
+    @Override public List<AppView> queryList(AppQueryParam param) {
+        List<AppDO> dos = appService.queryList(param);
+        List<AppView> appVOs = new ArrayList<>();
+        for (AppDO appDO : dos) {
+            AppView appVO = new AppView();
+            BeanUtils.copyProperties(appDO, appVO);
+            appVOs.add(appVO);
+        }
+        return appVOs;
     }
 
     @Override public void auditApp(AuditParam param) {

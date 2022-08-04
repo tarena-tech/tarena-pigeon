@@ -26,6 +26,7 @@ import com.tarena.mnmp.protocol.BusinessException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -160,9 +161,21 @@ public interface AppApi {
     )
     @GetMapping(
         produces = {"application/json"},
+        value = {"/queryPage"}
+    )
+    PagerResult<AppView> queryPage(AppQueryParam param);
+
+    @ApiOperationSupport(order = 1006)
+    @ApiOperation(
+        value = "查询应用管理列表",
+        nickname = "queryList",
+        notes = ""
+    )
+    @GetMapping(
+        produces = {"application/json"},
         value = {"/queryList"}
     )
-    PagerResult<AppView> queryList(AppQueryParam param);
+    List<AppView> queryList(AppQueryParam param);
 
     /**
      * 审核应用
