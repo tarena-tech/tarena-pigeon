@@ -111,7 +111,7 @@ public interface TaskApi {
         value = {"detail"},
         produces = {"application/json"}
     )
-    TaskView queryTaskDetail(@ApiParam(value = "任务id", required = true)Long id);
+    TaskView queryTaskDetail(@ApiParam(value = "任务id", required = true)Long id) throws BusinessException;
 
     @ApiOperationSupport(order = 5006)
     @ApiOperation(

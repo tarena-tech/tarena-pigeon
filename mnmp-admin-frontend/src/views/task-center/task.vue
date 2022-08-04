@@ -79,7 +79,7 @@
         <el-table-column prop="cycleNum" label="周期数"/>
         <el-table-column prop="targetFileUrl" label="文件地址">
           <template slot-scope="scope" v-if="scope.row.targetFileUrl">
-            <i class="el-icon-download" @click="downExcel(scope.row.targetFileUrl)"></i>
+            <i class="el-icon-download"  @click="downExcel(scope.row.targetFileUrl)"></i>
           </template>
         </el-table-column>
 
@@ -137,6 +137,7 @@
             <el-button  type="text" size="small" @click="save(scope.row)" >
               修改
             </el-button>
+            <router-link :to="{name: 'detail', params: {id : scope.row.id}}">详情</router-link>
           </template>
         </el-table-column>
       </tmp-table-pagination>
@@ -147,7 +148,7 @@
 </template>
 
 <script>
-import {queryList, changeStatus , downExcel} from '@/api/task.js'
+import {queryList, changeStatus} from '@/api/task.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogTaskAudit from '@/components/task/dialog-audit'
 import DialogTaskSave from '@/components/task/dialog-save'
@@ -230,6 +231,9 @@ export default {
         url += '?path=' + path;
       }
       window.open(url)
+    },
+    details(id) {
+
     },
 
     // 重置页码并搜索

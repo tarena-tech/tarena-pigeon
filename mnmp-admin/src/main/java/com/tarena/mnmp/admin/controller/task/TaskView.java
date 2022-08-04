@@ -59,17 +59,25 @@ public class TaskView {
     @ApiModelProperty(value = "消息模板主表ID 根据id可查看模板详情", required = true)
     private Long templateId;
 
+    @ApiModelProperty(value = "模板名称", required = true)
+    private String templateName;
     /**
      * 签名ID
      */
     @ApiModelProperty(value = "签名ID 根据签名id可查看签名详情", required = true)
     private Long signId;
 
+    @ApiModelProperty(value = "签名名称", required = true)
+    private String signName;
+
     /**
      * 所属应用
      */
     @ApiModelProperty(value = "所属应用 根据id可查看应用详情", required = true)
     private Long appId;
+
+    @ApiModelProperty(value = "签名名称", required = true)
+    private String appName;
 
     /**
      * 周期类型 1:小时 2:日 3:周 4:月 5:年

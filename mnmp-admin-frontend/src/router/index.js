@@ -136,7 +136,15 @@ export const constantRoutes = [
         name: 'task',
         component: () => import('@/views/task-center/task'),
         meta: { title: '任务', icon: 'table' }
-      }
+      },
+      {
+        path: 'detail',
+        name: 'detail',
+        component: () => import('@/views/task-center/detail'),
+        meta: { title: '详情', icon: 'table' },
+        hidden: true
+      },
+
     ]
   },
 

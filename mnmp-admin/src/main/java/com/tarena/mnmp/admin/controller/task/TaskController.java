@@ -24,11 +24,17 @@ import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.commons.utils.DateUtils;
 import com.tarena.mnmp.commons.utils.ExcelUtils;
+import com.tarena.mnmp.domain.AppDO;
+import com.tarena.mnmp.domain.SignDO;
+import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.TaskDO;
+import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.domain.sign.SignService;
 import com.tarena.mnmp.domain.task.TargetExcelData;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.domain.task.TaskStatistics;
+import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
 import java.io.BufferedInputStream;
@@ -43,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.util.Streams;
 import org.slf4j.Logger;
@@ -64,6 +71,15 @@ public class TaskController implements TaskApi {
 
     @Autowired
     private TaskService taskService;
+
+    @Resource
+    private AppService appService;
+
+    @Resource
+    private SignService signService;
+
+    @Resource
+    private TemplateService templateService;
 
     @Value("${excel.path}")
     private String excelPath;
@@ -164,9 +180,29 @@ public class TaskController implements TaskApi {
         return result;
     }
 
-    @Override public TaskView queryTaskDetail(Long id) {
+    @Override public TaskView queryTaskDetail(Long id) throws BusinessException {
         TaskDO task = taskService.detailById(id);
+        if (null == task) {
+            throw new BusinessException("100", "任务不存在");
+        }
+
         TaskView tv = new TaskView();
+
+        AppDO aDo = appService.queryAppDetail(task.getAppId());
+        if (null != aDo) {
+            tv.setAppName(aDo.getName());
+        }
+
+        SignDO sign = signService.querySignDetail(task.getSignId());
+        if (null != sign) {
+            tv.setSignName(sign.getName());
+        }
+
+        SmsTemplateDO smsTemplateDO = templateService.querySmsTemplateDetail(task.getTemplateId());
+        if (null != smsTemplateDO) {
+            tv.setTemplateName(smsTemplateDO.getName());
+        }
+
         BeanUtils.copyProperties(task, tv);
         return tv;
     }
