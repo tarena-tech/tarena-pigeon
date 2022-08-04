@@ -58,7 +58,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -148,7 +147,6 @@ public class TaskController implements TaskApi {
         return new Result<>(dir + name);
     }
 
-    @Transactional
     @Override public void addTask(TaskParam taskParam, HttpServletResponse response) throws IOException {
         TaskDO bo = new TaskDO();
         BeanUtils.copyProperties(taskParam, bo);

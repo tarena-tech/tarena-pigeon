@@ -39,6 +39,28 @@ module.exports = {
         label: '审核通过'
       }
     ],
+    cycleLevel: [
+      {
+        value: '1',
+        label: '小时'
+      },
+      {
+        value: '2',
+        label: '日'
+      },
+      {
+        value: '3',
+        label: '周'
+      },
+      {
+        value: '4',
+        label: '月'
+      },
+      {
+        value: '5',
+        label: '年'
+      },
+    ],
     taskStatusOpts: [
       {
         value: '0',

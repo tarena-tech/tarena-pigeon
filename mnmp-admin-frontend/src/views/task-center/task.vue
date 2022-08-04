@@ -11,8 +11,17 @@
           <el-form-item prop="name" label="任务名">
             <el-input v-model.trim="claForm.name" placeholder="" style="width: 120px"></el-input>
           </el-form-item>
-          <el-form-item prop="appId" label="应用" >
-            <el-input v-model.trim="claForm.appId" placeholder="" style="width: 120px"></el-input>
+          <el-form-item label="应用" prop="appId">
+            <template>
+              <el-select v-model="claForm.appId" filterable placeholder="请选择" :filter-method="queryApps">
+                <el-option
+                  v-for="item in apps"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </template>
           </el-form-item>
           <el-form-item prop="taskStatus" label="任务状态">
             <com-dict :val.sync="claForm.taskStatus" dict-name="taskStatusOpts" :is-all="true" />
@@ -149,6 +158,7 @@
 
 <script>
 import {queryList, changeStatus} from '@/api/task.js'
+import {queryAppList} from "@/api/app";
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogTaskAudit from '@/components/task/dialog-audit'
 import DialogTaskSave from '@/components/task/dialog-save'
@@ -167,7 +177,9 @@ export default {
         taskStatus: null, // 任务状态 0:未开启 1:推送中 2:终止 3:已结束 4.失败
         taskAudit: null // 审核状态 -1：拒绝， 0：待审核， 1：审核通过
       },
+      apps: {
 
+      },
       tableData: { recordCount: 0, list: [] },
       pagination: {
         // 数据表格配置项
@@ -234,6 +246,15 @@ export default {
     },
     details(id) {
 
+    },
+    queryApps(param) {
+      queryAppList({name: param})
+        .then(res => {
+          this.apps = res
+          console.dir(res)
+        }).catch(err => {
+        console.log(err);
+      })
     },
 
     // 重置页码并搜索

@@ -26,20 +26,17 @@
             :limit="1"
             :auto-upload="false">
             <el-button slot="trigger" size="small" type="primary">选取Excel文件</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+            <el-button prop="filePath" v-model="ruleForm.filePath" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
           </el-upload>
 
 
-          <el-form-item label="模板名称" prop="name">
+          <el-form-item label="任务名称" prop="name">
             <el-input v-model="ruleForm.name" />
-          </el-form-item>
-          <el-form-item label="模板编码" prop="code">
-            <el-input v-model="ruleForm.code" />
           </el-form-item>
           <el-form-item label="模板类型" prop="templateType">
             <com-dict :val.sync="ruleForm.templateType" dict-name="templateType" :is-all="false" />
           </el-form-item>
-          <el-form-item label="通知类型" prop="noticeType">
+          <el-form-item label="消息类型" prop="noticeType">
             <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false" />
           </el-form-item>
           <el-form-item label="应用" prop="appId">
@@ -49,42 +46,60 @@
                   v-for="item in apps"
                   :key="item.id"
                   :label="item.name"
-                  :value="item.name">
+                  :value="item.id">
                 </el-option>
               </el-select>
             </template>
           </el-form-item>
 
-          <el-form-item label="签名" prop="sign">
+          <el-form-item label="签名" prop="signId">
             <template>
-              <el-select v-model="sign" filterable placeholder="请选择" :filter-method="querySigns">
+              <el-select v-model="ruleForm.signId" filterable placeholder="请选择" :filter-method="querySigns">
                 <el-option
                   v-for="item in signs"
                   :key="item.id"
                   :label="item.name"
-                  :value="item.name">
+                  :value="item.id">
                 </el-option>
               </el-select>
             </template>
           </el-form-item>
 
-          <el-form-item label="模板" prop="template">
+          <el-form-item label="模板" prop="templateId">
             <template>
-              <el-select v-model="template" filterable placeholder="请选择" :filter-method="queryTemplates">
+              <el-select v-model="ruleForm.templateId" filterable placeholder="请选择" :filter-method="queryTemplates">
                 <el-option
                   v-for="item in templates"
                   :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                  :label="item.name"
+                  :value="item.id">
                 </el-option>
               </el-select>
             </template>
           </el-form-item>
 
-          <el-form-item label="模板内容" prop="content">
-            <el-input v-model="ruleForm.content" type="textarea" />
+          <el-form-item label="周期类型" prop="cycleLevel">
+            <com-dict :val.sync="ruleForm.cycleLevel" dict-name="cycleLevel" :is-all="false" />
           </el-form-item>
-          <el-form-item label="备注" prop="remark">
+          <el-form-item label="周期数" prop="cycleNum">
+            <el-input v-model="ruleForm.cycleNum" />
+          </el-form-item>
+
+          <el-form-item label="结束时间" prop="triggerEndTime">
+            <template>
+              <div class="block">
+                <el-date-picker
+                  v-model="ruleForm.triggerEndTime"
+                  type="datetime"
+                  format="yyyy-MM-dd HH:mm:ss"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  placeholder="选择日期时间">
+                </el-date-picker>
+              </div>
+            </template>
+          </el-form-item>
+
+          <el-form-item label="描述" prop="remark">
             <el-input v-model="ruleForm.remark" type="textarea" />
           </el-form-item>
 
@@ -99,7 +114,7 @@
 </template>
 
 <script>
-import { save } from '@/api/task'
+import { addTask } from '@/api/task'
 import { queryAppList } from '@/api/app'
 import { querySignList } from '@/api/sign'
 import { querySmsTemplateList } from '@/api/sms'
@@ -114,11 +129,13 @@ export default {
       loading: false,
       ruleForm: {
         name: null,
-        code: null,
-        appId: null,
-        noticeType: null,
-        content: null,
         templateType: null,
+        noticeType: null,
+        appId: null,
+        signId: null,
+        templateId: null,
+        cycleLevel: null,
+        cycleNum: null,
         remark: null
       },
       apps: {
@@ -137,7 +154,7 @@ export default {
         name: [
           { required: true, message: '请输入模板名称', trigger: 'blur' }
         ],
-        code: [
+        templateType: [
           { required: true, message: '请输入code码', trigger: 'blur' }
         ],
         appId: [
@@ -149,11 +166,32 @@ export default {
         content: [
           { required: true, message: '请填写模板内容', trigger: 'blur' }
         ],
-        templateType: [
-          { required: true, message: '请选择模板类型', trigger: 'blur' }
-        ]
+        signId: [
+          { required: true, message: '请选择签名模板', trigger: 'blur' }
+        ],
+        templateId: [
+          { required: true, message: '请选择短信模板', trigger: 'blur' }
+        ],
+        cycleLevel: [
+          { required: true, message: '请选择周期类型', trigger: 'blur' }
+        ],
+        cycleNum: [
+          { required: true, message: '请选择周期数', trigger: 'blur' }
+        ],
+        filePath: [
+          { required: true, message: '请选择上传文件', trigger: 'blur' }
+        ],
+        triggerEndTime: [
+          { required: true, message: '请选择结束时间', trigger: 'blur' }
+        ],
+
       }
     }
+  },
+  mounted() {
+    this.queryApps();
+    this.queryTemplates();
+    this.querySigns();
   },
   methods: {
     handleClose(done) {
@@ -190,7 +228,7 @@ export default {
       querySmsTemplateList({templateName: param})
         .then(res => {
           console.dir(res)
-          this.template = res
+          this.templates = res
         })
         .catch(err => {
           console.log(err);
@@ -216,10 +254,7 @@ export default {
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          // TODO 假数据
-          this.ruleForm.appCode = 333
-          this.ruleForm.appId = 333
-          save(this.ruleForm)
+          addTask(this.ruleForm)
             .then(res => {
               console.dir(res)
               this.cancelForm()
