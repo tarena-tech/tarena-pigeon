@@ -40,11 +40,13 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import javax.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class TaskService {
 
     @Autowired
@@ -77,65 +79,70 @@ public class TaskService {
         taskDao.update(taskDO);
     }
 
-    public List<TargetExcelData> addTask(TaskDO bo, String filePath) {
-        bo.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
-        bo.setAuditStatus(AuditStatus.WAITING.getStatus());
-        bo.setTargetFileUrl(filePath);
-        bo.setTargetFileName(filePath.substring(filePath.lastIndexOf("/") + 1));
-        bo.setCreateTime(new Date());
-        bo.setUpdateTime(new Date());
-        taskDao.save(bo);
+    public List<TargetExcelData> addTask(TaskDO taskDO, String filePath) {
+        taskDO.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
+        taskDO.setAuditStatus(AuditStatus.WAITING.getStatus());
+        taskDO.setTargetFileUrl(filePath);
+        taskDO.setTargetFileName(filePath.substring(filePath.lastIndexOf("/") + 1));
+        taskDO.setCreateTime(new Date());
+        taskDO.setUpdateTime(new Date());
+        taskDao.save(taskDO);
         List<TargetExcelData> fails = new ArrayList<>();
-        String fullPath = excelPath + filePath;
+        String readExcelPath = excelPath + filePath;
+        log.info("addTask taskDO:{}, readExcelPath:{}", taskDO, readExcelPath);
+        try {
+            Set<String> set = new HashSet<>();
+            EasyExcel.read(readExcelPath, TargetExcelData.class, new ReadListener<TargetExcelData>() {
 
-        Set<String> set = new HashSet<>();
-        EasyExcel.read(fullPath, TargetExcelData.class, new ReadListener<TargetExcelData>() {
+                public static final int BATCH_COUNT = 100;
 
-            public static final int BATCH_COUNT = 100;
+                private List<TargetExcelData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+                @Override public void invoke(TargetExcelData data, AnalysisContext context) {
+                    cachedDataList.add(data);
+                    if (cachedDataList.size() >= BATCH_COUNT) {
+                        save();
+                    }
+                }
 
-            private List<TargetExcelData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-            @Override public void invoke(TargetExcelData data, AnalysisContext context) {
-                cachedDataList.add(data);
-                if (cachedDataList.size() >= BATCH_COUNT) {
+                @Override public void doAfterAllAnalysed(AnalysisContext context) {
                     save();
                 }
-            }
 
-            @Override public void doAfterAllAnalysed(AnalysisContext context) {
-                save();
-            }
+                private void save() {
+                    List<TaskTargetDO> list = new ArrayList<>();
+                    for (TargetExcelData old : cachedDataList) {
+                        if (!RegexUtils.checkPhone(old.getPhone())) {
+                            fails.add(old);
+                            continue;
+                        }
+                        try {
+                            json.parse(old.getParams());
+                        } catch (Exception e) {
+                            fails.add(old);
+                            continue;
+                        }
 
-            private void save() {
-                List<TaskTargetDO> list = new ArrayList<>();
-                for (TargetExcelData old : cachedDataList) {
-                    if (!RegexUtils.checkPhone(old.getPhone())) {
-                        fails.add(old);
-                        continue;
+                        if (set.contains(old.getPhone())) {
+                            continue;
+                        }
+
+                        TaskTargetDO task = new TaskTargetDO();
+                        task.setTaskId(taskDO.getId());
+                        task.setDeleted(Deleted.NO.getVal());
+                        task.setParams(old.getParams());
+                        task.setTarget(old.getPhone());
+                        list.add(task);
+                        set.add(old.getPhone());
                     }
-                    try {
-                        json.parse(old.getParams());
-                    } catch (Exception e) {
-                        fails.add(old);
-                        continue;
-                    }
-
-                    if (set.contains(old.getPhone())) {
-                        continue;
-                    }
-
-                    TaskTargetDO task = new TaskTargetDO();
-                    task.setTaskId(bo.getId());
-                    task.setDeleted(Deleted.NO.getVal());
-                    task.setParams(old.getParams());
-                    task.setTarget(old.getPhone());
-                    list.add(task);
-                    set.add(old.getPhone());
+                    taskTargetService.saveBatch(list);
+                    // 存储完成清理 list
+                    cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
                 }
-                taskTargetService.saveBatch(list);
-                // 存储完成清理 list
-                cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-            }
-        }).sheet().doRead();
+            }).sheet().doRead();
+        } catch (Exception e) {
+            taskDao.deleteById(taskDO.getId());
+        }
+
         return fails;
     }
 

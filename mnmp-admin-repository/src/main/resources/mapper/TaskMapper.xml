@@ -327,5 +327,11 @@
             </if>
         </where>
     </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete from notice_task
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
 </mapper>
 
