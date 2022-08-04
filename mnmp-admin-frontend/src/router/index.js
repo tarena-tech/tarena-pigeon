@@ -79,7 +79,7 @@ export const constantRoutes = [
         path: 'app',
         name: 'App',
         component: () => import('@/views/app-center/app'),
-        meta: { title: '应用', icon: 'table' }
+        meta: { title: '应用管理', icon: 'table' }
       }
     ]
   },

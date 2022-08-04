@@ -17,9 +17,13 @@
 
 package com.tarena.mnmp.admin.codegen.api.provider;
 
+import com.tarena.mnmp.domain.ProviderDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import org.springframework.beans.BeanUtils;
 
 @ApiModel(value = "供应商控制层出参")
 public class ProviderView {
@@ -90,6 +94,19 @@ public class ProviderView {
         name = "updateTime"
     )
     private Date updateTime;
+
+    public static List<ProviderView> convert(List<ProviderDO> source) {
+        if (null == source) {
+            return new ArrayList<>();
+        }
+        List<ProviderView> list = new ArrayList<>(source.size());
+        for (ProviderDO providerDO : source) {
+            ProviderView providerView = new ProviderView();
+            BeanUtils.copyProperties(providerDO, providerView);
+            list.add(providerView);
+        }
+        return list;
+    }
 
     public Long getId() {
         return id;

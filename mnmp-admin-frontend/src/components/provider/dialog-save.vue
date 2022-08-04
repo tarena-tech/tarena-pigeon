@@ -12,11 +12,12 @@
     size="500px"
   >
     <div class="cus-drawer__content">
-      <el-form ref="ruleForm" class="cus-form" :model="ruleForm" :rules="rules" label-width="100px">
+      <el-scrollbar class="cus-scrollbar">
+        <el-form ref="ruleForm" class="cus-form" :model="ruleForm" :rules="rules" label-width="100px">
         <el-form-item label="服务商名称" prop="name">
           <el-input v-model="ruleForm.name" />
         </el-form-item>
-        <el-form-item label="服务商code" prop="code">
+        <el-form-item label="服务商编码" prop="code">
           <el-input v-model="ruleForm.code" />
         </el-form-item>
         <el-form-item label="消息类型" prop="noticeType">
@@ -34,10 +35,11 @@
         <el-form-item label="JSON配置" prop="clientConfig">
           <el-input v-model="ruleForm.clientConfig" type="textarea" />
         </el-form-item>
-        <el-form-item label="备注" prop="remarks">
+        <el-form-item label="简介" prop="remarks">
           <el-input v-model="ruleForm.remarks" type="textarea" />
         </el-form-item>
       </el-form>
+      </el-scrollbar>
       <div class="cus-drawer__footer">
         <el-button @click="cancelForm()">取 消</el-button>
         <el-button type="primary" :loading="loading" @click="submitForm()">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
@@ -125,13 +127,12 @@ export default {
     },
     show(data) {
       this.dialogVisible = true
+      this.ruleForm = {};
       if (null != data) {
         this.windowName = "修改"
         this.ruleForm = data;
       }
-      this.$nextTick(() => {
-        // TODO init
-      })
+
     }
   }
 }
@@ -144,7 +145,13 @@ export default {
   padding: 0 15px 15px 15px;
   height: 100%;
   .cus-form{
-    flex: 1;
+    padding-right: 15px;
+  }
+  .cus-scrollbar{
+    flex: 1 1 0;
+  }
+  ::v-deep .el-scrollbar__wrap{
+    overflow-x: hidden;
   }
 }
 .cus-drawer__footer{

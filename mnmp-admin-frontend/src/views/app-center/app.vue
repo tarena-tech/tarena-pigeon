@@ -11,7 +11,7 @@
           <el-form-item prop="name" label="应用名称" >
             <el-input v-model.trim="claForm.name"  placeholder="" style="width: 120px" />
           </el-form-item>
-          <el-form-item prop="code" label="应用Code">
+          <el-form-item prop="code" label="应用编码">
             <el-input v-model.trim="claForm.code" placeholder="" style="width: 120px" />
           </el-form-item>
 
@@ -37,8 +37,8 @@
         @callback="getTabelData"
       >
 
-        <el-table-column prop="name" label="模板名称" />
-        <el-table-column prop="code" label="模板编码" />
+        <el-table-column prop="name" label="应用名称" />
+        <el-table-column prop="code" label="应用编码" />
         <el-table-column prop="remarks" label="描述">
           <template slot-scope="scope">
             <el-popover v-if="scope.row.remarks" trigger="hover" placement="top">

@@ -118,6 +118,7 @@
                 and code = #{code,jdbcType=VARCHAR}
             </if>
         </where>
+        order by id desc
         ${limitClause}
     </select>
 
