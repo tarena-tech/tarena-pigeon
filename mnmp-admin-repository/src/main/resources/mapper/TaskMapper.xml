@@ -123,7 +123,7 @@
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="auditStatus != null">
-                audit_status = #{auditStatus,jdbcType=TINYINT},
+                audit_status = #{auditStatus,jdbcType=BOOLEAN},
             </if>
             <if test="auditResult != null">
                 audit_result = #{auditResult,jdbcType=VARCHAR},
@@ -203,11 +203,11 @@
             <if test="updateTime != null">
                 update_time,
             </if>
-            <if test="taskAudit != null">
-                task_audit,
+            <if test="auditStatus != null">
+                audit_status,
             </if>
-            <if test="taskAuditResult != null">
-                task_audit_result,
+            <if test="auditResult != null">
+                audit_result,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -280,11 +280,11 @@
             <if test="updateTime != null">
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="taskAudit != null">
-                #{taskAudit,jdbcType=BOOLEAN},
+            <if test="auditStatus != null">
+                #{auditStatus,jdbcType=BOOLEAN},
             </if>
-            <if test="taskAuditResult != null">
-                #{taskAuditResult,jdbcType=VARCHAR},
+            <if test="auditResult != null">
+                #{auditResult,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -302,8 +302,8 @@
             <if test="taskStatus != null">
                 and task_status = #{taskStatus,jdbcType=INTEGER}
             </if>
-            <if  test="taskAudit != null">
-                and task_audit = #{taskStatus,jdbcType=INTEGER}
+            <if  test="auditStatus != null != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
             </if>
         </where>
         ${limitClause}
@@ -322,8 +322,8 @@
             <if test="taskStatus != null">
                 and task_status = #{taskStatus,jdbcType=INTEGER}
             </if>
-            <if  test="taskAudit != null">
-                and task_audit = #{taskStatus,jdbcType=INTEGER}
+            <if  test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
             </if>
         </where>
     </select>

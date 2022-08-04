@@ -68,4 +68,6 @@ public class TaskQuery extends PagerResult {
     public void setAuditStatus(Integer auditStatus) {
         this.auditStatus = auditStatus;
     }
+
+
 }
