@@ -138,9 +138,9 @@ export const constantRoutes = [
         meta: { title: '任务', icon: 'table' }
       },
       {
-        path: 'detail',
+        path: 'task/detail',
         name: 'detail',
-        component: () => import('@/views/task-center/detail'),
+        component: () => import('@/components/task/dialog-detail'),
         meta: { title: '详情', icon: 'table' },
         hidden: true
       },

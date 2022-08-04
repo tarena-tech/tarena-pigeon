@@ -31,11 +31,11 @@
       </el-form-item>
 
       <el-form-item label="周期类型">
-        <el-input v-if="form.cycleLvel === 1" value="小时" :disabled="true"></el-input>
-        <el-input v-if="form.cycleLvel === 2" value="日" :disabled="true"></el-input>
-        <el-input v-if="form.cycleLvel === 3" value="周</" :disabled="true"></el-input>
-        <el-input v-if="form.cycleLvel === 4" value="月" :disabled="true"></el-input>
-        <el-input v-if="form.cycleLvel === 5" value="年" :disabled="true"></el-input>
+        <el-input v-if="form.cycleLevel === 1" value="小时" :disabled="true"></el-input>
+        <el-input v-if="form.cycleLevel === 2" value="日" :disabled="true"></el-input>
+        <el-input v-if="form.cycleLevel === 3" value="周</" :disabled="true"></el-input>
+        <el-input v-if="form.cycleLevel === 4" value="月" :disabled="true"></el-input>
+        <el-input v-if="form.cycleLevel === 5" value="年" :disabled="true"></el-input>
       </el-form-item>
 
       <el-form-item label="周期数">

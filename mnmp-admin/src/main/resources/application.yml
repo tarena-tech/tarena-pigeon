@@ -11,6 +11,10 @@ server:
 spring:
   profiles:
     active: test
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+
 knife4j:
   # 开启增强配置
   enable: true
