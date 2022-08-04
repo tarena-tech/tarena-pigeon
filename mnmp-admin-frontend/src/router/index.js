@@ -80,13 +80,6 @@ export const constantRoutes = [
         name: 'App',
         component: () => import('@/views/app-center/app'),
         meta: { title: '应用', icon: 'table' }
-      },
-      {
-        path: 'add',
-        name: 'add',
-        component: () => import('@/views/app-center/add'),
-        meta: {title: '新增', icon: 'table'},
-        hidden: true
       }
     ]
   },
@@ -143,7 +136,15 @@ export const constantRoutes = [
         name: 'task',
         component: () => import('@/views/task-center/task'),
         meta: { title: '任务', icon: 'table' }
-      }
+      },
+      {
+        path: 'task/detail',
+        name: 'detail',
+        component: () => import('@/components/task/dialog-detail'),
+        meta: { title: '详情', icon: 'table' },
+        hidden: true
+      },
+
     ]
   },
 

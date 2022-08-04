@@ -8,42 +8,20 @@
     >
       <div class="form-container">
         <div class="form-left-box">
-          <el-form-item
-            prop="name"
-            label="应用名称"
-          >
-            <el-input
-              v-model.trim="claForm.name"
-              placeholder=""
-              style="width: 120px"
-            />
+          <el-form-item prop="name" label="应用名称" >
+            <el-input v-model.trim="claForm.name"  placeholder="" style="width: 120px" />
           </el-form-item>
-          <el-form-item
-            prop="code"
-            label="应用Code"
-          >
-            <el-input
-              v-model.trim="claForm.code"
-              placeholder=""
-              style="width: 120px"
-            />
+          <el-form-item prop="code" label="应用Code">
+            <el-input v-model.trim="claForm.code" placeholder="" style="width: 120px" />
           </el-form-item>
 
           <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              @click="toResetPageForList"
-            >查询</el-button>
-            <el-button
-              type="default"
-              icon="el-icon-delete"
-              @click="resetForm"
-            >重置</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="toResetPageForList">查询</el-button>
+            <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus" @click="$router.push('add')">新建</el-button>
+          <el-button type="success" icon="el-icon-plus"  @click="save(null)">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -53,22 +31,30 @@
         :table-data="tableData"
         :pagination="pagination"
         border
+
         show-size
         hide-on-single-page
         @callback="getTabelData"
       >
 
         <el-table-column prop="name" label="模板名称" />
-        <el-table-column prop="code" label="模板code" />
-        <el-table-column prop="leader" label="应用负责人" />
-        <el-table-column prop="teamMembers"  label="应用组员" />
-        <el-table-column prop="remarks" label="应用简介" />
+        <el-table-column prop="code" label="模板编码" />
+        <el-table-column prop="remarks" label="描述">
+          <template slot-scope="scope">
+            <el-popover v-if="scope.row.remarks" trigger="hover" placement="top">
+              <p>{{ scope.row.remarks }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">描述</el-tag>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
 
         <el-table-column prop="auditStatus" label="审核状态">
           <template slot-scope="scope">
             <span v-if="scope.row.auditStatus === 1">通过</span>
             <span v-if="scope.row.auditStatus === 0">待审核</span>
-            <span v-if="scope.row.auditStatus === 1">拒绝</span>
+            <span v-if="scope.row.auditStatus === -1">拒绝</span>
           </template>
         </el-table-column>
         <el-table-column prop="enabled" label="应用状态">
@@ -81,31 +67,36 @@
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button  type="text" size="small" @click="changeStatus(scope.row)" >
+            <el-button size="mini"  type="text" @click="changeStatus(scope.row)" >
               {{scope.row.enabled === 1 ? '禁用' : '启用'}}
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0" @click="audit(scope.row.id)" type="text" size="small">
+            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
-
+            <el-button  type="text" size="small" @click="save(scope.row)" >
+              修改
+            </el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
     </div>
-    <!-- 详情弹窗 -->
-    <dialog-sms-info ref="dialogSmsInfo" />
+
+    <dialog-app-save ref="DialogAppSave"  @refresh="refresh"/>
+    <dialog-app-audit ref="DialogAppAudit" @refresh="refresh" />
   </div>
 </template>
 
 <script>
-import { queryList, changeEnable, audit } from '@/api/app.js'
+import { queryPage, changeEnable} from '@/api/app.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import dialogSmsInfo from '@/components/sms/dialog-info.vue'
+import DialogAppSave from "@/components/app/dialog-save";
+import DialogAppAudit from "@/components/app/dialog-audit";
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    dialogSmsInfo
+    DialogAppSave,
+    DialogAppAudit
   },
   data() {
     return {
@@ -133,11 +124,17 @@ export default {
       this.$message('点击了按钮！')
       console.log('click-row-data:', row)
     },
+    refresh() {
+      this.toResetPageForList();
+    },
     resetForm() {
       this.$refs.claFrom.resetFields()
     },
-    audit(_id) {
-      console.log("audit----", _id)
+    save(data) {
+      this.$refs.DialogAppSave.show(data)
+    },
+    showAudit(_id) {
+      this.$refs.DialogAppAudit.show(_id);
     },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)
@@ -145,43 +142,46 @@ export default {
         ...this.claForm,
         ...this.pagination
       }
-      queryList(_data)
+      queryPage(_data)
         .then(res => {
-          console.log('list-res:', res)
           this.$refs.tmp_table.loadingState(false)
           this.tableData = res
+          console.log("2222", res)
         })
         .catch((err) => {
-          console.log('list-err:', err)
+          console.error('list-err:', err)
           this.$refs.tmp_table.loadingState(false)
         })
     },
     changeStatus(_data) {
-
-      changeEnable(_data.id).then(res => {
-        console.log('list-res:', res)
-      }).catch(err => {
-        console.log('list-err:', err)
-        this.$refs.tmp_table.loadingState(false)
-      })
-      this.getTabelData()
+      let msg = _data.enabled === 1 ? '禁用' : '启用';
+      let str = '是否要' + msg + '【' + _data.name + '】';
+      this.$confirm(str, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        changeEnable(_data.id).then(res => {
+          this.successMsg();
+          this.getTabelData()
+        }).catch(err => {
+          console.log('list-err:', err)
+          this.$refs.tmp_table.loadingState(false)
+        })
+      });
     },
-
-
+    successMsg() {
+      this.$message({
+        type: 'success',
+        message: '操作成功!'
+      });
+    },
 
     // 重置页码并搜索
     toResetPageForList() {
       this.pagination.currentPageIndex = 1
       this.getTabelData()
     },
-    // 行内编辑
-    toEditBtnFn(row) {
-      this.$refs['updateSeriesClass'].show(row)
-    },
-    // 详情
-    showSmsInfo(row) {
-      this.$refs['dialogSmsInfo'].show({ name: row.code })
-    }
   }
 }
 </script>

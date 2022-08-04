@@ -49,7 +49,7 @@
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus">新建</el-button>
+          <el-button type="success" icon="el-icon-plus" @click="save(null)">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -70,7 +70,7 @@
         <el-table-column prop="remarks" label="应用简介" />
         <el-table-column prop="enabled" label="应用状态">
           <templat slot-scope="scope">
-            <span>{{scope.row.enable === 1 ? '启用' : '禁用'}}</span>
+            <span>{{scope.row.enabled === 1 ? '启用' : '禁用'}}</span>
           </templat>
         </el-table-column>
 
@@ -78,7 +78,7 @@
           <template slot-scope="scope">
             <span v-if="scope.row.auditStatus === 1">通过</span>
             <span v-if="scope.row.auditStatus === 0">待审核</span>
-            <span v-if="scope.row.auditStatus === 1">拒绝</span>
+            <span v-if="scope.row.auditStatus === -1">拒绝</span>
           </template>
         </el-table-column>
 
@@ -87,29 +87,35 @@
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              size="small"
-              @click="showSmsInfo(scope.row)"
-            >按钮1</el-button>
+            <el-button  type="text" size="small" @click="changeStatus(scope.row)" >
+              {{scope.row.enabled === 1 ? '禁用' : '启用'}}
+            </el-button>
+            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
+              审核
+            </el-button>
+            <el-button  type="text" size="small" @click="save(scope.row)" >
+              修改
+            </el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
     </div>
-    <!-- 详情弹窗 -->
-    <dialog-sms-info ref="dialogSmsInfo" />
+    <dialog-sign-save ref="DialogSignSave"  @refresh="refresh"/>
+    <dialog-sign-audit ref="DialogSignAudit" @refresh="refresh"/>
   </div>
 </template>
 
 <script>
-import { queryList } from '@/api/sign.js'
+import { queryPage, changeEnable } from '@/api/sign.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import dialogSmsInfo from '@/components/sms/dialog-info.vue'
+import DialogSignSave from "@/components/sign/dialog-save";
+import DialogSignAudit from "@/components/sign/dialog-audit";
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    dialogSmsInfo
+    DialogSignSave,
+    DialogSignAudit
   },
   data() {
     return {
@@ -147,7 +153,7 @@ export default {
         ...this.claForm,
         ...this.pagination
       }
-      queryList(_data)
+      queryPage(_data)
         .then(res => {
           console.log('list-res:', res)
           this.$refs.tmp_table.loadingState(false)
@@ -163,13 +169,24 @@ export default {
       this.pagination.currentPageIndex = 1
       this.getTabelData()
     },
-    // 行内编辑
-    toEditBtnFn(row) {
-      this.$refs['updateSeriesClass'].show(row)
+    changeStatus(_data) {
+      changeEnable(_data.id).then(res => {
+        console.log('list-res:', res)
+        this.getTabelData()
+      }).catch(err => {
+        console.log('list-err:', err)
+        this.$refs.tmp_table.loadingState(false)
+      })
+
     },
-    // 详情
-    showSmsInfo(row) {
-      this.$refs['dialogSmsInfo'].show({ name: row.code })
+    showAudit(_id) {
+      this.$refs.DialogSignAudit.show(_id);
+    },
+    save(data) {
+      this.$refs.DialogSignSave.show(data)
+    },
+    refresh() {
+      this.toResetPageForList();
     }
   }
 }

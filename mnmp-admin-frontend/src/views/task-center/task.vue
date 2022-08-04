@@ -11,8 +11,17 @@
           <el-form-item prop="name" label="任务名">
             <el-input v-model.trim="claForm.name" placeholder="" style="width: 120px"></el-input>
           </el-form-item>
-          <el-form-item prop="appId" label="应用" >
-            <el-input v-model.trim="claForm.appId" placeholder="" style="width: 120px"></el-input>
+          <el-form-item label="应用" prop="appId">
+            <template>
+              <el-select v-model="claForm.appId" filterable placeholder="请选择" :filter-method="queryApps">
+                <el-option
+                  v-for="item in apps"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </template>
           </el-form-item>
           <el-form-item prop="taskStatus" label="任务状态">
             <com-dict :val.sync="claForm.taskStatus" dict-name="taskStatusOpts" :is-all="true" />
@@ -35,7 +44,7 @@
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus">新建</el-button>
+          <el-button type="success" icon="el-icon-plus" @click="save(null)">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -50,9 +59,16 @@
         @callback="getTabelData"
       >
 
-        <el-table-column prop="name" label="供应商名称" />
-        <el-table-column prop="code" label="供应商编码" />
-        <el-table-column prop="noticeType" label="业务类型">
+        <el-table-column prop="name" label="内务名称" />
+        <el-table-column prop="taskStatus" label="任务类型">
+          <template slot-scope="scope">
+            <span v-if="scope.row.taskStatus === 0">立即</span>
+            <span v-if="scope.row.taskStatus === 1">定时</span>
+            <span v-if="scope.row.taskStatus === 2">周期</span>
+            <span v-if="scope.row.taskStatus === 3">条件规则触发</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="noticeType" label="消息类型">
           <template slot-scope="scope">
             <span v-if="scope.row.noticeType === 1">SMS</span>
             <span v-else-if="scope.row.noticeType === 2">EMAIL</span>
@@ -60,21 +76,59 @@
             <span v-else>未知</span>
           </template>
         </el-table-column>
-        <el-table-column prop="officialWebsite"  label="官方网站" />
-        <el-table-column prop="remarks" label="应用简介"/>
-        <el-table-column prop="contacts" label="联系人"/>
-        <el-table-column prop="phone" label="联系电话"/>
-        <el-table-column prop="remarks" label="简介"/>
+        <el-table-column prop="cycleLvel" label="周期类型">
+          <template slot-scope="scope">
+            <span v-if="scope.row.cycleLvel === 1">小时</span>
+            <span v-if="scope.row.cycleLvel === 2">日</span>
+            <span v-if="scope.row.cycleLvel === 3">周</span>
+            <span v-if="scope.row.cycleLvel === 4">月</span>
+            <span v-if="scope.row.cycleLvel === 5">年</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="cycleNum" label="周期数"/>
+        <el-table-column prop="targetFileUrl" label="文件地址">
+          <template slot-scope="scope" v-if="scope.row.targetFileUrl">
+            <i class="el-icon-download"  @click="downExcel(scope.row.targetFileUrl)"></i>
+          </template>
+        </el-table-column>
+
+
+        <el-table-column prop="error" label="描述">
+          <template slot-scope="scope">
+            <el-popover v-if="scope.row.remark" trigger="hover" placement="top">
+              <p>{{ scope.row.remark }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">描述</el-tag>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="error" label="错误日志">
+          <template slot-scope="scope">
+            <el-popover v-if="scope.row.error" trigger="hover" placement="top">
+              <p>{{ scope.row.error }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">错误日志</el-tag>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
+
         <el-table-column prop="auditStatus" label="审核状态">
           <template slot-scope="scope">
             <span v-if="scope.row.auditStatus === 1">通过</span>
             <span v-if="scope.row.auditStatus === 0">待审核</span>
-            <span v-if="scope.row.auditStatus === 1">拒绝</span>
+            <span v-if="scope.row.auditStatus === -1">拒绝</span>
           </template>
         </el-table-column>
-        <el-table-column prop="enabled" label="应用状态">
+        <el-table-column prop="taskStatus" label="当前状态">
           <templat slot-scope="scope">
-            <span>{{scope.row.enable === 1 ? '启用' : '禁用'}}</span>
+            <span v-if="scope.row.taskStatus === 0">未开启</span>
+            <span v-if="scope.row.taskStatus === 1">推送中</span>
+            <span v-if="scope.row.taskStatus === 2">终止</span>
+            <span v-if="scope.row.taskStatus === 3">已结束</span>
+            <span v-if="scope.row.taskStatus === 4">失败</span>
           </templat>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间"/>
@@ -83,29 +137,37 @@
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              size="small"
-              @click="showSmsInfo(scope.row)"
-            >按钮1</el-button>
+            <el-button v-if="scope.row.taskStatus === 0 || scope.row.taskStatus === 1"  type="text" size="small" @click="changeStatus(scope.row)" >
+              终止
+            </el-button>
+            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
+              审核
+            </el-button>
+            <el-button  type="text" size="small" @click="save(scope.row)" >
+              修改
+            </el-button>
+            <router-link :to="{name: 'detail', params: {id : scope.row.id}}">详情</router-link>
           </template>
         </el-table-column>
       </tmp-table-pagination>
     </div>
-    <!-- 详情弹窗 -->
-    <dialog-sms-info ref="dialogSmsInfo" />
+    <dialog-task-audit ref="DialogTaskAudit" @refresh="refresh" />
+    <dialog-task-save ref="DialogTaskSave" @refresh="refresh"/>
   </div>
 </template>
 
 <script>
-import { queryList } from '@/api/task.js'
+import {queryList, changeStatus} from '@/api/task.js'
+import {queryAppList} from "@/api/app";
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import dialogSmsInfo from '@/components/sms/dialog-info.vue'
+import DialogTaskAudit from '@/components/task/dialog-audit'
+import DialogTaskSave from '@/components/task/dialog-save'
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    dialogSmsInfo
+    DialogTaskAudit,
+    DialogTaskSave
   },
   data() {
     return {
@@ -115,7 +177,9 @@ export default {
         taskStatus: null, // 任务状态 0:未开启 1:推送中 2:终止 3:已结束 4.失败
         taskAudit: null // 审核状态 -1：拒绝， 0：待审核， 1：审核通过
       },
+      apps: {
 
+      },
       tableData: { recordCount: 0, list: [] },
       pagination: {
         // 数据表格配置项
@@ -138,6 +202,9 @@ export default {
     resetForm() {
       this.$refs.claFrom.resetFields()
     },
+    refresh() {
+      this.toResetPageForList();
+    },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)
       const _data = {
@@ -155,19 +222,46 @@ export default {
           this.$refs.tmp_table.loadingState(false)
         })
     },
+    changeStatus(data) {
+      changeStatus(data.id).then(res => {
+        console.log('list-res:', res)
+        this.getTabelData()
+      }).catch(err => {
+        console.log('list-err:', err)
+        this.$refs.tmp_table.loadingState(false)
+      })
+    },
+    showAudit(_id) {
+      this.$refs.DialogTaskAudit.show(_id);
+    },
+    save(data) {
+      this.$refs.DialogTaskSave.show(data)
+    },
+    downExcel(path) {
+      var url = process.env.VUE_APP_BASE_API + '/task/excel';
+      if (path) {
+        url += '?path=' + path;
+      }
+      window.open(url)
+    },
+    details(id) {
+
+    },
+    queryApps(param) {
+      queryAppList({name: param})
+        .then(res => {
+          this.apps = res
+          console.dir(res)
+        }).catch(err => {
+        console.log(err);
+      })
+    },
+
     // 重置页码并搜索
     toResetPageForList() {
       this.pagination.currentPageIndex = 1
       this.getTabelData()
     },
-    // 行内编辑
-    toEditBtnFn(row) {
-      this.$refs['updateSeriesClass'].show(row)
-    },
-    // 详情
-    showSmsInfo(row) {
-      this.$refs['dialogSmsInfo'].show({ name: row.code })
-    }
   }
 }
 </script>

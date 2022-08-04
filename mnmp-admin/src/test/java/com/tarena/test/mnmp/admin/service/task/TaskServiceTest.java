@@ -6,6 +6,7 @@ import com.tarena.mnmp.domain.ttarget.TaskTargetService;
 import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Deleted;
 import com.tarena.mnmp.enums.TaskStatus;
+import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.test.mnmp.admin.service.template.TemplateServiceTest;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,7 +48,7 @@ public class TaskServiceTest {
         scripts = {AppSqlScript.TRUNCATE_TABLE},
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
-    public void doAudit () {
+    public void doAudit () throws BusinessException {
         taskService.doAudit(1L, 1, "sdfsfsd");
     }
 

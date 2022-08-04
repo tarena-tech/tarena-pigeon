@@ -32,16 +32,23 @@ public class TemplateService {
     @Resource
     private SmsTemplateDao smsTemplateDao;
 
-    public String addSmsTemplate(SmsTemplateDO template) {
-
-
+    public String save(SmsTemplateDO template) {
         Date now = new Date();
-        template.setDeleted(Deleted.NO.getVal());
-        template.setEnabled(Enabled.YES.getVal());
-        template.setAuditStatus(0);
-        template.setCreateTime(now);
-        template.setUpdateTime(now);
-        smsTemplateDao.save(template);
+        if (null == template.getId()) {
+            template.setDeleted(Deleted.NO.getVal());
+            template.setEnabled(Enabled.YES.getVal());
+            template.setAuditStatus(0);
+            template.setCreateTime(now);
+            template.setUpdateTime(now);
+            smsTemplateDao.save(template);
+        } else {
+            template.setCreateTime(null);
+            template.setEnabled(null);
+            template.setAuditStatus(null);
+            template.setAuditResult(null);
+            template.setUseCount(null);
+            smsTemplateDao.modify(template);
+        }
         return "ok";
     }
 
@@ -59,17 +66,13 @@ public class TemplateService {
         smsTemplateDao.modify(sms);
     }
 
-    public List<SmsTemplateDO> queryListPage(TemplateQuery query) {
+    public List<SmsTemplateDO> queryList(TemplateQuery query) {
         return smsTemplateDao.queryTemplates(query);
     }
 
     public Long queryCount(TemplateQuery query) {
         Long count = smsTemplateDao.queryCount(query);
         return Optional.ofNullable(count).orElse(0L);
-    }
-
-    public List<SmsTemplateDO> queryListByParam(String keyword, String code, Integer type, Integer templateType) {
-        return smsTemplateDao.search(keyword, code, type, templateType);
     }
 
     public SmsTemplateDO querySmsTemplateDetail(Long id) {

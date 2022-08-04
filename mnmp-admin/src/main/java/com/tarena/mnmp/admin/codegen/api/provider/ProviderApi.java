@@ -18,6 +18,7 @@
 package com.tarena.mnmp.admin.codegen.api.provider;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.provider.ProviderQueryParam;
 import com.tarena.mnmp.domain.provider.ProviderSaveParam;
@@ -56,8 +57,26 @@ public interface ProviderApi {
         value = {"/add"},
         consumes = {"application/json"}
     )
+    @Deprecated
     void addProvider(
         @ApiParam(value = "新增服务商", required = true) @Valid @RequestBody ProviderSaveParam providerSaveParam);
+
+    @ApiOperationSupport(order = 2003)
+    @ApiOperation(
+        value = "修改服务商信息",
+        nickname = "editProvider",
+        notes = ""
+    )
+    @PostMapping(
+        value = {"/edit"},
+        consumes = {"application/json"}
+    )
+    @Deprecated
+    void editProvider(@ApiParam(value = "修改服务商信息", required = true) @Valid @RequestBody ProviderSaveParam providerSaveParam);
+
+    @ApiOperation(value = "保存服务商 创建/更新")
+    @PostMapping("save")
+    void save(@RequestBody ProviderSaveParam param);
 
     @ApiOperationSupport(order = 2002)
     @ApiOperation(
@@ -83,34 +102,19 @@ public interface ProviderApi {
 
     @ApiOperationSupport(order = 2004)
     @ApiOperation(value = "切换服务商可用状态")
-    @PostMapping({"/changeEnableStatus"})
+    @PostMapping({"/change/enable/status"})
     void changeEnableStatus(@NotNull @ApiParam(value = "服务商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id) throws BusinessException;
-
-    @ApiOperationSupport(order = 2003)
-    @ApiOperation(
-        value = "修改服务商信息",
-        nickname = "editProvider",
-        notes = ""
-    )
-    @PostMapping(
-        value = {"/edit"},
-        consumes = {"application/json"}
-    )
-    void editProvider(@ApiParam(value = "修改服务商信息", required = true) @Valid @RequestBody ProviderSaveParam providerSaveParam);
 
 
 
     @ApiOperationSupport(order = 2005)
     @ApiOperation(
-        value = "查询服务商列表",
-        nickname = "queryList",
+        value = "查询服务分页商列表",
+        nickname = "queryPage",
         notes = ""
     )
-    @GetMapping(
-        value = {"/queryList"},
-        produces = {"application/json"}
-    )
-    PagerResult<ProviderView>  queryList(ProviderQueryParam param);
+    @GetMapping(value = {"/queryPage"})
+    PagerResult<ProviderView> queryPage(ProviderQueryParam param);
 
     @ApiOperationSupport(order = 2006)
     @ApiOperation(
@@ -135,13 +139,8 @@ public interface ProviderApi {
         notes = ""
     )
     @PostMapping(
-        value = "/audit",
-        produces = {"application/json"},
-        consumes = {"application/json"}
+        value = "/audit"
     )
-    public void auditProvider(
-        @NotNull @ApiParam(value = "供应商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
-        @NotNull @ApiParam(value = "审核结果", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus
-        );
+    void auditProvider(@RequestBody AuditParam param);
 
 }

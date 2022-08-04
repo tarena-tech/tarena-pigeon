@@ -20,15 +20,21 @@ package com.tarena.mnmp.admin.controller.task;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.util.StringUtils;
 import com.tarena.mnmp.admin.codegen.api.task.TaskApi;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.commons.utils.DateUtils;
 import com.tarena.mnmp.commons.utils.ExcelUtils;
+import com.tarena.mnmp.domain.AppDO;
+import com.tarena.mnmp.domain.SignDO;
+import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.TaskDO;
+import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.domain.sign.SignService;
 import com.tarena.mnmp.domain.task.TargetExcelData;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.domain.task.TaskStatistics;
-import com.tarena.mnmp.enums.TaskStatus;
+import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
 import java.io.BufferedInputStream;
@@ -43,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.util.Streams;
 import org.slf4j.Logger;
@@ -51,7 +58,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,6 +70,15 @@ public class TaskController implements TaskApi {
 
     @Autowired
     private TaskService taskService;
+
+    @Resource
+    private AppService appService;
+
+    @Resource
+    private SignService signService;
+
+    @Resource
+    private TemplateService templateService;
 
     @Value("${excel.path}")
     private String excelPath;
@@ -132,7 +147,6 @@ public class TaskController implements TaskApi {
         return new Result<>(dir + name);
     }
 
-    @Transactional
     @Override public void addTask(TaskParam taskParam, HttpServletResponse response) throws IOException {
         TaskDO bo = new TaskDO();
         BeanUtils.copyProperties(taskParam, bo);
@@ -146,8 +160,8 @@ public class TaskController implements TaskApi {
         }
     }
 
-    @Override public void doAudit(Long id, Integer auditStatus, String auditResult) {
-        taskService.doAudit(id, auditStatus, auditResult);
+    @Override public void doAudit(AuditParam param) throws BusinessException {
+        taskService.doAudit(param.getId(), param.getAuditStatus(), param.getAuditResult());
     }
 
     @Override public PagerResult<TaskView> queryListByPage(TaskQuery taskQuery) {
@@ -164,9 +178,29 @@ public class TaskController implements TaskApi {
         return result;
     }
 
-    @Override public TaskView queryTaskDetail(Long id) {
+    @Override public TaskView queryTaskDetail(Long id) throws BusinessException {
         TaskDO task = taskService.detailById(id);
+        if (null == task) {
+            throw new BusinessException("100", "任务不存在");
+        }
+
         TaskView tv = new TaskView();
+
+        AppDO aDo = appService.queryAppDetail(task.getAppId());
+        if (null != aDo) {
+            tv.setAppName(aDo.getName());
+        }
+
+        SignDO sign = signService.querySignDetail(task.getSignId());
+        if (null != sign) {
+            tv.setSignName(sign.getName());
+        }
+
+        SmsTemplateDO smsTemplateDO = templateService.querySmsTemplateDetail(task.getTemplateId());
+        if (null != smsTemplateDO) {
+            tv.setTemplateName(smsTemplateDO.getName());
+        }
+
         BeanUtils.copyProperties(task, tv);
         return tv;
     }
@@ -175,17 +209,13 @@ public class TaskController implements TaskApi {
         return null;
     }
 
-    @Override public void stopTask(Long id) {
-        taskService.action(id, TaskStatus.TASK_STOP.status());
-    }
-
-    @Override public void startTask(Long id) {
-        taskService.action(id, TaskStatus.TASK_NO_OPEN.status());
-    }
-
     @Override public void modify(TaskParam taskParam) {
         TaskDO task = new TaskDO();
         BeanUtils.copyProperties(taskParam, task);
         taskService.updateTask(task);
+    }
+
+    @Override public void changeTaskStatus(Long id) throws BusinessException {
+        taskService.changeTaskStatus(id);
     }
 }

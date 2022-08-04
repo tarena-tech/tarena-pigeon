@@ -2,29 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tarena.mnmp.domain.task.TaskDao">
     <resultMap type="com.tarena.mnmp.domain.TaskDO" id="NoticeTaskMap">
-        <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="name" column="name" jdbcType="VARCHAR"/>
-        <result property="taskStatus" column="task_status" jdbcType="INTEGER"/>
-        <result property="taskType" column="task_type" jdbcType="INTEGER"/>
-        <result property="noticeType" column="notice_type" jdbcType="INTEGER"/>
-        <result property="templateId" column="template_id" jdbcType="INTEGER"/>
-        <result property="signId" column="sign_id" jdbcType="INTEGER"/>
-        <result property="appId" column="app_id" jdbcType="INTEGER"/>
-        <result property="targetType" column="target_type" jdbcType="INTEGER"/>
-        <result property="targetFileName" column="target_file_name" jdbcType="VARCHAR"/>
-        <result property="targetFileUrl" column="target_file_url" jdbcType="VARCHAR"/>
-        <result property="creator" column="creator" jdbcType="INTEGER"/>
-        <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
-        <result property="remark" column="remark" jdbcType="VARCHAR"/>
-        <result property="cycleLevel" column="cycle_level" jdbcType="INTEGER"/>
-        <result property="cycleNum" column="cycle_num" jdbcType="INTEGER"/>
-        <result property="firstTriggerTime" column="first_trigger_time" jdbcType="TIMESTAMP"/>
-        <result property="triggerEndTime" column="trigger_end_time" jdbcType="TIMESTAMP"/>
-        <result property="nextTriggerTime" column="next_trigger_time" jdbcType="TIMESTAMP"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-        <result property="taskAudit" column="task_audit" jdbcType="INTEGER"/>
-        <result property="taskAuditResult" column="task_audit_result" jdbcType="VARCHAR"/>
+        <!--@mbg.generated-->
+        <!--@Table notice_task-->
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="task_status" jdbcType="TINYINT" property="taskStatus" />
+        <result column="task_type" jdbcType="TINYINT" property="taskType" />
+        <result column="notice_type" jdbcType="TINYINT" property="noticeType" />
+        <result column="template_id" jdbcType="INTEGER" property="templateId" />
+        <result column="sign_id" jdbcType="INTEGER" property="signId" />
+        <result column="app_id" jdbcType="BIGINT" property="appId" />
+        <result column="cycle_level" jdbcType="TINYINT" property="cycleLevel" />
+        <result column="cycle_num" jdbcType="INTEGER" property="cycleNum" />
+        <result column="first_trigger_time" jdbcType="TIMESTAMP" property="firstTriggerTime" />
+        <result column="trigger_end_time" jdbcType="TIMESTAMP" property="triggerEndTime" />
+        <result column="next_trigger_time" jdbcType="TIMESTAMP" property="nextTriggerTime" />
+        <result column="target_type" jdbcType="TINYINT" property="targetType" />
+        <result column="target_file_name" jdbcType="VARCHAR" property="targetFileName" />
+        <result column="target_file_url" jdbcType="VARCHAR" property="targetFileUrl" />
+        <result column="creator" jdbcType="INTEGER" property="creator" />
+        <result column="creator_email" jdbcType="VARCHAR" property="creatorEmail" />
+        <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
+        <result column="dept_id" jdbcType="BIGINT" property="deptId" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="error" jdbcType="VARCHAR" property="error" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="audit_status" jdbcType="TINYINT" property="auditStatus" />
+        <result column="audit_result" jdbcType="VARCHAR" property="auditResult" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -32,7 +37,7 @@
         id, `name`, task_status, task_type, notice_type, template_id, sign_id, app_id, cycle_level,
         cycle_num, first_trigger_time, trigger_end_time, next_trigger_time, target_type,
         target_file_name, target_file_url, creator, creator_email, creator_name, dept_id,
-        remark, error, create_time, update_time, task_audit, task_audit_result
+        remark, error, create_time, update_time, audit_status, audit_result
     </sql>
 
     <!--查询单个-->
@@ -48,69 +53,83 @@
     <update id="update">
         update notice_task
         <set>
-            <if test="name != null and name != ''">
-                name = #{name},
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
             </if>
             <if test="taskStatus != null">
-                task_status = #{taskStatus},
+                task_status = #{taskStatus,jdbcType=TINYINT},
             </if>
             <if test="taskType != null">
-                task_type = #{taskType},
+                task_type = #{taskType,jdbcType=TINYINT},
             </if>
             <if test="noticeType != null">
-                notice_type = #{noticeType},
+                notice_type = #{noticeType,jdbcType=TINYINT},
             </if>
             <if test="templateId != null">
-                template_id = #{templateId},
+                template_id = #{templateId,jdbcType=INTEGER},
             </if>
             <if test="signId != null">
-                sign_id = #{signId},
+                sign_id = #{signId,jdbcType=INTEGER},
             </if>
             <if test="appId != null">
-                app_id = #{appId},
-            </if>
-            <if test="targetType != null">
-                target_type = #{targetType},
-            </if>
-            <if test="targetFileName != null and targetFileName != ''">
-                target_file_name = #{targetFileName},
-            </if>
-            <if test="targetFileUrl != null and targetFileUrl != ''">
-                target_file_url = #{targetFileUrl},
-            </if>
-            <if test="creator != null">
-                creator = #{creator},
-            </if>
-            <if test="remark != null and remark != ''">
-                remark = #{remark},
+                app_id = #{appId,jdbcType=BIGINT},
             </if>
             <if test="cycleLevel != null">
-                cycle_level = #{cycleLevel},
+                cycle_level = #{cycleLevel,jdbcType=TINYINT},
             </if>
             <if test="cycleNum != null">
-                cycle_num = #{cycleNum},
+                cycle_num = #{cycleNum,jdbcType=INTEGER},
             </if>
             <if test="firstTriggerTime != null">
-                first_trigger_time = #{firstTriggerTime},
+                first_trigger_time = #{firstTriggerTime,jdbcType=TIMESTAMP},
             </if>
             <if test="triggerEndTime != null">
-                trigger_end_time = #{triggerEndTime},
+                trigger_end_time = #{triggerEndTime,jdbcType=TIMESTAMP},
             </if>
             <if test="nextTriggerTime != null">
-                next_trigger_time = #{nextTriggerTime},
+                next_trigger_time = #{nextTriggerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="targetType != null">
+                target_type = #{targetType,jdbcType=TINYINT},
+            </if>
+            <if test="targetFileName != null">
+                target_file_name = #{targetFileName,jdbcType=VARCHAR},
+            </if>
+            <if test="targetFileUrl != null">
+                target_file_url = #{targetFileUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=INTEGER},
+            </if>
+            <if test="creatorEmail != null">
+                creator_email = #{creatorEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorName != null">
+                creator_name = #{creatorName,jdbcType=VARCHAR},
+            </if>
+            <if test="deptId != null">
+                dept_id = #{deptId,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="error != null">
+                error = #{error,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
-                create_time = #{createTime},
+                create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="taskAudit != null">
-                task_audit = #{taskAudit,jdbcType=INTEGER},
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="taskAuditResult != null and taskAuditResult != ''">
-                task_audit_result = #{taskAuditResult,jdbcType=VARCHAR},
+            <if test="auditStatus != null">
+                audit_status = #{auditStatus,jdbcType=BOOLEAN},
             </if>
-            update_time = now()
+            <if test="auditResult != null">
+                audit_result = #{auditResult,jdbcType=VARCHAR},
+            </if>
         </set>
-        where id = #{id}
+        where id = #{id,jdbcType=BIGINT}
     </update>
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into notice_task
@@ -184,11 +203,11 @@
             <if test="updateTime != null">
                 update_time,
             </if>
-            <if test="taskAudit != null">
-                task_audit,
+            <if test="auditStatus != null">
+                audit_status,
             </if>
-            <if test="taskAuditResult != null">
-                task_audit_result,
+            <if test="auditResult != null">
+                audit_result,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -261,11 +280,11 @@
             <if test="updateTime != null">
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="taskAudit != null">
-                #{taskAudit,jdbcType=BOOLEAN},
+            <if test="auditStatus != null">
+                #{auditStatus,jdbcType=BOOLEAN},
             </if>
-            <if test="taskAuditResult != null">
-                #{taskAuditResult,jdbcType=VARCHAR},
+            <if test="auditResult != null">
+                #{auditResult,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -283,8 +302,8 @@
             <if test="taskStatus != null">
                 and task_status = #{taskStatus,jdbcType=INTEGER}
             </if>
-            <if  test="taskAudit != null">
-                and task_audit = #{taskStatus,jdbcType=INTEGER}
+            <if  test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
             </if>
         </where>
         ${limitClause}
@@ -303,10 +322,16 @@
             <if test="taskStatus != null">
                 and task_status = #{taskStatus,jdbcType=INTEGER}
             </if>
-            <if  test="taskAudit != null">
-                and task_audit = #{taskStatus,jdbcType=INTEGER}
+            <if  test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
             </if>
         </where>
     </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete from notice_task
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
 </mapper>
 

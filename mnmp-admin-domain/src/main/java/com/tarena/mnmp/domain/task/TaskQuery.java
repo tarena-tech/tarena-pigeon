@@ -35,7 +35,7 @@ public class TaskQuery extends PagerResult {
     private Integer taskStatus;
 
     @ApiModelProperty(value = "审核状态 -1：拒绝， 0：待审核， 1：审核通过")
-    private Integer taskAudit;
+    private Integer auditStatus;
 
     public String getName() {
         return name;
@@ -61,11 +61,13 @@ public class TaskQuery extends PagerResult {
         this.taskStatus = taskStatus;
     }
 
-    public Integer getTaskAudit() {
-        return taskAudit;
+    public Integer getAuditStatus() {
+        return auditStatus;
     }
 
-    public void setTaskAudit(Integer taskAudit) {
-        this.taskAudit = taskAudit;
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
     }
+
+
 }

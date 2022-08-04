@@ -51,7 +51,7 @@
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus"  @click="showSmsCreate">新建</el-button>
+          <el-button type="success" icon="el-icon-plus"  @click="save(null)">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -89,6 +89,17 @@
             <span v-if="scope.row.noticeType === 3">WECHAT</span>
           </template>
         </el-table-column>
+        <el-table-column prop="content" label="模板内容">
+          <template slot-scope="scope">
+            <el-popover trigger="hover" placement="top">
+              <p>{{ scope.row.content }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">模板内容</el-tag>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
+
 
         <el-table-column
           prop="useCount"
@@ -123,7 +134,7 @@
             <el-button  type="text" size="small" @click="changeStatus(scope.row.id)" >
               {{scope.row.enabled === 1 ? '禁用' : '启用'}}
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0" @click="audit(scope.row.id)" type="text" size="small">
+            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
           </template>
@@ -134,23 +145,22 @@
     <dialog-sms-info ref="dialogSmsInfo"/>
     <dialog-sms-info ref="dialogSmsInfo" />
     <!-- 创建弹窗 -->
-    <dialog-sms-create ref="DialogSmsCreate" />
+    <dialog-sms-save ref="DialogSmsSave" @refresh="refresh"/>
+    <dialog-sms-audit ref="DialogSmsAudit" @refresh="refresh" />
   </div>
 </template>
 
 <script>
-import {queryListByPage, changeEnableStatus} from '@/api/template.js'
+import {queryListByPage, changeEnableStatus} from '@/api/sms.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import dialogSmsInfo from '@/components/sms/dialog-info.vue'
-
-import DialogSmsInfo from '@/components/sms/dialog-info.vue'
-import DialogSmsCreate from '@/components/sms/dialog-create.vue'
+import DialogSmsAudit from "@/components/sms/dialog-audit";
+import DialogSmsSave from "@/components/sms/dialog-save"
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    DialogSmsInfo,
-    DialogSmsCreate
+    DialogSmsAudit,
+    DialogSmsSave
   },
   data() {
     return {
@@ -201,20 +211,24 @@ export default {
           this.$refs.tmp_table.loadingState(false)
         })
     },
-
+    refresh() {
+      this.toResetPageForList();
+    },
     changeStatus(_id) {
       changeEnableStatus(_id)
         .then(res => {
           console.dir("res:", res);
+          this.getTabelData()
         })
         .catch(err => {
           console.dir("res:", err);
         })
-      this.getTabelData();
     },
-    audit(_id) {
-      this.$message("待实现");
+
+    showAudit(_id) {
+      this.$refs.DialogSmsAudit.show(_id);
     },
+
     // 重置页码并搜索
     toResetPageForList() {
       this.pagination.currentPageIndex = 1
@@ -230,8 +244,8 @@ export default {
       this.$refs['dialogSmsInfo'].show({ name: row.code })
     },
     // 创建
-    showSmsCreate() {
-      this.$refs.DialogSmsCreate.show()
+    save(data) {
+      this.$refs.DialogSmsSave.show(data)
     }
   }
 }

@@ -19,13 +19,13 @@ package com.tarena.mnmp.admin.controller.app;
 
 import com.tarena.mnmp.admin.codegen.api.app.AppApi;
 import com.tarena.mnmp.admin.codegen.api.app.AppView;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.app.AppQueryParam;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.protocol.BusinessException;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +36,8 @@ public class AppController implements AppApi {
     @Autowired
     private AppService appService;
 
-    @Override public void addApp(AppSaveParam appAddParam) {
-        appService.addApp(appAddParam);
+    @Override public void save(AppSaveParam appAddParam) {
+        appService.save(appAddParam);
     }
 
     @Override public void editApp(AppSaveParam appEditParam) {
@@ -71,22 +71,24 @@ public class AppController implements AppApi {
         return appVO;
     }
 
-    @Override public PagerResult<AppView> queryList(AppQueryParam param) {
+    @Override public PagerResult<AppView> queryPage(AppQueryParam param) {
         List<AppDO> appDTOs = appService.queryList(param);
         Long count = appService.queryCount(param);
-        List<AppView> appVOs = new ArrayList<>();
-        for (AppDO appDO : appDTOs) {
-            AppView appVO = new AppView();
-            BeanUtils.copyProperties(appDO, appVO);
-            appVOs.add(appVO);
-        }
         PagerResult<AppView> pagerResult = new PagerResult<>(param.getPageSize(), param.getCurrentPageIndex());
-        pagerResult.setList(appVOs);
+        pagerResult.setList(AppView.convert(appDTOs));
         pagerResult.setRecordCount(count);
         return pagerResult;
     }
 
-    @Override public void auditApp(Long id, Integer auditStatus) {
-        appService.auditApp(id, auditStatus);
+    @Override public List<AppView> queryList(AppQueryParam param) {
+        param.setOrder(false);
+        param.setCurrentPageIndex(1);
+        param.setPageSize(100);
+        List<AppDO> dos = appService.queryList(param);
+        return AppView.convert(dos);
+    }
+
+    @Override public void auditApp(AuditParam param) {
+        appService.auditApp(param.getId(), param.getAuditStatus(), param.getAuditResult());
     }
 }

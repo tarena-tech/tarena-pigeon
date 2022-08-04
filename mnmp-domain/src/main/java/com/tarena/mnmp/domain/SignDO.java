@@ -36,6 +36,8 @@ public class SignDO {
 
     private Integer enabled;
     private Integer auditStatus;
+
+    private String auditResult;
     private Date createTime;
     private Date updateTime;
 
@@ -125,5 +127,13 @@ public class SignDO {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getAuditResult() {
+        return auditResult;
+    }
+
+    public void setAuditResult(String auditResult) {
+        this.auditResult = auditResult;
     }
 }

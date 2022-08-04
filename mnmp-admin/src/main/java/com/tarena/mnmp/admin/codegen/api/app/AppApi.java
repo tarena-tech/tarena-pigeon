@@ -18,6 +18,7 @@
 package com.tarena.mnmp.admin.codegen.api.app;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.domain.app.AppQueryParam;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
@@ -25,6 +26,7 @@ import com.tarena.mnmp.protocol.BusinessException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -47,17 +49,10 @@ public interface AppApi {
      * @param appSaveParam
      */
     @ApiOperationSupport(order = 1001)
-    @ApiOperation(
-        value = "新增应用",
-        nickname = "addApp",
-        notes = ""
-    )
-    @PostMapping(
-        value = {"/add"},
-        produces = {"application/json"},
-        consumes = {"application/json"}
-    )
-    void addApp(@ApiParam(value = "新增应用", required = true) @Valid @RequestBody AppSaveParam appSaveParam);
+    @ApiOperation(value = "新增应用", nickname = "save")
+    @PostMapping("save")
+    @ApiParam(name = "appSaveParam", value = "新增应用", required = true)
+    void save(@Valid @RequestBody AppSaveParam appSaveParam);
 
     /**
      * 编辑应用
@@ -66,16 +61,14 @@ public interface AppApi {
      */
     @ApiOperationSupport(order = 1002)
     @ApiOperation(
-        value = "编辑应用",
+        value = "编辑应用 -- 废弃",
         nickname = "editApp",
         notes = ""
     )
-    @PostMapping(
-        value = {"/edit"},
-        produces = {"application/json"},
-        consumes = {"application/json"}
-    )
-    void editApp(@ApiParam(value = "编辑应用", required = true) @Valid @RequestBody AppSaveParam appSaveParam);
+    @PostMapping("edit")
+    @Deprecated
+    @ApiParam(name = "appSaveParam", value = "编辑应用", required = true)
+    void editApp(@Valid @RequestBody AppSaveParam appSaveParam);
 
     /**
      * 关闭应用
@@ -83,19 +76,11 @@ public interface AppApi {
      * @param id
      */
     @ApiOperationSupport(order = 1003)
-    @ApiOperation(
-        value = "关闭应用",
-        nickname = "closeApp",
-        notes = ""
-    )
-    @PostMapping(
-        value = {"/close"},
-        produces = {"application/json"},
-        consumes = {"application/json"}
-    )
+    @ApiOperation(value = "关闭应用 -- 废弃", nickname = "closeApp", notes = "")
+    @PostMapping("close")
+    @ApiParam(name = "id", value = "要关闭的应用", required = true)
     @Deprecated
-    void closeApp(
-        @NotNull @ApiParam(value = "要关闭的应用", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+    void closeApp(@NotNull @Valid @RequestParam(value = "id", required = true) Long id);
 
     /**
      * 开启应用
@@ -103,29 +88,15 @@ public interface AppApi {
      * @param id
      */
     @ApiOperationSupport(order = 1004)
-    @ApiOperation(
-        value = "开启应用",
-        nickname = "openApp",
-        notes = ""
-    )
-    @PostMapping(
-        value = {"/open"},
-        produces = {"application/json"},
-        consumes = {"application/json"}
-    )
+    @ApiOperation(value = "开启应用 -- 废弃", nickname = "openApp")
+    @PostMapping("open")
+    @ApiParam(name = "id", value = "要开启的应用id", required = true)
     @Deprecated
-    void openApp(
-        @NotNull @ApiParam(value = "要开启的应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+    void openApp(@NotNull @Valid @RequestParam(value = "id", required = true) Long id);
 
     @ApiOperationSupport(order = 1004)
-    @ApiOperation(
-        value = "更改可用状态",
-        nickname = "openApp",
-        notes = ""
-    )
-    @PostMapping(
-        value = {"/changeEnableStatus"}
-    )
+    @ApiOperation(value = "更改可用状态", nickname = "openApp", notes = "")
+    @PostMapping("change/enable/status")
     void changeEnableStatus(Long id) throws BusinessException;
 
     /**
@@ -134,17 +105,8 @@ public interface AppApi {
      * @param id
      */
     @ApiOperationSupport(order = 1005)
-    @ApiOperation(
-        value = "查看应用详情",
-        nickname = "queryAppDetail",
-        notes = "",
-        response = AppView.class
-    )
-    @GetMapping(
-        value = {"/queryDetail"},
-        produces = {"application/json"},
-        consumes = {"application/json"}
-    )
+    @ApiOperation(value = "查看应用详情",nickname = "query/detail",notes = "")
+    @GetMapping("query/detail")
     AppView queryAppDetail(
         @NotNull @ApiParam(value = "应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
@@ -152,32 +114,20 @@ public interface AppApi {
      * 查询应用管理列表
      */
     @ApiOperationSupport(order = 1006)
-    @ApiOperation(
-        value = "查询应用管理列表",
-        nickname = "queryList",
-        notes = ""
-    )
-    @GetMapping(
-        produces = {"application/json"},
-        value = {"/queryList"}
-    )
-    PagerResult<AppView> queryList(AppQueryParam param);
+    @ApiOperation(value = "查询应用管理分页列表", nickname = "query/page", notes = "")
+    @GetMapping("query/page")
+    PagerResult<AppView> queryPage(AppQueryParam param);
+
+    @ApiOperationSupport(order = 1006)
+    @ApiOperation(value = "查询应用管理列表", nickname = "query/list", notes = "")
+    @GetMapping("query/list")
+    List<AppView> queryList(AppQueryParam param);
 
     /**
      * 审核应用
      */
     @ApiOperationSupport(order = 1007)
-    @ApiOperation(
-        value = "审核应用",
-        notes = ""
-    )
-    @PostMapping(
-        value = "audit",
-        produces = {"application/json"},
-        consumes = {"application/json"}
-    )
-    void auditApp(
-        @NotNull @ApiParam(value = "应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
-        @NotNull @ApiParam(value = "审核结果", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus
-        );
+    @ApiOperation(value = "审核应用",notes = "")
+    @PostMapping("audit")
+    void auditApp(@RequestBody AuditParam param);
 }

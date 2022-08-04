@@ -19,6 +19,7 @@ package com.tarena.mnmp.admin.controller.template;
 
 import com.tarena.mnmp.admin.codegen.api.template.TemplateApi;
 import com.tarena.mnmp.admin.codegen.api.template.TemplateView;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
@@ -38,10 +39,10 @@ public class TemplateController implements TemplateApi {
     @Resource
     private TemplateService templateService;
 
-    @Override public Result<String> addSmsTemplate(SmsTemplateParam param) {
+    @Override public Result<String> save(SmsTemplateParam param) {
         SmsTemplateDO sms = new SmsTemplateDO();
         BeanUtils.copyProperties(param, sms);
-        String str = templateService.addSmsTemplate(sms);
+        String str = templateService.save(sms);
         return new Result<>(str);
     }
 
@@ -68,7 +69,7 @@ public class TemplateController implements TemplateApi {
 
     @Override
     public PagerResult<TemplateView> queryListByPage(TemplateQuery templateQuery) {
-        List<SmsTemplateDO> dos = templateService.queryListPage(templateQuery);
+        List<SmsTemplateDO> dos = templateService.queryList(templateQuery);
         PagerResult<TemplateView> page = new PagerResult<>(templateQuery.getPageSize(), templateQuery.getCurrentPageIndex());
 
         List<TemplateView> list = new ArrayList<>();
@@ -83,9 +84,8 @@ public class TemplateController implements TemplateApi {
         return page;
     }
 
-    @Override public List<TemplateView> queryListByParam(String keyword, String appCode, Integer noticeType,
-        Integer templateType) {
-        List<SmsTemplateDO> dos = templateService.queryListByParam(keyword, appCode, noticeType, templateType);
+    @Override public List<TemplateView> queryListByParam(TemplateQuery templateQuery) {
+        List<SmsTemplateDO> dos = templateService.queryList(templateQuery);
         List<TemplateView> list = new ArrayList<>();
         dos.forEach(l -> {
             TemplateView view = new TemplateView();
@@ -111,11 +111,8 @@ public class TemplateController implements TemplateApi {
         return new Result<>(str);
     }
 
-    @Override public void doAuditSmsTemplate(Long id, Integer auditStatus, String auditResult) {
-        if (null == auditStatus || auditStatus != 1 && auditStatus != -1) {
-            return;
-        }
-        templateService.doAuditSmsTemplate(id, auditStatus, auditResult);
+    @Override public void doAuditSmsTemplate(AuditParam param) {
+        templateService.doAuditSmsTemplate(param.getId(), param.getAuditStatus(), param.getAuditResult());
     }
 //
 //    @Override public String addWecomTemplate(WecomTemplateVO wecomTemplateVO) {

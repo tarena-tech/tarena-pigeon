@@ -28,18 +28,76 @@
         create_time,
         update_time
     </sql>
-    <insert id="save">
-        insert into notice_app (code,
-                                name,
-                                leader,
-                                team_members,
-                                remarks,
-                                audit_status,
-                                enabled,
-                                create_time,
-                                update_time)
-        values (#{code}, #{name}, #{leader}, #{teamMembers}, #{remarks}, #{auditStatus}, #{enabled}, now(), now())
+
+    <insert id="save" keyColumn="id" keyProperty="id" parameterType="com.tarena.mnmp.domain.AppDO" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into notice_app
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="leader != null">
+                leader,
+            </if>
+            <if test="teamMembers != null">
+                team_members,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="true">
+                create_time,
+            </if>
+            <if test="true">
+                update_time,
+            </if>
+            <if test="auditStatus != null">
+                audit_status,
+            </if>
+            <if test="auditResult != null">
+                audit_result,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="leader != null">
+                #{leader,jdbcType=VARCHAR},
+            </if>
+            <if test="teamMembers != null">
+                #{teamMembers,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=TINYINT},
+            </if>
+            <if test="true">
+                now(),
+            </if>
+            <if test="true">
+                now(),
+            </if>
+            <if test="auditStatus != null">
+                #{auditStatus,jdbcType=BIGINT},
+            </if>
+            <if test="auditResult != null">
+                #{auditResult,jdbcType=VARCHAR},
+            </if>
+        </trim>
     </insert>
+
     <select id="queryByParam" resultMap="AppMap">
         select
         <include refid="AppAllFields"/>
@@ -52,6 +110,9 @@
                 and code = #{code,jdbcType=VARCHAR}
             </if>
         </where>
+        <if test="order">
+            order by id desc
+        </if>
         ${limitClause}
     </select>
 
@@ -93,6 +154,9 @@
             </if>
             <if test="auditStatus!=null">
                 audit_status=#{auditStatus},
+            </if>
+            <if test="auditResult != null and auditResult != ''">
+                audit_result = #{auditResult,jdbcType=VARCHAR},
             </if>
             <if test="enabled != null">
                 enabled = #{enabled,jdbcType=INTEGER},

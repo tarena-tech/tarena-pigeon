@@ -11,25 +11,17 @@
           <el-form-item prop="name" label="供应商名称">
             <el-input v-model.trim="claForm.name" placeholder="" style="width: 120px"></el-input>
           </el-form-item>
-          <el-form-item prop="code" label="供应商code" >
+          <el-form-item prop="code" label="供应商code">
             <el-input v-model.trim="claForm.code" placeholder="" style="width: 120px"></el-input>
           </el-form-item>
 
           <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              @click="toResetPageForList"
-            >查询</el-button>
-            <el-button
-              type="default"
-              icon="el-icon-delete"
-              @click="resetForm"
-            >重置</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="toResetPageForList">查询</el-button>
+            <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus">新建</el-button>
+          <el-button type="success" icon="el-icon-plus" @click="save(null)">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -44,8 +36,8 @@
         @callback="getTabelData"
       >
 
-        <el-table-column prop="name" label="供应商名称" />
-        <el-table-column prop="code" label="供应商编码" />
+        <el-table-column prop="name" label="供应商名称"/>
+        <el-table-column prop="code" label="供应商编码"/>
         <el-table-column prop="noticeType" label="业务类型">
           <template slot-scope="scope">
             <span v-if="scope.row.noticeType === 1">SMS</span>
@@ -54,7 +46,7 @@
             <span v-else>未知</span>
           </template>
         </el-table-column>
-        <el-table-column prop="officialWebsite"  label="官方网站" />
+        <el-table-column prop="officialWebsite" label="官方网站"/>
         <el-table-column prop="remarks" label="应用简介"/>
         <el-table-column prop="contacts" label="联系人"/>
         <el-table-column prop="phone" label="联系电话"/>
@@ -68,7 +60,7 @@
         </el-table-column>
         <el-table-column prop="enabled" label="应用状态">
           <templat slot-scope="scope">
-            <span>{{scope.row.enabled === 1 ? '启用' : '禁用'}}</span>
+            <span>{{ scope.row.enabled === 1 ? '启用' : '禁用' }}</span>
           </templat>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间"/>
@@ -77,39 +69,45 @@
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button  type="text" size="small" @click="changeStatus(scope.row.id)" >
-              {{scope.row.enabled === 1 ? '禁用' : '启用'}}
+            <el-button type="text" size="small" @click="changeStatus(scope.row.id)">
+              {{ scope.row.enabled === 1 ? '禁用' : '启用' }}
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0" @click="audit(scope.row.id)" type="text" size="small">
+            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
+            </el-button>
+            <el-button type="text" size="small" @click="save(scope.row)">
+              修改
             </el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
     </div>
-    <!-- 详情弹窗 -->
-    <dialog-sms-info ref="dialogSmsInfo" />
+    <dialog-provider-save ref="DialogProviderSave" @refresh="refresh"/>
+    <dialog-provider-audit ref="DialogProviderAudit" @refresh="refresh"/>
   </div>
 </template>
 
 <script>
-import { queryList, changeEnableStatus } from '@/api/provider.js'
+import {queryPage, changeEnableStatus} from '@/api/provider.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import dialogSmsInfo from '@/components/sms/dialog-info.vue'
+import DialogProviderAudit from "@/components/provider/dialog-audit";
+import DialogProviderSave from "@/components/provider/dialog-save";
+
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    dialogSmsInfo
+    DialogProviderSave,
+    DialogProviderAudit
   },
   data() {
     return {
       claForm: {
         name: null, // 应用名称
-        code: '' // 应用code
+        code: null // 应用code
       },
 
-      tableData: { recordCount: 0, list: [] },
+      tableData: {recordCount: 0, list: []},
       pagination: {
         // 数据表格配置项
         currentPageIndex: 1,
@@ -122,7 +120,8 @@ export default {
   mounted() {
     this.getTabelData()
   },
-  created() {},
+  created() {
+  },
   methods: {
     handleClick(row) {
       this.$message('点击了按钮！')
@@ -131,13 +130,19 @@ export default {
     resetForm() {
       this.$refs.claFrom.resetFields()
     },
+    refresh() {
+      this.toResetPageForList();
+    },
+    reload() {
+      this.getTabelData();
+    },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)
       const _data = {
         ...this.claForm,
         ...this.pagination
       }
-      queryList(_data)
+      queryPage(_data)
         .then(res => {
           console.log('list-res:', res)
           this.$refs.tmp_table.loadingState(false)
@@ -148,6 +153,9 @@ export default {
           this.$refs.tmp_table.loadingState(false)
         })
     },
+    save(data) {
+      this.$refs.DialogProviderSave.show(data)
+    },
     // 重置页码并搜索
     toResetPageForList() {
       this.pagination.currentPageIndex = 1
@@ -157,22 +165,19 @@ export default {
     toEditBtnFn(row) {
       this.$refs['updateSeriesClass'].show(row)
     },
-    // 详情
-    showSmsInfo(row) {
-      this.$refs['dialogSmsInfo'].show({ name: row.code })
-    },
     // 修改可用状态
     changeStatus(_id) {
       changeEnableStatus(_id)
         .then(res => {
           console.dir('change.....', res);
+          this.getTabelData()
         }).catch(err => {
-          console.dir('change.....', err);
+        console.dir('change.....', err);
       })
     },
-    audit(_id) {
-      this.$message('待补充！')
-    }
+    showAudit(_id) {
+      this.$refs.DialogProviderAudit.show(_id);
+    },
   }
 }
 </script>
@@ -194,18 +199,22 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
+
 .statusCircle {
   width: 8px;
   height: 8px;
   border-radius: 4px;
   display: inline-block;
 }
+
 .statusCircle1 {
   background: #72c040;
 }
+
 .statusCircle2 {
   background: #828282;
 }
+
 .column-status {
   text-align: center;
 }

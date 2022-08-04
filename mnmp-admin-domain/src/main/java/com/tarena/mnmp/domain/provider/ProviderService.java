@@ -32,7 +32,15 @@ public class ProviderService {
     public void addProvider(ProviderSaveParam providerSaveParam) {
         ProviderDO providerDO = new ProviderDO();
         BeanUtils.copyProperties(providerSaveParam, providerDO);
-        providerDao.save(providerDO);
+        if (null == providerDO.getId()) {
+            providerDao.save(providerDO);
+        } else {
+            providerDO.setAuditResult(null);
+            providerDO.setEnabled(null);
+            providerDO.setAuditStatus(null);
+            providerDO.setCreateTime(null);
+            providerDao.modify(providerDO);
+        }
     }
 
     public void closeProvider(Long id) {
@@ -57,10 +65,11 @@ public class ProviderService {
         return providerDao.findById(id);
     }
 
-    public void auditProvider(Long id, Integer auditStatus) {
+    public void auditProvider(Long id, Integer auditStatus, String auditResult) {
         ProviderDO providerDO = new ProviderDO();
         providerDO.setId(id);
         providerDO.setAuditStatus(auditStatus);
+        providerDO.setAuditResult(auditResult);
         providerDao.modify(providerDO);
     }
 
@@ -71,5 +80,16 @@ public class ProviderService {
 
     public void update(ProviderDO up) {
         providerDao.modify(up);
+    }
+
+    public void save(ProviderDO pdo) {
+        if (null == pdo.getId()) {
+            providerDao.save(pdo);
+        } else {
+            pdo.setEnabled(null);
+            pdo.setAuditStatus(null);
+            pdo.setCreateTime(null);
+            providerDao.modify(pdo);
+        }
     }
 }

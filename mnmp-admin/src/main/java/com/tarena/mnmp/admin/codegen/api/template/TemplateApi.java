@@ -19,6 +19,7 @@ package com.tarena.mnmp.admin.codegen.api.template;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.controller.template.SmsTemplateChangeParam;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
@@ -51,11 +52,9 @@ public interface TemplateApi {
         notes = ""
     )
     @PostMapping(
-        value = {"/sms/add"},
-        produces = {"application/json"},
-        consumes = {"application/json"}
+        value = {"/sms/save"}
     )
-    Result<String> addSmsTemplate(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate);
+    Result<String> save(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate);
 
     @ApiOperationSupport(order = 4002)
     @ApiOperation(
@@ -102,11 +101,7 @@ public interface TemplateApi {
         value = {"/sms/queryListByParam"},
         produces = {"application/json"}
     )
-    List<TemplateView> queryListByParam(
-        @ApiParam("根据模板名称/模板code模糊查询") @Valid @RequestParam(value = "keyword", required = false) String keyword,
-        @ApiParam("根据应用code查询") @Valid @RequestParam(value = "appCode", required = false) String appCode,
-        @ApiParam("根据消息类型查询 1:sms") @Valid @RequestParam(value = "noticeType", required = false) Integer noticeType,
-        @ApiParam("根据消息子类型查询 1:sms-短信通知 2:sms-验证码 3:sms-推广短信") @Valid @RequestParam(value = "templateType", required = false) Integer templateType);
+    List<TemplateView> queryListByParam(TemplateQuery templateQuery);
 
     @ApiOperationSupport(order = 4006)
     @ApiOperation(
@@ -144,10 +139,7 @@ public interface TemplateApi {
         notes = ""
     )
     @PostMapping({"/sms/doAudit"})
-    void doAuditSmsTemplate(
-        @NotNull @ApiParam(value = "要审核的模板id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
-        @NotNull @ApiParam(value = "审核状态 -1未通过 1通过", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus,
-        @ApiParam("审核意见") @Valid @RequestParam(value = "auditResult", required = false) String auditResult);
+    void doAuditSmsTemplate(@RequestBody AuditParam param);
 
 //    @ApiOperationSupport(order = 4101)
 //    @ApiOperation(
