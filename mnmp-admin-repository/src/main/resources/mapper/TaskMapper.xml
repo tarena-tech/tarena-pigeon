@@ -302,7 +302,7 @@
             <if test="taskStatus != null">
                 and task_status = #{taskStatus,jdbcType=INTEGER}
             </if>
-            <if  test="auditStatus != null != null">
+            <if  test="auditStatus != null">
                 and audit_status = #{auditStatus,jdbcType=INTEGER}
             </if>
         </where>
