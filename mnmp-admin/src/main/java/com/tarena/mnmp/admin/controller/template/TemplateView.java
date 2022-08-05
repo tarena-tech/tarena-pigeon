@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.codegen.api.template;
+package com.tarena.mnmp.admin.controller.template;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

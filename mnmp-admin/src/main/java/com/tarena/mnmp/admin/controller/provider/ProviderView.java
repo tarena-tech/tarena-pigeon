@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.codegen.api.provider;
+package com.tarena.mnmp.admin.controller.provider;
 
 import com.tarena.mnmp.domain.ProviderDO;
 import io.swagger.annotations.ApiModel;
