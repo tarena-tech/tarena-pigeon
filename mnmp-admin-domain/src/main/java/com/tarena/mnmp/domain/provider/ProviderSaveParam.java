@@ -77,6 +77,9 @@ public class ProviderSaveParam {
         example = "张三"
     )
     private String contacts;
+
+    @ApiModelProperty(value = "json配置项")
+    private String clientConfig;
     @ApiModelProperty(
         value = "联系电话",
         name = "phone",
@@ -232,5 +235,13 @@ public class ProviderSaveParam {
 
     public void setAccessKeySecret(String accessKeySecret) {
         this.accessKeySecret = accessKeySecret;
+    }
+
+    public String getClientConfig() {
+        return clientConfig;
+    }
+
+    public void setClientConfig(String clientConfig) {
+        this.clientConfig = clientConfig;
     }
 }
