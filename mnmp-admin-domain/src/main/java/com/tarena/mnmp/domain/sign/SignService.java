@@ -28,10 +28,17 @@ public class SignService {
     @Autowired
     private SignDao signDao;
 
-    public void addSign(SignSaveParam signSaveParam) {
+    public void save(SignSaveParam signSaveParam) {
         SignDO signDO = new SignDO();
         BeanUtils.copyProperties(signSaveParam, signDO);
-        signDao.save(signDO);
+        if (null == signDO.getId()) {
+            signDao.save(signDO);
+        } else {
+            signDO.setEnabled(null);
+            signDO.setAuditStatus(null);
+            signDO.setCreateTime(null);
+            signDao.modify(signDO);
+        }
     }
 
     public void closeSign(Long id) {
@@ -56,14 +63,19 @@ public class SignService {
         return signDao.querySigns(signQuery);
     }
 
-    public void auditSign(Long id, Integer status) {
+    public void auditSign(Long id, Integer status, String auditResult) {
         SignDO signDO = new SignDO();
         signDO.setId(id);
-        signDO.setAuditStatus(signDO.getAuditStatus());
+        signDO.setAuditStatus(status);
+        signDO.setAuditResult(auditResult);
         signDao.modify(signDO);
     }
 
     public Long queryCount(SignQuery query) {
         return signDao.queryCount(query);
+    }
+
+    public void modify(SignDO up) {
+        signDao.modify(up);
     }
 }

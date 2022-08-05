@@ -1,8 +1,7 @@
 <template>
   <el-drawer
     ref="drawer"
-    title="创建"
-
+    :title="windowName"
     :visible.sync="dialogVisible"
     direction="rtl"
     :close-on-press-escape="false"
@@ -15,39 +14,21 @@
     <div class="cus-drawer__content">
       <el-form ref="ruleForm" class="cus-form" :model="ruleForm" :rules="rules" label-width="100px">
 
-        <el-form-item label="模板名称" prop="name">
+        <el-form-item label="签名名称" prop="name">
           <el-input v-model="ruleForm.name" />
         </el-form-item>
-        <el-form-item label="模板编码" prop="code">
+        <el-form-item label="签名编码" prop="code">
           <el-input v-model="ruleForm.code" />
         </el-form-item>
-        <el-form-item label="模板类型" prop="templateType">
-          <com-dict :val.sync="ruleForm.templateType" dict-name="templateType" :is-all="false"/>
-        </el-form-item>
-        <el-form-item label="通知类型" prop="noticeType">
-          <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false"/>
-        </el-form-item>
-
-        <el-form-item label="应用(做成下拉框赛选)" prop="appId">
+        <el-form-item label="应用" prop="appId">
           <el-input v-model="ruleForm.appId" />
         </el-form-item>
         <el-form-item label="描述" prop="remark">
-          <el-input v-model="ruleForm.remark" type="textarea" />
+          <el-input v-model="ruleForm.remarks" type="textarea" />
         </el-form-item>
-
-
-<!--        <el-form-item label="活动名称" prop="name">-->
-<!--          <el-input v-model="ruleForm.name" />-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="活动区域" prop="region">-->
-<!--          <el-input v-model="ruleForm.name2" />-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="活动形式" prop="desc">-->
-<!--          <el-input v-model="ruleForm.desc" type="textarea" />-->
-<!--        </el-form-item>-->
       </el-form>
       <div class="cus-drawer__footer">
-        <el-button @click="cancelForm">取 消</el-button>
+        <el-button @click="cancelForm()">取 消</el-button>
         <el-button type="primary" :loading="loading" @click="submitForm()">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
       </div>
     </div>
@@ -55,16 +36,20 @@
 </template>
 
 <script>
+import {save} from "@/api/sign";
+
 export default {
-  name: 'SmsDialogCreate',
+  name: 'DialogSignSave',
   data() {
     return {
       dialogVisible: false,
+      windowName: '创建',
       loading: false,
       ruleForm: {
-        name: '',
-        name2: '',
-        desc: ''
+        name: null,
+        code: null,
+        appId: null,
+        remarks: null
       },
       rules: {
         name: [
@@ -73,14 +58,8 @@ export default {
         code: [
           { required: true, message: '请输入code码', trigger: 'blur' }
         ],
-        templateType: [
-          { required: true, message: '请选择模板类型', trigger: 'blur' }
-        ],
-        noticeType: [
-          { required: true, message: '请选择通知类型', trigger: 'blur' }
-        ],
         appId: [
-          { required: true, message: '请选择适用的应用', trigger: 'blur' }
+          { required: true, message: '请选择应用', trigger: 'blur' }
         ]
       }
     }
@@ -93,11 +72,23 @@ export default {
       this.loading = false
       // this.dialogVisible = false
       this.$refs.drawer.closeDrawer()
+      this.$emit('refresh')
+
     },
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          // TODO 假数据
+          this.ruleForm.appId = 222
+          this.ruleForm.appCode = 222
+          save(this.ruleForm)
+            .then(res => {
+              console.dir(res);
+              this.cancelForm();
+            })
+            .catch(err => {
+              console.error("create fail", err);
+            })
         } else {
           console.log('error submit!!')
           return false
@@ -107,8 +98,12 @@ export default {
     resetForm() {
       this.$refs['ruleForm'].resetFields()
     },
-    show() {
+    show(data) {
       this.dialogVisible = true
+      if (null != data) {
+        this.windowName = "修改"
+        this.ruleForm = data;
+      }
       this.$nextTick(() => {
         // TODO init
       })

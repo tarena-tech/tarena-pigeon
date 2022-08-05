@@ -17,9 +17,13 @@
 
 package com.tarena.mnmp.admin.codegen.api.provider;
 
+import com.tarena.mnmp.domain.ProviderDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import org.springframework.beans.BeanUtils;
 
 @ApiModel(value = "供应商控制层出参")
 public class ProviderView {
@@ -28,7 +32,7 @@ public class ProviderView {
         value = "主键",
         name = "id"
     )
-    private Integer id;
+    private Long id;
     @ApiModelProperty(
         value = "供应商名称",
         name = "name"
@@ -64,6 +68,10 @@ public class ProviderView {
         name = "remarks"
     )
     private String remarks;
+
+
+    private String clientConfig;
+
     @ApiModelProperty(
         value = "审核状态",
         name = "auditStatus",
@@ -87,11 +95,24 @@ public class ProviderView {
     )
     private Date updateTime;
 
-    public Integer getId() {
+    public static List<ProviderView> convert(List<ProviderDO> source) {
+        if (null == source) {
+            return new ArrayList<>();
+        }
+        List<ProviderView> list = new ArrayList<>(source.size());
+        for (ProviderDO providerDO : source) {
+            ProviderView providerView = new ProviderView();
+            BeanUtils.copyProperties(providerDO, providerView);
+            list.add(providerView);
+        }
+        return list;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -181,5 +202,13 @@ public class ProviderView {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getClientConfig() {
+        return clientConfig;
+    }
+
+    public void setClientConfig(String clientConfig) {
+        this.clientConfig = clientConfig;
     }
 }

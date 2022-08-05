@@ -31,18 +31,22 @@ import com.tarena.mnmp.domain.ttarget.TaskTargetService;
 import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Deleted;
 import com.tarena.mnmp.enums.TaskStatus;
+import com.tarena.mnmp.protocol.BusinessException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import javax.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class TaskService {
 
     @Autowired
@@ -57,14 +61,14 @@ public class TaskService {
     @Value("${excel.path}")
     private String excelPath;
 
-    public void doAudit(Long id, Integer status, String result) {
+    public void doAudit(Long id, Integer status, String result) throws BusinessException {
         TaskDO taskDO = taskDao.queryById(id);
         if (null == taskDO) {
-            return;
+            throw new BusinessException("100", "任务不存在");
         }
         taskDO.setId(id);
-        taskDO.setTaskAudit(status);
-        taskDO.setTaskAuditResult(result);
+        taskDO.setAuditStatus(status);
+        taskDO.setAuditResult(result);
         if (AuditStatus.REJECT.getStatus().intValue() == status) {
             taskDao.update(taskDO);
             return;
@@ -75,65 +79,70 @@ public class TaskService {
         taskDao.update(taskDO);
     }
 
-    public List<TargetExcelData> addTask(TaskDO bo, String filePath) {
-        bo.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
-        bo.setTaskAudit(AuditStatus.WAITING.getStatus());
-        bo.setTargetFileUrl(filePath);
-        bo.setTargetFileName(filePath.substring(filePath.lastIndexOf("/") + 1));
-        bo.setCreateTime(new Date());
-        bo.setUpdateTime(new Date());
-        taskDao.save(bo);
+    public List<TargetExcelData> addTask(TaskDO taskDO, String filePath) {
+        taskDO.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
+        taskDO.setAuditStatus(AuditStatus.WAITING.getStatus());
+        taskDO.setTargetFileUrl(filePath);
+        taskDO.setTargetFileName(filePath.substring(filePath.lastIndexOf("/") + 1));
+        taskDO.setCreateTime(new Date());
+        taskDO.setUpdateTime(new Date());
+        taskDao.save(taskDO);
         List<TargetExcelData> fails = new ArrayList<>();
-        String fullPath = excelPath + filePath;
+        String readExcelPath = excelPath + filePath;
+        log.info("addTask taskDO:{}, readExcelPath:{}", taskDO, readExcelPath);
+        try {
+            Set<String> set = new HashSet<>();
+            EasyExcel.read(readExcelPath, TargetExcelData.class, new ReadListener<TargetExcelData>() {
 
-        Set<String> set = new HashSet<>();
-        EasyExcel.read(fullPath, TargetExcelData.class, new ReadListener<TargetExcelData>() {
+                public static final int BATCH_COUNT = 100;
 
-            public static final int BATCH_COUNT = 100;
+                private List<TargetExcelData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+                @Override public void invoke(TargetExcelData data, AnalysisContext context) {
+                    cachedDataList.add(data);
+                    if (cachedDataList.size() >= BATCH_COUNT) {
+                        save();
+                    }
+                }
 
-            private List<TargetExcelData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-            @Override public void invoke(TargetExcelData data, AnalysisContext context) {
-                cachedDataList.add(data);
-                if (cachedDataList.size() >= BATCH_COUNT) {
+                @Override public void doAfterAllAnalysed(AnalysisContext context) {
                     save();
                 }
-            }
 
-            @Override public void doAfterAllAnalysed(AnalysisContext context) {
-                save();
-            }
+                private void save() {
+                    List<TaskTargetDO> list = new ArrayList<>();
+                    for (TargetExcelData old : cachedDataList) {
+                        if (!RegexUtils.checkPhone(old.getPhone())) {
+                            fails.add(old);
+                            continue;
+                        }
+                        try {
+                            json.parse(old.getParams());
+                        } catch (Exception e) {
+                            fails.add(old);
+                            continue;
+                        }
 
-            private void save() {
-                List<TaskTargetDO> list = new ArrayList<>();
-                for (TargetExcelData old : cachedDataList) {
-                    if (!RegexUtils.checkPhone(old.getPhone())) {
-                        fails.add(old);
-                        continue;
+                        if (set.contains(old.getPhone())) {
+                            continue;
+                        }
+
+                        TaskTargetDO task = new TaskTargetDO();
+                        task.setTaskId(taskDO.getId());
+                        task.setDeleted(Deleted.NO.getVal());
+                        task.setParams(old.getParams());
+                        task.setTarget(old.getPhone());
+                        list.add(task);
+                        set.add(old.getPhone());
                     }
-                    try {
-                        json.parse(old.getParams());
-                    } catch (Exception e) {
-                        fails.add(old);
-                        continue;
-                    }
-
-                    if (set.contains(old.getPhone())) {
-                        continue;
-                    }
-
-                    TaskTargetDO task = new TaskTargetDO();
-                    task.setTaskId(bo.getId());
-                    task.setDeleted(Deleted.NO.getVal());
-                    task.setParams(old.getParams());
-                    task.setTarget(old.getPhone());
-                    list.add(task);
-                    set.add(old.getPhone());
+                    taskTargetService.saveBatch(list);
+                    // 存储完成清理 list
+                    cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
                 }
-                taskTargetService.saveBatch(list);
-                // 存储完成清理 list
-                cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-            }
-        }).sheet().doRead();
+            }).sheet().doRead();
+        } catch (Exception e) {
+            taskDao.deleteById(taskDO.getId());
+        }
+
         return fails;
     }
 
@@ -145,7 +154,7 @@ public class TaskService {
     }
 
     public void updateTask(TaskDO task) {
-        task.setTaskAudit(AuditStatus.WAITING.getStatus());
+        task.setAuditStatus(AuditStatus.WAITING.getStatus());
         taskDao.update(task);
     }
 
@@ -161,9 +170,29 @@ public class TaskService {
     }
 
     public TaskDO detailById(Long id) {
-        if (null == id) {
-            return new TaskDO();
-        }
         return taskDao.queryById(id);
+    }
+
+    public void changeTaskStatus(Long id) throws BusinessException {
+        TaskDO aDo = detailById(id);
+        if (null == aDo) {
+            throw new BusinessException("100", "任务不存在");
+        }
+        int open = 0;
+        if (Objects.equals(TaskStatus.TASK_STOP.status(), aDo.getTaskStatus())
+            || Objects.equals(TaskStatus.TASK_END.status(), aDo.getTaskStatus())) {
+            open = 1;
+        }
+
+        TaskDO up = new TaskDO();
+        up.setId(id);
+        if (open == 1) {
+            up.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
+            up.setNextTriggerTime(DateUtils.generateNextTriggerTime(up.getCycleLevel(), up.getCycleNum(), new Date()));
+        } else {
+            up.setTaskStatus(TaskStatus.TASK_END.status());
+            up.setTriggerEndTime(new Date());
+        }
+        taskDao.update(up);
     }
 }

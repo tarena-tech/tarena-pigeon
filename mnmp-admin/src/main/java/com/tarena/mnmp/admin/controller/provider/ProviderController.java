@@ -19,13 +19,13 @@ package com.tarena.mnmp.admin.controller.provider;
 
 import com.tarena.mnmp.admin.codegen.api.provider.ProviderApi;
 import com.tarena.mnmp.admin.codegen.api.provider.ProviderView;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.ProviderDO;
 import com.tarena.mnmp.domain.provider.ProviderQueryParam;
 import com.tarena.mnmp.domain.provider.ProviderSaveParam;
 import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.protocol.BusinessException;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +48,12 @@ public class ProviderController implements ProviderApi {
         providerService.editProvider(providerSaveParam);
     }
 
+    @Override public void save(ProviderSaveParam param) {
+        ProviderDO pdo = new ProviderDO();
+        BeanUtils.copyProperties(param, pdo);
+        providerService.save(pdo);
+    }
+
     @Override public void openProvider(Long id) {
         providerService.openProvider(id);
     }
@@ -60,19 +66,14 @@ public class ProviderController implements ProviderApi {
 
         ProviderDO up = new ProviderDO();
         up.setId(id);
-        up.setEnabled(up.getEnabled() == 1 ? 0 : 1);
+        up.setEnabled(aDo.getEnabled() == 1 ? 0 : 1);
         providerService.update(up);
     }
 
-    @Override public PagerResult<ProviderView> queryList(ProviderQueryParam param) {
+    @Override public PagerResult<ProviderView> queryPage(ProviderQueryParam param) {
         List<ProviderDO> providerDOs = providerService.queryList(param);
         Long count = providerService.queryCount(param);
-        List<ProviderView> providerViews = new ArrayList<>(providerDOs.size());
-        for (ProviderDO providerDO : providerDOs) {
-            ProviderView providerView = new ProviderView();
-            BeanUtils.copyProperties(providerDO, providerView);
-            providerViews.add(providerView);
-        }
+        List<ProviderView> providerViews = ProviderView.convert(providerDOs);
         PagerResult<ProviderView> pagerResult = new PagerResult<ProviderView>(param.getPageSize(), param.getCurrentPageIndex());
         pagerResult.setList(providerViews);
         pagerResult.setRecordCount(count);
@@ -86,8 +87,8 @@ public class ProviderController implements ProviderApi {
         return providerView;
     }
 
-    @Override public void auditProvider(Long id, Integer auditStatus) {
-        providerService.auditProvider(id,auditStatus);
+    @Override public void auditProvider(AuditParam param) {
+        providerService.auditProvider(param.getId(), param.getAuditStatus(), param.getAuditResult());
     }
 
 }

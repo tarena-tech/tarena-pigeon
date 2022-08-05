@@ -19,11 +19,13 @@ package com.tarena.mnmp.admin.controller.sign;
 
 import com.tarena.mnmp.admin.codegen.api.sign.SignApi;
 import com.tarena.mnmp.admin.codegen.api.sign.SignView;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SignDO;
 import com.tarena.mnmp.domain.sign.SignQuery;
 import com.tarena.mnmp.domain.sign.SignSaveParam;
 import com.tarena.mnmp.domain.sign.SignService;
+import com.tarena.mnmp.protocol.BusinessException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
@@ -35,20 +37,25 @@ public class SignController implements SignApi {
     @Autowired
     private SignService signService;
 
-    @Override public void addSign(SignSaveParam signSaveParam) {
-        signService.addSign(signSaveParam);
-    }
-
-    @Override public void closeSign(Long id) {
-        signService.closeSign(id);
+    @Override public void save(SignSaveParam signSaveParam) {
+        signService.save(signSaveParam);
     }
 
     @Override public void editSign(SignSaveParam signSaveParam) {
         signService.editSign(signSaveParam);
     }
 
-    @Override public void openSign(Long id) {
-        signService.openSign(id);
+
+    @Override public void changeEnableStatus(Long id) throws BusinessException {
+        SignDO aDo = signService.querySignDetail(id);
+        if (null == aDo) {
+            throw new BusinessException("100", "签名不存在");
+        }
+
+        SignDO up = new SignDO();
+        up.setId(id);
+        up.setEnabled(aDo.getEnabled() == 1 ? 0 : 1);
+        signService.modify(up);
     }
 
     @Override public SignView querySignDetail(Long id) {
@@ -58,7 +65,7 @@ public class SignController implements SignApi {
         return signView;
     }
 
-    @Override public PagerResult<SignView> querySignList(SignQuery signQuery) {
+    @Override public PagerResult<SignView> queryPage(SignQuery signQuery) {
         List<SignDO> signDOs = signService.querySignList(signQuery);
         Long count = signService.queryCount(signQuery);
         List<SignView> signViews = new ArrayList<>();
@@ -74,7 +81,18 @@ public class SignController implements SignApi {
         return rest;
     }
 
-    @Override public void auditSign(Long id, Integer auditStatus) {
-        signService.auditSign(id, auditStatus);
+    @Override public List<SignView> queryList(SignQuery signQuery) {
+        List<SignDO> signDOs = signService.querySignList(signQuery);
+        List<SignView> signViews = new ArrayList<>();
+        for (SignDO signDO : signDOs) {
+            SignView signView = new SignView();
+            BeanUtils.copyProperties(signDO, signView);
+            signViews.add(signView);
+        }
+        return signViews;
+    }
+
+    @Override public void auditSign(AuditParam param) {
+        signService.auditSign(param.getId(), param.getAuditStatus(), param.getAuditResult());
     }
 }

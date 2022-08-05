@@ -46,7 +46,7 @@ public class SmsTemplateParam {
     private String name;
 
     @ApiModelProperty(value = "模板类型: 0-全部，1-短信通通知，2-验证码，3-推广短信", required = true)
-    @NotBlank(message = "模板类型必填项")
+    @NotNull(message = "模板类型必填项")
     private Integer templateType;
 
     @ApiModelProperty("通知类型： 1-sms,2-email,3-wechat")

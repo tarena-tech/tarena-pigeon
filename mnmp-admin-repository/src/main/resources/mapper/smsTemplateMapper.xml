@@ -251,34 +251,35 @@
                 and deleted = 0
             </if>
         </where>
+        group by id desc
         ${limitClause};
     </select>
 
-    <select id="search" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from notice_sms_template
-        <where>
-            <if test="param1 != null and param1 != ''">
-                and ( name like concat('%',#{param1,jdbcType=VARBINARY},'%') or code like concat('%', #{param1,jdbcType=VARCHAR}, '%'))
-            </if>
-            <if test="param2 != null and param2 != ''">
-                and app_code = #{param2,jdbcType=VARCHAR}
-            </if>
+<!--    <select id="search" resultMap="BaseResultMap">-->
+<!--        select-->
+<!--        <include refid="Base_Column_List"/>-->
+<!--        from notice_sms_template-->
+<!--        <where>-->
+<!--            <if test="param1 != null and param1 != ''">-->
+<!--                and ( name like concat('%',#{param1,jdbcType=VARBINARY},'%') or code like concat('%', #{param1,jdbcType=VARCHAR}, '%'))-->
+<!--            </if>-->
+<!--            <if test="param2 != null and param2 != ''">-->
+<!--                and app_code = #{param2,jdbcType=VARCHAR}-->
+<!--            </if>-->
 
-            <if test="param3 != null">
-                and notice_type = #{param3,jdbcType=INTEGER}
-            </if>
+<!--            <if test="param3 != null">-->
+<!--                and notice_type = #{param3,jdbcType=INTEGER}-->
+<!--            </if>-->
 
-            <if test="param4 != null">
-                and template_type = #{param4,jdbcType=INTEGER}
-            </if>
-            <if test="true">
-                and deleted = 0
-            </if>
-        </where>
-        limit 100;
-    </select>
+<!--            <if test="param4 != null">-->
+<!--                and template_type = #{param4,jdbcType=INTEGER}-->
+<!--            </if>-->
+<!--            <if test="true">-->
+<!--                and deleted = 0-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        limit 100;-->
+<!--    </select>-->
 
     <select id="queryCount" resultType="java.lang.Long">
         select

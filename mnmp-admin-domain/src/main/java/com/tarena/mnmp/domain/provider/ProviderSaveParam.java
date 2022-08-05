@@ -28,7 +28,7 @@ public class ProviderSaveParam {
         required = false,
         example = "1"
     )
-    private Integer id;
+    private Long id;
     @ApiModelProperty(
         value = "供应商名称",
         name = "name",
@@ -77,6 +77,9 @@ public class ProviderSaveParam {
         example = "张三"
     )
     private String contacts;
+
+    @ApiModelProperty(value = "json配置项")
+    private String clientConfig;
     @ApiModelProperty(
         value = "联系电话",
         name = "phone",
@@ -130,11 +133,11 @@ public class ProviderSaveParam {
 
     private Date updateTime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -232,5 +235,13 @@ public class ProviderSaveParam {
 
     public void setAccessKeySecret(String accessKeySecret) {
         this.accessKeySecret = accessKeySecret;
+    }
+
+    public String getClientConfig() {
+        return clientConfig;
+    }
+
+    public void setClientConfig(String clientConfig) {
+        this.clientConfig = clientConfig;
     }
 }

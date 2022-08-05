@@ -13,10 +13,10 @@
 </template>
 <script>
 
-import {audit} from "@/api/app";
+import {audit} from "@/api/sign";
 
 export default {
-  name: 'DialogAppAudit',
+  name: 'DialogSignAudit',
   data() {
     return {
       dialogFormVisible: false,
@@ -43,13 +43,6 @@ export default {
       this.dialogFormVisible = true
       this.ruleForm.id = _id;
     },
-    cancelForm() {
-      this.loading = false
-      // this.dialogVisible = false
-      this.$refs.drawer.closeDrawer()
-      this.$emit('refresh')
-
-    },
     auditing(status) {
       this.ruleForm.auditStatus = status;
       console.dir(this.ruleForm)
@@ -58,7 +51,7 @@ export default {
           audit(this.ruleForm)
             .then(res => {
               this.dialogFormVisible = false;
-              this.cancelForm();
+              this.$emit('refresh')
             })
             .catch(err => {
               console.error('audit fial', err);

@@ -17,7 +17,7 @@
         <el-form-item label="应用名称" prop="name">
           <el-input v-model="ruleForm.name" />
         </el-form-item>
-        <el-form-item label="code" prop="code">
+        <el-form-item label="应用编码" prop="code">
           <el-input v-model="ruleForm.code" />
         </el-form-item>
         <el-form-item label="负责人" prop="leader">
@@ -31,7 +31,7 @@
         </el-form-item>
       </el-form>
       <div class="cus-drawer__footer">
-        <el-button @click="cancelForm">取 消</el-button>
+        <el-button @click="cancelForm()">取 消</el-button>
         <el-button type="primary" :loading="loading" @click="submitForm()">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
       </div>
     </div>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import {create} from "@/api/app";
+import {save} from "@/api/app";
 
 export default {
   name: 'AppDialogSave',
@@ -73,18 +73,22 @@ export default {
       this.loading = false
       // this.dialogVisible = false
       this.$refs.drawer.closeDrawer()
+      this.$emit('refresh')
+
     },
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          create(this.ruleForm)
+          save(this.ruleForm)
             .then(res => {
               console.dir(res);
+              this.$message({
+                type: 'success',
+                message: '操作成功!'
+              });
               this.cancelForm();
-              this.$emit('callback')
             })
             .catch(err => {
-              console.error("create fail", err);
             })
         } else {
           console.log('error submit!!')
@@ -97,14 +101,11 @@ export default {
     },
     show(data) {
       this.dialogVisible = true
+      this.ruleForm = {};
       if (null != data) {
         this.windowName = "修改"
         this.ruleForm = data;
       }
-
-      this.$nextTick(() => {
-        // TODO init
-      })
     }
   }
 }

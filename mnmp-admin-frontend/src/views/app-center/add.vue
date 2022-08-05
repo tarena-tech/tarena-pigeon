@@ -1,8 +1,0 @@
-<template>
-      <dev></dev>
-
-
-
-
-
-</template>

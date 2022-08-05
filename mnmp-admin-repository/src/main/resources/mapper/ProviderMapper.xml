@@ -3,60 +3,108 @@
 <mapper namespace="com.tarena.mnmp.domain.provider.ProviderDao">
 
     <resultMap type="com.tarena.mnmp.domain.ProviderDO" id="ProviderMap">
+        <!--@mbg.generated-->
         <!--@Table notice_provider-->
-        <id column="id" property="id"/>
-        <result column="code" property="code"/>
-        <result column="name" property="name"/>
-        <result column="notice_type" property="noticeType"/>
-        <result column="official_website" property="officialWebsite"/>
-        <result column="contacts" property="contacts"/>
-        <result column="phone" property="phone"/>
-        <result column="remarks" property="remarks"/>
-        <result column="audit_status" property="auditStatus"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="notice_type" jdbcType="TINYINT" property="noticeType" />
+        <result column="official_website" jdbcType="VARCHAR" property="officialWebsite" />
+        <result column="contacts" jdbcType="VARCHAR" property="contacts" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="client_config" jdbcType="VARCHAR" property="clientConfig" />
+        <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+        <result column="enabled" jdbcType="TINYINT" property="enabled" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="audit_status" jdbcType="BIGINT" property="auditStatus" />
+        <result column="audit_result" jdbcType="VARCHAR" property="auditResult" />
     </resultMap>
 
+
     <sql id="ProviderAllFields">
-        id
-        ,name
-        ,code
-        ,notice_type
-        ,official_website
-        ,contacts
-        ,phone
-        ,remarks
-        ,audit_status
-        ,enabled
-        ,create_time
-        ,update_time
+        id, `name`, code, notice_type, official_website, contacts, phone, client_config,
+        remarks, enabled, create_time, update_time, audit_status, audit_result
     </sql>
-    <insert id="save">
+    <insert id="save" keyColumn="id" keyProperty="id" parameterType="com.tarena.mnmp.domain.ProviderDO" useGeneratedKeys="true">
+        <!--@mbg.generated-->
         insert into notice_provider
-        ( name
-        , code
-        , notice_type
-        , official_website
-        , contacts
-        , phone
-        , remarks
-        , audit_status
-        , enabled
-        , create_time
-        , update_time)
-        values (
-                #{name},
-                #{code},
-                #{noticeType},
-                #{officialWebsite},
-                #{contacts},
-                #{phone},
-                #{remarks},
-                #{auditStatus},
-                #{enabled},
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="noticeType != null">
+                notice_type,
+            </if>
+            <if test="officialWebsite != null">
+                official_website,
+            </if>
+            <if test="contacts != null">
+                contacts,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="clientConfig != null">
+                client_config,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="true">
+                create_time,
+            </if>
+            <if test="true">
+                update_time,
+            </if>
+            <if test="auditStatus != null">
+                audit_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="noticeType != null">
+                #{noticeType,jdbcType=TINYINT},
+            </if>
+            <if test="officialWebsite != null">
+                #{officialWebsite,jdbcType=VARCHAR},
+            </if>
+            <if test="contacts != null">
+                #{contacts,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="clientConfig != null">
+                #{clientConfig,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=TINYINT},
+            </if>
+            <if test="true">
                 now(),
-                now()
-               )
+            </if>
+            <if test="true">
+                now(),
+            </if>
+            <if test="auditStatus != null">
+                #{auditStatus,jdbcType=BIGINT},
+            </if>
+        </trim>
     </insert>
     <select id="queryByParam" resultMap="ProviderMap">
         select
@@ -70,6 +118,7 @@
                 and code = #{code,jdbcType=VARCHAR}
             </if>
         </where>
+        order by id desc
         ${limitClause}
     </select>
 
@@ -104,41 +153,50 @@
             enabled=1,update_time=now()
         where id=#{id}
     </update>
-    <update id="modify">
+    <update id="modify" parameterType="com.tarena.mnmp.domain.ProviderDO">
         update notice_provider
         <set>
-            <if test="name!=null">
-                name=#{name},
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
             </if>
-            <if test="code!=null">
-                code=#{code},
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
             </if>
-            <if test="noticeType!=null">
-                notice_type=#{noticeType},
+            <if test="noticeType != null">
+                notice_type = #{noticeType,jdbcType=TINYINT},
             </if>
-            <if test="officialWebsite!=null">
-                official_website=#{officialWebsite},
+            <if test="officialWebsite != null">
+                official_website = #{officialWebsite,jdbcType=VARCHAR},
             </if>
-            <if test="contacts!=null">
-                contacts=#{contacts},
+            <if test="contacts != null">
+                contacts = #{contacts,jdbcType=VARCHAR},
             </if>
-            <if test="phone!=null">
-                phone=#{phone},
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
             </if>
-            <if test="remarks!=null">
-                remarks=#{remarks},
+            <if test="clientConfig != null">
+                client_config = #{clientConfig,jdbcType=VARCHAR},
             </if>
-            <if test="auditStatus!=null">
-                audit_status=#{auditStatus},
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
             </if>
             <if test="enabled != null">
-                enabled = #{enabled,jdbcType=INTEGER}
+                enabled = #{enabled,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
             <if test="true">
-                update_time=now()
+                update_time = now(),
+            </if>
+            <if test="auditStatus != null">
+                audit_status = #{auditStatus,jdbcType=BIGINT},
+            </if>
+            <if test="auditResult != null">
+                audit_result = #{auditResult,jdbcType=VARCHAR},
             </if>
         </set>
-        where id=#{id}
+        where id = #{id,jdbcType=BIGINT}
     </update>
 
 

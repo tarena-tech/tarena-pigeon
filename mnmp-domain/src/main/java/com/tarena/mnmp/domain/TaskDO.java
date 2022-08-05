@@ -141,9 +141,9 @@ public class TaskDO {
      */
     private Date updateTime;
 
-    private Integer taskAudit;
+    private Integer auditStatus;
 
-    private String taskAuditResult;
+    private String auditResult;
 
     public Long getId() {
         return id;
@@ -337,19 +337,51 @@ public class TaskDO {
         this.updateTime = updateTime;
     }
 
-    public Integer getTaskAudit() {
-        return taskAudit;
+    public Integer getAuditStatus() {
+        return auditStatus;
     }
 
-    public void setTaskAudit(Integer taskAudit) {
-        this.taskAudit = taskAudit;
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
     }
 
-    public String getTaskAuditResult() {
-        return taskAuditResult;
+    public String getAuditResult() {
+        return auditResult;
     }
 
-    public void setTaskAuditResult(String taskAuditResult) {
-        this.taskAuditResult = taskAuditResult;
+    public void setAuditResult(String auditResult) {
+        this.auditResult = auditResult;
+    }
+
+    @Override public String toString() {
+        return "TaskDO{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", taskStatus=" + taskStatus +
+            ", taskType=" + taskType +
+            ", noticeType=" + noticeType +
+            ", templateId=" + templateId +
+            ", signId=" + signId +
+            ", appId=" + appId +
+            ", cycleLevel=" + cycleLevel +
+            ", cycleNum=" + cycleNum +
+            ", firstTriggerTime=" + firstTriggerTime +
+            ", triggerEndTime=" + triggerEndTime +
+            ", nextTriggerTime=" + nextTriggerTime +
+            ", targetType=" + targetType +
+            ", targetFileName='" + targetFileName + '\'' +
+            ", targetFileUrl='" + targetFileUrl + '\'' +
+            ", creator=" + creator +
+            ", creatorEmail='" + creatorEmail + '\'' +
+            ", creatorName='" + creatorName + '\'' +
+            ", deptId=" + deptId +
+            ", remark='" + remark + '\'' +
+            ", error='" + error + '\'' +
+            ", createTime=" + createTime +
+            ", updateTime=" + updateTime +
+            ", auditStatus=" + auditStatus +
+            ", auditResult='" + auditResult + '\'' +
+            '}';
     }
 }
+

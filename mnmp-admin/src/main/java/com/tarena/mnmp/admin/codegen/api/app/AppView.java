@@ -17,9 +17,14 @@
 
 package com.tarena.mnmp.admin.codegen.api.app;
 
+import com.github.xiaoymin.knife4j.annotations.Ignore;
+import com.tarena.mnmp.domain.AppDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import org.springframework.beans.BeanUtils;
 
 @ApiModel(value = "应用控制层出参")
 public class AppView {
@@ -145,4 +150,16 @@ public class AppView {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    @Ignore
+    public static List<AppView> convert(List<AppDO> source) {
+        List<AppView> list = new ArrayList<>();
+        for (AppDO appDO : source) {
+            AppView appVO = new AppView();
+            BeanUtils.copyProperties(appDO, appVO);
+            list.add(appVO);
+        }
+        return list;
+    }
+
 }

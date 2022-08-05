@@ -62,7 +62,7 @@ public class TaskParam {
 
 
     @ApiModelProperty(value = "创建人", required = true)
-    @NotBlank(message = "创建人为必填项")
+//    @NotBlank(message = "创建人为必填项")
     private String creatorName;
 
 

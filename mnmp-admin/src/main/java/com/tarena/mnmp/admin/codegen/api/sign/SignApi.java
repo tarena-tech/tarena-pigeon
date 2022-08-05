@@ -18,12 +18,15 @@
 package com.tarena.mnmp.admin.codegen.api.sign;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.sign.SignSaveParam;
 import com.tarena.mnmp.domain.sign.SignQuery;
+import com.tarena.mnmp.protocol.BusinessException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -48,21 +51,10 @@ public interface SignApi {
         response = String.class
     )
     @PostMapping(
-        value = {"/add"},
-        produces = {"application/json"},
-        consumes = {"application/json"}
+        value = {"/save"}
     )
-    void addSign(@ApiParam(value = "新增签名", required = true) @Valid @RequestBody SignSaveParam signParam);
+    void save(@ApiParam(value = "新增签名", required = true) @Valid @RequestBody SignSaveParam signParam);
 
-    @ApiOperationSupport(order = 3002)
-    @ApiOperation(
-        value = "关闭签名",
-        nickname = "closeSign",
-        notes = ""
-    )
-    @PostMapping({"/close"})
-    void closeSign(
-        @NotNull @ApiParam(value = "要关闭的签名", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
     @ApiOperationSupport(order = 3003)
     @ApiOperation(
@@ -78,15 +70,9 @@ public interface SignApi {
     )
     void editSign(@ApiParam(value = "编辑签名", required = true) @Valid @RequestBody SignSaveParam signParam);
 
-    @ApiOperationSupport(order = 3004)
-    @ApiOperation(
-        value = "开启签名",
-        nickname = "openSign",
-        notes = ""
-    )
-    @PostMapping({"/open"})
-    void openSign(
-        @NotNull @ApiParam(value = "要开启的签名id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+
+    @PostMapping("change/enable/status")
+    void changeEnableStatus(Long id) throws BusinessException;
 
     @ApiOperationSupport(order = 3005)
     @ApiOperation(
@@ -111,18 +97,18 @@ public interface SignApi {
         responseContainer = "List"
     )
     @GetMapping(
-        value = {"/queryList"},
-        produces = {"application/json"}
+        value = {"/queryPage"}
     )
-    PagerResult<SignView> querySignList(@ApiParam(value = "签名查询入参")SignQuery signQuery);
+    PagerResult<SignView> queryPage(@ApiParam(value = "签名查询入参")SignQuery signQuery);
+
+    @GetMapping(
+        value = {"/queryList"}
+    )
+    List<SignView> queryList(@ApiParam(value = "签名查询入参")SignQuery signQuery);
 
     /**
      * 审核签名
-     * @param id
-     * @param auditStatus
      */
-    public void auditSign(
-        @NotNull @ApiParam(value = "签名id", required = true) @Valid @RequestParam(value = "id", required = true) Long id,
-        @NotNull @ApiParam(value = "审核结果", required = true) @Valid @RequestParam(value = "auditStatus", required = true) Integer auditStatus
-    );
+    @PostMapping("audit")
+    void auditSign(@RequestBody AuditParam param);
 }
