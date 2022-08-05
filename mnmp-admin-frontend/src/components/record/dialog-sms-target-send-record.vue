@@ -56,8 +56,6 @@
 
       </tmp-table-pagination>
     </div>
-    <dialog-task-audit ref="DialogTaskAudit" @refresh="refresh" />
-    <dialog-task-save ref="DialogTaskSave" @refresh="refresh"/>
   </div>
 </template>
 
@@ -91,21 +89,14 @@ export default {
   computed: {},
   watch: {},
   mounted() {
-    this.claForm.eqTarget = this.$route.params.target;
-    this.claForm.taskId = this.$route.params.taskId;
+    this.claForm.eqTarget = this.$route.query.target;
+    this.claForm.taskId = this.$route.query.taskId;
     this.getTabelData()
   },
   created() {},
   methods: {
-    handleClick(row) {
-      this.$message('点击了按钮！')
-      console.log('click-row-data:', row)
-    },
     resetForm() {
       this.$refs.claFrom.resetFields()
-    },
-    refresh() {
-      this.toResetPageForList();
     },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)

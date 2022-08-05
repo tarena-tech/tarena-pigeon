@@ -244,10 +244,10 @@ export default {
       })
     },
     jump(_id) {
-      this.$router.push({name: 'detail', params: {id : _id}});
+      this.$router.push({name: 'detail', query: {id : _id}});
     },
     target(_id) {
-      this.$router.push({name: 'targets', params: {id : _id}});
+      this.$router.push({name: 'targets', query: {id : _id}});
     },
 
     // 重置页码并搜索

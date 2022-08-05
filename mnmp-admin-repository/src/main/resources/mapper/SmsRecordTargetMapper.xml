@@ -161,7 +161,7 @@
         from notice_sms_record_target
         <where>
             <if test="eqTarget != null and eqTarget != ''">
-                target = #{target,jdbcType=VARCHAR}
+                target = #{eqTarget,jdbcType=VARCHAR}
             </if>
             <if test="target != null and target != ''">
                 and target like concat('%', #{target,jdbcType=VARCHAR}, '%')

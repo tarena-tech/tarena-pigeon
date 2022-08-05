@@ -85,7 +85,7 @@ export default {
   computed: {},
   watch: {},
   mounted() {
-    this.claForm.taskId = this.$route.params.id;
+    this.claForm.taskId = this.$route.query.id;
     this.getTabelData()
   },
   created() {},
@@ -119,7 +119,9 @@ export default {
     },
 
     jumpSendRecord(data) {
-      this.$router.push({name: 'records', params: {target : data.target, taskId: data.taskId}});
+      // this.$router.push({name: 'records', params: {target : data.target, taskId: data.taskId}});
+      this.$router.push({name: 'records', query: {target : data.target, taskId: data.taskId}});
+
     },
 
 

@@ -105,7 +105,7 @@ export default {
     }
   },
   mounted() {
-    this.getDetail(this.$route.params.id)
+    this.getDetail(this.$route.query.id)
 
   },
   methods: {
