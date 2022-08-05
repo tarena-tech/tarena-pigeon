@@ -28,7 +28,7 @@ public class ProviderSaveParam {
         required = false,
         example = "1"
     )
-    private Integer id;
+    private Long id;
     @ApiModelProperty(
         value = "供应商名称",
         name = "name",
@@ -130,11 +130,11 @@ public class ProviderSaveParam {
 
     private Date updateTime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
