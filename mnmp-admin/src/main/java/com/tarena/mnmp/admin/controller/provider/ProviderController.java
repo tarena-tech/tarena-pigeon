@@ -26,7 +26,6 @@ import com.tarena.mnmp.domain.provider.ProviderQueryParam;
 import com.tarena.mnmp.domain.provider.ProviderSaveParam;
 import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.protocol.BusinessException;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
