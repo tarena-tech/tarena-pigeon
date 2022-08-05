@@ -143,9 +143,6 @@
                 task_id = #{taskId,jdbcType=BIGINT}
             </if>
             <if test="phone != null and phone != ''">
-                and target = #{phone,jdbcType=VARCHAR}
-            </if>
-            <if test="phone != null and phone != ''">
                 and target like concat('%', #{phone,jdbcType=VARCHAR}, '%')
             </if>
         </where>
