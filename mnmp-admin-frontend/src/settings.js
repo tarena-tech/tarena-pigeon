@@ -154,6 +154,6 @@ module.exports = {
         value: '3',
         label: '发送给目标成功'
       },
-    ]
+    ],
   }
 }
