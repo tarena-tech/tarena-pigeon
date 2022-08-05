@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.admin.controller.ttarget;
+package com.tarena.mnmp.admin.controller.task;
 
 import com.tarena.mnmp.domain.TaskTargetDO;
 import java.util.ArrayList;

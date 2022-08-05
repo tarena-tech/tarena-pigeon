@@ -234,9 +234,6 @@ export default {
       }
       window.open(url)
     },
-    details(id) {
-
-    },
     queryApps(param) {
       queryAppList({name: param})
         .then(res => {

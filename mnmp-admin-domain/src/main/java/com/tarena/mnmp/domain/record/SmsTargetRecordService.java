@@ -14,8 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.domain.record;
 
-package com.tarena.mnmp.admin.codegen.api.record;
+import com.tarena.mnmp.domain.SmsRecordTargetDO;
+import java.util.List;
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
-public interface RecordApi {
+@Service
+public class SmsTargetRecordService {
+
+    @Resource
+    private SmsTargetRecordDao smsTargetRecordDao;
+
+    public List<SmsRecordTargetDO> queryList(SmsTargetRecordParam param) {
+        return smsTargetRecordDao.queryList(param);
+    }
+
+    public Long count(SmsTargetRecordParam param) {
+        return smsTargetRecordDao.queryCount(param);
+    }
 }

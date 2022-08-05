@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tarena.mnmp.domain.ttarget.TaskTargetDAO">
+<mapper namespace="com.tarena.mnmp.domain.task.TaskTargetDAO">
     <resultMap id="BaseResultMap" type="com.tarena.mnmp.domain.TaskTargetDO">
         <!--@mbg.generated-->
         <!--@Table notice_task_target-->

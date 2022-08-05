@@ -14,29 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.domain.ttarget;
+package com.tarena.mnmp.domain.task;
 
 import com.tarena.mnmp.domain.TaskTargetDO;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class TaskTargetService {
+public interface TaskTargetDAO {
+    int deleteByPrimaryKey(Long id);
 
+    int insert(TaskTargetDO record);
 
-    @Autowired
-    private TaskTargetDAO taskTargetDAO;
+    int insertSelective(TaskTargetDO record);
 
-    public void saveBatch(List<TaskTargetDO> list) {
-        taskTargetDAO.insertBatch(list);
-    }
+    TaskTargetDO selectByPrimaryKey(Long id);
 
-    public List<TaskTargetDO> queryList(TaskTargetParam param) {
-        return taskTargetDAO.queryList(param);
-    }
+    int updateByPrimaryKeySelective(TaskTargetDO record);
 
-    public Long count(TaskTargetParam param) {
-        return taskTargetDAO.count(param);
-    }
+    int updateByPrimaryKey(TaskTargetDO record);
+
+    int insertBatch(List<TaskTargetDO> list);
+
+    List<TaskTargetDO> queryList(TaskTargetParam param);
+
+    Long count(TaskTargetParam param);
 }

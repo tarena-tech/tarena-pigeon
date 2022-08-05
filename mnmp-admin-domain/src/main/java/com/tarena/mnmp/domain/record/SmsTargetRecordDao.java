@@ -14,27 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.domain.ttarget;
+package com.tarena.mnmp.domain.record;
 
-import com.tarena.mnmp.domain.TaskTargetDO;
+import com.tarena.mnmp.domain.SmsRecordTargetDO;
 import java.util.List;
 
-public interface TaskTargetDAO {
-    int deleteByPrimaryKey(Long id);
+public interface SmsTargetRecordDao {
 
-    int insert(TaskTargetDO record);
+    List<SmsRecordTargetDO> queryList(SmsTargetRecordParam param);
 
-    int insertSelective(TaskTargetDO record);
-
-    TaskTargetDO selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(TaskTargetDO record);
-
-    int updateByPrimaryKey(TaskTargetDO record);
-
-    int insertBatch(List<TaskTargetDO> list);
-
-    List<TaskTargetDO> queryList(TaskTargetParam param);
-
-    Long count(TaskTargetParam param);
+    Long queryCount(SmsTargetRecordParam param);
 }

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.domain.ttarget;
+package com.tarena.mnmp.domain.task;
 
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
