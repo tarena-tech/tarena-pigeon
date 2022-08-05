@@ -166,6 +166,9 @@
             <if test="target != null and target != ''">
                 and target like concat('%', #{target,jdbcType=VARCHAR}, '%')
             </if>
+            <if test="taskId != null">
+                and task_id = #{taskId,jdbcType=BIGINT}
+            </if>
         </where>
         ${limitClause}
     </select>
@@ -180,6 +183,9 @@
             </if>
             <if test="target != null and target != ''">
                 and target like concat('%', #{target,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="taskId != null">
+                and task_id = #{taskId,jdbcType=BIGINT}
             </if>
         </where>
     </select>

@@ -91,7 +91,8 @@ export default {
   computed: {},
   watch: {},
   mounted() {
-    this.claForm.taskId = this.$route.params.phone;
+    this.claForm.eqTarget = this.$route.params.target;
+    this.claForm.taskId = this.$route.params.taskId;
     this.getTabelData()
   },
   created() {},
@@ -122,10 +123,6 @@ export default {
           console.log('list-err:', err)
           this.$refs.tmp_table.loadingState(false)
         })
-    },
-
-    jumpSendRecord(_id) {
-
     },
 
 

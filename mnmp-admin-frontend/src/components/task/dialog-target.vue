@@ -43,7 +43,7 @@
 
         <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="jumpSendRecord(scope.row.target)">
+            <el-button type="text" size="small" @click="jumpSendRecord(scope.row)">
               发送明细
             </el-button>
           </template>
@@ -118,8 +118,8 @@ export default {
         })
     },
 
-    jumpSendRecord(_phone) {
-      this.$router.push({name: 'records', params: {phone : _phone}});
+    jumpSendRecord(data) {
+      this.$router.push({name: 'records', params: {target : data.target, taskId: data.taskId}});
     },
 
 

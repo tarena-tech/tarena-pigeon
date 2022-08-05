@@ -30,4 +30,7 @@ public class SmsTargetRecordParam extends PagerResult {
 
     @ApiModelProperty("手机号，该字段为模糊搜索")
     private String target;
+
+    @ApiModelProperty("任务id")
+    private Long taskId;
 }
