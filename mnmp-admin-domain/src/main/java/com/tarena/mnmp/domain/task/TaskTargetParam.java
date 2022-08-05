@@ -14,21 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.domain.ttarget;
+package com.tarena.mnmp.domain.task;
 
-import com.tarena.mnmp.domain.TaskTargetDO;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.tarena.mnmp.commons.pager.PagerResult;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
-@Service
-public class TaskTargetService {
+@Data
+@ApiModel(value = "任务目标数据模型")
+public class TaskTargetParam extends PagerResult {
 
+    @ApiModelProperty(value = "任务id")
+    private Long taskId;
 
-    @Autowired
-    private TaskTargetDAO taskTargetDAO;
+    @ApiModelProperty(value = "目标电话")
+    private String phone;
 
-    public void saveBatch(List<TaskTargetDO> list) {
-        taskTargetDAO.insertBatch(list);
-    }
 }

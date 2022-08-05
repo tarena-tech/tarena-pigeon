@@ -14,8 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.domain.task;
 
-package com.tarena.mnmp.admin.codegen.api.targets;
+import com.tarena.mnmp.domain.TaskTargetDO;
+import java.util.List;
 
-public interface TargetApi {
+public interface TaskTargetDAO {
+    int deleteByPrimaryKey(Long id);
+
+    int insert(TaskTargetDO record);
+
+    int insertSelective(TaskTargetDO record);
+
+    TaskTargetDO selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(TaskTargetDO record);
+
+    int updateByPrimaryKey(TaskTargetDO record);
+
+    int insertBatch(List<TaskTargetDO> list);
+
+    List<TaskTargetDO> queryList(TaskTargetParam param);
+
+    Long count(TaskTargetParam param);
 }

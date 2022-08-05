@@ -41,6 +41,7 @@ export default {
   methods: {
     show(_id) {
       this.dialogFormVisible = true
+      this.ruleForm = {}
       this.ruleForm.id = _id;
     },
     auditing(status) {

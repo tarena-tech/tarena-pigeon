@@ -37,10 +37,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Validated
-@Api(
-    value = "app",
-    tags = "应用管理"
-)
+@Api(value = "app", tags = "应用管理")
 @RequestMapping("/app")
 public interface AppApi {
     /**
@@ -49,7 +46,7 @@ public interface AppApi {
      * @param appSaveParam
      */
     @ApiOperationSupport(order = 1001)
-    @ApiOperation(value = "新增应用", nickname = "save")
+    @ApiOperation(value = "新增/修改 应用", nickname = "save")
     @PostMapping("save")
     @ApiParam(name = "appSaveParam", value = "新增应用", required = true)
     void save(@Valid @RequestBody AppSaveParam appSaveParam);

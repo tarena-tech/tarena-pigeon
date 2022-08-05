@@ -1,132 +1,164 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tarena.mnmp.domain.ttarget.TaskTargetDAO">
-  <resultMap id="BaseResultMap" type="com.tarena.mnmp.domain.TaskTargetDO">
-    <!--@mbg.generated-->
-    <!--@Table notice_task_target-->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="task_id" jdbcType="INTEGER" property="taskId" />
-    <result column="target" jdbcType="VARCHAR" property="target" />
-    <result column="params" jdbcType="VARCHAR" property="params" />
-    <result column="deleted" jdbcType="BOOLEAN" property="deleted" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, task_id, target, params, deleted, create_time, update_time
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from notice_task_target
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    <!--@mbg.generated-->
-    delete from notice_task_target
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.tarena.mnmp.domain.TaskTargetDO" useGeneratedKeys="true">
-    insert into notice_task_target (task_id, target, params,
-      deleted, create_time, update_time
-      )
-    values (#{taskId,jdbcType=INTEGER}, #{target,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR}, 
-      #{deleted,jdbcType=BOOLEAN}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.tarena.mnmp.domain.TaskTargetDO" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into notice_task_target
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="taskId != null">
+<mapper namespace="com.tarena.mnmp.domain.task.TaskTargetDAO">
+    <resultMap id="BaseResultMap" type="com.tarena.mnmp.domain.TaskTargetDO">
+        <!--@mbg.generated-->
+        <!--@Table notice_task_target-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="task_id" jdbcType="INTEGER" property="taskId"/>
+        <result column="target" jdbcType="VARCHAR" property="target"/>
+        <result column="params" jdbcType="VARCHAR" property="params"/>
+        <result column="deleted" jdbcType="BOOLEAN" property="deleted"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
         task_id,
-      </if>
-      <if test="target != null">
         target,
-      </if>
-      <if test="params != null">
         params,
-      </if>
-      <if test="deleted != null">
         deleted,
-      </if>
-      <if test="createTime != null">
         create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="taskId != null">
-        #{taskId,jdbcType=INTEGER},
-      </if>
-      <if test="target != null">
-        #{target,jdbcType=VARCHAR},
-      </if>
-      <if test="params != null">
-        #{params,jdbcType=VARCHAR},
-      </if>
-      <if test="deleted != null">
-        #{deleted,jdbcType=BOOLEAN},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tarena.mnmp.domain.TaskTargetDO">
-    <!--@mbg.generated-->
-    update notice_task_target
-    <set>
-      <if test="taskId != null">
-        task_id = #{taskId,jdbcType=INTEGER},
-      </if>
-      <if test="target != null">
-        target = #{target,jdbcType=VARCHAR},
-      </if>
-      <if test="params != null">
-        params = #{params,jdbcType=VARCHAR},
-      </if>
-      <if test="deleted != null">
-        deleted = #{deleted,jdbcType=BOOLEAN},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.tarena.mnmp.domain.TaskTargetDO">
-    <!--@mbg.generated-->
-    update notice_task_target
-    set task_id = #{taskId,jdbcType=INTEGER},
-      target = #{target,jdbcType=VARCHAR},
-      params = #{params,jdbcType=VARCHAR},
-      deleted = #{deleted,jdbcType=BOOLEAN},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+        update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from notice_task_target
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete
+        from notice_task_target
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.tarena.mnmp.domain.TaskTargetDO"
+            useGeneratedKeys="true">
+        insert into notice_task_target (task_id, target, params,
+                                        deleted, create_time, update_time)
+        values (#{taskId,jdbcType=INTEGER}, #{target,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR},
+                #{deleted,jdbcType=BOOLEAN}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.tarena.mnmp.domain.TaskTargetDO"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into notice_task_target
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">
+                task_id,
+            </if>
+            <if test="target != null">
+                target,
+            </if>
+            <if test="params != null">
+                params,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">
+                #{taskId,jdbcType=INTEGER},
+            </if>
+            <if test="target != null">
+                #{target,jdbcType=VARCHAR},
+            </if>
+            <if test="params != null">
+                #{params,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BOOLEAN},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tarena.mnmp.domain.TaskTargetDO">
+        <!--@mbg.generated-->
+        update notice_task_target
+        <set>
+            <if test="taskId != null">
+                task_id = #{taskId,jdbcType=INTEGER},
+            </if>
+            <if test="target != null">
+                target = #{target,jdbcType=VARCHAR},
+            </if>
+            <if test="params != null">
+                params = #{params,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BOOLEAN},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tarena.mnmp.domain.TaskTargetDO">
+        <!--@mbg.generated-->
+        update notice_task_target
+        set task_id     = #{taskId,jdbcType=INTEGER},
+            target      = #{target,jdbcType=VARCHAR},
+            params      = #{params,jdbcType=VARCHAR},
+            deleted     = #{deleted,jdbcType=BOOLEAN},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 
-  <insert id="insertBatch">
-    insert into notice_task_target (task_id, target, params,
-                                    deleted, create_time, update_time)
-    values
-    <foreach collection="list" item="item" index="index" separator=",">
-        (#{item.taskId,jdbcType=BIGINT}, #{item.target,jdbcType=VARCHAR}, #{item.params,jdbcType=VARCHAR},
-        #{item.deleted,jdbcType=INTEGER}, now(), now())
-    </foreach>
+    <insert id="insertBatch">
+        insert into notice_task_target (task_id, target, params,
+                                        deleted, create_time, update_time)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.taskId,jdbcType=BIGINT}, #{item.target,jdbcType=VARCHAR}, #{item.params,jdbcType=VARCHAR},
+             #{item.deleted,jdbcType=INTEGER}, now(), now())
+        </foreach>
+    </insert>
 
+    <select id="queryList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from notice_task_target
+        <where>
+            <if test="taskId != null">
+                task_id = #{taskId,jdbcType=BIGINT}
+            </if>
+            <if test="phone != null and phone != ''">
+                and target like concat('%', #{phone,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+        ${limitClause}
+    </select>
 
-
-  </insert>
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from notice_task_target
+        <where>
+            <if test="taskId != null">
+                task_id = #{taskId,jdbcType=BIGINT}
+            </if>
+            <if test="phone != null and phone != ''">
+                and target like concat('%', #{phone,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </select>
 </mapper>

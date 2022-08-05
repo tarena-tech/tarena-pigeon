@@ -26,7 +26,6 @@ import com.tarena.mnmp.domain.provider.ProviderQueryParam;
 import com.tarena.mnmp.domain.provider.ProviderSaveParam;
 import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.protocol.BusinessException;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,12 +73,7 @@ public class ProviderController implements ProviderApi {
     @Override public PagerResult<ProviderView> queryPage(ProviderQueryParam param) {
         List<ProviderDO> providerDOs = providerService.queryList(param);
         Long count = providerService.queryCount(param);
-        List<ProviderView> providerViews = new ArrayList<>(providerDOs.size());
-        for (ProviderDO providerDO : providerDOs) {
-            ProviderView providerView = new ProviderView();
-            BeanUtils.copyProperties(providerDO, providerView);
-            providerViews.add(providerView);
-        }
+        List<ProviderView> providerViews = ProviderView.convert(providerDOs);
         PagerResult<ProviderView> pagerResult = new PagerResult<ProviderView>(param.getPageSize(), param.getCurrentPageIndex());
         pagerResult.setList(providerViews);
         pagerResult.setRecordCount(count);

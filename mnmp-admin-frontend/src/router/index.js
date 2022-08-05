@@ -79,7 +79,7 @@ export const constantRoutes = [
         path: 'app',
         name: 'App',
         component: () => import('@/views/app-center/app'),
-        meta: { title: '应用', icon: 'table' }
+        meta: { title: '应用管理', icon: 'table' }
       }
     ]
   },
@@ -142,6 +142,20 @@ export const constantRoutes = [
         name: 'detail',
         component: () => import('@/components/task/dialog-detail'),
         meta: { title: '详情', icon: 'table' },
+        hidden: true
+      },
+      {
+        path: 'task/targets',
+        name: 'targets',
+        component: () => import('@/components/task/dialog-target'),
+        meta: { title: '执行明细', icon: 'table' },
+        hidden: true
+      },
+      {
+        path: 'task/target/records',
+        name: 'records',
+        component: () => import('@/components/record/dialog-sms-target-send-record'),
+        meta: { title: '发送明细', icon: 'table' },
         hidden: true
       },
 

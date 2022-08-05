@@ -14,8 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.domain.record;
 
-package com.tarena.mnmp.admin.codegen.api.record;
+import com.tarena.mnmp.domain.SmsRecordTargetDO;
+import java.util.List;
 
-public interface RecordApi {
+public interface SmsTargetRecordDao {
+
+    List<SmsRecordTargetDO> queryList(SmsTargetRecordParam param);
+
+    Long queryCount(SmsTargetRecordParam param);
 }

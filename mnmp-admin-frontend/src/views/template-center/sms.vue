@@ -8,50 +8,23 @@
     >
       <div class="form-container">
         <div class="form-left-box">
-          <el-form-item
-            prop="templateName"
-            label="模板名称"
-          >
-            <el-input
-              v-model.trim="claForm.templateName"
-              placeholder=""
-              style="width: 120px"
-            />
+          <el-form-item prop="templateName" label="模板名称">
+            <el-input v-model.trim="claForm.templateName" placeholder="" style="width: 120px" />
           </el-form-item>
-          <el-form-item
-            prop="templateCode"
-            label="模板code"
-          >
-            <el-input
-              v-model.trim="claForm.templateCode"
-              placeholder=""
-              style="width: 120px"
-            />
+          <el-form-item prop="templateCode" label="模板编码" >
+            <el-input v-model.trim="claForm.templateCode" placeholder="" style="width: 120px" />
           </el-form-item>
-          <el-form-item
-            prop="appCode"
-            label="审核"
-          >
+          <el-form-item prop="auditStatus" label="审核">
             <com-dict :val.sync="claForm.auditStatus" dict-name="auditOpts" :is-all="true"/>
           </el-form-item>
 
           <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              @click="toResetPageForList"
-            >查询
-            </el-button>
-            <el-button
-              type="default"
-              icon="el-icon-delete"
-              @click="resetForm"
-            >重置
-            </el-button>
+            <el-button type="primary" icon="el-icon-search" @click="toResetPageForList">查询</el-button>
+            <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
           </el-form-item>
         </div>
         <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus"  @click="save(null)">新建</el-button>
+          <el-button type="success" icon="el-icon-plus" @click="save(null)">新建</el-button>
         </div>
       </div>
     </el-form>
@@ -66,14 +39,10 @@
         @callback="getTabelData"
       >
 
-        <el-table-column
-          prop="code"
-          label="模板code"
-        />
-        <el-table-column
-          prop="name"
-          label="模板名称"
-        />
+        <el-table-column prop="name" label="模板名称" />
+
+        <el-table-column prop="code" label="模板编码" />
+
         <el-table-column prop="templateType" label="模板类型">
           <template slot-scope="scope">
             <span v-if="scope.row.templateType === 0">全部</span>
@@ -90,7 +59,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="content" label="模板内容">
-          <template slot-scope="scope">
+          <template slot-scope="scope" v-if="scope.row.content">
             <el-popover trigger="hover" placement="top">
               <p>{{ scope.row.content }}</p>
               <div slot="reference" class="name-wrapper">
@@ -100,16 +69,10 @@
           </template>
         </el-table-column>
 
+        <el-table-column prop="useCount" label="使用次数" />
 
-        <el-table-column
-          prop="useCount"
-          label="使用次数"
-        />
+        <el-table-column prop="appCode" label="应用编码" />
 
-        <el-table-column
-          prop="appCode"
-          label="应用编码"
-        />
         <el-table-column prop="auditStatus" label="审核状态">
           <template slot-scope="scope">
             <span v-if="scope.row.auditStatus === 1">通过</span>
@@ -120,22 +83,22 @@
 
         <el-table-column prop="enabled" label="应用状态">
           <templat slot-scope="scope">
-            <span>{{scope.row.enabled === 1 ? '启用' : '禁用'}}</span>
+            <span>{{ scope.row.enabled === 1 ? '启用' : '禁用' }}</span>
           </templat>
         </el-table-column>
 
-        <el-table-column
-          prop="createTime"
-          label="创建时间"
-        />
+        <el-table-column prop="createTime" label="创建时间" />
 
-        <el-table-column label="操作">
+        <el-table-column label="操作" fixed="right">
           <template slot-scope="scope">
-            <el-button  type="text" size="small" @click="changeStatus(scope.row.id)" >
-              {{scope.row.enabled === 1 ? '禁用' : '启用'}}
+            <el-button type="text" size="small" @click="changeStatus(scope.row)">
+              {{ scope.row.enabled === 1 ? '禁用' : '启用' }}
             </el-button>
             <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
+            </el-button>
+            <el-button type="text" size="mini" @click="save(scope.row)">
+              修改
             </el-button>
           </template>
         </el-table-column>
@@ -143,10 +106,10 @@
     </div>
     <!-- 详情弹窗 -->
     <dialog-sms-info ref="dialogSmsInfo"/>
-    <dialog-sms-info ref="dialogSmsInfo" />
+    <dialog-sms-info ref="dialogSmsInfo"/>
     <!-- 创建弹窗 -->
     <dialog-sms-save ref="DialogSmsSave" @refresh="refresh"/>
-    <dialog-sms-audit ref="DialogSmsAudit" @refresh="refresh" />
+    <dialog-sms-audit ref="DialogSmsAudit" @refresh="refresh"/>
   </div>
 </template>
 
@@ -155,6 +118,7 @@ import {queryListByPage, changeEnableStatus} from '@/api/sms.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogSmsAudit from "@/components/sms/dialog-audit";
 import DialogSmsSave from "@/components/sms/dialog-save"
+
 export default {
   name: 'DemoTable',
   components: {
@@ -214,15 +178,31 @@ export default {
     refresh() {
       this.toResetPageForList();
     },
-    changeStatus(_id) {
-      changeEnableStatus(_id)
-        .then(res => {
-          console.dir("res:", res);
+
+    changeStatus(_data) {
+      let msg = _data.enabled === 1 ? '禁用' : '启用';
+      let str = '是否要' + msg + '【' + _data.name + '】';
+      this.$confirm(str, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        changeEnableStatus(_data.id).then(res => {
+          this.successMsg();
+          console.dir(this.claForm)
           this.getTabelData()
+        }).catch(err => {
+          console.log('list-err:', err)
+          this.$refs.tmp_table.loadingState(false)
         })
-        .catch(err => {
-          console.dir("res:", err);
-        })
+      });
+    },
+
+    successMsg() {
+      this.$message({
+        type: 'success',
+        message: '操作成功!'
+      });
     },
 
     showAudit(_id) {
@@ -241,7 +221,7 @@ export default {
     // 详情
     showSmsInfo(row) {
       this.$refs['dialogSmsInfo'].show({name: row.code})
-      this.$refs['dialogSmsInfo'].show({ name: row.code })
+      this.$refs['dialogSmsInfo'].show({name: row.code})
     },
     // 创建
     save(data) {

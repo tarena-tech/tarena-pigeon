@@ -11,7 +11,7 @@
           <el-form-item prop="name" label="供应商名称">
             <el-input v-model.trim="claForm.name" placeholder="" style="width: 120px"></el-input>
           </el-form-item>
-          <el-form-item prop="code" label="供应商code">
+          <el-form-item prop="code" label="供应商编码">
             <el-input v-model.trim="claForm.code" placeholder="" style="width: 120px"></el-input>
           </el-form-item>
 
@@ -36,8 +36,8 @@
         @callback="getTabelData"
       >
 
-        <el-table-column prop="name" label="供应商名称"/>
-        <el-table-column prop="code" label="供应商编码"/>
+        <el-table-column prop="name" label="供应商名称" />
+        <el-table-column prop="code" label="供应商编码" />
         <el-table-column prop="noticeType" label="业务类型">
           <template slot-scope="scope">
             <span v-if="scope.row.noticeType === 1">SMS</span>
@@ -46,8 +46,12 @@
             <span v-else>未知</span>
           </template>
         </el-table-column>
-        <el-table-column prop="officialWebsite" label="官方网站"/>
-        <el-table-column prop="remarks" label="应用简介"/>
+        <el-table-column prop="officialWebsite" label="官网">
+          <template slot-scope="scope">
+            <el-link :href="scope.row.officialWebsite" target="_blank">链接地址</el-link>
+          </template>
+        </el-table-column>
+        <el-table-column prop="remarks" label="简介"/>
         <el-table-column prop="contacts" label="联系人"/>
         <el-table-column prop="phone" label="联系电话"/>
         <el-table-column prop="remarks" label="简介"/>
@@ -67,15 +71,15 @@
         <el-table-column prop="updateTime" label="更新时间"/>
 
 
-        <el-table-column label="操作">
+        <el-table-column fixed="right" width="100"  label="操作">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="changeStatus(scope.row.id)">
+            <el-button type="text" size="mini" @click="changeStatus(scope.row)">
               {{ scope.row.enabled === 1 ? '禁用' : '启用' }}
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
+            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="mini">
               审核
             </el-button>
-            <el-button type="text" size="small" @click="save(scope.row)">
+            <el-button type="text" size="mini" @click="save(scope.row)">
               修改
             </el-button>
           </template>
@@ -88,7 +92,7 @@
 </template>
 
 <script>
-import {queryPage, changeEnableStatus} from '@/api/provider.js'
+import {queryPage, changeProviderEnable} from '@/api/provider.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogProviderAudit from "@/components/provider/dialog-audit";
 import DialogProviderSave from "@/components/provider/dialog-save";
@@ -161,19 +165,29 @@ export default {
       this.pagination.currentPageIndex = 1
       this.getTabelData()
     },
-    // 行内编辑
-    toEditBtnFn(row) {
-      this.$refs['updateSeriesClass'].show(row)
-    },
-    // 修改可用状态
-    changeStatus(_id) {
-      changeEnableStatus(_id)
-        .then(res => {
-          console.dir('change.....', res);
+
+    changeStatus(_data) {
+      let msg = _data.enabled === 1 ? '禁用' : '启用';
+      let str = '是否要' + msg + '【' + _data.name + '】';
+      this.$confirm(str, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        changeProviderEnable(_data.id).then(res => {
+          this.successMsg();
           this.getTabelData()
         }).catch(err => {
-        console.dir('change.....', err);
-      })
+          console.log('list-err:', err)
+          this.$refs.tmp_table.loadingState(false)
+        })
+      });
+    },
+    successMsg() {
+      this.$message({
+        type: 'success',
+        message: '操作成功!'
+      });
     },
     showAudit(_id) {
       this.$refs.DialogProviderAudit.show(_id);

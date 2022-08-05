@@ -41,6 +41,7 @@ export default {
   methods: {
     show(_id) {
       this.dialogFormVisible = true
+      this.ruleForm = {};
       this.ruleForm.id = _id;
     },
     auditing(status) {
@@ -51,7 +52,7 @@ export default {
           audit(this.ruleForm)
             .then(res => {
               this.dialogFormVisible = false;
-              this.$emit('reload')
+              this.$emit('refresh')
             })
             .catch(err => {
               console.error('audit fial', err);
