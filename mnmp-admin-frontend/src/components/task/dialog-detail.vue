@@ -18,6 +18,11 @@
         <el-input v-if="form.noticeType === 2" value="WECHAT" :disabled="true"></el-input>
       </el-form-item>
 
+      <el-form-item label="mock">
+        <el-input v-if="form.mock === 0" value="否" :disabled="true"></el-input>
+        <el-input v-if="form.mock === 1" value="是" :disabled="true"></el-input>
+      </el-form-item>
+
       <el-form-item label="所属模板">
         <el-input v-model="form.templateName" :disabled="true"></el-input>
       </el-form-item>
@@ -87,7 +92,9 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button @click="alert('待实现')">关闭</el-button>
+        <el-button type="danger" size="small" @click="pre()">
+          关闭
+        </el-button>
       </el-form-item>
 
 
@@ -106,7 +113,6 @@ export default {
   },
   mounted() {
     this.getDetail(this.$route.query.id)
-
   },
   methods: {
     getDetail(_id) {
@@ -125,7 +131,11 @@ export default {
       }
       window.open(url)
     },
+    pre() {
+      this.$router.push({name: 'task'});
+    },
   },
+
 
 
 }

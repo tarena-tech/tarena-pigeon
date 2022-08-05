@@ -16,9 +16,11 @@
  */
 package com.tarena.mnmp.domain.record;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
 import lombok.Data;
 
 @Data
@@ -33,4 +35,21 @@ public class SmsTargetRecordParam extends PagerResult {
 
     @ApiModelProperty("任务id")
     private Long taskId;
+
+    @ApiModelProperty("回执码搜索")
+    private String bizId;
+
+    @ApiModelProperty("应用编码")
+    private String appCode;
+
+    @ApiModelProperty("发送状态")
+    private Integer status;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @ApiModelProperty("任务执行时间 时间格式 yyyy-MM-dd HH:mm:ss ")
+    private Date startTriggerTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @ApiModelProperty("任务执行时间 时间格式 yyyy-MM-dd HH:mm:ss ")
+    private Date endTriggerTime;
 }

@@ -136,6 +136,24 @@ module.exports = {
         value: '3',
         label: '条件规则触发'
       },
+    ],
+    sendStatus: [
+      {
+        value: '0',
+        label: '发送给供应商失败'
+      },
+      {
+        value: '1',
+        label: '发送给供应商成功'
+      },
+      {
+        value: '2',
+        label: '发送给目标失败'
+      },
+      {
+        value: '3',
+        label: '发送给目标成功'
+      },
     ]
   }
 }
