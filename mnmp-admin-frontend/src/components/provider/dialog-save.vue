@@ -49,7 +49,8 @@
 </template>
 
 <script>
-import {save} from "@/api/provider";
+import { save } from "@/api/provider";
+import { isLegalHttpUrl, isJson } from "@/utils/validate";
 
 export default {
   name: 'DialogProviderSave',
@@ -79,7 +80,7 @@ export default {
           { required: true, message: '请选择消息类型', trigger: 'blur' }
         ],
         officialWebsite: [
-          { required: true, message: '请输入官网地址', trigger: 'blur' }
+          { required: true, validator: isLegalHttpUrl, trigger: 'blur' }
         ],
         contacts: [
           { required: true, message: '请输入联系人', trigger: 'blur' }
@@ -88,7 +89,7 @@ export default {
           { required: true, message: '请输入联系电话', trigger: 'blur' }
         ],
         clientConfig: [
-          { required: true, message: '请输入配置项', trigger: 'blur' }
+          { required: true, validator: isJson, trigger: 'blur' }
         ]
       }
     }
@@ -109,7 +110,6 @@ export default {
         if (valid) {
           save(this.ruleForm)
             .then(res => {
-              console.dir(res);
               this.cancelForm();
             })
             .catch(err => {
@@ -132,8 +132,7 @@ export default {
         this.windowName = "修改"
         this.ruleForm = data;
       }
-
-    }
+    },
   }
 }
 </script>

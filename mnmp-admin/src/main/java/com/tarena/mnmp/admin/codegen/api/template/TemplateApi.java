@@ -76,7 +76,7 @@ public interface TemplateApi {
     @Deprecated
     void openSmsTemplate(@Validated @RequestBody SmsTemplateChangeParam param);
 
-    @PostMapping("changeEnableStatus")
+    @PostMapping("sms/change/enable/status")
     void changeEnableStatus(Long id) throws BusinessException;
 
     @ApiOperationSupport(order = 4004)
