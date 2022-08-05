@@ -14,8 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.domain.record;
 
-package com.tarena.mnmp.admin.codegen.api.record;
+import com.tarena.mnmp.commons.pager.PagerResult;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
-public interface RecordApi {
+@Data
+@ApiModel("任务发送记录查询模型")
+public class SmsTargetRecordParam extends PagerResult {
+
+    @ApiModelProperty("手机号，该字段为精确搜索")
+    private String eqTarget;
+
+    @ApiModelProperty("手机号，该字段为模糊搜索")
+    private String target;
+
+    @ApiModelProperty("任务id")
+    private Long taskId;
 }

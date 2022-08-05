@@ -14,13 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.tarena.mnmp.admin.codegen.api.targets;
+package com.tarena.mnmp.admin.codegen.api.record;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.tarena.mnmp.admin.controller.ttarget.TaskTargetView;
+import com.tarena.mnmp.admin.controller.record.SmsTargetRecordView;
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.domain.ttarget.TaskTargetParam;
+import com.tarena.mnmp.domain.record.SmsTargetRecordParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
@@ -29,11 +28,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Validated
 @Api(
-    value = "Task",
-    tags = "任务目标管理"
+    value = "TaskTargetRecord",
+    tags = "任务发送记录管理"
 )
-@RequestMapping("task/target")
-public interface TaskTargetApi {
+@RequestMapping("/record/target/sms")
+public interface SmsTargetRecordApi {
+
 
     @ApiOperationSupport(order = 6000)
     @ApiOperation(
@@ -44,5 +44,5 @@ public interface TaskTargetApi {
     @GetMapping(
         value = {"/query/page"}
     )
-    PagerResult<TaskTargetView> queryListByPage(TaskTargetParam param);
+    PagerResult<SmsTargetRecordView> queryPage(SmsTargetRecordParam param);
 }

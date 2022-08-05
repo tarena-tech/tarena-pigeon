@@ -2,7 +2,7 @@ package com.tarena.test.mnmp.admin.service.task;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.TaskTargetDO;
 import com.tarena.mnmp.domain.task.TaskQuery;
-import com.tarena.mnmp.domain.ttarget.TaskTargetService;
+import com.tarena.mnmp.domain.task.TaskTargetService;
 import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Deleted;
 import com.tarena.mnmp.enums.TaskStatus;

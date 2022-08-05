@@ -151,6 +151,13 @@ export const constantRoutes = [
         meta: { title: '执行明细', icon: 'table' },
         hidden: true
       },
+      {
+        path: 'task/target/records',
+        name: 'records',
+        component: () => import('@/components/record/dialog-sms-target-send-record'),
+        meta: { title: '发送明细', icon: 'table' },
+        hidden: true
+      },
 
     ]
   },

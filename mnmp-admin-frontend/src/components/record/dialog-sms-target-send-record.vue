@@ -2,18 +2,6 @@
 <template>
   <div class="app-container">
     <el-form ref="claFrom" :inline="true" :model="claForm">
-      <div class="form-container">
-        <div class="form-left-box">
-          <el-form-item prop="name" label="目标电话">
-            <el-input v-model.trim="claForm.phone" placeholder="" style="width: 120px"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="toResetPageForList">查询</el-button>
-            <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
-          </el-form-item>
-        </div>
-
-      </div>
     </el-form>
     <div class="cus-main-wrap">
       <tmp-table-pagination
@@ -26,11 +14,37 @@
         @callback="getTabelData"
       >
 
+        <el-table-column prop="appCode" label="应用编码" />
         <el-table-column prop="target" label="目标电话" />
-        <el-table-column prop="params" label="目标参数">
+        <el-table-column prop="pushTime" label="发送时间"/>
+        <el-table-column prop="status" label="发送状态">
+          <templat slot-scope="scope">
+            <span v-if="scope.row.status === 0">发送给供应商失败</span>
+            <span v-if="scope.row.status === 1">发送给供应商成功</span>
+            <span v-if="scope.row.status === 2">发送给目标失败</span>
+            <span v-if="scope.row.status === 3">发送给目标成功</span>
+          </templat>
+        </el-table-column>
+
+        <el-table-column prop="triggerTime" label="执行时间"/>
+        <el-table-column prop="pushReceiveTime" label="到达时间"/>
+        <el-table-column prop="bizId" label="回执码" />
+
+        <el-table-column prop="sendResult" label="响应描述">
           <template slot-scope="scope" >
-            <el-popover v-if="scope.row.params" trigger="hover" placement="top">
-              <p>{{ scope.row.params }}</p>
+            <el-popover v-if="scope.row.sendResult" trigger="hover" placement="top">
+              <p>{{ scope.row.sendResult }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">目标参数</el-tag>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="status" label="短信内容">
+          <template slot-scope="scope" >
+            <el-popover v-if="scope.row.content" trigger="hover" placement="top">
+              <p>{{ scope.row.content }}</p>
               <div slot="reference" class="name-wrapper">
                 <el-tag size="medium">目标参数</el-tag>
               </div>
@@ -40,23 +54,13 @@
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="updateTime" label="更新时间"/>
 
-
-        <el-table-column fixed="right" label="操作">
-          <template slot-scope="scope">
-            <el-button type="text" size="small" @click="jumpSendRecord(scope.row)">
-              发送明细
-            </el-button>
-          </template>
-        </el-table-column>
       </tmp-table-pagination>
     </div>
-    <dialog-task-audit ref="DialogTaskAudit" @refresh="refresh" />
-    <dialog-task-save ref="DialogTaskSave" @refresh="refresh"/>
   </div>
 </template>
 
 <script>
-import { queryPage } from '@/api/target'
+import { queryPage } from '@/api/SmsRecord'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 export default {
   name: 'DemoTable',
@@ -85,20 +89,14 @@ export default {
   computed: {},
   watch: {},
   mounted() {
-    this.claForm.taskId = this.$route.query.id;
+    this.claForm.eqTarget = this.$route.query.target;
+    this.claForm.taskId = this.$route.query.taskId;
     this.getTabelData()
   },
   created() {},
   methods: {
-    handleClick(row) {
-      this.$message('点击了按钮！')
-      console.log('click-row-data:', row)
-    },
     resetForm() {
       this.$refs.claFrom.resetFields()
-    },
-    refresh() {
-      this.toResetPageForList();
     },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)
@@ -116,12 +114,6 @@ export default {
           console.log('list-err:', err)
           this.$refs.tmp_table.loadingState(false)
         })
-    },
-
-    jumpSendRecord(data) {
-      // this.$router.push({name: 'records', params: {target : data.target, taskId: data.taskId}});
-      this.$router.push({name: 'records', query: {target : data.target, taskId: data.taskId}});
-
     },
 
 
