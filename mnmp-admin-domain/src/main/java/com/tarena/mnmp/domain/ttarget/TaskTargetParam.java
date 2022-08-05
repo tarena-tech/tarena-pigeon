@@ -20,7 +20,7 @@ import com.tarena.mnmp.commons.pager.PagerResult;
 import lombok.Data;
 
 @Data
-public class TargetParam extends PagerResult {
+public class TaskTargetParam extends PagerResult {
 
     private Long taskId;
 

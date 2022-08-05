@@ -34,7 +34,7 @@ public interface TaskTargetDAO {
 
     int insertBatch(List<TaskTargetDO> list);
 
-    List<TaskTargetDO> queryList(TargetParam param);
+    List<TaskTargetDO> queryList(TaskTargetParam param);
 
-    Long count(TargetParam param);
+    Long count(TaskTargetParam param);
 }

@@ -18,9 +18,9 @@
 package com.tarena.mnmp.admin.codegen.api.targets;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.tarena.mnmp.admin.controller.target.TargetView;
+import com.tarena.mnmp.admin.controller.ttarget.TaskTargetView;
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.domain.ttarget.TargetParam;
+import com.tarena.mnmp.domain.ttarget.TaskTargetParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
@@ -44,5 +44,5 @@ public interface TaskTargetApi {
     @GetMapping(
         value = {"/query/page"}
     )
-    PagerResult<TargetView> queryListByPage(TargetParam param);
+    PagerResult<TaskTargetView> queryListByPage(TaskTargetParam param);
 }

@@ -32,11 +32,11 @@ public class TaskTargetService {
         taskTargetDAO.insertBatch(list);
     }
 
-    public List<TaskTargetDO> queryList(TargetParam param) {
+    public List<TaskTargetDO> queryList(TaskTargetParam param) {
         return taskTargetDAO.queryList(param);
     }
 
-    public Long count(TargetParam param) {
+    public Long count(TaskTargetParam param) {
         return taskTargetDAO.count(param);
     }
 }
