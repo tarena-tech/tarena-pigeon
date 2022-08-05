@@ -17,11 +17,19 @@
 package com.tarena.mnmp.domain.ttarget;
 
 import com.tarena.mnmp.commons.pager.PagerResult;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
+@ApiModel(value = "任务目标数据模型")
 public class TaskTargetParam extends PagerResult {
 
+    @ApiModelProperty(value = "任务id")
     private Long taskId;
+
+    @ApiModelProperty(value = "目标电话")
+    private String phone;
 
 }

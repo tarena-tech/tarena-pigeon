@@ -1,7 +1,20 @@
 <!-- 任务 -->
 <template>
   <div class="app-container">
-    <el-form ref="claFrom" :inline="true" :model="claForm" />
+    <el-form ref="claFrom" :inline="true" :model="claForm">
+      <div class="form-container">
+        <div class="form-left-box">
+          <el-form-item prop="name" label="目标电话">
+            <el-input v-model.trim="claForm.phone" placeholder="" style="width: 120px"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" icon="el-icon-search" @click="toResetPageForList">查询</el-button>
+            <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
+          </el-form-item>
+        </div>
+
+      </div>
+    </el-form>
     <div class="cus-main-wrap">
       <tmp-table-pagination
         ref="tmp_table"
@@ -15,9 +28,9 @@
 
         <el-table-column prop="target" label="目标电话" />
         <el-table-column prop="params" label="目标参数">
-          <template slot-scope="scope">
+          <template slot-scope="scope" >
             <el-popover v-if="scope.row.params" trigger="hover" placement="top">
-              <p>{{ scope.row.remark }}</p>
+              <p>{{ scope.row.params }}</p>
               <div slot="reference" class="name-wrapper">
                 <el-tag size="medium">目标参数</el-tag>
               </div>

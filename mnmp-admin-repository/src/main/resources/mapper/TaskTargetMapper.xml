@@ -142,6 +142,9 @@
             <if test="taskId != null">
                 task_id = #{taskId,jdbcType=BIGINT}
             </if>
+            <if test="phone != null and phone != ''">
+                and target = #{phone,jdbcType=VARCHAR}
+            </if>
         </where>
         ${limitClause}
     </select>
@@ -152,6 +155,9 @@
         <where>
             <if test="taskId != null">
                 task_id = #{taskId,jdbcType=BIGINT}
+            </if>
+            <if test="phone != null and phone != ''">
+                and target = #{phone,jdbcType=VARCHAR}
             </if>
         </where>
     </select>
