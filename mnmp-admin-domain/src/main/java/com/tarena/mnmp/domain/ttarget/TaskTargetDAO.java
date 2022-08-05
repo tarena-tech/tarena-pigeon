@@ -33,4 +33,8 @@ public interface TaskTargetDAO {
     int updateByPrimaryKey(TaskTargetDO record);
 
     int insertBatch(List<TaskTargetDO> list);
+
+    List<TaskTargetDO> queryList(TaskTargetParam param);
+
+    Long count(TaskTargetParam param);
 }
