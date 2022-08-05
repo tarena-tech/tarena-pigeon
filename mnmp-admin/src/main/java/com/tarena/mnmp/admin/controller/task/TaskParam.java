@@ -74,6 +74,17 @@ public class TaskParam {
     @NotBlank(message = "文件路径为必填项")
     private String filePath;
 
+    @ApiModelProperty(value = "是否是mock接口， 0：否， 1：是", required = true)
+    private Integer mock;
+
+    public Integer getMock() {
+        return mock;
+    }
+
+    public void setMock(Integer mock) {
+        this.mock = mock;
+    }
+
     public String getName() {
         return name;
     }
