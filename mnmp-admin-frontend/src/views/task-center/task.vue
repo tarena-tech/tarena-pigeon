@@ -14,12 +14,7 @@
           <el-form-item label="应用" prop="appId">
             <template>
               <el-select v-model="claForm.appId" filterable placeholder="请选择" :filter-method="queryApps">
-                <el-option
-                  v-for="item in apps"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id">
-                </el-option>
+                <el-option v-for="item in apps" :key="item.id" :label="item.name" :value="item.id" />
               </el-select>
             </template>
           </el-form-item>
@@ -31,16 +26,8 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              @click="toResetPageForList"
-            >查询</el-button>
-            <el-button
-              type="default"
-              icon="el-icon-delete"
-              @click="resetForm"
-            >重置</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="toResetPageForList">查询</el-button>
+            <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
           </el-form-item>
         </div>
         <div class="form-right-box">
@@ -78,11 +65,11 @@
         </el-table-column>
         <el-table-column prop="cycleLvel" label="周期类型">
           <template slot-scope="scope">
-            <span v-if="scope.row.cycleLvel === 1">小时</span>
-            <span v-if="scope.row.cycleLvel === 2">日</span>
-            <span v-if="scope.row.cycleLvel === 3">周</span>
-            <span v-if="scope.row.cycleLvel === 4">月</span>
-            <span v-if="scope.row.cycleLvel === 5">年</span>
+            <span v-if="scope.row.cycleLevel === 1">小时</span>
+            <span v-if="scope.row.cycleLevel === 2">日</span>
+            <span v-if="scope.row.cycleLevel === 3">周</span>
+            <span v-if="scope.row.cycleLevel === 4">月</span>
+            <span v-if="scope.row.cycleLevel === 5">年</span>
           </template>
         </el-table-column>
         <el-table-column prop="cycleNum" label="周期数"/>
@@ -135,7 +122,7 @@
         <el-table-column prop="updateTime" label="更新时间"/>
 
 
-        <el-table-column label="操作">
+        <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
             <el-button v-if="scope.row.taskStatus === 0 || scope.row.taskStatus === 1"  type="text" size="small" @click="changeStatus(scope.row)" >
               终止
@@ -143,10 +130,9 @@
             <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
-            <el-button  type="text" size="small" @click="save(scope.row)" >
-              修改
+            <el-button type="text" size="small" @click="jump(scope.row.id)">
+              详情
             </el-button>
-            <router-link :to="{name: 'detail', params: {id : scope.row.id}}">详情</router-link>
           </template>
         </el-table-column>
       </tmp-table-pagination>
@@ -157,7 +143,7 @@
 </template>
 
 <script>
-import {queryList, changeStatus} from '@/api/task.js'
+import { changeStatus, queryPage } from '@/api/task.js'
 import {queryAppList} from "@/api/app";
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogTaskAudit from '@/components/task/dialog-audit'
@@ -192,6 +178,7 @@ export default {
   watch: {},
   mounted() {
     this.getTabelData()
+    this.queryApps()
   },
   created() {},
   methods: {
@@ -211,7 +198,7 @@ export default {
         ...this.claForm,
         ...this.pagination
       }
-      queryList(_data)
+      queryPage(_data)
         .then(res => {
           console.log('list-res:', res)
           this.$refs.tmp_table.loadingState(false)
@@ -255,6 +242,9 @@ export default {
         }).catch(err => {
         console.log(err);
       })
+    },
+    jump(_id) {
+      this.$router.push({name: 'detail', params: {id : _id}});
     },
 
     // 重置页码并搜索

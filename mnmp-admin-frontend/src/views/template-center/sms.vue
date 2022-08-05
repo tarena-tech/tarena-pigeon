@@ -8,46 +8,19 @@
     >
       <div class="form-container">
         <div class="form-left-box">
-          <el-form-item
-            prop="templateName"
-            label="模板名称"
-          >
-            <el-input
-              v-model.trim="claForm.templateName"
-              placeholder=""
-              style="width: 120px"
-            />
+          <el-form-item prop="templateName" label="模板名称">
+            <el-input v-model.trim="claForm.templateName" placeholder="" style="width: 120px" />
           </el-form-item>
-          <el-form-item
-            prop="templateCode"
-            label="模板code"
-          >
-            <el-input
-              v-model.trim="claForm.templateCode"
-              placeholder=""
-              style="width: 120px"
-            />
+          <el-form-item prop="templateCode" label="模板编码" >
+            <el-input v-model.trim="claForm.templateCode" placeholder="" style="width: 120px" />
           </el-form-item>
-          <el-form-item
-            prop="appCode"
-            label="审核"
-          >
+          <el-form-item prop="auditStatus" label="审核">
             <com-dict :val.sync="claForm.auditStatus" dict-name="auditOpts" :is-all="true"/>
           </el-form-item>
 
           <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              @click="toResetPageForList"
-            >查询
-            </el-button>
-            <el-button
-              type="default"
-              icon="el-icon-delete"
-              @click="resetForm"
-            >重置
-            </el-button>
+            <el-button type="primary" icon="el-icon-search" @click="toResetPageForList">查询</el-button>
+            <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
           </el-form-item>
         </div>
         <div class="form-right-box">
@@ -66,15 +39,9 @@
         @callback="getTabelData"
       >
 
-        <el-table-column
-          prop="name"
-          label="模板名称"
-        />
+        <el-table-column prop="name" label="模板名称" />
 
-        <el-table-column
-          prop="code"
-          label="模板编码"
-        />
+        <el-table-column prop="code" label="模板编码" />
 
         <el-table-column prop="templateType" label="模板类型">
           <template slot-scope="scope">
@@ -130,6 +97,9 @@
             <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
+            <el-button type="text" size="mini" @click="save(scope.row)">
+              修改
+            </el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
@@ -148,7 +118,6 @@ import {queryListByPage, changeEnableStatus} from '@/api/sms.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogSmsAudit from "@/components/sms/dialog-audit";
 import DialogSmsSave from "@/components/sms/dialog-save"
-import {changeProviderEnable} from "@/api/provider";
 
 export default {
   name: 'DemoTable',
