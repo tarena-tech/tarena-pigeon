@@ -19,7 +19,6 @@ package com.tarena.mnmp.domain.ttarget;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
