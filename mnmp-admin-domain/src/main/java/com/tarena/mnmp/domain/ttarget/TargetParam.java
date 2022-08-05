@@ -14,8 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.domain.ttarget;
 
-package com.tarena.mnmp.admin.codegen.api.targets;
+import com.tarena.mnmp.commons.pager.PagerResult;
+import lombok.Data;
 
-public interface TargetApi {
+@Data
+public class TargetParam extends PagerResult {
+
+    private Long taskId;
+
 }

@@ -31,4 +31,12 @@ public class TaskTargetService {
     public void saveBatch(List<TaskTargetDO> list) {
         taskTargetDAO.insertBatch(list);
     }
+
+    public List<TaskTargetDO> queryList(TargetParam param) {
+        return taskTargetDAO.queryList(param);
+    }
+
+    public Long count(TargetParam param) {
+        return taskTargetDAO.count(param);
+    }
 }

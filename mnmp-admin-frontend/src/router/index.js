@@ -144,6 +144,13 @@ export const constantRoutes = [
         meta: { title: '详情', icon: 'table' },
         hidden: true
       },
+      {
+        path: 'task/targets',
+        name: 'targets',
+        component: () => import('@/components/task/dialog-target'),
+        meta: { title: '执行明细', icon: 'table' },
+        hidden: true
+      },
 
     ]
   },
