@@ -148,7 +148,7 @@ export const constantRoutes = [
         path: 'task/targets',
         name: 'targets',
         component: () => import('@/components/task/dialog-target'),
-        meta: { title: '执行明细', icon: 'table' },
+        meta: { title: '任务目标', icon: 'table' },
         hidden: true
       },
       {

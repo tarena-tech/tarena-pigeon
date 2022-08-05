@@ -81,8 +81,6 @@ public class AppController implements AppApi {
 
     @Override public List<AppView> queryList(AppQueryParam param) {
         param.setOrder(false);
-        param.setCurrentPageIndex(1);
-        param.setPageSize(100);
         List<AppDO> dos = appService.queryList(param);
         return AppView.convert(dos);
     }
