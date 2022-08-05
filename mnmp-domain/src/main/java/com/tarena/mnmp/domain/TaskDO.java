@@ -145,6 +145,16 @@ public class TaskDO {
 
     private String auditResult;
 
+    private Integer mock;
+
+    public Integer getMock() {
+        return mock;
+    }
+
+    public void setMock(Integer mock) {
+        this.mock = mock;
+    }
+
     public Long getId() {
         return id;
     }

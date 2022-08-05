@@ -18,7 +18,7 @@
 package com.tarena.mnmp.admin.codegen.api.template;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.tarena.mnmp.admin.controller.template.SmsTemplateChangeParam;
+import com.tarena.mnmp.admin.controller.template.TemplateView;
 import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
@@ -64,7 +64,7 @@ public interface TemplateApi {
     )
     @PostMapping({"/sms/close"})
     @Deprecated
-    void closeSmsTemplate(@Validated @RequestBody SmsTemplateChangeParam param);
+    void closeSmsTemplate(@Validated Long id);
 
     @ApiOperationSupport(order = 4003)
     @ApiOperation(
@@ -74,7 +74,7 @@ public interface TemplateApi {
     )
     @PostMapping({"/sms/open"})
     @Deprecated
-    void openSmsTemplate(@Validated @RequestBody SmsTemplateChangeParam param);
+    void openSmsTemplate(@Validated @RequestBody Long id);
 
     @PostMapping("sms/change/enable/status")
     void changeEnableStatus(Long id) throws BusinessException;

@@ -18,7 +18,6 @@
 package com.tarena.mnmp.admin.controller.template;
 
 import com.tarena.mnmp.admin.codegen.api.template.TemplateApi;
-import com.tarena.mnmp.admin.codegen.api.template.TemplateView;
 import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SmsTemplateDO;
@@ -46,12 +45,12 @@ public class TemplateController implements TemplateApi {
         return new Result<>(str);
     }
 
-    @Override public void closeSmsTemplate(SmsTemplateChangeParam param) {
-        templateService.closeSmsTemplate(param.getId());
+    @Override public void closeSmsTemplate(Long id) {
+        templateService.closeSmsTemplate(id);
     }
 
-    @Override public void openSmsTemplate(SmsTemplateChangeParam param) {
-        templateService.openSmsTemplate(param.getId());
+    @Override public void openSmsTemplate(Long id) {
+        templateService.openSmsTemplate(id);
     }
 
     @Override public void changeEnableStatus(Long id) throws BusinessException {

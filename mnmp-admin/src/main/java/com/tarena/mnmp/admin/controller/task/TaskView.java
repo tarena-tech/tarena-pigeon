@@ -175,6 +175,17 @@ public class TaskView {
     @ApiModelProperty(value = "审核时提交的文案", required = true)
     private String auditResult;
 
+    @ApiModelProperty(value = "是否是mock，0：否， 1：是", required = true)
+    private Integer mock;
+
+    public Integer getMock() {
+        return mock;
+    }
+
+    public void setMock(Integer mock) {
+        this.mock = mock;
+    }
+
     public Long getId() {
         return id;
     }
