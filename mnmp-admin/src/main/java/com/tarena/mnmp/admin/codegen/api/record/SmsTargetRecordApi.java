@@ -24,6 +24,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Validated
@@ -42,5 +43,5 @@ public interface SmsTargetRecordApi {
         notes = ""
     )
     @PostMapping(value = {"/query/page"})
-    PagerResult<SmsTargetRecordView> queryPage(SmsTargetRecordParam param);
+    PagerResult<SmsTargetRecordView> queryPage(@RequestBody  SmsTargetRecordParam data);
 }

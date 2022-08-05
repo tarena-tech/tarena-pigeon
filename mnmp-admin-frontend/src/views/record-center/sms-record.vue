@@ -4,7 +4,7 @@
     <el-form ref="claFrom" :inline="true" :model="claForm">
       <div class="form-container">
         <div class="form-left-box">
-          <el-form-item prop="name" label="回执码">
+          <el-form-item prop="bizId" label="回执码">
             <el-input v-model.trim="claForm.bizId" placeholder="" style="width: 120px"></el-input>
           </el-form-item>
           <el-form-item label="应用" prop="appCode">
@@ -170,8 +170,6 @@ export default {
         console.log(err);
       })
     },
-
-
 
 
 
