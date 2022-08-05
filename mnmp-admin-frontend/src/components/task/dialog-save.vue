@@ -300,6 +300,7 @@ export default {
     },
     show(data) {
       this.dialogVisible = true
+      this.ruleForm = {};
       if (data != null) {
         this.windowName = '修改'
         this.ruleForm = data

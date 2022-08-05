@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import {queryPage, changeProviderEnable} from '@/api/provider.js'
+import {queryPage, changeEnable} from '@/api/provider.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogProviderAudit from "@/components/provider/dialog-audit";
 import DialogProviderSave from "@/components/provider/dialog-save";
@@ -174,7 +174,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        changeProviderEnable(_data.id).then(res => {
+        changeEnable(_data.id).then(res => {
           this.successMsg();
           this.getTabelData()
         }).catch(err => {
