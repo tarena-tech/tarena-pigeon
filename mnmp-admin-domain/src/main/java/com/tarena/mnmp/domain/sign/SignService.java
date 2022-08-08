@@ -43,17 +43,17 @@ public class SignService {
     private ProviderService providerService;
 
     public void save(SignSaveParam signSaveParam) throws BusinessException {
-        SignDO signDO = new SignDO();
-        BeanUtils.copyProperties(signSaveParam, signDO);
-        AppDO app = appService.checkStatus(signDO.getAppId());
-        signDO.setAppCode(app.getCode());
-        if (null == signDO.getId()) {
-            signDao.save(signDO);
+        SignDO sign = new SignDO();
+        BeanUtils.copyProperties(signSaveParam, sign);
+        AppDO app = appService.checkStatus(sign.getAppId());
+        sign.setAppCode(app.getCode());
+        if (null == sign.getId()) {
+            signDao.save(sign);
         } else {
-            signDO.setEnabled(null);
-            signDO.setAuditStatus(null);
-            signDO.setCreateTime(null);
-            signDao.modify(signDO);
+            sign.setEnabled(null);
+            sign.setAuditStatus(null);
+            sign.setCreateTime(null);
+            signDao.modify(sign);
         }
     }
 
@@ -104,12 +104,13 @@ public class SignService {
         if (null == sign) {
             throw new BusinessException("100", "签名不存在");
         }
+        String name = sign.getName();
         if (!Objects.equals(AuditStatus.PASS.getStatus(), sign.getAuditStatus())) {
-            throw new BusinessException("100", "签名未审核");
+            throw new BusinessException("100", "[" + name + "]签名未审核");
         }
 
         if (!Objects.equals(Enabled.YES.getVal(), sign.getEnabled())) {
-            throw new BusinessException("100", "签名未启用");
+            throw new BusinessException("100", "[" + name + "]签名未启用");
         }
         return sign;
     }

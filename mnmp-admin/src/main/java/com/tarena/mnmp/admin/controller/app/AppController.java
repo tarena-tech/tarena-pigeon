@@ -69,14 +69,14 @@ public class AppController implements AppApi {
     }
 
     @Override public void changeEnableStatus(Long id) throws BusinessException {
-        AppDO aDo = appService.queryAppDetail(id);
-        if (aDo == null) {
+        AppDO app = appService.queryAppDetail(id);
+        if (app == null) {
             throw new BusinessException("100", "应用不存在");
         }
 
         AppDO up = new AppDO();
         up.setId(id);
-        up.setEnabled(Enabled.reverse(aDo.getEnabled()).getVal());
+        up.setEnabled(Enabled.reverse(app.getEnabled()).getVal());
         appService.updateById(up);
 
         // 应用被禁用 依赖于该应用的关系全部禁用
@@ -99,18 +99,18 @@ public class AppController implements AppApi {
     }
 
     @Override public PagerResult<AppView> queryPage(AppQueryParam param) {
-        List<AppDO> appDTOs = appService.queryList(param);
+        List<AppDO> sources = appService.queryList(param);
         Long count = appService.queryCount(param);
         PagerResult<AppView> pagerResult = new PagerResult<>(param.getPageSize(), param.getCurrentPageIndex());
-        pagerResult.setList(AppView.convert(appDTOs));
+        pagerResult.setList(AppView.convert(sources));
         pagerResult.setRecordCount(count);
         return pagerResult;
     }
 
     @GetMapping("query/list") @Override public List<AppView> queryList(AppQueryParam param) {
         param.setOrderBy(false);
-        List<AppDO> dos = appService.queryList(param);
-        return AppView.convert(dos);
+        List<AppDO> sources = appService.queryList(param);
+        return AppView.convert(sources);
     }
 
     @Override public void auditApp(AuditParam param) {

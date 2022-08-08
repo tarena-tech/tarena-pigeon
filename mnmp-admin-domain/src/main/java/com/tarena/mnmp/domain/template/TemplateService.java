@@ -123,12 +123,13 @@ public class TemplateService {
             throw new BusinessException("100", "短信模板不存在");
         }
 
+        String name = smsTemplate.getName();
         if (!Objects.equals(AuditStatus.PASS.getStatus(), smsTemplate.getAuditStatus())) {
-            throw new BusinessException("100", "短信模板未审核");
+            throw new BusinessException("100", "[" + name + "]" + "短信模板未审核");
         }
 
         if (!Objects.equals(Enabled.YES.getVal(), smsTemplate.getEnabled())) {
-            throw new BusinessException("100", "短信模板未启用");
+            throw new BusinessException("100",  "[" + name + "]" + "短信模板未启用");
         }
 
         return smsTemplate;

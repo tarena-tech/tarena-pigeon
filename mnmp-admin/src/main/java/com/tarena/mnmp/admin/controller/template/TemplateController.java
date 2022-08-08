@@ -69,23 +69,26 @@ public class TemplateController implements TemplateApi {
     }
 
     @Override public void changeEnableStatus(Long id) throws BusinessException {
-        SmsTemplateDO smsTemplateDO = templateService.querySmsTemplateDetail(id);
-        if (null == smsTemplateDO) {
+        SmsTemplateDO smstempalte = templateService.querySmsTemplateDetail(id);
+        if (null == smstempalte) {
             throw new BusinessException("100", "模板不存在");
+        }
+
+        // 如果之前禁用 改为 启用， 则需要校验管理数据
+        if (Objects.equals(Enabled.NO.getVal(), smstempalte.getEnabled())) {
+            appService.checkStatus(smstempalte.getAppId());
+            providerService.checkStatus(smstempalte.getProviderId());
         }
 
         SmsTemplateDO up = new SmsTemplateDO();
         up.setId(id);
-        up.setEnabled(Enabled.reverse(smsTemplateDO.getEnabled()).getVal());
+        up.setEnabled(Enabled.reverse(smstempalte.getEnabled()).getVal());
         templateService.updateSmsTemplate(up);
 
         if (Objects.equals(Enabled.NO.getVal(), up.getEnabled())) {
             TaskQuery query = new TaskQuery();
             query.setTemplateId(id);
             taskService.endTaskStatusByTargetId(query);
-        } else {
-            appService.checkStatus(smsTemplateDO.getAppId());
-            providerService.checkStatus(smsTemplateDO.getProviderId());
         }
 
     }
