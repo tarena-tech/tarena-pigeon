@@ -210,18 +210,28 @@ public class TaskService {
     }
 
     public void changeTaskStatus(Long id) throws BusinessException {
-        TaskDO aDo = detailById(id);
-        if (null == aDo) {
+        TaskDO task = detailById(id);
+        if (null == task) {
             throw new BusinessException("100", "任务不存在");
         }
+        changeTaskStatus(task);
+    }
+
+    public void endTaskStatusByTargetId(TaskQuery query) {
+        query.setTaskStatusList(TaskStatus.operable());
+        List<TaskDO> list = taskDao.queryByTargetId(query);
+        list.forEach(this::changeTaskStatus);
+    }
+
+    private void changeTaskStatus(TaskDO task) {
         int open = 0;
-        if (Objects.equals(TaskStatus.TASK_STOP.status(), aDo.getTaskStatus())
-            || Objects.equals(TaskStatus.TASK_END.status(), aDo.getTaskStatus())) {
+        if (Objects.equals(TaskStatus.TASK_STOP.status(), task.getTaskStatus())
+            || Objects.equals(TaskStatus.TASK_END.status(), task.getTaskStatus())) {
             open = 1;
         }
 
         TaskDO up = new TaskDO();
-        up.setId(id);
+        up.setId(task.getId());
         if (open == 1) {
             up.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
             up.setNextTriggerTime(DateUtils.generateNextTriggerTime(up.getCycleLevel(), up.getCycleNum(), new Date()));

@@ -18,9 +18,11 @@
 
 package com.tarena.mnmp.domain.task;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.List;
 
 @ApiModel(value = "任务查询入参")
 public class TaskQuery extends PagerResult {
@@ -29,13 +31,22 @@ public class TaskQuery extends PagerResult {
     private String name;
 
     @ApiModelProperty(value = "appId")
-    private Integer appId;
+    private Long appId;
 
     @ApiModelProperty(value = "任务状态 0:未开启 1:推送中 2:终止 3:已结束 4.失败")
     private Integer taskStatus;
 
     @ApiModelProperty(value = "审核状态 -1：拒绝， 0：待审核， 1：审核通过")
     private Integer auditStatus;
+
+    @JsonIgnore
+    private Long signId;
+
+    @JsonIgnore
+    private Long templateId;
+    @JsonIgnore
+    private List<Integer> taskStatusList;
+
 
     public String getName() {
         return name;
@@ -45,11 +56,11 @@ public class TaskQuery extends PagerResult {
         this.name = name;
     }
 
-    public Integer getAppId() {
+    public Long getAppId() {
         return appId;
     }
 
-    public void setAppId(Integer appId) {
+    public void setAppId(Long appId) {
         this.appId = appId;
     }
 
@@ -69,5 +80,27 @@ public class TaskQuery extends PagerResult {
         this.auditStatus = auditStatus;
     }
 
+    public Long getSignId() {
+        return signId;
+    }
 
+    public void setSignId(Long signId) {
+        this.signId = signId;
+    }
+
+    public List<Integer> getTaskStatusList() {
+        return taskStatusList;
+    }
+
+    public void setTaskStatusList(List<Integer> taskStatusList) {
+        this.taskStatusList = taskStatusList;
+    }
+
+    public Long getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(Long templateId) {
+        this.templateId = templateId;
+    }
 }

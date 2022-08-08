@@ -33,4 +33,6 @@ public interface TaskDao {
     Long queryCount(TaskQuery query);
 
     void deleteById(Long id);
+
+    List<TaskDO> queryByTargetId(TaskQuery query);
 }

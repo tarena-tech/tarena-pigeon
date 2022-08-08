@@ -21,13 +21,17 @@ import com.tarena.mnmp.admin.codegen.api.template.TemplateApi;
 import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SmsTemplateDO;
+import com.tarena.mnmp.domain.task.TaskQuery;
+import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.domain.template.TemplateService;
+import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +41,9 @@ public class TemplateController implements TemplateApi {
 
     @Resource
     private TemplateService templateService;
+
+    @Resource
+    private TaskService taskService;
 
     @Override public Result<String> save(SmsTemplateParam param) {
         SmsTemplateDO sms = new SmsTemplateDO();
@@ -61,8 +68,14 @@ public class TemplateController implements TemplateApi {
 
         SmsTemplateDO up = new SmsTemplateDO();
         up.setId(id);
-        up.setEnabled(smsTemplateDO.getEnabled() == 1 ? 0 : 1);
+        up.setEnabled(Enabled.reverse(smsTemplateDO.getEnabled()).getVal());
         templateService.updateSmsTemplate(up);
+
+        if (Objects.equals(Enabled.NO.getVal(), up.getEnabled())) {
+            TaskQuery query = new TaskQuery();
+            query.setTemplateId(id);
+            taskService.endTaskStatusByTargetId(query);
+        }
 
     }
 
