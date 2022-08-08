@@ -111,6 +111,9 @@ public class TemplateView {
         name = "createUserName")
     private String createUserName;
 
+    @ApiModelProperty("供应商id")
+    private Long providerId;
+
     public Long getId() {
         return id;
     }
@@ -253,5 +256,13 @@ public class TemplateView {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Long getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(Long providerId) {
+        this.providerId = providerId;
     }
 }

@@ -45,7 +45,7 @@ public class TemplateController implements TemplateApi {
     @Resource
     private TaskService taskService;
 
-    @Override public Result<String> save(SmsTemplateParam param) {
+    @Override public Result<String> save(SmsTemplateParam param) throws BusinessException {
         SmsTemplateDO sms = new SmsTemplateDO();
         BeanUtils.copyProperties(param, sms);
         String str = templateService.save(sms);

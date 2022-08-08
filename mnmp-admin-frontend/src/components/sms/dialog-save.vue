@@ -27,10 +27,10 @@
           <el-form-item label="通知类型" prop="noticeType">
             <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false" />
           </el-form-item>
-          <el-form-item label="应用" prop="">
+          <el-form-item label="应用" prop="appId">
             <template>
-              <el-select v-model="ruleForm.app" filterable placeholder="请选择" :filter-method="queryApps">
-                <el-option v-for="item in apps" :key="item.id" :label="item.name" :value="item" />
+              <el-select v-model="ruleForm.appId" filterable placeholder="请选择" :filter-method="queryApps">
+                <el-option v-for="item in apps" :key="item.id" :label="item.name" :value="item.id" />
               </el-select>
             </template>
           </el-form-item>
@@ -123,8 +123,6 @@ export default {
       this.$emit('refresh')
     },
     submitForm() {
-      this.ruleForm.appId = this.ruleForm.app.id;
-      this.ruleForm.appCode = this.ruleForm.app.code;
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           save(this.ruleForm)
