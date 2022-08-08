@@ -1,4 +1,15 @@
 <template>
+<!--  <el-drawer-->
+<!--    ref="drawer"-->
+<!--    :visible.sync="dialogVisible"-->
+<!--    direction="rtl"-->
+<!--    :close-on-press-escape="false"-->
+<!--    :close-on-click-modal="false"-->
+<!--    append-to-body-->
+<!--    custom-class="cus-drawer"-->
+<!--    :destroy-on-close="true"-->
+<!--    size="500px"-->
+<!--  >-->
   <el-dialog title="审核" :visible.sync="dialogFormVisible" :destroy-on-close="true">
     <el-form ref="ruleForm" class="cus-form" :model="ruleForm" :rules="rules">
       <el-form-item label="描述" prop="auditResult">
@@ -10,6 +21,7 @@
       <el-button @click="auditing(1)">通 过</el-button>
     </div>
   </el-dialog>
+<!--  </el-drawer>-->
 </template>
 <script>
 
@@ -19,6 +31,7 @@ export default {
   name: 'DialogAppAudit',
   data() {
     return {
+      dialogVisible: false,
       dialogFormVisible: false,
       ruleForm: {
         id: null,
@@ -47,7 +60,7 @@ export default {
     cancelForm() {
       this.loading = false
       // this.dialogVisible = false
-      this.$refs.drawer.closeDrawer()
+      // this.$refs.drawer.closeDrawer()
       this.$emit('refresh')
 
     },
@@ -69,11 +82,5 @@ export default {
       })
     }
   }
-
-
 }
-
-
-
-
 </script>

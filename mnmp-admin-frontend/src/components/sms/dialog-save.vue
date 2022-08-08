@@ -34,6 +34,15 @@
               </el-select>
             </template>
           </el-form-item>
+
+          <el-form-item label="供应商" prop="">
+            <template>
+              <el-select v-model="ruleForm.appCode" filterable placeholder="请选择" :filter-method="queryProviders">
+                <el-option v-for="item in apps" :key="item.id" :label="item.name" :value="item.code" />
+              </el-select>
+            </template>
+          </el-form-item>
+
           <el-form-item label="模板内容" prop="content">
             <el-input v-model="ruleForm.content" type="textarea" />
           </el-form-item>
@@ -54,6 +63,7 @@
 <script>
 import { save } from '@/api/sms'
 import {queryAppList} from "@/api/app";
+import { queryList } from "@/api/provider"
 export default {
   name: 'DialogSmsSave',
   data() {
@@ -112,12 +122,8 @@ export default {
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          // TODO 假数据
-          this.ruleForm.appCode = 333
-          this.ruleForm.appId = 333
           save(this.ruleForm)
             .then(res => {
-              console.dir(res)
               this.cancelForm()
             })
             .catch(err => {
@@ -146,9 +152,18 @@ export default {
         .then(res => {
           this.apps = res
         }).catch(err => {
-        console.log(err);
+        console.error(err);
       })
     },
+
+    queryProviders(param) {
+      queryList({name: param})
+        .then(res => {
+          this.providers = res;
+        }).catch(err => {
+          console.error(err)
+      })
+    }
   }
 }
 </script>

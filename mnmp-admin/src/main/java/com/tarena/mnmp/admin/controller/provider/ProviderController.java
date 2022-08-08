@@ -90,4 +90,8 @@ public class ProviderController implements ProviderApi {
         providerService.auditProvider(param.getId(), param.getAuditStatus(), param.getAuditResult());
     }
 
+    @Override public List<ProviderView> queryList(ProviderQueryParam param) {
+        List<ProviderDO> dos = providerService.queryList(param);
+        return ProviderView.convert(dos);
+    }
 }
