@@ -101,6 +101,7 @@ public class DispatcherConfiguration {
         aliNoticeDispatcher.setAliSmsClient(smsAliClient);
         aliNoticeDispatcher.setTaskRepository(taskRepository);
         aliNoticeDispatcher.setMonitor(monitor);
+        aliNoticeDispatcher.setReceipt(this.dispatcherConfig.getEnableReceipt());
         return aliNoticeDispatcher;
     }
 

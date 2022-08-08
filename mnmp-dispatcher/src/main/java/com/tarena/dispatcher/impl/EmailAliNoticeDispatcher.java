@@ -18,7 +18,7 @@
 package com.tarena.dispatcher.impl;
 
 import com.tarena.dispatcher.event.EmailNoticeEvent;
-import com.tarena.mnmp.enums.NoticeType;
+import com.tarena.mnmp.enums.Provider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public class EmailAliNoticeDispatcher extends AbstractNoticeDispatcher<EmailNoti
     private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
 
     public String getNoticeType() {
-        return NoticeType.EMAIL.name().toLowerCase() + "Ali";
+        return Provider.ALI_EMAIL.name();
     }
 
     @Override

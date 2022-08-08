@@ -48,12 +48,12 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
 
     @Override public void newSuccessSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus,
         String bizId) {
-        addSmsTargetByTask(event, target, targetStatus.status(), bizId);
+        addSmsTargetByTask(event, target, targetStatus.status(), bizId, "SUCCESS");
     }
 
     @Override public void newFailSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus,
         String errorMsg) {
-        addSmsTargetByTask(event, target, targetStatus.status(), null);
+        addSmsTargetByTask(event, target, targetStatus.status(), null, errorMsg);
     }
 
     @Override public List<PhoneBizIdReceiptBO> queryNotReceiptBizIds(Provider provider) {
@@ -71,16 +71,20 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
     }
 
     private void addSmsTargetByTask(SmsNoticeEvent event, SmsTarget target, Integer targetStatus,
-        String bizId) {
-        NoticeSmsRecordTargetDO insertData = new NoticeSmsRecordTargetDO();
-        insertData.setTaskId(event.getNoticeEvent().getTaskId());
-        insertData.setTarget(target.getTarget());
-        insertData.setTriggerTime(event.getNoticeEvent().getTriggerTime());
-        insertData.setPushTime(new Date());
-        insertData.setContent(target.getContent());
-        insertData.setStatus(targetStatus);
-        insertData.setBizId(bizId);
-        insertData.setAppCode(target.getAppCode());
-        recordTargetDao.insert(insertData);
+        String bizId, String resultMsg) {
+        Date current = new Date();
+        NoticeSmsRecordTargetDO noticeSmsRecordTarget = new NoticeSmsRecordTargetDO();
+        noticeSmsRecordTarget.setTaskId(event.getNoticeEvent().getTaskId());
+        noticeSmsRecordTarget.setTarget(target.getTarget());
+        noticeSmsRecordTarget.setTriggerTime(event.getNoticeEvent().getTriggerTime());
+        noticeSmsRecordTarget.setPushTime(current);
+        noticeSmsRecordTarget.setCreateTime(current);
+        noticeSmsRecordTarget.setUpdateTime(current);
+        noticeSmsRecordTarget.setContent(target.getContent());
+        noticeSmsRecordTarget.setStatus(targetStatus);
+        noticeSmsRecordTarget.setBizId(bizId);
+        noticeSmsRecordTarget.setAppCode(target.getAppCode());
+        noticeSmsRecordTarget.setSendResult(resultMsg);
+        recordTargetDao.insert(noticeSmsRecordTarget);
     }
 }

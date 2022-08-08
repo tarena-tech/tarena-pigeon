@@ -23,6 +23,7 @@ import com.tarena.dispatcher.impl.DispatcherRegistry;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.enums.NoticeType;
+import com.tarena.mnmp.enums.Provider;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -43,6 +44,8 @@ public class DispatcherTest {
         notice.setSignName("阿里云测试短信");
         notice.setTemplateCode("SMS_154950909");
         notice.setTemplateContent("1656");
+        notice.setAppCode("TCTM");
+        notice.setProviderCode(Provider.ALI_SMS.name());
         List<String> strings = Arrays.asList("18510273063");
         Map<String, Object> params = new HashMap<>();
         params.put("code", "1656");

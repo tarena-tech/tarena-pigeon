@@ -25,6 +25,7 @@ public class DispatcherConfig {
     private Boolean noticeSmsAli;
     private Boolean noticeEmailAli;
     private String smsAliPigeonProviderCode;
+    private Boolean enableReceipt;
 
     public Boolean getAssemblerEmail() {
         return assemblerEmail;
@@ -64,5 +65,13 @@ public class DispatcherConfig {
 
     public void setNoticeEmailAli(Boolean noticeEmailAli) {
         this.noticeEmailAli = noticeEmailAli;
+    }
+
+    public Boolean getEnableReceipt() {
+        return enableReceipt;
+    }
+
+    public void setEnableReceipt(Boolean enableReceipt) {
+        this.enableReceipt = enableReceipt;
     }
 }

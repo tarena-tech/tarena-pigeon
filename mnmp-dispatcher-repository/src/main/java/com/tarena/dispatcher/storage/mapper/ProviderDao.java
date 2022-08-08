@@ -25,5 +25,8 @@ import org.apache.ibatis.annotations.Select;
 public interface ProviderDao {
     @Select("select client_config from notice_provider where code = #{code}")
     String getClientConfig(@Param("code") String providerCode);
+
+    @Select("select code from notice_provider where id = #{id} and enabled=1 and  audit_status=1")
+    String getCodeById(@Param("id") Long providerId);
 }
 

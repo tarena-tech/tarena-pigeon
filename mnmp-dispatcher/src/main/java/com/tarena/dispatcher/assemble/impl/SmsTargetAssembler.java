@@ -39,8 +39,7 @@ public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> 
             notice.getTaskId(),
             notice.getTriggerTime(),
             notice.getNoticeType(),
-            notice.
-            "Ali",
+            notice.getProviderCode(),
             batchIndex,
             notice.getTargets().size(),
             notice.getMock());

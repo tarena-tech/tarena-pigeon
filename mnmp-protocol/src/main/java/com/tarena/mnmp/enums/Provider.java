@@ -18,6 +18,8 @@
 package com.tarena.mnmp.enums;
 
 public enum Provider {
+    ALI_EMAIL("阿里Email"),
+
     ALI_SMS("阿里短信");
 
     private String description;

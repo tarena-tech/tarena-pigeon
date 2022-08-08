@@ -29,7 +29,6 @@ import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.mnmp.commons.utils.SmsUtils;
 import com.tarena.mnmp.constant.Constant;
 import com.tarena.mnmp.constant.ErrorCode;
-import com.tarena.mnmp.enums.NoticeType;
 import com.tarena.mnmp.enums.Provider;
 import com.tarena.mnmp.enums.TargetStatus;
 import com.tarena.mnmp.protocol.BusinessException;
@@ -56,7 +55,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
     private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
     private String aliTemplateCode;
     private Client aliSmsClient;
-    private Boolean receipt = false;
+    private Boolean receipt = true;
 
     public void setAliTemplateCode(String aliTemplateCode) {
         this.aliTemplateCode = aliTemplateCode;
@@ -66,8 +65,12 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
         this.aliSmsClient = aliSmsClient;
     }
 
+    public void setReceipt(Boolean receipt) {
+        this.receipt = receipt;
+    }
+
     public String getNoticeType() {
-        return NoticeType.SMS.name().toLowerCase() + "Ali";
+        return Provider.ALI_SMS.name();
     }
 
     protected String doDispatcher(SmsNoticeEvent notice, SmsTarget smsTarget) throws Exception {
@@ -190,19 +193,20 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
         try {
             List<PhoneBizIdReceiptBO> bizIds = targetLogRepository.queryNotReceiptBizIds(Provider.ALI_SMS);
             if (CollectionUtils.isEmpty(bizIds)) {
-                //空则延迟100ms
-                Thread.sleep(100);
+                //空则延迟1000ms
+                Thread.sleep(1000);
                 return;
             }
             List<PhoneBizIdReceiptBO> receiptedList = this.fetchReceipt(bizIds);
             targetLogRepository.modifyTargetReceiptStatus(Provider.ALI_SMS, receiptedList);
+            Thread.sleep(10);
         } catch (Throwable e) {
             logger.error("ali sms receipt error", e);
         }
     }
 
     public void receipt() {
-        if (this.receipt) {
+        if (!this.receipt) {
             return;
         }
         ExecutorService receiptService = new ThreadPoolExecutor(1, 1, 0, TimeUnit.MICROSECONDS, new LinkedBlockingQueue<>(1),
