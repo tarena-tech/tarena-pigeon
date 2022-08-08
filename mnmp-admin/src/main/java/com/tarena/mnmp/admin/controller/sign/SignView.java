@@ -51,7 +51,7 @@ public class SignView {
         List<SignView> list = new ArrayList<>();
         for (SignDO sign : sources) {
             SignView signView = new SignView();
-            BeanUtils.copyProperties(list, signView);
+            BeanUtils.copyProperties(sign, signView);
             list.add(signView);
         }
         return list;

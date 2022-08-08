@@ -73,7 +73,10 @@ public class ProviderController implements ProviderApi {
         up.setEnabled(aDo.getEnabled() == 1 ? 0 : 1);
         providerService.update(up);
 
-        templateService.changeEnableByProviderId(id, up.getEnabled());
+        // 服务供应商被禁用 跟他有关系的全部禁用
+        if (up.getEnabled() == 0) {
+            templateService.changeEnableByProviderId(id, up.getEnabled());
+        }
     }
 
     @Override public PagerResult<ProviderView> queryPage(ProviderQueryParam param) {

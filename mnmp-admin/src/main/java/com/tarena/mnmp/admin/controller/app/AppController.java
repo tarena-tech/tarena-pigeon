@@ -72,8 +72,12 @@ public class AppController implements AppApi {
         up.setEnabled(aDo.getEnabled() == 1 ? 0 : 1);
         appService.updateById(up);
 
-        templateService.changeEnableByAppId(id, up.getEnabled());
-        signService.changeEnableByAppId(id, up.getEnabled());
+        // 应用被禁用 依赖于该应用的关系全部禁用
+        if (up.getEnabled() == 0) {
+            templateService.changeEnableByAppId(id, up.getEnabled());
+            signService.changeEnableByAppId(id, up.getEnabled());
+        }
+
     }
 
     @Override public AppView queryAppDetail(Long id) {
