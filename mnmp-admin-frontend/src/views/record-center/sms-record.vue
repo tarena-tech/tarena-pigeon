@@ -2,8 +2,11 @@
 <template>
   <div class="app-container">
     <el-form ref="claFrom" :inline="true" :model="claForm">
-      <div class="form-container">
+      <div>
         <div class="form-left-box">
+          <el-form-item prop="target" label="目标">
+            <el-input v-model.trim="claForm.target" placeholder="" style="width: 120px"></el-input>
+          </el-form-item>
           <el-form-item prop="bizId" label="回执码">
             <el-input v-model.trim="claForm.bizId" placeholder="" style="width: 120px"></el-input>
           </el-form-item>
@@ -114,7 +117,9 @@ export default {
         status: null, // 任务状态 0:未开启 1:推送中 2:终止 3:已结束 4.失败
         triggerTimes: [],
         startTriggerTime: null,
-        endTriggerTime: null
+        endTriggerTime: null,
+        taskId: null,
+        target: null
       },
       apps: {
 
@@ -130,13 +135,15 @@ export default {
   computed: {},
   watch: {},
   mounted() {
-    this.claForm.eqTarget = this.$route.query.target;
+    this.claForm.target = this.$route.query.target;
     this.claForm.taskId = this.$route.query.taskId;
+
     this.getTabelData()
   },
   created() {},
   methods: {
     resetForm() {
+      this.claForm.taskId = null
       this.$refs.claFrom.resetFields()
     },
     getTabelData() {

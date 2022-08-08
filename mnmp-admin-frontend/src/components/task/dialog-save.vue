@@ -42,6 +42,17 @@
           <el-form-item label="消息类型" prop="noticeType">
             <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false" />
           </el-form-item>
+
+          <el-form-item label="模拟发送" prop="mock">
+            <el-switch
+              v-model="ruleForm.mock"
+              active-color="#13ce66"
+              active-value="1"
+              inactive-value="0"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+
           <el-form-item label="应用" prop="appId">
             <template>
               <el-select v-model="ruleForm.appId" filterable placeholder="请选择" :filter-method="queryApps">
@@ -130,6 +141,7 @@ export default {
       dialogVisible: false,
       windowName: '创建',
       loading: false,
+
       uploadUrl:  process.env.VUE_APP_BASE_API + '/task/uploadFile',
       ruleForm: {
         name: null,
@@ -142,6 +154,7 @@ export default {
         cycleNum: null,
         remark: null,
         filePath: null,
+        mock: 1
       },
       apps: {
 
@@ -264,6 +277,7 @@ export default {
       window.open(url)
     },
     submitForm() {
+      console.log("--------------", this.ruleForm.mock)
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           addTask(this.ruleForm)
@@ -286,6 +300,7 @@ export default {
     },
     show(data) {
       this.dialogVisible = true
+      this.ruleForm = {};
       if (data != null) {
         this.windowName = '修改'
         this.ruleForm = data

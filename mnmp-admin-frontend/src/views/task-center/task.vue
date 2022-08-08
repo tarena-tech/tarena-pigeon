@@ -238,7 +238,6 @@ export default {
       queryAppList({name: param})
         .then(res => {
           this.apps = res
-          console.dir(res)
         }).catch(err => {
         console.log(err);
       })
