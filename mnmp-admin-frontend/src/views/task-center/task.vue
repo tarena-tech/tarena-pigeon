@@ -134,7 +134,7 @@
               详情
             </el-button>
             <el-button type="text" size="small" @click="target(scope.row.id)">
-              执行明细
+              任务目标
             </el-button>
           </template>
         </el-table-column>
@@ -238,7 +238,6 @@ export default {
       queryAppList({name: param})
         .then(res => {
           this.apps = res
-          console.dir(res)
         }).catch(err => {
         console.log(err);
       })

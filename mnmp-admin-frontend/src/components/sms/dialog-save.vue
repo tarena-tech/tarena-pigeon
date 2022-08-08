@@ -27,8 +27,12 @@
           <el-form-item label="通知类型" prop="noticeType">
             <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false" />
           </el-form-item>
-          <el-form-item label="应用" prop="appId">
-            <el-input v-model="ruleForm.appId" />
+          <el-form-item label="应用" prop="">
+            <template>
+              <el-select v-model="ruleForm.appCode" filterable placeholder="请选择" :filter-method="queryApps">
+                <el-option v-for="item in apps" :key="item.id" :label="item.name" :value="item.code" />
+              </el-select>
+            </template>
           </el-form-item>
           <el-form-item label="模板内容" prop="content">
             <el-input v-model="ruleForm.content" type="textarea" />
@@ -49,7 +53,7 @@
 
 <script>
 import { save } from '@/api/sms'
-
+import {queryAppList} from "@/api/app";
 export default {
   name: 'DialogSmsSave',
   data() {
@@ -65,6 +69,9 @@ export default {
         content: null,
         templateType: null,
         remark: null
+      },
+      apps: {
+
       },
       rules: {
         name: [
@@ -87,6 +94,10 @@ export default {
         ]
       }
     }
+  },
+  mounted() {
+    this.ruleForm = {}
+    this.queryApps()
   },
   methods: {
     handleClose(done) {
@@ -124,11 +135,20 @@ export default {
     },
     show(data) {
       this.dialogVisible = true
+      this.ruleForm = {};
       if (data != null) {
         this.windowName = '修改'
         this.ruleForm = data
       }
-    }
+    },
+    queryApps(param) {
+      queryAppList({name: param})
+        .then(res => {
+          this.apps = res
+        }).catch(err => {
+        console.log(err);
+      })
+    },
   }
 }
 </script>

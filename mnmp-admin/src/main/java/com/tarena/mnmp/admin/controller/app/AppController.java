@@ -18,7 +18,6 @@
 package com.tarena.mnmp.admin.controller.app;
 
 import com.tarena.mnmp.admin.codegen.api.app.AppApi;
-import com.tarena.mnmp.admin.codegen.api.app.AppView;
 import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.AppDO;
@@ -82,8 +81,6 @@ public class AppController implements AppApi {
 
     @Override public List<AppView> queryList(AppQueryParam param) {
         param.setOrder(false);
-        param.setCurrentPageIndex(1);
-        param.setPageSize(100);
         List<AppDO> dos = appService.queryList(param);
         return AppView.convert(dos);
     }

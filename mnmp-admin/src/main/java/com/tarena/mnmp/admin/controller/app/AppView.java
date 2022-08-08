@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.codegen.api.app;
+package com.tarena.mnmp.admin.controller.app;
 
 import com.github.xiaoymin.knife4j.annotations.Ignore;
 import com.tarena.mnmp.domain.AppDO;

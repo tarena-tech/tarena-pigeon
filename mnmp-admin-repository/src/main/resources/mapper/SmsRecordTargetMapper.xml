@@ -169,6 +169,15 @@
             <if test="taskId != null">
                 and task_id = #{taskId,jdbcType=BIGINT}
             </if>
+            <if test="bizId != null and bizId != ''">
+                and biz_id = #{bizId,jdbcType=VARCHAR}
+            </if>
+            <if test="appCode != null and appCode != ''">
+                and app_code = #{appCode,jdbcType=VARCHAR}
+            </if>
+            <if test="startTriggerTime != null and endTriggerTime != null">
+                and trigger_time between #{startTriggerTime,jdbcType=TIMESTAMP} and #{endTriggerTime,jdbcType=TIMESTAMP}
+            </if>
         </where>
         ${limitClause}
     </select>
@@ -179,13 +188,22 @@
         from notice_sms_record_target
         <where>
             <if test="eqTarget != null and eqTarget != ''">
-                target = #{target,jdbcType=VARCHAR}
+                target = #{eqTarget,jdbcType=VARCHAR}
             </if>
             <if test="target != null and target != ''">
                 and target like concat('%', #{target,jdbcType=VARCHAR}, '%')
             </if>
             <if test="taskId != null">
                 and task_id = #{taskId,jdbcType=BIGINT}
+            </if>
+            <if test="bizId != null and bizId != ''">
+                and biz_id = #{bizId,jdbcType=VARCHAR}
+            </if>
+            <if test="appCode != null and appCode != ''">
+                and app_code = #{appCode,jdbcType=VARCHAR}
+            </if>
+            <if test="startTriggerTime != null and endTriggerTime != null">
+                and trigger_time between #{startTriggerTime,jdbcType=TIMESTAMP} and #{endTriggerTime,jdbcType=TIMESTAMP}
             </if>
         </where>
     </select>

@@ -30,6 +30,7 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
         <result column="audit_status" jdbcType="TINYINT" property="auditStatus" />
         <result column="audit_result" jdbcType="VARCHAR" property="auditResult" />
+        <result column="mock" jdbcType="INTEGER" property="mock" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -37,7 +38,7 @@
         id, `name`, task_status, task_type, notice_type, template_id, sign_id, app_id, cycle_level,
         cycle_num, first_trigger_time, trigger_end_time, next_trigger_time, target_type,
         target_file_name, target_file_url, creator, creator_email, creator_name, dept_id,
-        remark, error, create_time, update_time, audit_status, audit_result
+        remark, error, create_time, update_time, audit_status, audit_result,mock
     </sql>
 
     <!--查询单个-->
@@ -128,6 +129,9 @@
             <if test="auditResult != null">
                 audit_result = #{auditResult,jdbcType=VARCHAR},
             </if>
+            <if test="mock != null">
+                mock = #{mock,jdbcType=INTEGER},
+            </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -209,6 +213,9 @@
             <if test="auditResult != null">
                 audit_result,
             </if>
+            <if test="mock != null">
+                mock,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null">
@@ -285,6 +292,9 @@
             </if>
             <if test="auditResult != null">
                 #{auditResult,jdbcType=VARCHAR},
+            </if>
+            <if test="mock != null">
+                #{mock,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>

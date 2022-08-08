@@ -1,5 +1,5 @@
 import {
-  get
+  post
 } from '@/utils/request.js'
 
-export const queryPage = (data) => get('/record/target/sms/query/page', data)
+export const queryPage = (data) => post('/record/target/sms/query/page', data)

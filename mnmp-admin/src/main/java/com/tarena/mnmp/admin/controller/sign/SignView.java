@@ -14,24 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.admin.controller.template;
 
-import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+package com.tarena.mnmp.admin.controller.sign;
 
-public class SmsTemplateChangeParam {
+import io.swagger.annotations.ApiModel;
+import java.util.Date;
+import lombok.Data;
 
-    @NotNull(message = "id不能为空")
-    @Min(value = 1, message = "参数不合法")
-    @ApiModelProperty(value = "id", required = true)
+@ApiModel(value = "签名模型")
+@Data
+public class SignView {
+
     private Long id;
 
-    public Long getId() {
-        return id;
-    }
+    private String code;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String name;
+
+    private Long appId;
+    private String appCode;
+
+    private String remarks;
+
+    private String creator;
+
+    private Integer enabled;
+    private Integer auditStatus;
+    private Date createTime;
+    private Date updateTime;
 }
