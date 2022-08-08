@@ -43,7 +43,7 @@ public class SignController implements SignApi {
     @Resource
     private TaskService taskService;
 
-    @Override public void save(SignSaveParam signSaveParam) {
+    @Override public void save(SignSaveParam signSaveParam) throws BusinessException {
         signService.save(signSaveParam);
     }
 

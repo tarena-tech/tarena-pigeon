@@ -17,8 +17,15 @@
 
 package com.tarena.mnmp.domain.sign;
 
+import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.SignDO;
+import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.enums.AuditStatus;
+import com.tarena.mnmp.enums.Enabled;
+import com.tarena.mnmp.protocol.BusinessException;
 import java.util.List;
+import java.util.Objects;
+import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,9 +35,13 @@ public class SignService {
     @Autowired
     private SignDao signDao;
 
-    public void save(SignSaveParam signSaveParam) {
+    @Resource
+    private AppService appService;
+
+    public void save(SignSaveParam signSaveParam) throws BusinessException {
         SignDO signDO = new SignDO();
         BeanUtils.copyProperties(signSaveParam, signDO);
+        check(signDO);
         if (null == signDO.getId()) {
             signDao.save(signDO);
         } else {
@@ -81,5 +92,21 @@ public class SignService {
 
     public void changeEnableByAppId(Long id, Integer enable) {
         signDao.changeEnableByAppId(id, enable);
+    }
+
+    private void check(SignDO sign) throws BusinessException {
+        AppDO app = appService.queryAppDetail(sign.getAppId());
+        if (null == app) {
+            throw new BusinessException("100", "应用不存在");
+        }
+
+        if (!Objects.equals(Enabled.YES.getVal(), app.getEnabled())) {
+            throw new BusinessException("100", "应用已被禁用");
+        }
+
+        if (!Objects.equals(AuditStatus.PASS.getStatus(), app.getAuditStatus())) {
+            throw new BusinessException("100", "应用未审核通过");
+        }
+
     }
 }
