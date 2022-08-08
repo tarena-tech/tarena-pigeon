@@ -15,27 +15,25 @@
  * limitations under the License.
  */
 
-package com.tarena.commons.test;
+package com.tarena.schedule.test;
 
-import com.tarena.mnmp.api.NoticeDTO;
-import com.tarena.mnmp.enums.TargetStatus;
-import com.tarena.mnmp.monitor.Monitor;
-import com.tarena.mnmp.protocol.NoticeEvent;
+import com.tarena.mnmp.commons.pager.PagerResultAddition;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MonitorMock implements Monitor {
-    @Override public void alarms(String key, String msg) {
+public class PagerTest {
 
-    }
-
-    @Override public void noticeRequest(NoticeDTO notice) {
-        System.out.println("notice request");
-    }
-
-    @Override public void noticeStatus(NoticeEvent noticeEvent, String target, TargetStatus status) {
-        System.out.println("notice status " + status);
-    }
-
-    @Override public void schedule() {
-        System.out.println("schedule ....");
+    public static void main(String[] args) {
+        PagerResultAddition<String,Integer> pagerResultAddition=new PagerResultAddition<>();
+        pagerResultAddition.setAddition(1000);
+        pagerResultAddition.setCurrentPageIndex(1);
+        pagerResultAddition.setPageSize(100);
+        pagerResultAddition.setRecordCount(10000L);
+        List<String> list=new ArrayList<>();
+        list.add("TEST1");
+        list.add("TEST2");
+        list.add("TEST3");
+        pagerResultAddition.setList(list);
+        System.out.println(pagerResultAddition.getLastPageIndex());
     }
 }

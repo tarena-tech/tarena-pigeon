@@ -46,10 +46,6 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
         return null;
     }
 
-    @Override public Integer modifySmsStatus(NoticeEvent noticeEvent, String target, TargetStatus targetStatus) {
-        return null;
-    }
-
     @Override public void newSuccessSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus,
         String bizId) {
         addSmsTargetByTask(event, target, targetStatus.status(), bizId);
@@ -71,7 +67,7 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
     }
 
     @Override public void modifyTargetReceiptStatus(Provider provider, List<PhoneBizIdReceiptBO> receiptedList) {
-        //todo 更新回执状态
+        recordTargetDao.batchUpdate(receiptedList);
     }
 
     private void addSmsTargetByTask(SmsNoticeEvent event, SmsTarget target, Integer targetStatus,

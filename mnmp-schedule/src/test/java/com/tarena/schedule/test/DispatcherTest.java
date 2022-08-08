@@ -15,42 +15,29 @@
  * limitations under the License.
  */
 
-package com.tarena.commons.test;
+package com.tarena.schedule.test;
 
-import com.aliyun.dysmsapi20170525.Client;
-import com.aliyun.teaopenapi.models.Config;
-import com.tarena.dispatcher.assemble.impl.EmailTargetAssembler;
-import com.tarena.dispatcher.assemble.impl.SmsTargetAssembler;
 import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.dispatcher.impl.DispatcherRegistry;
-import com.tarena.dispatcher.impl.EmailAliNoticeDispatcher;
-import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
-import com.tarena.dispatcher.respository.TargetLogRepository;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.TargetDTO;
-import com.tarena.mnmp.commons.utils.DollarPlaceholderReplacer;
 import com.tarena.mnmp.enums.NoticeType;
-import com.tarena.mnmp.monitor.Monitor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class DispatcherTest {
-
     private static SmsNoticeEvent assemble() throws Exception {
-
-        DollarPlaceholderReplacer dollarPlaceholderReplacer = new DollarPlaceholderReplacer();
-        EmailTargetAssembler emailTargetAssembler = new EmailTargetAssembler();
-        emailTargetAssembler.afterPropertiesSet();
-        emailTargetAssembler.setDollarPlaceholderReplacer(dollarPlaceholderReplacer);
-        SmsTargetAssembler smsTargetAssembler = new SmsTargetAssembler();
-        smsTargetAssembler.afterPropertiesSet();
-        smsTargetAssembler.setDollarPlaceholderReplacer(dollarPlaceholderReplacer);
-
         NoticeDTO notice = new NoticeDTO();
         notice.setNoticeType(NoticeType.SMS);
         notice.setSignName("阿里云测试短信");
@@ -74,21 +61,10 @@ public class DispatcherTest {
         assemble();
     }
 
+
+
     @Test
     public void test() throws Exception {
-        TargetLogRepository targetLogRepository = new TargetLogRepositoryMock();
-        Client client = new Client(new Config());
-        Monitor monitor = new MonitorMock();
-        EmailAliNoticeDispatcher emailAliNoticeDispatcher = new EmailAliNoticeDispatcher();
-        emailAliNoticeDispatcher.afterPropertiesSet();
-        emailAliNoticeDispatcher.setTargetLogRepository(targetLogRepository);
-        emailAliNoticeDispatcher.setMonitor(monitor);
-
-        SmsAliNoticeDispatcher smsAliNoticeDispatcher = new AliSmsDispatcherMock();
-        smsAliNoticeDispatcher.afterPropertiesSet();
-        smsAliNoticeDispatcher.setTargetLogRepository(targetLogRepository);
-        smsAliNoticeDispatcher.setMonitor(monitor);
-        smsAliNoticeDispatcher.setAliSmsClient(client);
         SmsNoticeEvent baseNoticeTargets = assemble();
         DispatcherRegistry.getInstance().dispatcher(baseNoticeTargets);
     }

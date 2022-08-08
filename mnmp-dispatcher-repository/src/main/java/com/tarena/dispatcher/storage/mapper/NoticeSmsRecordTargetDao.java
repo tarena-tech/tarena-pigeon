@@ -17,6 +17,7 @@
 
 package com.tarena.dispatcher.storage.mapper;
 
+import com.tarena.dispatcher.bo.PhoneBizIdReceiptBO;
 import com.tarena.mnmp.domain.NoticeSmsRecordTargetDO;
 import com.tarena.mnmp.enums.TargetStatus;
 import java.util.List;
@@ -31,6 +32,7 @@ public interface NoticeSmsRecordTargetDao {
 
     void update(NoticeSmsRecordTargetDO data);
 
+    void batchUpdate(List<PhoneBizIdReceiptBO> receiptedList);
 
     @Select("select status from notice_sms_record_target where task_id = #{taskId} " +
         "and trigger_time = #{triggerTime} and target = #{target}")
@@ -39,12 +41,11 @@ public interface NoticeSmsRecordTargetDao {
 
     /**
      * 获取已发送但未回执的目标数据
+     *
      * @return
      * @see TargetStatus SENT_TO_PROVIDER
      */
-//    @Select("select id, record_id, app_id,task_id, target, content, status, trigger_time,push_time, biz_id, send_result," +
-//        " create_time, update_time from notice_sms_record_target where status=1 order by id limit 100")
-    @Select("select id, app_id,task_id, target, content, status, trigger_time,push_time, biz_id, send_result," +
+    @Select("select id,task_id, target, content, status, trigger_time,push_time, biz_id, send_result," +
         " create_time, update_time from notice_sms_record_target where status=1 order by id limit 100")
     List<NoticeSmsRecordTargetDO> queryNotReceiptBizIds();
 }

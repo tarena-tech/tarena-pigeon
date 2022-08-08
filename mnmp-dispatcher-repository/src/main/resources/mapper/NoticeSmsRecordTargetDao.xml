@@ -26,7 +26,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="NoticeSmsRecordTargetMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from notice_sms_record_target
         <where>
             <if test="id != null">
@@ -75,36 +75,60 @@
     </insert>
 
 
+    <update id="batchUpdate">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update notice_sms_record_target
+            <set>
+                <if test="item.status != null">
+                    status = #{item.status},
+                </if>
+                <if test="item.pushTime != null">
+                    push_time = #{item.pushTime},
+                </if>
+                <if test="item.pushTime != null">
+                    push_receive_time = #{item.pushReceiveTime},
+                </if>
+                <if test="item.sendResult != null">
+                    send_result = #{item.sendResult},
+                </if>
+                <if test="item.updateTime != null">
+                    update_time = #{item.updateTime},
+                </if>
+            </set>
+            where biz_id = #{item.bizId}
+        </foreach>
+    </update>
+
 
     <!--通过主键修改数据-->
     <update id="update">
         update notice_sms_record_target
         <set>
             <if test="taskId != null">
-                 task_id = #{taskId},
+                task_id = #{taskId},
             </if>
             <if test="target != null and target != ''">
-                 target = #{target},
+                target = #{target},
             </if>
             <if test="content != null and content != ''">
-                 content = #{content},
+                content = #{content},
             </if>
             <if test="status != null">
-                 status = #{status},
+                status = #{status},
             </if>
             <if test="triggerTime != null and triggerTime != ''">
-                 trigger_time = #{triggerTime},
+                trigger_time = #{triggerTime},
             </if>
             <if test="pushTime != null">
-                 push_time = #{pushTime},
+                push_time = #{pushTime},
             </if>
             <if test="bizId != null and bizId != ''">
-                 biz_id = #{bizId},
+                biz_id = #{bizId},
             </if>
             <if test="sendResult != null and sendResult != ''">
-                 send_result = #{sendResult},
+                send_result = #{sendResult},
             </if>
-                update_time = now()
+            update_time = now()
         </set>
         where id = #{id}
     </update>

@@ -95,6 +95,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
         List<SmsTarget> targets = notice.getTargets();
         NoticeEvent event = notice.getNoticeEvent();
         for (SmsTarget smsTarget : targets) {
+            //todo 升级redis 或hbase 提高并发吞吐
             TargetStatus sentStatus = this.targetLogRepository.getSmsStatus(event, smsTarget.getTarget());
             //未发送或发送失败则重试
             if (sentStatus == null || sentStatus.equals(TargetStatus.SENT_FAIL)) {
@@ -206,7 +207,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
         }
         ExecutorService receiptService = new ThreadPoolExecutor(1, 1, 0, TimeUnit.MICROSECONDS, new LinkedBlockingQueue<>(1),
             new BasicThreadFactory.Builder()
-                .namingPattern("ali-sms-receipt-service-").daemon(true).build());
+                .namingPattern("ali-sms-receipt-service-%d").daemon(true).build());
         receiptService.submit(new Runnable() {
             @Override public void run() {
                 while (true) {
