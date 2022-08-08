@@ -24,7 +24,6 @@ public class DispatcherConfig {
     private Boolean assemblerSms;
     private Boolean noticeSmsAli;
     private Boolean noticeEmailAli;
-    private Boolean mock;
     private String smsAliPigeonProviderCode;
 
     public Boolean getAssemblerEmail() {
@@ -49,14 +48,6 @@ public class DispatcherConfig {
 
     public void setSmsAliPigeonProviderCode(String smsAliPigeonProviderCode) {
         this.smsAliPigeonProviderCode = smsAliPigeonProviderCode;
-    }
-
-    public Boolean getMock() {
-        return mock;
-    }
-
-    public void setMock(Boolean mock) {
-        this.mock = mock;
     }
 
     public Boolean getNoticeSmsAli() {

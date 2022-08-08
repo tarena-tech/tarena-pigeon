@@ -27,7 +27,6 @@ import com.tarena.mnmp.protocol.BusinessException;
 
 public class DefaultNoticeService implements NoticeService {
     private Monitor monitor;
-
     public void setMonitor(Monitor monitor) {
         this.monitor = monitor;
     }

@@ -29,7 +29,7 @@ import org.springframework.context.event.ContextClosedEvent;
 
 @SpringBootApplication
 @MapperScan(basePackages = {"com.tarena.dispatcher.storage.mapper"})
-@ComponentScan(basePackages = {"com.tarena.dispatcher.repository.impl","com.tarena.consumer"})
+@ComponentScan(basePackages = {"com.tarena.dispatcher.repository.impl", "com.tarena.consumer"})
 public class ConsumerApplication {
     private static Logger logger = LoggerFactory.getLogger(ConsumerApplication.class);
 

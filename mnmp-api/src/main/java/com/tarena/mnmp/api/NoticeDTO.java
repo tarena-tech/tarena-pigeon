@@ -34,6 +34,7 @@ public class NoticeDTO implements Serializable {
     private List<TargetDTO> targets;
     private String signCode;
     private String signName;
+    private Integer mock = 0;
 
     public SendType getSendType() {
         return sendType;
@@ -113,5 +114,13 @@ public class NoticeDTO implements Serializable {
 
     public void setTriggerTime(String triggerTime) {
         this.triggerTime = triggerTime;
+    }
+
+    public Integer getMock() {
+        return mock;
+    }
+
+    public void setMock(Integer mock) {
+        this.mock = mock;
     }
 }

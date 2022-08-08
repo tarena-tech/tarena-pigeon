@@ -46,7 +46,8 @@ public class DispatcherRegistry {
 
     public <T extends NoticeEventGetter> void dispatcher(T noticeEventWrap) throws BusinessException {
         NoticeEvent noticeEvent = noticeEventWrap.getNoticeEvent();
-        NoticeDispatcher noticeDispatcher = this.noticeDispatcherContainer.get(noticeEvent.getNoticeType().name().toLowerCase() + noticeEvent.getProvider());
+        String dispatcherKey = noticeEvent.getNoticeType().name().toLowerCase() + noticeEvent.getProvider();
+        NoticeDispatcher noticeDispatcher = this.noticeDispatcherContainer.get(dispatcherKey);
         if (noticeDispatcher == null) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "Notice Dispatcher not found. notice type=" + noticeEvent.getNoticeType().name() + "provider =" + noticeEvent.getProvider());
         }
