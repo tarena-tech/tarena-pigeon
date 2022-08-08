@@ -194,6 +194,10 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-
+    <update id="changeEnableByAppId">
+        update  notice_sms_sign
+        set enabled = #{enable,jdbcType=INTEGER} , create_time = now()
+        where app_id = #{id,jdbcType=BIGINT} and enabled != #{enable,jdbcType=INTEGER}
+    </update>
 </mapper>
 

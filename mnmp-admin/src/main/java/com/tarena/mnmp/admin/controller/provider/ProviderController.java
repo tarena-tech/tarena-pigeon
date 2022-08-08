@@ -24,8 +24,10 @@ import com.tarena.mnmp.domain.ProviderDO;
 import com.tarena.mnmp.domain.provider.ProviderQueryParam;
 import com.tarena.mnmp.domain.provider.ProviderSaveParam;
 import com.tarena.mnmp.domain.provider.ProviderService;
+import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.protocol.BusinessException;
 import java.util.List;
+import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +36,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProviderController implements ProviderApi {
     @Autowired
     private ProviderService providerService;
+
+    @Resource
+    private TemplateService templateService;
 
     @Override public void addProvider(ProviderSaveParam providerSaveParam) {
         providerService.addProvider(providerSaveParam);
@@ -67,6 +72,8 @@ public class ProviderController implements ProviderApi {
         up.setId(id);
         up.setEnabled(aDo.getEnabled() == 1 ? 0 : 1);
         providerService.update(up);
+
+        templateService.changeEnableByProviderId(id, up.getEnabled());
     }
 
     @Override public PagerResult<ProviderView> queryPage(ProviderQueryParam param) {

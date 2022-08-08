@@ -147,7 +147,7 @@ public class TaskController implements TaskApi {
         return new Result<>(dir + name);
     }
 
-    @Override public void addTask(TaskParam taskParam, HttpServletResponse response) throws IOException {
+    @Override public void addTask(TaskParam taskParam, HttpServletResponse response) throws IOException, BusinessException {
         TaskDO bo = new TaskDO();
         BeanUtils.copyProperties(taskParam, bo);
         List<TargetExcelData> fial = taskService.addTask(bo, taskParam.getFilePath());

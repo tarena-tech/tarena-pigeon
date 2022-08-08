@@ -24,8 +24,11 @@ import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.app.AppQueryParam;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.domain.sign.SignService;
+import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.protocol.BusinessException;
 import java.util.List;
+import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +37,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppController implements AppApi {
     @Autowired
     private AppService appService;
+
+    @Resource
+    private TemplateService templateService;
+
+    @Resource
+    private SignService signService;
 
     @Override public void save(AppSaveParam appAddParam) {
         appService.save(appAddParam);
@@ -61,6 +70,9 @@ public class AppController implements AppApi {
         up.setId(id);
         up.setEnabled(aDo.getEnabled() == 1 ? 0 : 1);
         appService.updateById(up);
+
+        templateService.changeEnableByAppId(id, up.getEnabled());
+        signService.changeEnableByAppId(id, up.getEnabled());
     }
 
     @Override public AppView queryAppDetail(Long id) {
