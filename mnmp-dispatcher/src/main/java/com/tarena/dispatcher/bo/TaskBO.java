@@ -107,6 +107,8 @@ public class TaskBO {
      */
     private Date updateTime;
 
+    private Integer mock;
+
     public Long getId() {
         return id;
     }
@@ -273,5 +275,13 @@ public class TaskBO {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getMock() {
+        return mock;
+    }
+
+    public void setMock(Integer mock) {
+        this.mock = mock;
     }
 }

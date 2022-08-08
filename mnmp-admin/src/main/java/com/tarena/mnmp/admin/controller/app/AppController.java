@@ -24,16 +24,33 @@ import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.app.AppQueryParam;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.domain.sign.SignService;
+import com.tarena.mnmp.domain.task.TaskQuery;
+import com.tarena.mnmp.domain.task.TaskService;
+import com.tarena.mnmp.domain.template.TemplateService;
+import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
 import java.util.List;
+import java.util.Objects;
+import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AppController implements AppApi {
     @Autowired
     private AppService appService;
+
+    @Resource
+    private TemplateService templateService;
+
+    @Resource
+    private TaskService taskService;
+
+    @Resource
+    private SignService signService;
 
     @Override public void save(AppSaveParam appAddParam) {
         appService.save(appAddParam);
@@ -59,8 +76,19 @@ public class AppController implements AppApi {
 
         AppDO up = new AppDO();
         up.setId(id);
-        up.setEnabled(aDo.getEnabled() == 1 ? 0 : 1);
+        up.setEnabled(Enabled.reverse(aDo.getEnabled()).getVal());
         appService.updateById(up);
+
+        // 应用被禁用 依赖于该应用的关系全部禁用
+        if (Objects.equals(Enabled.NO.getVal(), up.getEnabled())) {
+            templateService.changeEnableByAppId(id, up.getEnabled());
+            signService.changeEnableByAppId(id, up.getEnabled());
+
+            TaskQuery query = new TaskQuery();
+            query.setAppId(id);
+            taskService.endTaskStatusByTargetId(query);
+        }
+
     }
 
     @Override public AppView queryAppDetail(Long id) {
@@ -79,8 +107,8 @@ public class AppController implements AppApi {
         return pagerResult;
     }
 
-    @Override public List<AppView> queryList(AppQueryParam param) {
-        param.setOrder(false);
+    @GetMapping("query/list") @Override public List<AppView> queryList(AppQueryParam param) {
+        param.setOrderBy(false);
         List<AppDO> dos = appService.queryList(param);
         return AppView.convert(dos);
     }

@@ -64,14 +64,14 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
         List<NoticeSmsRecordTargetDO> targets = this.recordTargetDao.queryNotReceiptBizIds();
         List<PhoneBizIdReceiptBO> phoneBizIdPairs = new ArrayList<>(targets.size());
         for (NoticeSmsRecordTargetDO target : targets) {
-            PhoneBizIdReceiptBO phoneBizIdPair = new PhoneBizIdReceiptBO(target.getTarget(), target.getBizId());
+            PhoneBizIdReceiptBO phoneBizIdPair = new PhoneBizIdReceiptBO(target.getTarget(), target.getBizId(), target.getTaskId());
             phoneBizIdPairs.add(phoneBizIdPair);
         }
         return phoneBizIdPairs;
     }
 
-    @Override public void modifyTargetReceiptStatus(Provider provider,List<PhoneBizIdReceiptBO> receiptedList) {
-      //todo 更新回执状态
+    @Override public void modifyTargetReceiptStatus(Provider provider, List<PhoneBizIdReceiptBO> receiptedList) {
+        //todo 更新回执状态
     }
 
     private void addSmsTargetByTask(SmsNoticeEvent event, SmsTarget target, Integer targetStatus,

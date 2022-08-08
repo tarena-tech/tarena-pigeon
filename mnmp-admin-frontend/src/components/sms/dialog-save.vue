@@ -29,11 +29,20 @@
           </el-form-item>
           <el-form-item label="应用" prop="">
             <template>
-              <el-select v-model="ruleForm.appCode" filterable placeholder="请选择" :filter-method="queryApps">
-                <el-option v-for="item in apps" :key="item.id" :label="item.name" :value="item.code" />
+              <el-select v-model="ruleForm.app" filterable placeholder="请选择" :filter-method="queryApps">
+                <el-option v-for="item in apps" :key="item.id" :label="item.name" :value="item" />
               </el-select>
             </template>
           </el-form-item>
+
+          <el-form-item label="供应商" prop="">
+            <template>
+              <el-select v-model="ruleForm.providerId" filterable placeholder="请选择" :filter-method="queryProviders">
+                <el-option v-for="item in providers" :key="item.id" :label="item.name" :value="item.id" />
+              </el-select>
+            </template>
+          </el-form-item>
+
           <el-form-item label="模板内容" prop="content">
             <el-input v-model="ruleForm.content" type="textarea" />
           </el-form-item>
@@ -54,6 +63,7 @@
 <script>
 import { save } from '@/api/sms'
 import {queryAppList} from "@/api/app";
+import { queryProviderList } from "@/api/provider"
 export default {
   name: 'DialogSmsSave',
   data() {
@@ -68,11 +78,13 @@ export default {
         noticeType: null,
         content: null,
         templateType: null,
-        remark: null
+        remark: null,
+        providerId: null
       },
       apps: {
 
       },
+      providers: {},
       rules: {
         name: [
           { required: true, message: '请输入模板名称', trigger: 'blur' }
@@ -98,6 +110,7 @@ export default {
   mounted() {
     this.ruleForm = {}
     this.queryApps()
+    this.queryProviders()
   },
   methods: {
     handleClose(done) {
@@ -110,14 +123,12 @@ export default {
       this.$emit('refresh')
     },
     submitForm() {
+      this.ruleForm.appId = this.ruleForm.app.id;
+      this.ruleForm.appCode = this.ruleForm.app.code;
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          // TODO 假数据
-          this.ruleForm.appCode = 333
-          this.ruleForm.appId = 333
           save(this.ruleForm)
             .then(res => {
-              console.dir(res)
               this.cancelForm()
             })
             .catch(err => {
@@ -142,13 +153,30 @@ export default {
       }
     },
     queryApps(param) {
-      queryAppList({name: param})
+      queryAppList({
+        name: param,
+        enable: 1,
+        auditStatus: 1
+      })
         .then(res => {
           this.apps = res
         }).catch(err => {
-        console.log(err);
+        console.error(err);
       })
     },
+
+    queryProviders(param) {
+      queryProviderList({
+        name: param,
+        auditStatus: 1,
+        enable: 1
+      })
+        .then(res => {
+          this.providers = res;
+        }).catch(err => {
+          console.error(err)
+      })
+    }
   }
 }
 </script>

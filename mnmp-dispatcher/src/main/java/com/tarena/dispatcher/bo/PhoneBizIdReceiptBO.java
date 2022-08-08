@@ -21,6 +21,10 @@ import java.util.Date;
 
 public class PhoneBizIdReceiptBO {
     /**
+     * 任务ID
+     */
+    private Long taskId;
+    /**
      * phone number
      */
     private String phone;
@@ -42,17 +46,15 @@ public class PhoneBizIdReceiptBO {
      * 接收时间
      */
     private Date receiveDate;
-
     /**
      * 回执状态
      */
     private Boolean success;
 
-
-
-    public PhoneBizIdReceiptBO(String phone, String bizId) {
+    public PhoneBizIdReceiptBO(String phone, String bizId, Long taskId) {
         this.phone = phone;
         this.bizId = bizId;
+        this.taskId = taskId;
     }
 
     public String getPhone() {
@@ -101,5 +103,9 @@ public class PhoneBizIdReceiptBO {
 
     public void setReceiveDate(Date receiveDate) {
         this.receiveDate = receiveDate;
+    }
+
+    public Long getTaskId() {
+        return taskId;
     }
 }

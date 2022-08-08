@@ -20,19 +20,29 @@ package com.tarena.schedule;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.mnmp.commons.mq.MQPublisher;
 import com.tarena.mnmp.constant.AlarmKey;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SpringBootSchedule extends AbstractScheduler {
+
     @Autowired
     private MQPublisher mqPublisher;
+
+    private static Logger logger = LoggerFactory.getLogger(SpringBootSchedule.class);
+
     @Override boolean stop() {
         return false;
     }
 
     @Override <T extends NoticeEventGetter> void send(T event) {
         try {
+            if (event == null) {
+                logger.error("send event is null");
+                return;
+            }
             this.mqPublisher.publish(event);
         } catch (Throwable e) {
             this.monitor.alarms(AlarmKey.MSG_SENT_ERROR, event.getNoticeEvent().toString());

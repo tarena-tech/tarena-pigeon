@@ -235,11 +235,15 @@ export default {
       window.open(url)
     },
     queryApps(param) {
-      queryAppList({name: param})
+      queryAppList({
+        name: param,
+        enable: 1,
+        auditStatus: 1
+      })
         .then(res => {
           this.apps = res
         }).catch(err => {
-        console.log(err);
+        console.error(err);
       })
     },
     jump(_id) {

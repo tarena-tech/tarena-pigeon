@@ -20,6 +20,7 @@ package com.tarena.dispatcher.storage.mapper;
 import com.tarena.mnmp.domain.TaskDO;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
@@ -28,6 +29,8 @@ import org.apache.ibatis.annotations.Update;
 public interface TaskDao {
 
     TaskDO queryById(Long id);
+
+    List<Integer> queryMockStatusByIds(Set<Long> ids);
 
     void update(TaskDO task);
 

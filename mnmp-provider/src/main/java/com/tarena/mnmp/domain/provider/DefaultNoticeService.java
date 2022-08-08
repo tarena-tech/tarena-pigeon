@@ -24,8 +24,11 @@ import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.NoticeService;
 import com.tarena.mnmp.monitor.Monitor;
 import com.tarena.mnmp.protocol.BusinessException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DefaultNoticeService implements NoticeService {
+    private static Logger logger = LoggerFactory.getLogger(DefaultNoticeService.class);
     private Monitor monitor;
 
     public void setMonitor(Monitor monitor) {
@@ -35,6 +38,10 @@ public class DefaultNoticeService implements NoticeService {
     @Override public void send(NoticeDTO notice) throws BusinessException {
         this.monitor.noticeRequest(notice);
         NoticeEventGetter noticeEvent = TargetAssemblerRegistry.getInstance().assemble(notice);
+        if (noticeEvent == null) {
+            logger.error("notice event getter can't found taskId:{}", notice.getTaskId());
+            return;
+        }
         DispatcherRegistry.getInstance().dispatcher(noticeEvent);
     }
 }

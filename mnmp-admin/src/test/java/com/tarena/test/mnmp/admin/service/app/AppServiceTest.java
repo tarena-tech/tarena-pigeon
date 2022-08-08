@@ -17,6 +17,7 @@
 
 package com.tarena.test.mnmp.admin.service.app;
 
+import com.alibaba.fastjson.JSON;
 import com.tarena.mnmp.admin.AdminApplication;
 import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.app.AppSaveParam;
@@ -134,4 +135,25 @@ public class AppServiceTest {
         });
         logger.info("更新app应用测试业务层service成功");
     }
+
+    @Test
+    public void saveTest() {
+        AppSaveParam param = new AppSaveParam();
+        param.setCode("app_002");
+        param.setName("童程童美");
+        param.setLeader("lisi");
+        param.setTeamMembers("sadfsf,sfd,sfd");
+        param.setRemarks("胜多负少");
+        appService.save(param);
+
+    }
+
+    @Test
+    public void queryAppDetailTest() {
+        AppDO aDo = appService.queryAppDetail(1L);
+        logger.info("appDetail:{}", JSON.toJSONString(aDo));
+    }
+
+
+
 }

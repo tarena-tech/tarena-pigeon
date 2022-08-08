@@ -17,9 +17,13 @@
 
 package com.tarena.mnmp.admin.controller.sign;
 
+import com.tarena.mnmp.domain.SignDO;
 import io.swagger.annotations.ApiModel;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 @ApiModel(value = "签名模型")
 @Data
@@ -42,4 +46,14 @@ public class SignView {
     private Integer auditStatus;
     private Date createTime;
     private Date updateTime;
+
+    public static List<SignView> convert(List<SignDO> sources) {
+        List<SignView> list = new ArrayList<>();
+        for (SignDO sign : sources) {
+            SignView signView = new SignView();
+            BeanUtils.copyProperties(sign, signView);
+            list.add(signView);
+        }
+        return list;
+    }
 }

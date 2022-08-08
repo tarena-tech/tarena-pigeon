@@ -22,6 +22,7 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="create_user_id" jdbcType="INTEGER" property="createUserId"/>
         <result column="create_user_name" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="privider_id" jdbcType="BIGINT" property="providerId"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
@@ -42,7 +43,8 @@
         create_time,
         update_time,
         create_user_id,
-        create_user_name
+        create_user_name,
+        provider_id
     </sql>
     <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -108,6 +110,9 @@
             <if test="createUserName != null">
                 create_user_name,
             </if>
+            <if test="providerId != null">
+                provider_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -164,6 +169,9 @@
             <if test="createUserName != null">
                 #{createUserName,jdbcType=VARCHAR},
             </if>
+            <if test="providerId != null">
+                #{providerId,jdbcType=BIGINT}
+            </if>
         </trim>
     </insert>
     <update id="modify">
@@ -218,6 +226,9 @@
             <if test="createUserName != null">
                 create_user_name = #{createUserName,jdbcType=VARCHAR},
             </if>
+            <if test="providerId != null">
+                provider_id = #{providerId,jdbcType=BIGINT},
+            </if>
             update_time = now()
         </set>
         where id = #{id,jdbcType=BIGINT}
@@ -255,32 +266,6 @@
         ${limitClause};
     </select>
 
-<!--    <select id="search" resultMap="BaseResultMap">-->
-<!--        select-->
-<!--        <include refid="Base_Column_List"/>-->
-<!--        from notice_sms_template-->
-<!--        <where>-->
-<!--            <if test="param1 != null and param1 != ''">-->
-<!--                and ( name like concat('%',#{param1,jdbcType=VARBINARY},'%') or code like concat('%', #{param1,jdbcType=VARCHAR}, '%'))-->
-<!--            </if>-->
-<!--            <if test="param2 != null and param2 != ''">-->
-<!--                and app_code = #{param2,jdbcType=VARCHAR}-->
-<!--            </if>-->
-
-<!--            <if test="param3 != null">-->
-<!--                and notice_type = #{param3,jdbcType=INTEGER}-->
-<!--            </if>-->
-
-<!--            <if test="param4 != null">-->
-<!--                and template_type = #{param4,jdbcType=INTEGER}-->
-<!--            </if>-->
-<!--            <if test="true">-->
-<!--                and deleted = 0-->
-<!--            </if>-->
-<!--        </where>-->
-<!--        limit 100;-->
-<!--    </select>-->
-
     <select id="queryCount" resultType="java.lang.Long">
         select
         count(1)
@@ -310,4 +295,16 @@
             </if>
         </where>
     </select>
+
+    <update id="changeEnableByAppId">
+        update notice_sms_template
+        set enabled = #{enable,jdbcType=INTEGER}, update_time = now()
+        where app_id = #{appId,jdbcType=BIGINT} and enabled != #{enable,jdbcType=INTEGER}
+    </update>
+
+    <update id="changeEnableByProviderId">
+        update notice_sms_template
+        set enabled = #{enabled,jdbcType=INTEGER}, update_time = now()
+        where provider_id = #{providerId,jdbcType=BIGINT} and enabled != #{enabled,jdbcType=INTEGER}
+    </update>
 </mapper>

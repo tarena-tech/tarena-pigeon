@@ -111,7 +111,16 @@
             <if test="appCode!=null">
                 and app_code like concat('%',#{appCode},'%')
             </if>
+            <if test="enable != null">
+                and enabled = #{enable,jdbcType=INTEGER}
+            </if>
+            <if test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
+            </if>
         </where>
+        <if test="orderBy != null and orderBy == true">
+            order by id desc
+        </if>
         ${limitClause}
     </select>
 
@@ -194,6 +203,10 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-
+    <update id="changeEnableByAppId">
+        update  notice_sms_sign
+        set enabled = #{enable,jdbcType=INTEGER} , create_time = now()
+        where app_id = #{id,jdbcType=BIGINT} and enabled != #{enable,jdbcType=INTEGER}
+    </update>
 </mapper>
 

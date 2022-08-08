@@ -226,12 +226,15 @@ export default {
       this.$emit('refresh')
     },
     queryApps(param) {
-      queryAppList({name: param})
+      queryAppList({
+        name: param,
+        enable: 1,
+        auditStatus: 1
+      })
         .then(res => {
           this.apps = res
-          console.dir(res)
-      }).catch(err => {
-        console.log(err);
+        }).catch(err => {
+        console.error(err);
       })
     },
     querySigns(param) {
@@ -246,10 +249,13 @@ export default {
         })
     },
     queryTemplates(param) {
-      console.log("333333", param)
-      querySmsTemplateList({templateName: param})
+      let params = {
+        templateName: param,
+        enable: 1,
+        auditStatus: 1
+      }
+      querySmsTemplateList(params)
         .then(res => {
-          console.dir(res)
           this.templates = res
         })
         .catch(err => {

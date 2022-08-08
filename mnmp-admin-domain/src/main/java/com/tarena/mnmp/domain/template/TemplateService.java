@@ -91,4 +91,12 @@ public class TemplateService {
         bo.setAuditResult(auditResult);
         smsTemplateDao.modify(bo);
     }
+
+    public void changeEnableByAppId(Long id, Integer enable) {
+        smsTemplateDao.changeEnableByAppId(id, enable);
+    }
+
+    public void changeEnableByProviderId(Long providerId, Integer enabled) {
+        smsTemplateDao.changeEnableByProviderId(providerId, enabled);
+    }
 }

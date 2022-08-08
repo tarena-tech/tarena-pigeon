@@ -20,8 +20,12 @@
         <el-form-item label="签名编码" prop="code">
           <el-input v-model="ruleForm.code" />
         </el-form-item>
-        <el-form-item label="应用" prop="appId">
-          <el-input v-model="ruleForm.appId" />
+        <el-form-item label="应用" prop="">
+          <template>
+            <el-select v-model="ruleForm.app" filterable placeholder="请选择" :filter-method="queryApps">
+              <el-option v-for="item in apps" :key="item.id" :label="item.name" :value="item" />
+            </el-select>
+          </template>
         </el-form-item>
         <el-form-item label="描述" prop="remark">
           <el-input v-model="ruleForm.remarks" type="textarea" />
@@ -37,6 +41,7 @@
 
 <script>
 import {save} from "@/api/sign";
+import {queryAppList} from "@/api/app";
 
 export default {
   name: 'DialogSignSave',
@@ -51,6 +56,9 @@ export default {
         appId: null,
         remarks: null
       },
+      apps: {
+
+      },
       rules: {
         name: [
           { required: true, message: '请输入模板名称', trigger: 'blur' }
@@ -64,6 +72,9 @@ export default {
       }
     }
   },
+  mounted() {
+    this.queryApps()
+  },
   methods: {
     handleClose(done) {
 
@@ -76,11 +87,10 @@ export default {
 
     },
     submitForm() {
+      this.ruleForm.appId = this.ruleForm.app.id;
+      this.ruleForm.appCode = this.ruleForm.app.code;
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          // TODO 假数据
-          this.ruleForm.appId = 222
-          this.ruleForm.appCode = 222
           save(this.ruleForm)
             .then(res => {
               console.dir(res);
@@ -107,7 +117,19 @@ export default {
       this.$nextTick(() => {
         // TODO init
       })
-    }
+    },
+    queryApps(param) {
+      queryAppList({
+        name: param,
+        enable: 1,
+        auditStatus: 1
+      })
+        .then(res => {
+          this.apps = res
+        }).catch(err => {
+        console.error(err);
+      })
+    },
   }
 }
 </script>

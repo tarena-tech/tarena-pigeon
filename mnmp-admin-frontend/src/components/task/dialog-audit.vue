@@ -51,6 +51,10 @@ export default {
         if (valid) {
           audit(this.ruleForm)
             .then(res => {
+              this.$message({
+                type: 'success',
+                message: '操作成功!'
+              });
               this.dialogFormVisible = false;
               this.$emit('refresh')
             })

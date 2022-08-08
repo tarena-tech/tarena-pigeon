@@ -65,8 +65,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class TaskController implements TaskApi {
 
-
-    Logger logger = LoggerFactory.getLogger(TaskController.class);
+    private static Logger logger = LoggerFactory.getLogger(TaskController.class);
 
     @Autowired
     private TaskService taskService;
@@ -147,7 +146,7 @@ public class TaskController implements TaskApi {
         return new Result<>(dir + name);
     }
 
-    @Override public void addTask(TaskParam taskParam, HttpServletResponse response) throws IOException {
+    @Override public void addTask(TaskParam taskParam, HttpServletResponse response) throws IOException, BusinessException {
         TaskDO bo = new TaskDO();
         BeanUtils.copyProperties(taskParam, bo);
         List<TargetExcelData> fial = taskService.addTask(bo, taskParam.getFilePath());

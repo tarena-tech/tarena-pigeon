@@ -86,7 +86,7 @@ public interface TemplateApi {
         notes = ""
     )
     @GetMapping(
-        value = {"/sms/queryListByPage"},
+        value = {"/sms/query/page"},
         produces = {"application/json"}
     )
     PagerResult<TemplateView> queryListByPage(TemplateQuery templateQuery);
@@ -98,7 +98,7 @@ public interface TemplateApi {
         notes = ""
     )
     @GetMapping(
-        value = {"/sms/queryListByParam"},
+        value = {"/sms/query/list"},
         produces = {"application/json"}
     )
     List<TemplateView> queryListByParam(TemplateQuery templateQuery);

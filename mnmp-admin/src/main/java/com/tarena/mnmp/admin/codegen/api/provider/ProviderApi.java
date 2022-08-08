@@ -27,6 +27,7 @@ import com.tarena.mnmp.protocol.BusinessException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -114,7 +115,7 @@ public interface ProviderApi {
         nickname = "queryPage",
         notes = ""
     )
-    @GetMapping(value = {"/queryPage"})
+    @GetMapping(value = {"/query/page"})
     PagerResult<ProviderView> queryPage(ProviderQueryParam param);
 
     @ApiOperationSupport(order = 2006)
@@ -125,7 +126,7 @@ public interface ProviderApi {
         response = ProviderView.class
     )
     @GetMapping(
-        value = {"/queryDetail"},
+        value = {"/query/detail"},
         produces = {"application/json"}
     )
     ProviderView queryProviderDetail(
@@ -143,5 +144,15 @@ public interface ProviderApi {
         value = "/audit"
     )
     void auditProvider(@RequestBody AuditParam param);
+
+    @ApiOperationSupport(order = 2008)
+    @ApiOperation(
+        value = "供应商列表",
+        notes = ""
+    )
+    @GetMapping(
+        value = "/query/list"
+    )
+    List<ProviderView> queryList(ProviderQueryParam param);
 
 }

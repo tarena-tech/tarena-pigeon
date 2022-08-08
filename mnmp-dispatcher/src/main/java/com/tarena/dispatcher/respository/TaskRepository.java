@@ -22,7 +22,9 @@ import com.tarena.dispatcher.bo.TaskBO;
 import com.tarena.dispatcher.bo.TaskTargetBO;
 import com.tarena.dispatcher.bo.TemplateBO;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 
 public interface TaskRepository {
 
@@ -30,9 +32,11 @@ public interface TaskRepository {
 
     Integer finishTask(Long taskId, Integer taskStatus);
 
-    Integer errorTask(Long taskId,Integer status,String remark);
+    Integer errorTask(Long taskId, Integer status, String remark);
 
     List<TaskBO> queryTriggers();
+
+    Map<Long, Integer> queryTaskMockStatus(LinkedHashSet<Long> taskIds);
 
     List<TaskTargetBO> getTargets(Long taskId);
 

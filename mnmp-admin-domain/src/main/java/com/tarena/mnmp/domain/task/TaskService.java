@@ -25,8 +25,14 @@ import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.commons.utils.DateUtils;
 import com.tarena.mnmp.commons.utils.RegexUtils;
+import com.tarena.mnmp.domain.AppDO;
+import com.tarena.mnmp.domain.SignDO;
+import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.TaskDO;
 import com.tarena.mnmp.domain.TaskTargetDO;
+import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.domain.sign.SignService;
+import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Deleted;
 import com.tarena.mnmp.enums.TaskStatus;
@@ -54,6 +60,15 @@ public class TaskService {
     @Resource
     private TaskTargetService taskTargetService;
 
+    @Resource
+    private AppService appService;
+
+    @Resource
+    private SignService signService;
+
+    @Resource
+    private TemplateService templateService;
+
     @Autowired
     private Json json;
 
@@ -78,7 +93,11 @@ public class TaskService {
         taskDao.update(taskDO);
     }
 
-    public List<TargetExcelData> addTask(TaskDO taskDO, String filePath) {
+    public List<TargetExcelData> addTask(TaskDO taskDO, String filePath) throws BusinessException {
+
+        // check
+        checkStatus(taskDO);
+
         taskDO.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
         taskDO.setAuditStatus(AuditStatus.WAITING.getStatus());
         taskDO.setTargetFileUrl(filePath);
@@ -145,6 +164,24 @@ public class TaskService {
         return fails;
     }
 
+    private void checkStatus(TaskDO taskDO) throws BusinessException {
+        AppDO app = appService.queryAppDetail(taskDO.getAppId());
+        if (null == app || app.getEnabled() == 0 || Objects.equals(AuditStatus.PASS.getStatus(), app.getAuditStatus())) {
+            throw new BusinessException("100", "应用未审核或已被禁用");
+        }
+
+        SignDO sign = signService.querySignDetail(taskDO.getSignId());
+        if (null == sign || sign.getEnabled() == 0 || !Objects.equals(AuditStatus.PASS.getStatus(), sign.getAuditStatus())) {
+            throw new BusinessException("100", "签名未审核或已被禁用");
+        }
+
+        SmsTemplateDO smsTemp = templateService.querySmsTemplateDetail(taskDO.getTemplateId());
+        if (null == smsTemp || smsTemp.getEnabled() == 0 ||
+            !Objects.equals(AuditStatus.PASS.getStatus(), smsTemp.getAuditStatus())) {
+            throw new BusinessException("100", "短信模板未审核或已被禁用");
+        }
+    }
+
     public void action(Long id, int status) {
         TaskDO task = new TaskDO();
         task.setId(id);
@@ -173,18 +210,28 @@ public class TaskService {
     }
 
     public void changeTaskStatus(Long id) throws BusinessException {
-        TaskDO aDo = detailById(id);
-        if (null == aDo) {
+        TaskDO task = detailById(id);
+        if (null == task) {
             throw new BusinessException("100", "任务不存在");
         }
+        changeTaskStatus(task);
+    }
+
+    public void endTaskStatusByTargetId(TaskQuery query) {
+        query.setTaskStatusList(TaskStatus.operable());
+        List<TaskDO> list = taskDao.queryByTargetId(query);
+        list.forEach(this::changeTaskStatus);
+    }
+
+    private void changeTaskStatus(TaskDO task) {
         int open = 0;
-        if (Objects.equals(TaskStatus.TASK_STOP.status(), aDo.getTaskStatus())
-            || Objects.equals(TaskStatus.TASK_END.status(), aDo.getTaskStatus())) {
+        if (Objects.equals(TaskStatus.TASK_STOP.status(), task.getTaskStatus())
+            || Objects.equals(TaskStatus.TASK_END.status(), task.getTaskStatus())) {
             open = 1;
         }
 
         TaskDO up = new TaskDO();
-        up.setId(id);
+        up.setId(task.getId());
         if (open == 1) {
             up.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
             up.setNextTriggerTime(DateUtils.generateNextTriggerTime(up.getCycleLevel(), up.getCycleNum(), new Date()));

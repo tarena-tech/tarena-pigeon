@@ -77,6 +77,7 @@ public abstract class AbstractScheduler {
         for (List<TargetDTO> targetList : targets) {
             NoticeDTO notice = new NoticeDTO();
             notice.setTaskId(taskTrigger.getTaskId());
+            notice.setMock(taskTrigger.getMock());
             //每次任务执行的时间
             notice.setTriggerTime(new SimpleDateFormat(Constant.DATE_FORMAT_MIN).format(taskTrigger.getNextTriggerTime()));
             notice.setNoticeType(NoticeType.SMS);
@@ -146,6 +147,7 @@ public abstract class AbstractScheduler {
             NoticeTaskTrigger trigger = new NoticeTaskTrigger();
             BeanUtils.copyProperties(task, trigger);
             trigger.setTaskId(task.getId());
+            trigger.setMock(task.getMock());
             return trigger;
         }).collect(Collectors.toList());
         return resList;
@@ -159,6 +161,7 @@ public abstract class AbstractScheduler {
      */
     private List<List<TargetDTO>> getTargets(NoticeTaskTrigger noticeTaskTrigger) {
         List<TargetDTO> targets = new ArrayList<>();
+        //todo  分页查询优化
         List<TaskTargetBO> taskTargetList = taskRepository.getTargets(noticeTaskTrigger.getTaskId());
         taskTargetList.forEach(target -> {
             targets.add(new TargetDTO(target.getTarget(), this.json.parse(target.getParams())));

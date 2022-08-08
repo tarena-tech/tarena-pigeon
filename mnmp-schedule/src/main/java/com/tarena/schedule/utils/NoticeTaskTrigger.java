@@ -72,6 +72,8 @@ public class NoticeTaskTrigger implements Serializable {
      */
     private Long appId;
 
+    private Integer mock;
+
     public Integer getCycleLevel() {
         return cycleLevel;
     }
@@ -163,6 +165,14 @@ public class NoticeTaskTrigger implements Serializable {
 
     public void setTriggerEndTime(Date triggerEndTime) {
         this.triggerEndTime = triggerEndTime;
+    }
+
+    public Integer getMock() {
+        return mock;
+    }
+
+    public void setMock(Integer mock) {
+        this.mock = mock;
     }
 
     public Date generateNextTriggerTime() {
