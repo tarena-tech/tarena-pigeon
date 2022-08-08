@@ -150,9 +150,9 @@ public interface ProviderApi {
         value = "供应商列表",
         notes = ""
     )
-    @PostMapping(
+    @GetMapping(
         value = "/query/list"
     )
-    List<ProviderView> queryList (ProviderQueryParam param);
+    List<ProviderView> queryList(ProviderQueryParam param);
 
 }
