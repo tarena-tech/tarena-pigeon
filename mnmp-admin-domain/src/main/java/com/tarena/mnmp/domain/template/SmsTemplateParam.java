@@ -38,7 +38,6 @@ public class SmsTemplateParam {
     private Long appId;
 
     @ApiModelProperty(value = "appCode", required = true)
-    @NotBlank(message = "appcode为必填项")
     private String appCode;
 
     @ApiModelProperty(value = "模板名称", required = true)

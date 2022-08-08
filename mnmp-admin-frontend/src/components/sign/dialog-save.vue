@@ -22,8 +22,8 @@
         </el-form-item>
         <el-form-item label="应用" prop="">
           <template>
-            <el-select v-model="ruleForm.app" filterable placeholder="请选择" :filter-method="queryApps">
-              <el-option v-for="item in apps" :key="item.id" :label="item.name" :value="item" />
+            <el-select v-model="ruleForm.appId" filterable placeholder="请选择" :filter-method="queryApps">
+              <el-option v-for="item in apps" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
           </template>
         </el-form-item>
@@ -87,8 +87,6 @@ export default {
 
     },
     submitForm() {
-      this.ruleForm.appId = this.ruleForm.app.id;
-      this.ruleForm.appCode = this.ruleForm.app.code;
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           save(this.ruleForm)

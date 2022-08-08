@@ -54,7 +54,7 @@ public interface TemplateApi {
     @PostMapping(
         value = {"/sms/save"}
     )
-    Result<String> save(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate);
+    Result<String> save(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate) throws BusinessException;
 
     @ApiOperationSupport(order = 4002)
     @ApiOperation(
