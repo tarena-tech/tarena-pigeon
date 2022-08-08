@@ -15,31 +15,48 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.security.domain;
+package com.tarena.mnmp.security;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import java.util.List;
 
-@ApiModel("认证返回值")
-public class LoginToken {
-    @ApiModelProperty(value="jwt token值")
-    private String tokenValue;
-    @ApiModelProperty(value="jwt token的前缀")
-    private String tokenHeader="Bearer";
+public class LoginToken{
+    private Long id;
+    private String username;
 
-    public String getTokenValue() {
-        return tokenValue;
+    private List<String> authorities;
+
+    private Object details;
+
+    public List<String> getAuthorities() {
+        return authorities;
     }
 
-    public void setTokenValue(String tokenValue) {
-        this.tokenValue = tokenValue;
+    public void setAuthorities(List<String> authorities) {
+        this.authorities = authorities;
     }
 
-    public String getTokenHeader() {
-        return tokenHeader;
+    public Object getDetails() {
+        return details;
     }
 
-    public void setTokenHeader(String tokenHeader) {
-        this.tokenHeader = tokenHeader;
+    public void setDetails(Object details) {
+        this.details = details;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 }

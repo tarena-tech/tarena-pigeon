@@ -33,5 +33,7 @@
         <module>mnmp-rocketmq</module>
         <module>mnmp-autoconfigurations</module>
         <module>mnmp-domain</module>
+        <module>mnmp-security</module>
+        <module>mnmp-passport</module>
     </modules>
 </project>
