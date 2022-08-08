@@ -107,6 +107,6 @@ public class SignService {
         if (!Objects.equals(AuditStatus.PASS.getStatus(), app.getAuditStatus())) {
             throw new BusinessException("100", "应用未审核通过");
         }
-
+        sign.setAppCode(app.getCode());
     }
 }
