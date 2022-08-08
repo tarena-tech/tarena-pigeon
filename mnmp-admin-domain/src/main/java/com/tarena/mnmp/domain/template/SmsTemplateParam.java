@@ -66,6 +66,9 @@ public class SmsTemplateParam {
     @ApiModelProperty("审核时填写的文案, 修改时 使用")
     private String auditResult;
 
+    @ApiModelProperty("供应商id")
+    private Long providerId;
+
     @ApiModelProperty("是否可用 (0否 1是）, 修改时 使用")
     private Integer enabled;
 
@@ -164,5 +167,13 @@ public class SmsTemplateParam {
 
     public void setEnabled(Integer enabled) {
         this.enabled = enabled;
+    }
+
+    public Long getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(Long providerId) {
+        this.providerId = providerId;
     }
 }
