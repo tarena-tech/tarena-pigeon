@@ -38,7 +38,6 @@ public class SmsTemplateParam {
     private Long appId;
 
     @ApiModelProperty(value = "appCode", required = true)
-    @NotBlank(message = "appcode为必填项")
     private String appCode;
 
     @ApiModelProperty(value = "模板名称", required = true)
@@ -67,6 +66,8 @@ public class SmsTemplateParam {
     private String auditResult;
 
     @ApiModelProperty("供应商id")
+    @Min(1)
+    @NotNull(message = "请选择供应商")
     private Long providerId;
 
     @ApiModelProperty("是否可用 (0否 1是）, 修改时 使用")

@@ -24,9 +24,13 @@ import com.tarena.mnmp.domain.SignDO;
 import com.tarena.mnmp.domain.sign.SignQuery;
 import com.tarena.mnmp.domain.sign.SignSaveParam;
 import com.tarena.mnmp.domain.sign.SignService;
+import com.tarena.mnmp.domain.task.TaskQuery;
+import com.tarena.mnmp.domain.task.TaskService;
+import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +39,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class SignController implements SignApi {
     @Autowired
     private SignService signService;
+
+    @Resource
+    private TaskService taskService;
 
     @Override public void save(SignSaveParam signSaveParam) {
         signService.save(signSaveParam);
@@ -53,8 +60,16 @@ public class SignController implements SignApi {
 
         SignDO up = new SignDO();
         up.setId(id);
-        up.setEnabled(aDo.getEnabled() == 1 ? 0 : 1);
+        up.setEnabled(Enabled.reverse(aDo.getEnabled()).getVal());
         signService.modify(up);
+
+        // 签名被禁用  关闭任务
+        if (Objects.equals(Enabled.NO.getVal(), up.getEnabled())) {
+            TaskQuery query = new TaskQuery();
+            taskService.endTaskStatusByTargetId(query);
+        }
+
+
     }
 
     @Override public SignView querySignDetail(Long id) {
@@ -67,28 +82,16 @@ public class SignController implements SignApi {
     @Override public PagerResult<SignView> queryPage(SignQuery signQuery) {
         List<SignDO> signDOs = signService.querySignList(signQuery);
         Long count = signService.queryCount(signQuery);
-        List<SignView> signViews = new ArrayList<>();
-        for (SignDO signDO : signDOs) {
-            SignView signView = new SignView();
-            BeanUtils.copyProperties(signDO, signView);
-            signViews.add(signView);
-        }
-
         PagerResult<SignView> rest = new PagerResult<>(signQuery.getPageSize(), signQuery.getCurrentPageIndex());
-        rest.setList(signViews);
+        rest.setList(SignView.convert(signDOs));
         rest.setRecordCount(count);
         return rest;
     }
 
     @Override public List<SignView> queryList(SignQuery signQuery) {
+        signQuery.setOrderBy(false);
         List<SignDO> signDOs = signService.querySignList(signQuery);
-        List<SignView> signViews = new ArrayList<>();
-        for (SignDO signDO : signDOs) {
-            SignView signView = new SignView();
-            BeanUtils.copyProperties(signDO, signView);
-            signViews.add(signView);
-        }
-        return signViews;
+        return SignView.convert(signDOs);
     }
 
     @Override public void auditSign(AuditParam param) {

@@ -23,6 +23,12 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "签名查询入参")
 public class SignQuery extends PagerResult {
+
+    public SignQuery() {
+        super();
+        this.orderBy = true;
+    }
+
     @ApiModelProperty(
         value = "应用编码",
         name = "appCode"
@@ -38,6 +44,12 @@ public class SignQuery extends PagerResult {
         name = "name"
     )
     private String name;
+
+    @ApiModelProperty("0:禁用， 1：启用")
+    private Integer enable;
+
+    @ApiModelProperty("true:倒叙， false：正序")
+    private Boolean orderBy;
 
     public String getAppCode() {
         return appCode;
@@ -61,5 +73,21 @@ public class SignQuery extends PagerResult {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Integer enable) {
+        this.enable = enable;
+    }
+
+    public Boolean getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(Boolean orderBy) {
+        this.orderBy = orderBy;
     }
 }

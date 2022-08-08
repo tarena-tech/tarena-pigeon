@@ -23,11 +23,26 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("服务商查询模型")
 public class ProviderQueryParam extends PagerResult {
 
+    public ProviderQueryParam() {
+        super();
+        this.orderBy = true;
+    }
+
     @ApiModelProperty("供应商名称")
     private String name;
 
     @ApiModelProperty("供应商编码")
     private String code;
+
+
+    @ApiModelProperty("是否启用 0：未启用， 1：启用")
+    private Integer enable;
+
+    @ApiModelProperty("审核状态 -1未通过 0审核中 1通过")
+    private Integer auditStatus;
+
+    @ApiModelProperty("true：倒排， false：不排序")
+    private Boolean orderBy;
 
     public String getName() {
         return name;
@@ -43,5 +58,29 @@ public class ProviderQueryParam extends PagerResult {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Integer getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Integer enable) {
+        this.enable = enable;
+    }
+
+    public Integer getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
+    }
+
+    public Boolean getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(Boolean orderBy) {
+        this.orderBy = orderBy;
     }
 }

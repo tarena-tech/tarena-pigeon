@@ -18,7 +18,11 @@
 package com.tarena.mnmp.domain.app;
 
 import com.tarena.mnmp.domain.AppDO;
+import com.tarena.mnmp.enums.AuditStatus;
+import com.tarena.mnmp.enums.Enabled;
+import com.tarena.mnmp.protocol.BusinessException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +82,22 @@ public class AppService {
 
     public void updateById(AppDO up) {
         appDao.modify(up);
+    }
+
+    public AppDO checkStatus(Long appId) throws BusinessException {
+        AppDO app = queryAppDetail(appId);
+        if (null == app) {
+            throw new BusinessException("100", "应用不存在");
+        }
+
+        if (!Objects.equals(AuditStatus.PASS.getStatus(), app.getAuditStatus())) {
+            throw new BusinessException("100", "应用审核未通过");
+        }
+
+        if (!Objects.equals(Enabled.YES.getVal(), app.getEnabled())) {
+            throw new BusinessException("100", "应用未启用");
+        }
+
+        return app;
     }
 }

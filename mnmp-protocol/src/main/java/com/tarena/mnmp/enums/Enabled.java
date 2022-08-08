@@ -16,6 +16,8 @@
  */
 package com.tarena.mnmp.enums;
 
+import java.util.Objects;
+
 public enum Enabled {
 
     NO(0, "未启用"),
@@ -27,6 +29,14 @@ public enum Enabled {
     Enabled(Integer val, String description) {
         this.val = val;
         this.description = description;
+    }
+
+    public static Enabled reverse(Integer enable) {
+        if (null == enable) {
+            return NO;
+        }
+
+        return Objects.equals(YES.getVal(), enable) ? NO : YES;
     }
 
     public Integer getVal() {

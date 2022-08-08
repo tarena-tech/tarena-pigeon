@@ -353,5 +353,28 @@
         delete from notice_task
         where id = #{id,jdbcType=BIGINT}
     </delete>
+
+    <select id="queryByTargetId" resultMap="NoticeTaskMap">
+        select
+        <include refid="Base_Column_List"/>
+        from notice_task
+        <where>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=INTEGER}
+            </if>
+            <if test="signId != null">
+                and sign_id = #{signId,jdbcType=BIGINT}
+            </if>
+            <if test="templateId != null">
+                and template_id = #{templateId,jdbcType=BIGINT}
+            </if>
+            <if test="taskStatusList != null and taskStatusList.size() != 0">
+                and task_status in
+                <foreach collection="taskStatusList" index="index" item="item" open="(" close=")" separator=",">
+                    #{item,jdbcType=INTEGER}
+                </foreach>
+            </if>
+        </where>
+    </select>
 </mapper>
 

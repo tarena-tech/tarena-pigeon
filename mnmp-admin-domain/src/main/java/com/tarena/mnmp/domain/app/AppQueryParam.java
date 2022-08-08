@@ -25,7 +25,7 @@ public class AppQueryParam extends PagerResult {
 
     public AppQueryParam() {
         super();
-        this.order = true;
+        this.orderBy = true;
     }
 
     @ApiModelProperty("app名字")
@@ -34,8 +34,14 @@ public class AppQueryParam extends PagerResult {
     @ApiModelProperty("app code")
     private String code;
 
-    @ApiModelProperty("是否需要排序")
-    private Boolean order;
+    @ApiModelProperty("true: 倒叙， false：不排序，默认倒叙")
+    private Boolean orderBy;
+
+    @ApiModelProperty("是否启用 0：未启用， 1：启用")
+    private Integer enable;
+
+    @ApiModelProperty("审核状态 -1未通过 0审核中 1通过")
+    private Integer auditStatus;
 
     public String getName() {
         return name;
@@ -53,11 +59,27 @@ public class AppQueryParam extends PagerResult {
         this.code = code;
     }
 
-    public Boolean getOrder() {
-        return order;
+    public Boolean getOrderBy() {
+        return orderBy;
     }
 
-    public void setOrder(Boolean order) {
-        this.order = order;
+    public void setOrderBy(Boolean orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public Integer getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Integer enable) {
+        this.enable = enable;
+    }
+
+    public Integer getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
     }
 }

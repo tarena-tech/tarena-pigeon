@@ -85,7 +85,6 @@ import { queryPage, changeEnable } from '@/api/sign.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogSignSave from "@/components/sign/dialog-save";
 import DialogSignAudit from "@/components/sign/dialog-audit";
-import {changeProviderEnable} from "@/api/provider";
 export default {
   name: 'DemoTable',
   components: {

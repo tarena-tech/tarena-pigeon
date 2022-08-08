@@ -17,9 +17,13 @@
 package com.tarena.mnmp.domain.template;
 
 
+import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.SmsTemplateDO;
+import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.enums.Deleted;
 import com.tarena.mnmp.enums.Enabled;
+import com.tarena.mnmp.protocol.BusinessException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +36,16 @@ public class TemplateService {
     @Resource
     private SmsTemplateDao smsTemplateDao;
 
-    public String save(SmsTemplateDO template) {
+    @Resource
+    private AppService appService;
+
+    @Resource
+    private ProviderService providerService;
+
+    public String save(SmsTemplateDO template) throws BusinessException {
+
+        check(template);
+
         Date now = new Date();
         if (null == template.getId()) {
             template.setDeleted(Deleted.NO.getVal());
@@ -50,6 +63,12 @@ public class TemplateService {
             smsTemplateDao.modify(template);
         }
         return "ok";
+    }
+
+    private void check(SmsTemplateDO template) throws BusinessException {
+        AppDO app = appService.checkStatus(template.getAppId());
+        template.setAppCode(app.getCode());
+        providerService.checkStatus(template.getProviderId());
     }
 
     public void closeSmsTemplate(Long id) {

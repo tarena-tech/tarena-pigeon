@@ -147,6 +147,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-security</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.12</version>

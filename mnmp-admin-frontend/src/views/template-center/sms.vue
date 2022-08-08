@@ -205,8 +205,9 @@ export default {
       });
     },
 
-    showAudit(_id) {
-      this.$refs.DialogSmsAudit.show(_id);
+    // 审核
+    showAudit(id) {
+      this.$refs.DialogSmsAudit.show(id);
     },
 
     // 重置页码并搜索
@@ -217,11 +218,6 @@ export default {
     // 行内编辑
     toEditBtnFn(row) {
       this.$refs['updateSeriesClass'].show(row)
-    },
-    // 详情
-    showSmsInfo(row) {
-      this.$refs['dialogSmsInfo'].show({name: row.code})
-      this.$refs['dialogSmsInfo'].show({name: row.code})
     },
     // 创建
     save(data) {
