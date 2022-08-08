@@ -78,4 +78,8 @@ public class SignService {
     public void modify(SignDO up) {
         signDao.modify(up);
     }
+
+    public void changeEnableByAppId(Long id, Integer enable) {
+        signDao.changeEnableByAppId(id, enable);
+    }
 }

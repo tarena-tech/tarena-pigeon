@@ -19,6 +19,7 @@ package com.tarena.mnmp.domain.sign;
 
 import com.tarena.mnmp.domain.SignDO;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface SignDao {
     Integer save(SignDO aDo);
@@ -34,4 +35,6 @@ public interface SignDao {
     List<SignDO> querySigns(SignQuery query);
 
     Long queryCount(SignQuery query);
+
+    void changeEnableByAppId(@Param("id") Long id, @Param("enable") Integer enable);
 }

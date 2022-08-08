@@ -65,7 +65,6 @@ public class TaskServiceTest {
         TaskDO task = new TaskDO();
         task.setName("测试任务");
         task.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
-        task.setTaskAudit(AuditStatus.WAITING.getStatus());
         task.setTargetFileName("todo");
         task.setTaskType(1);
         task.setNoticeType(1);
@@ -88,7 +87,6 @@ public class TaskServiceTest {
         task.setError("wrwer");
         task.setCreateTime(new Date());
         task.setUpdateTime(new Date());
-        task.setTaskAuditResult("sfsfd");
         taskDao.save(task);
 
         List<TaskTargetDO> list = new ArrayList<>();

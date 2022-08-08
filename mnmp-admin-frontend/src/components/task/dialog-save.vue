@@ -246,7 +246,6 @@ export default {
         })
     },
     queryTemplates(param) {
-      console.log("333333", param)
       querySmsTemplateList({templateName: param})
         .then(res => {
           console.dir(res)

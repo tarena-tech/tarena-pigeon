@@ -81,7 +81,6 @@ public class SignDaoTest {
         signDO.setName("童程童美");
         signDO.setCreator("100011");
         signDO.setAppId(1L);
-        signDO.setAppName("童程童美");
         signDO.setRemarks("童程童美签名");
         Integer result = signDao.save(signDO);
         Asserts.isTrue(result == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "新增签名测试持久层mapper失败"));
@@ -133,7 +132,6 @@ public class SignDaoTest {
         updateSignDO.setName("童程童美");
         updateSignDO.setCreator("100011");
         updateSignDO.setAppId(1L);
-        updateSignDO.setAppName("童程童美");
         updateSignDO.setRemarks("童程童美签名");
         updateSignDO.setId(signDO.getId());
         Integer result = signDao.modify(updateSignDO);

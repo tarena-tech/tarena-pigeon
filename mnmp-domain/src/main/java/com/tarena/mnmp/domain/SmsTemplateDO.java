@@ -57,6 +57,8 @@ public class SmsTemplateDO {
 
     private String createUserName;
 
+    private Long providerId;
+
 
     public Long getId() {
         return id;
@@ -202,4 +204,11 @@ public class SmsTemplateDO {
         this.appCode = appCode;
     }
 
+    public Long getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(Long providerId) {
+        this.providerId = providerId;
+    }
 }

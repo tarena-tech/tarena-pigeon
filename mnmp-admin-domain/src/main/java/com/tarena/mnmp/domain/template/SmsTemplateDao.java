@@ -19,6 +19,7 @@ package com.tarena.mnmp.domain.template;
 
 import com.tarena.mnmp.domain.SmsTemplateDO;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface SmsTemplateDao {
     Integer save(SmsTemplateDO smsTemplate);
@@ -32,4 +33,8 @@ public interface SmsTemplateDao {
     List<SmsTemplateDO> search(String keyword, String code, Integer type, Integer templateType);
 
     Long queryCount(TemplateQuery query);
+
+    void changeEnableByAppId(@Param("appId") Long appId, @Param("enable") Integer enable);
+
+    void changeEnableByProviderId(@Param("providerId") Long providerId, @Param("enabled") Integer enabled);
 }
