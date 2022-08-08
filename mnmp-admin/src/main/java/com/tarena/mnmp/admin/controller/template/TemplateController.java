@@ -21,6 +21,8 @@ import com.tarena.mnmp.admin.codegen.api.template.TemplateApi;
 import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SmsTemplateDO;
+import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
@@ -41,6 +43,12 @@ public class TemplateController implements TemplateApi {
 
     @Resource
     private TemplateService templateService;
+
+    @Resource
+    private AppService appService;
+
+    @Resource
+    private ProviderService providerService;
 
     @Resource
     private TaskService taskService;
@@ -75,6 +83,9 @@ public class TemplateController implements TemplateApi {
             TaskQuery query = new TaskQuery();
             query.setTemplateId(id);
             taskService.endTaskStatusByTargetId(query);
+        } else {
+            appService.checkStatus(smsTemplateDO.getAppId());
+            providerService.checkStatus(smsTemplateDO.getProviderId());
         }
 
     }

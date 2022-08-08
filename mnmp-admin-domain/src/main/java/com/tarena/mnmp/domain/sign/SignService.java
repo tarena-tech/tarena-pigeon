@@ -20,6 +20,7 @@ package com.tarena.mnmp.domain.sign;
 import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.SignDO;
 import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
@@ -38,10 +39,14 @@ public class SignService {
     @Resource
     private AppService appService;
 
+    @Resource
+    private ProviderService providerService;
+
     public void save(SignSaveParam signSaveParam) throws BusinessException {
         SignDO signDO = new SignDO();
         BeanUtils.copyProperties(signSaveParam, signDO);
-        check(signDO);
+        AppDO app = appService.checkStatus(signDO.getAppId());
+        signDO.setAppCode(app.getCode());
         if (null == signDO.getId()) {
             signDao.save(signDO);
         } else {
@@ -94,19 +99,18 @@ public class SignService {
         signDao.changeEnableByAppId(id, enable);
     }
 
-    private void check(SignDO sign) throws BusinessException {
-        AppDO app = appService.queryAppDetail(sign.getAppId());
-        if (null == app) {
-            throw new BusinessException("100", "应用不存在");
+    public SignDO checkStatus(Long id) throws BusinessException {
+        SignDO sign = querySignDetail(id);
+        if (null == sign) {
+            throw new BusinessException("100", "签名不存在");
+        }
+        if (!Objects.equals(AuditStatus.PASS.getStatus(), sign.getAuditStatus())) {
+            throw new BusinessException("100", "签名未审核");
         }
 
-        if (!Objects.equals(Enabled.YES.getVal(), app.getEnabled())) {
-            throw new BusinessException("100", "应用已被禁用");
+        if (!Objects.equals(Enabled.YES.getVal(), sign.getEnabled())) {
+            throw new BusinessException("100", "签名未启用");
         }
-
-        if (!Objects.equals(AuditStatus.PASS.getStatus(), app.getAuditStatus())) {
-            throw new BusinessException("100", "应用未审核通过");
-        }
-        sign.setAppCode(app.getCode());
+        return sign;
     }
 }

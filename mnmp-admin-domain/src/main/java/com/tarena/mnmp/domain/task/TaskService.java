@@ -96,7 +96,9 @@ public class TaskService {
     public List<TargetExcelData> addTask(TaskDO taskDO, String filePath) throws BusinessException {
 
         // check
-        checkStatus(taskDO);
+        appService.checkStatus(taskDO.getAppId());
+        signService.checkStatus(taskDO.getSignId());
+        templateService.checkStatus(taskDO.getTemplateId());
 
         taskDO.setTaskStatus(TaskStatus.TASK_NO_OPEN.status());
         taskDO.setAuditStatus(AuditStatus.WAITING.getStatus());
@@ -162,24 +164,6 @@ public class TaskService {
         }
 
         return fails;
-    }
-
-    private void checkStatus(TaskDO taskDO) throws BusinessException {
-        AppDO app = appService.queryAppDetail(taskDO.getAppId());
-        if (null == app || app.getEnabled() == 0 || Objects.equals(AuditStatus.PASS.getStatus(), app.getAuditStatus())) {
-            throw new BusinessException("100", "应用未审核或已被禁用");
-        }
-
-        SignDO sign = signService.querySignDetail(taskDO.getSignId());
-        if (null == sign || sign.getEnabled() == 0 || !Objects.equals(AuditStatus.PASS.getStatus(), sign.getAuditStatus())) {
-            throw new BusinessException("100", "签名未审核或已被禁用");
-        }
-
-        SmsTemplateDO smsTemp = templateService.querySmsTemplateDetail(taskDO.getTemplateId());
-        if (null == smsTemp || smsTemp.getEnabled() == 0 ||
-            !Objects.equals(AuditStatus.PASS.getStatus(), smsTemp.getAuditStatus())) {
-            throw new BusinessException("100", "短信模板未审核或已被禁用");
-        }
     }
 
     public void action(Long id, int status) {
