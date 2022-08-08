@@ -17,7 +17,7 @@
 
 package com.tarena.mnmp.admin.codegen.api.security;
 
-import com.tarena.mnmp.admin.security.domain.LoginToken;
+import com.tarena.mnmp.security.LoginToken;
 import io.swagger.annotations.Api;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,9 +30,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface AuthenticateApi {
 
     @PostMapping("/login")
-    public LoginToken login(String username,String password);
+    public LoginToken login(String username, String password);
+
     @PostMapping("/logout")
-    public void logout (String token);
+    public void logout(String token);
+
     @PostMapping("/refresh")
     public LoginToken refresh(String token);
 }
