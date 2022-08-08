@@ -65,8 +65,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class TaskController implements TaskApi {
 
-
-    Logger logger = LoggerFactory.getLogger(TaskController.class);
+    private static Logger logger = LoggerFactory.getLogger(TaskController.class);
 
     @Autowired
     private TaskService taskService;

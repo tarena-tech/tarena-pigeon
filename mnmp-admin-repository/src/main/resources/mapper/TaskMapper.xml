@@ -4,33 +4,33 @@
     <resultMap type="com.tarena.mnmp.domain.TaskDO" id="NoticeTaskMap">
         <!--@mbg.generated-->
         <!--@Table notice_task-->
-        <id column="id" jdbcType="BIGINT" property="id" />
-        <result column="name" jdbcType="VARCHAR" property="name" />
-        <result column="task_status" jdbcType="TINYINT" property="taskStatus" />
-        <result column="task_type" jdbcType="TINYINT" property="taskType" />
-        <result column="notice_type" jdbcType="TINYINT" property="noticeType" />
-        <result column="template_id" jdbcType="INTEGER" property="templateId" />
-        <result column="sign_id" jdbcType="INTEGER" property="signId" />
-        <result column="app_id" jdbcType="BIGINT" property="appId" />
-        <result column="cycle_level" jdbcType="TINYINT" property="cycleLevel" />
-        <result column="cycle_num" jdbcType="INTEGER" property="cycleNum" />
-        <result column="first_trigger_time" jdbcType="TIMESTAMP" property="firstTriggerTime" />
-        <result column="trigger_end_time" jdbcType="TIMESTAMP" property="triggerEndTime" />
-        <result column="next_trigger_time" jdbcType="TIMESTAMP" property="nextTriggerTime" />
-        <result column="target_type" jdbcType="TINYINT" property="targetType" />
-        <result column="target_file_name" jdbcType="VARCHAR" property="targetFileName" />
-        <result column="target_file_url" jdbcType="VARCHAR" property="targetFileUrl" />
-        <result column="creator" jdbcType="INTEGER" property="creator" />
-        <result column="creator_email" jdbcType="VARCHAR" property="creatorEmail" />
-        <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
-        <result column="dept_id" jdbcType="BIGINT" property="deptId" />
-        <result column="remark" jdbcType="VARCHAR" property="remark" />
-        <result column="error" jdbcType="VARCHAR" property="error" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-        <result column="audit_status" jdbcType="TINYINT" property="auditStatus" />
-        <result column="audit_result" jdbcType="VARCHAR" property="auditResult" />
-        <result column="mock" jdbcType="INTEGER" property="mock" />
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="task_status" jdbcType="TINYINT" property="taskStatus"/>
+        <result column="task_type" jdbcType="TINYINT" property="taskType"/>
+        <result column="notice_type" jdbcType="TINYINT" property="noticeType"/>
+        <result column="template_id" jdbcType="INTEGER" property="templateId"/>
+        <result column="sign_id" jdbcType="INTEGER" property="signId"/>
+        <result column="app_id" jdbcType="BIGINT" property="appId"/>
+        <result column="cycle_level" jdbcType="TINYINT" property="cycleLevel"/>
+        <result column="cycle_num" jdbcType="INTEGER" property="cycleNum"/>
+        <result column="first_trigger_time" jdbcType="TIMESTAMP" property="firstTriggerTime"/>
+        <result column="trigger_end_time" jdbcType="TIMESTAMP" property="triggerEndTime"/>
+        <result column="next_trigger_time" jdbcType="TIMESTAMP" property="nextTriggerTime"/>
+        <result column="target_type" jdbcType="TINYINT" property="targetType"/>
+        <result column="target_file_name" jdbcType="VARCHAR" property="targetFileName"/>
+        <result column="target_file_url" jdbcType="VARCHAR" property="targetFileUrl"/>
+        <result column="creator" jdbcType="INTEGER" property="creator"/>
+        <result column="creator_email" jdbcType="VARCHAR" property="creatorEmail"/>
+        <result column="creator_name" jdbcType="VARCHAR" property="creatorName"/>
+        <result column="dept_id" jdbcType="BIGINT" property="deptId"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="error" jdbcType="VARCHAR" property="error"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="audit_status" jdbcType="TINYINT" property="auditStatus"/>
+        <result column="audit_result" jdbcType="VARCHAR" property="auditResult"/>
+        <result column="mock" jdbcType="INTEGER" property="mock"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -44,9 +44,18 @@
     <!--查询单个-->
     <select id="queryById" resultMap="NoticeTaskMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from notice_task
         where id = #{id}
+    </select>
+
+    <select id="queryMockStatusByIds" resultMap="NoticeTaskMap">
+        select mock
+        from notice_task
+        where id IN
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
     </select>
 
 
@@ -300,7 +309,8 @@
     </insert>
 
     <select id="queryList" resultMap="NoticeTaskMap">
-        select <include refid="Base_Column_List" />
+        select
+        <include refid="Base_Column_List"/>
         from notice_task
         <where>
             <if test="name != null and name != ''">
@@ -312,7 +322,7 @@
             <if test="taskStatus != null">
                 and task_status = #{taskStatus,jdbcType=INTEGER}
             </if>
-            <if  test="auditStatus != null">
+            <if test="auditStatus != null">
                 and audit_status = #{auditStatus,jdbcType=INTEGER}
             </if>
         </where>
@@ -332,7 +342,7 @@
             <if test="taskStatus != null">
                 and task_status = #{taskStatus,jdbcType=INTEGER}
             </if>
-            <if  test="auditStatus != null">
+            <if test="auditStatus != null">
                 and audit_status = #{auditStatus,jdbcType=INTEGER}
             </if>
         </where>

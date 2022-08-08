@@ -22,8 +22,12 @@ import com.tarena.dispatcher.assemble.TargetAssembler;
 import com.tarena.mnmp.api.NoticeDTO;
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TargetAssemblerRegistry {
+    private static Logger logger = LoggerFactory.getLogger(TargetAssemblerRegistry.class);
+
     private TargetAssemblerRegistry() {
     }
 
@@ -43,10 +47,16 @@ public class TargetAssemblerRegistry {
     }
 
     public <T extends NoticeEventGetter> T assemble(NoticeDTO notice) {
-        return (T) targetAssemblerContainer.get(notice.getNoticeType().name()).assemble(notice, 0);
+        return this.assemble(notice, 0);
     }
 
     public <T extends NoticeEventGetter> T assemble(NoticeDTO notice, Integer batchIndex) {
-        return (T) targetAssemblerContainer.get(notice.getNoticeType().name()).assemble(notice, batchIndex);
+        String noticeTypeName = notice.getNoticeType().name();
+        TargetAssembler targetAssembler = targetAssemblerContainer.get(noticeTypeName);
+        if (targetAssembler == null) {
+            logger.error("target assembler [{}] not found", noticeTypeName);
+            return null;
+        }
+        return (T) targetAssembler.assemble(notice, batchIndex);
     }
 }

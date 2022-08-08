@@ -29,7 +29,10 @@ import com.tarena.dispatcher.storage.mapper.TemplateDao;
 import com.tarena.mnmp.domain.TaskDO;
 import com.tarena.mnmp.domain.TaskTargetDO;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +74,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override public Integer errorTask(Long taskId, Integer status, String error) {
-        return taskDao.errorTask(status, error,taskId);
+        return taskDao.errorTask(status, error, taskId);
     }
 
     /**
@@ -90,6 +93,16 @@ public class TaskRepositoryImpl implements TaskRepository {
             return triggers;
         }
         return null;
+    }
+
+    @Override public Map<Long, Integer> queryTaskMockStatus(LinkedHashSet<Long> taskIds) {
+        List<Integer> mockStatusList = this.taskDao.queryMockStatusByIds(taskIds);
+        Map<Long, Integer> taskIdMockStatusMap = new HashMap<>(mockStatusList.size());
+        int i = 0;
+        for (Long taskId : taskIds) {
+            taskIdMockStatusMap.put(taskId, mockStatusList.get(i++));
+        }
+        return taskIdMockStatusMap;
     }
 
     /**

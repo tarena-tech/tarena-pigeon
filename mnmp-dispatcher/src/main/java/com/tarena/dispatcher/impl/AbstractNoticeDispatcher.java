@@ -20,6 +20,7 @@ package com.tarena.dispatcher.impl;
 import com.tarena.dispatcher.NoticeDispatcher;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.respository.TargetLogRepository;
+import com.tarena.dispatcher.respository.TaskRepository;
 import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.monitor.Monitor;
 import org.springframework.beans.factory.InitializingBean;
@@ -38,8 +39,14 @@ public abstract class AbstractNoticeDispatcher<T extends NoticeEventGetter> impl
 
     protected TargetLogRepository targetLogRepository;
 
+    protected TaskRepository taskRepository;
+
     public void setJsonProvider(Json jsonProvider) {
         this.jsonProvider = jsonProvider;
+    }
+
+    public void setTaskRepository(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
 
     public void setTargetLogRepository(TargetLogRepository targetLogRepository) {

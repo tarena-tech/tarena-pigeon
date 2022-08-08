@@ -36,7 +36,9 @@ import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.NoticeEvent;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -54,12 +56,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
     private static Logger logger = LoggerFactory.getLogger(SmsAliNoticeDispatcher.class);
     private String aliTemplateCode;
     private Client aliSmsClient;
-    private Boolean mock = true;
     private Boolean receipt = false;
-
-    public void setMock(Boolean mock) {
-        this.mock = mock;
-    }
 
     public void setAliTemplateCode(String aliTemplateCode) {
         this.aliTemplateCode = aliTemplateCode;
@@ -74,14 +71,15 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
     }
 
     protected String doDispatcher(SmsNoticeEvent notice, SmsTarget smsTarget) throws Exception {
-        if (this.mock) {
+        if (notice.getNoticeEvent().getMock().equals(1)) {
             int delayTime = new Random().nextInt(200);
             Thread.sleep(delayTime);
             return delayTime + "-" + System.currentTimeMillis();
         }
         SendSmsRequest sendReq = new SendSmsRequest()
             .setPhoneNumbers(smsTarget.getTarget())
-            .setSignName("阿里云短信测试")
+            //"阿里云短信测试"
+            .setSignName(smsTarget.getSignName())
             .setTemplateCode(this.aliTemplateCode)
             .setTemplateParam("{\"content\":\"" + smsTarget.getContent() + "\"}");
         SendSmsResponse sendResp = this.aliSmsClient.sendSms(sendReq);
@@ -120,8 +118,26 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
      * @return
      */
     private List<PhoneBizIdReceiptBO> fetchReceipt(List<PhoneBizIdReceiptBO> receipts) {
+        LinkedHashSet<Long> taskIds = new LinkedHashSet<>(receipts.size());
+        for (PhoneBizIdReceiptBO phoneBizIdReceipt : receipts) {
+            taskIds.add(phoneBizIdReceipt.getTaskId());
+        }
+        Map<Long, Integer> taskMockStatusMap = this.taskRepository.queryTaskMockStatus(taskIds);
+
         List<PhoneBizIdReceiptBO> receiptedList = new ArrayList<>(receipts.size());
         for (PhoneBizIdReceiptBO phoneReceipt : receipts) {
+            Date current = new Date();
+            Integer mockStatus = taskMockStatusMap.get(phoneReceipt.getTaskId());
+            //mock数据
+            if (mockStatus.equals(1)) {
+                phoneReceipt.setSuccess(true);
+                phoneReceipt.setSendTime(current);
+                phoneReceipt.setReceiveDate(current);
+                phoneReceipt.setCostNumbers(1);
+                receiptedList.add(phoneReceipt);
+                continue;
+            }
+
             try {
                 QuerySendDetailsRequest querySendDetailsRequest = new QuerySendDetailsRequest();
                 querySendDetailsRequest.setBizId(phoneReceipt.getBizId());
@@ -177,10 +193,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
                 Thread.sleep(100);
                 return;
             }
-            List<PhoneBizIdReceiptBO> receiptedList = bizIds;
-            if (!this.mock) {
-                receiptedList = this.fetchReceipt(bizIds);
-            }
+            List<PhoneBizIdReceiptBO> receiptedList = this.fetchReceipt(bizIds);
             targetLogRepository.modifyTargetReceiptStatus(Provider.ALI_SMS, receiptedList);
         } catch (Throwable e) {
             logger.error("ali sms receipt error", e);
@@ -197,7 +210,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
         receiptService.submit(new Runnable() {
             @Override public void run() {
                 while (true) {
-                   // SmsAliNoticeDispatcher.this.doReceipt();
+                    SmsAliNoticeDispatcher.this.doReceipt();
                 }
             }
         });

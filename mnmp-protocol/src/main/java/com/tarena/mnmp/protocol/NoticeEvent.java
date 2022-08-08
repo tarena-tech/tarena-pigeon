@@ -31,4 +31,6 @@ public interface NoticeEvent {
     NoticeType getNoticeType();
 
     String getProvider();
+
+    Integer getMock();
 }

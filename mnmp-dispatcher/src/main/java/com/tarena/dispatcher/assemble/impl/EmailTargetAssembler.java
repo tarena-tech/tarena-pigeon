@@ -35,7 +35,14 @@ public class EmailTargetAssembler extends AbstractTargetAssembler<EmailNoticeEve
     @Override
     public EmailNoticeEvent assemble(NoticeDTO notice, Integer batchIndex) {
         EmailNoticeEvent emailNoticeWap = new EmailNoticeEvent();
-        DefaultNoticeEvent noticeEvent = new DefaultNoticeEvent(notice.getTaskId(), notice.getTriggerTime(), notice.getNoticeType(), "Ali", batchIndex, notice.getTargets().size());
+        DefaultNoticeEvent noticeEvent = new DefaultNoticeEvent(
+            notice.getTaskId(),
+            notice.getTriggerTime(),
+            notice.getNoticeType(),
+            "Ali",
+            batchIndex,
+            notice.getTargets().size(),
+            notice.getMock());
         emailNoticeWap.setNoticeEvent(noticeEvent);
         List<TargetDTO> targets = notice.getTargets();
         List<EmailTarget> targetList = new ArrayList<>();
