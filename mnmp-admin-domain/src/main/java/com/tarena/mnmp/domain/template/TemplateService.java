@@ -39,6 +39,7 @@ public class TemplateService {
     @Resource
     private AppService appService;
 
+    @Resource
     private ProviderService providerService;
 
     public String save(SmsTemplateDO template) throws BusinessException {
