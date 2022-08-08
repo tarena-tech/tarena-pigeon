@@ -111,7 +111,16 @@
             <if test="appCode!=null">
                 and app_code like concat('%',#{appCode},'%')
             </if>
+            <if test="enable != null">
+                and enabled = #{enable,jdbcType=INTEGER}
+            </if>
+            <if test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
+            </if>
         </where>
+        <if test="orderBy != null and orderBy == true">
+            order by id desc
+        </if>
         ${limitClause}
     </select>
 

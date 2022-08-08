@@ -98,6 +98,7 @@ public class ProviderController implements ProviderApi {
     }
 
     @Override public List<ProviderView> queryList(ProviderQueryParam param) {
+        param.setOrderBy(false);
         List<ProviderDO> dos = providerService.queryList(param);
         return ProviderView.convert(dos);
     }

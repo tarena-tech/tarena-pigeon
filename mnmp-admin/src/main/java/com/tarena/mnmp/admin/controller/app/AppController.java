@@ -31,6 +31,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -91,8 +92,8 @@ public class AppController implements AppApi {
         return pagerResult;
     }
 
-    @Override public List<AppView> queryList(AppQueryParam param) {
-        param.setOrder(false);
+    @GetMapping("query/list") @Override public List<AppView> queryList(AppQueryParam param) {
+        param.setOrderBy(false);
         List<AppDO> dos = appService.queryList(param);
         return AppView.convert(dos);
     }

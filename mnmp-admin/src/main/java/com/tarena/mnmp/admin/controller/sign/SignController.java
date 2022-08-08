@@ -25,7 +25,6 @@ import com.tarena.mnmp.domain.sign.SignQuery;
 import com.tarena.mnmp.domain.sign.SignSaveParam;
 import com.tarena.mnmp.domain.sign.SignService;
 import com.tarena.mnmp.protocol.BusinessException;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,28 +66,16 @@ public class SignController implements SignApi {
     @Override public PagerResult<SignView> queryPage(SignQuery signQuery) {
         List<SignDO> signDOs = signService.querySignList(signQuery);
         Long count = signService.queryCount(signQuery);
-        List<SignView> signViews = new ArrayList<>();
-        for (SignDO signDO : signDOs) {
-            SignView signView = new SignView();
-            BeanUtils.copyProperties(signDO, signView);
-            signViews.add(signView);
-        }
-
         PagerResult<SignView> rest = new PagerResult<>(signQuery.getPageSize(), signQuery.getCurrentPageIndex());
-        rest.setList(signViews);
+        rest.setList(SignView.convert(signDOs));
         rest.setRecordCount(count);
         return rest;
     }
 
     @Override public List<SignView> queryList(SignQuery signQuery) {
+        signQuery.setOrderBy(false);
         List<SignDO> signDOs = signService.querySignList(signQuery);
-        List<SignView> signViews = new ArrayList<>();
-        for (SignDO signDO : signDOs) {
-            SignView signView = new SignView();
-            BeanUtils.copyProperties(signDO, signView);
-            signViews.add(signView);
-        }
-        return signViews;
+        return SignView.convert(signDOs);
     }
 
     @Override public void auditSign(AuditParam param) {

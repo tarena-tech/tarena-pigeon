@@ -248,7 +248,6 @@ export default {
     queryTemplates(param) {
       querySmsTemplateList({templateName: param})
         .then(res => {
-          console.dir(res)
           this.templates = res
         })
         .catch(err => {
