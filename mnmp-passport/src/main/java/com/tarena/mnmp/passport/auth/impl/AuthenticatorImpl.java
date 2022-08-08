@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.passport.impl;
+package com.tarena.mnmp.passport.auth.impl;
 
 import com.tarena.mnmp.passport.config.JwtConfiguration;
 import com.tarena.mnmp.passport.dao.UserMapper;
-import com.tarena.mnmp.passport.domain.user.User;
-import com.tarena.mnmp.passport.filter.MnmpAuthenticationFilter;
+import com.tarena.mnmp.passport.domain.User;
 import com.tarena.mnmp.security.JwtUtils;
 import com.tarena.mnmp.security.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.passport.domain.user;
+package com.tarena.mnmp.passport.domain;
 
 import java.sql.Date;
 import java.util.List;

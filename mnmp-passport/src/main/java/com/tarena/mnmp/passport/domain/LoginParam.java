@@ -15,10 +15,35 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.passport.dao;
+package com.tarena.mnmp.passport.domain;
 
-import com.tarena.mnmp.passport.domain.User;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-public interface UserMapper {
-    User findByUsername(String username);
+@ApiModel(value="登录参数")
+public class LoginParam {
+    @ApiModelProperty(value = "用户名")
+    @NotBlank(message = "请填写用户名")
+    private String usename;
+    @ApiModelProperty(value="密码")
+    @NotBlank(message = "请填写密码")
+    private String password;
+
+    public String getUsename() {
+        return usename;
+    }
+
+    public void setUsename(String usename) {
+        this.usename = usename;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

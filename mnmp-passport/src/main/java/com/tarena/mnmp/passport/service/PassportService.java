@@ -15,24 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.admin.codegen.api.security;
+package com.tarena.mnmp.passport.service;
 
-import com.tarena.mnmp.admin.security.domain.LoginToken;
-import io.swagger.annotations.Api;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-
-@Validated
-@Api(
-    value = "Authenticator",
-    tags = "认证管理"
-)
-public interface AuthenticateApi {
-
-    @PostMapping("/login")
-    public LoginToken login(String username,String password);
-    @PostMapping("/logout")
-    public void logout (String token);
-    @PostMapping("/refresh")
-    public LoginToken refresh(String token);
+public interface PassportService {
 }

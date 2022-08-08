@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.passport.dao;
+package com.tarena.mnmp.passport.service.impl;
 
-import com.tarena.mnmp.passport.domain.User;
-
-public interface UserMapper {
-    User findByUsername(String username);
+public class PassportServiceImpl {
 }
