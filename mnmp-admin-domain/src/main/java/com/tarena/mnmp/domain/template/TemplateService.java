@@ -117,7 +117,7 @@ public class TemplateService {
         smsTemplateDao.changeEnableByProviderId(providerId, enabled);
     }
 
-    public SmsTemplateDO checkStatus (Long id) throws BusinessException {
+    public SmsTemplateDO checkStatus(Long id) throws BusinessException {
         SmsTemplateDO smsTemplate = querySmsTemplateDetail(id);
         if (null == smsTemplate) {
             throw new BusinessException("100", "短信模板不存在");
