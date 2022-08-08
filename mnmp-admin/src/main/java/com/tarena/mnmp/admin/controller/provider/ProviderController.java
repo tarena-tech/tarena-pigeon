@@ -25,8 +25,10 @@ import com.tarena.mnmp.domain.provider.ProviderQueryParam;
 import com.tarena.mnmp.domain.provider.ProviderSaveParam;
 import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.domain.template.TemplateService;
+import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
 import java.util.List;
+import java.util.Objects;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +76,7 @@ public class ProviderController implements ProviderApi {
         providerService.update(up);
 
         // 服务供应商被禁用 跟他有关系的全部禁用
-        if (up.getEnabled() == 0) {
+        if (Objects.equals(Enabled.NO.getVal(), up.getEnabled())) {
             templateService.changeEnableByProviderId(id, up.getEnabled());
         }
     }

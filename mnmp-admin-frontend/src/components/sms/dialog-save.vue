@@ -153,7 +153,11 @@ export default {
       }
     },
     queryApps(param) {
-      queryAppList({name: param})
+      queryAppList({
+        name: param,
+        enable: 1,
+        auditStatus: 1
+      })
         .then(res => {
           this.apps = res
         }).catch(err => {
@@ -162,7 +166,11 @@ export default {
     },
 
     queryProviders(param) {
-      queryProviderList({name: param})
+      queryProviderList({
+        name: param,
+        auditStatus: 1,
+        enable: 1
+      })
         .then(res => {
           this.providers = res;
         }).catch(err => {

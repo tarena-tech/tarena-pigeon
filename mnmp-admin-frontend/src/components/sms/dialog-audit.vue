@@ -39,18 +39,22 @@ export default {
     }
   },
   methods: {
-    show(_id) {
+    show(id) {
       this.dialogFormVisible = true
       this.ruleForm = {}
-      this.ruleForm.id = _id;
+      this.source = {}
+      this.ruleForm.id = id
     },
     auditing(status) {
       this.ruleForm.auditStatus = status;
-      console.dir(this.ruleForm)
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           audit(this.ruleForm)
             .then(res => {
+              this.$message({
+                type: 'success',
+                message: '操作成功!'
+              });
               this.dialogFormVisible = false;
               this.$emit('refresh')
             })

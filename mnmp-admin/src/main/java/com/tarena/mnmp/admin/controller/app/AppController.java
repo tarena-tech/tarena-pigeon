@@ -26,8 +26,10 @@ import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.domain.sign.SignService;
 import com.tarena.mnmp.domain.template.TemplateService;
+import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
 import java.util.List;
+import java.util.Objects;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +75,7 @@ public class AppController implements AppApi {
         appService.updateById(up);
 
         // 应用被禁用 依赖于该应用的关系全部禁用
-        if (up.getEnabled() == 0) {
+        if (Objects.equals(Enabled.NO.getVal(), up.getEnabled())) {
             templateService.changeEnableByAppId(id, up.getEnabled());
             signService.changeEnableByAppId(id, up.getEnabled());
         }

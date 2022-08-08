@@ -205,8 +205,9 @@ export default {
       });
     },
 
-    showAudit(_id) {
-      this.$refs.DialogSmsAudit.show(_id);
+    // 审核
+    showAudit(id) {
+      this.$refs.DialogSmsAudit.show(id);
     },
 
     // 重置页码并搜索
