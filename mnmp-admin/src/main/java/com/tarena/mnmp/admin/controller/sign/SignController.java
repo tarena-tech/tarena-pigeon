@@ -21,6 +21,7 @@ import com.tarena.mnmp.admin.codegen.api.sign.SignApi;
 import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SignDO;
+import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.domain.sign.SignQuery;
 import com.tarena.mnmp.domain.sign.SignSaveParam;
 import com.tarena.mnmp.domain.sign.SignService;
@@ -41,9 +42,13 @@ public class SignController implements SignApi {
     private SignService signService;
 
     @Resource
+    private AppService appService;
+
+    @Resource
     private TaskService taskService;
 
-    @Override public void save(SignSaveParam signSaveParam) {
+
+    @Override public void save(SignSaveParam signSaveParam) throws BusinessException {
         signService.save(signSaveParam);
     }
 
@@ -53,20 +58,23 @@ public class SignController implements SignApi {
 
 
     @Override public void changeEnableStatus(Long id) throws BusinessException {
-        SignDO aDo = signService.querySignDetail(id);
-        if (null == aDo) {
+        SignDO sign = signService.querySignDetail(id);
+        if (null == sign) {
             throw new BusinessException("100", "签名不存在");
         }
 
         SignDO up = new SignDO();
         up.setId(id);
-        up.setEnabled(Enabled.reverse(aDo.getEnabled()).getVal());
+        up.setEnabled(Enabled.reverse(sign.getEnabled()).getVal());
         signService.modify(up);
 
         // 签名被禁用  关闭任务
         if (Objects.equals(Enabled.NO.getVal(), up.getEnabled())) {
             TaskQuery query = new TaskQuery();
             taskService.endTaskStatusByTargetId(query);
+        } else {
+            // 启用 要判断管理的数据 是否在可用状态
+            appService.checkStatus(sign.getAppId());
         }
 
 

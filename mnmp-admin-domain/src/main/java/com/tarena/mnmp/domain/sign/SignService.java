@@ -17,8 +17,16 @@
 
 package com.tarena.mnmp.domain.sign;
 
+import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.SignDO;
+import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.domain.provider.ProviderService;
+import com.tarena.mnmp.enums.AuditStatus;
+import com.tarena.mnmp.enums.Enabled;
+import com.tarena.mnmp.protocol.BusinessException;
 import java.util.List;
+import java.util.Objects;
+import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,9 +36,17 @@ public class SignService {
     @Autowired
     private SignDao signDao;
 
-    public void save(SignSaveParam signSaveParam) {
+    @Resource
+    private AppService appService;
+
+    @Resource
+    private ProviderService providerService;
+
+    public void save(SignSaveParam signSaveParam) throws BusinessException {
         SignDO signDO = new SignDO();
         BeanUtils.copyProperties(signSaveParam, signDO);
+        AppDO app = appService.checkStatus(signDO.getAppId());
+        signDO.setAppCode(app.getCode());
         if (null == signDO.getId()) {
             signDao.save(signDO);
         } else {
@@ -81,5 +97,20 @@ public class SignService {
 
     public void changeEnableByAppId(Long id, Integer enable) {
         signDao.changeEnableByAppId(id, enable);
+    }
+
+    public SignDO checkStatus(Long id) throws BusinessException {
+        SignDO sign = querySignDetail(id);
+        if (null == sign) {
+            throw new BusinessException("100", "签名不存在");
+        }
+        if (!Objects.equals(AuditStatus.PASS.getStatus(), sign.getAuditStatus())) {
+            throw new BusinessException("100", "签名未审核");
+        }
+
+        if (!Objects.equals(Enabled.YES.getVal(), sign.getEnabled())) {
+            throw new BusinessException("100", "签名未启用");
+        }
+        return sign;
     }
 }

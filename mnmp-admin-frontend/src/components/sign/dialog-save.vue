@@ -91,7 +91,6 @@ export default {
         if (valid) {
           save(this.ruleForm)
             .then(res => {
-              console.dir(res);
               this.cancelForm();
             })
             .catch(err => {
@@ -107,14 +106,12 @@ export default {
       this.$refs['ruleForm'].resetFields()
     },
     show(data) {
+      this.ruleForm = {}
       this.dialogVisible = true
       if (null != data) {
         this.windowName = "修改"
         this.ruleForm = data;
       }
-      this.$nextTick(() => {
-        // TODO init
-      })
     },
     queryApps(param) {
       queryAppList({

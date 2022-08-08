@@ -21,11 +21,13 @@ import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.domain.provider.ProviderService;
+import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Deleted;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -44,7 +46,9 @@ public class TemplateService {
 
     public String save(SmsTemplateDO template) throws BusinessException {
 
-        check(template);
+        AppDO app = appService.checkStatus(template.getAppId());
+        template.setAppCode(app.getCode());
+        providerService.checkStatus(template.getProviderId());
 
         Date now = new Date();
         if (null == template.getId()) {
@@ -63,12 +67,6 @@ public class TemplateService {
             smsTemplateDao.modify(template);
         }
         return "ok";
-    }
-
-    private void check(SmsTemplateDO template) throws BusinessException {
-        AppDO app = appService.checkStatus(template.getAppId());
-        template.setAppCode(app.getCode());
-        providerService.checkStatus(template.getProviderId());
     }
 
     public void closeSmsTemplate(Long id) {
@@ -118,4 +116,22 @@ public class TemplateService {
     public void changeEnableByProviderId(Long providerId, Integer enabled) {
         smsTemplateDao.changeEnableByProviderId(providerId, enabled);
     }
+
+    public SmsTemplateDO checkStatus(Long id) throws BusinessException {
+        SmsTemplateDO smsTemplate = querySmsTemplateDetail(id);
+        if (null == smsTemplate) {
+            throw new BusinessException("100", "短信模板不存在");
+        }
+
+        if (!Objects.equals(AuditStatus.PASS.getStatus(), smsTemplate.getAuditStatus())) {
+            throw new BusinessException("100", "短信模板未审核");
+        }
+
+        if (!Objects.equals(Enabled.YES.getVal(), smsTemplate.getEnabled())) {
+            throw new BusinessException("100", "短信模板未启用");
+        }
+
+        return smsTemplate;
+    }
+
 }

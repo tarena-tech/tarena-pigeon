@@ -52,13 +52,6 @@ public class SignSaveParam {
     @NotNull(message = "请选择应用")
     private Long appId;
     @ApiModelProperty(
-        value = "应用编码",
-        name = "appCode",
-        required = false
-    )
-    @NotBlank(message = "请选择应用")
-    private String appCode;
-    @ApiModelProperty(
         value = "简介",
         name = "remark",
         required = false,
@@ -99,14 +92,6 @@ public class SignSaveParam {
 
     public void setAppId(Long appId) {
         this.appId = appId;
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public void setAppCode(String appCode) {
-        this.appCode = appCode;
     }
 
     public String getRemarks() {
