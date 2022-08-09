@@ -39,14 +39,8 @@ public abstract class AbstractNoticeDispatcher<T extends NoticeEventGetter> impl
 
     protected TargetLogRepository targetLogRepository;
 
-    protected TaskRepository taskRepository;
-
     public void setJsonProvider(Json jsonProvider) {
         this.jsonProvider = jsonProvider;
-    }
-
-    public void setTaskRepository(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
     }
 
     public void setTargetLogRepository(TargetLogRepository targetLogRepository) {

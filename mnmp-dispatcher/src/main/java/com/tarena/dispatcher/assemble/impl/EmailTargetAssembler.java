@@ -23,6 +23,7 @@ import com.tarena.dispatcher.event.EmailNoticeEvent;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.enums.NoticeType;
+import com.tarena.mnmp.enums.Provider;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class EmailTargetAssembler extends AbstractTargetAssembler<EmailNoticeEve
             notice.getTaskId(),
             notice.getTriggerTime(),
             notice.getNoticeType(),
-            "Ali",
+            Provider.ALI_EMAIL.name(),
             batchIndex,
             notice.getTargets().size(),
             notice.getMock());

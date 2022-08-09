@@ -97,9 +97,7 @@ public class DispatcherConfiguration {
         SmsAliNoticeDispatcher aliNoticeDispatcher = new SmsAliNoticeDispatcher();
         aliNoticeDispatcher.setJsonProvider(json);
         aliNoticeDispatcher.setTargetLogRepository(targetLogRepository);
-        aliNoticeDispatcher.setAliTemplateCode(providerClientConfig.getDefaultTemplate());
-        aliNoticeDispatcher.setAliSmsClient(smsAliClient);
-        aliNoticeDispatcher.setTaskRepository(taskRepository);
+
         aliNoticeDispatcher.setMonitor(monitor);
         aliNoticeDispatcher.setReceipt(this.dispatcherConfig.getEnableReceipt());
         return aliNoticeDispatcher;
