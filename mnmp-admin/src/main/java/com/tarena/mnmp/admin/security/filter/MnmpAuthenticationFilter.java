@@ -56,26 +56,26 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
         String token = getRequestToken(request);
         if (StringUtils.isEmpty(token)) {
             filterChain.doFilter(request, response);
-            return;
-        }
-        //获取设备ip地址,绑定token使用
-        String deviceIp = IPUtils.getIpAddress(request);
-        LoginToken loginToken = authenticator.authenticate(token, deviceIp);
-        if (ObjectUtils.isEmpty(loginToken)) {
-            filterChain.doFilter(request, response);
-            return;
+
         } else {
-            List<String> strAuthorities = loginToken.getAuthorities();
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            for (String authority : strAuthorities) {
-                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
-                authorities.add(simpleGrantedAuthority);
+            //获取设备ip地址,绑定token使用
+            String deviceIp = IPUtils.getIpAddress(request);
+            LoginToken loginToken = authenticator.authenticate(token, deviceIp);
+            if (ObjectUtils.isEmpty(loginToken)) {
+                filterChain.doFilter(request, response);
+            } else {
+                List<String> strAuthorities = loginToken.getAuthorities();
+                List<GrantedAuthority> authorities = new ArrayList<>();
+                for (String authority : strAuthorities) {
+                    SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
+                    authorities.add(simpleGrantedAuthority);
+                }
+                UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(loginToken.getUsername(), null, authorities);
+                SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+                securityContext.setAuthentication(authentication);
+                filterChain.doFilter(request, response);
             }
-            UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(loginToken.getUsername(), null, authorities);
-            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-            securityContext.setAuthentication(authentication);
-            filterChain.doFilter(request, response);
         }
 
     }

@@ -31,7 +31,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -85,17 +85,17 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
         //未认证处理器
         http.exceptionHandling().authenticationEntryPoint(mnmpAuthenticationEntryPoint());
         //添加过滤器
-        http.addFilterAfter(mnmpAuthenticationFilter(), SecurityContextPersistenceFilter.class);
+        http.addFilterAfter(mnmpAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override public void configure(WebSecurity web) throws Exception {
         //静态页面,swagger页面不经过security过滤器
-        web.ignoring().antMatchers(
+        web.ignoring().mvcMatchers(
             "/swagger-resources/**",    // Knife4j在线API文档的资源
             "/v2/api-docs/**",          // Knife4j在线API文档的资源
             "/favicon.ico",     // 网站图标文件
             "/",                // 根页面，通常是主页
-            "/*.html",          // 任何html
+            "/**/*.html",          // 任何html
             "/**/*.html",       // 任何目录下的html
             "/**/*.css",        // 任何目录下的css
             "/**/*.js");
