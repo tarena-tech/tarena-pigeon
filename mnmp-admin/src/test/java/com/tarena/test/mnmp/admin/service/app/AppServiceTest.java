@@ -137,7 +137,7 @@ public class AppServiceTest {
     }
 
     @Test
-    public void saveTest() {
+    public void saveTest() throws BusinessException {
         AppSaveParam param = new AppSaveParam();
         param.setCode("app_002");
         param.setName("童程童美");

@@ -52,46 +52,9 @@ public interface AppApi {
     @PostMapping("save")
     @ApiParam(name = "appSaveParam", value = "新增应用", required = true)
     @PreAuthorize("hasAnyRole('admin','root')")
-    void save(@Valid @RequestBody AppSaveParam appSaveParam);
+    void save(@Valid @RequestBody AppSaveParam appSaveParam) throws BusinessException;
 
-    /**
-     * 编辑应用
-     *
-     * @param appSaveParam
-     */
-    @ApiOperationSupport(order = 1002)
-    @ApiOperation(value = "编辑应用 -- 废弃")
-    @PostMapping("edit")
-    @Deprecated
-    @ApiParam(name = "appSaveParam", value = "编辑应用", required = true)
-    @PreAuthorize("hasAnyRole('admin','root')")
-    void editApp(@Valid @RequestBody AppSaveParam appSaveParam);
 
-    /**
-     * 关闭应用
-     *
-     * @param id
-     */
-    @ApiOperationSupport(order = 1003)
-    @ApiOperation(value = "关闭应用 -- 废弃")
-    @PostMapping("close")
-    @ApiParam(name = "id", value = "要关闭的应用", required = true)
-    @Deprecated
-    @PreAuthorize("hasAnyRole('admin','root')")
-    void closeApp(@NotNull @Valid @RequestParam(value = "id", required = true) Long id);
-
-    /**
-     * 开启应用
-     *
-     * @param id
-     */
-    @ApiOperationSupport(order = 1004)
-    @ApiOperation(value = "开启应用 -- 废弃")
-    @PostMapping("open")
-    @ApiParam(name = "id", value = "要开启的应用id", required = true)
-    @Deprecated
-    @PreAuthorize("hasAnyRole('admin','root')")
-    void openApp(@NotNull @Valid @RequestParam(value = "id", required = true) Long id);
 
     @ApiOperationSupport(order = 1004)
     @ApiOperation(value = "更改可用状态")

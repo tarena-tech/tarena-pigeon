@@ -98,7 +98,6 @@ public class TaskController implements TaskApi {
     }
 
     @Override public void getExcel(String path, HttpServletResponse response) throws BusinessException {
-
         if (StringUtils.isBlank(path)) {
             try {
                 ClassPathResource classPathResource = new ClassPathResource("target.xlsx");

@@ -115,6 +115,9 @@
             <if test="auditStatus != null">
                 and audit_status = #{auditStatus,jdbcType=INTEGER}
             </if>
+            <if test="excludeId != null">
+                and id != #{excludeId,jdbcType=BIGINT}
+            </if>
         </where>
         <if test="orderBy != null and orderBy == true">
             order by id desc
@@ -122,6 +125,28 @@
         ${limitClause}
     </select>
 
+    <select id="queryCount" resultType="java.lang.Long">
+        select
+        count(1)
+        from notice_app
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="enable != null">
+                and enabled = #{enable,jdbcType=INTEGER}
+            </if>
+            <if test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
+            </if>
+            <if test="excludeId != null">
+                and id != #{excludeId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
 
 
     <select id="findById" resultMap="AppMap">
@@ -174,18 +199,6 @@
         where id=#{id}
     </update>
 
-    <select id="queryCount" resultType="java.lang.Long">
-        select
-        count(1)
-        from notice_app
-        <where>
-            <if test="name != null and name != ''">
-                name like concat('%', #{name,jdbcType=VARCHAR}, '%')
-            </if>
-            <if test="code != null and code != ''">
-                and code = #{code,jdbcType=VARCHAR}
-            </if>
-        </where>
-    </select>
+
 </mapper>
 

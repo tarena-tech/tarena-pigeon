@@ -19,8 +19,10 @@ package com.tarena.mnmp.domain.app;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 @ApiModel("app查询模型")
+@Data
 public class AppQueryParam extends PagerResult {
 
     public AppQueryParam() {
@@ -28,7 +30,7 @@ public class AppQueryParam extends PagerResult {
         this.orderBy = true;
     }
 
-    @ApiModelProperty("app名字")
+    @ApiModelProperty("app名字 可模糊")
     private String name;
 
     @ApiModelProperty("app code")
@@ -43,54 +45,10 @@ public class AppQueryParam extends PagerResult {
     @ApiModelProperty("审核状态 -1未通过 0审核中 1通过")
     private Integer auditStatus;
 
-    @ApiModelProperty("查询列表时指定返回的id")
+    @ApiModelProperty("查询列表时指定在列表中返回的id")
     private Long appendId;
 
-    public String getName() {
-        return name;
-    }
+    @ApiModelProperty("查询列表时指定排除某个id")
+    private Long excludeId;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Boolean getOrderBy() {
-        return orderBy;
-    }
-
-    public void setOrderBy(Boolean orderBy) {
-        this.orderBy = orderBy;
-    }
-
-    public Integer getEnable() {
-        return enable;
-    }
-
-    public void setEnable(Integer enable) {
-        this.enable = enable;
-    }
-
-    public Integer getAuditStatus() {
-        return auditStatus;
-    }
-
-    public void setAuditStatus(Integer auditStatus) {
-        this.auditStatus = auditStatus;
-    }
-
-    public Long getAppendId() {
-        return appendId;
-    }
-
-    public void setAppendId(Long appendId) {
-        this.appendId = appendId;
-    }
 }

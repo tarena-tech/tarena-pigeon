@@ -52,21 +52,10 @@ public class AppController implements AppApi {
     @Resource
     private SignService signService;
 
-    @Override public void save(AppSaveParam appAddParam) {
+    @Override public void save(AppSaveParam appAddParam) throws BusinessException {
         appService.save(appAddParam);
     }
 
-    @Override public void editApp(AppSaveParam appEditParam) {
-        appService.editApp(appEditParam);
-    }
-
-    @Override public void closeApp(Long id) {
-        appService.closeApp(id);
-    }
-
-    @Override public void openApp(Long id) {
-        appService.openApp(id);
-    }
 
     @Override public void changeEnableStatus(Long id) throws BusinessException {
         AppDO app = appService.queryAppDetail(id);
@@ -92,9 +81,12 @@ public class AppController implements AppApi {
     }
 
     @Override public AppView queryAppDetail(Long id) {
-        AppDO appDO = appService.queryAppDetail(id);
+        AppDO app = appService.queryAppDetail(id);
+        if (null == app) {
+            return null;
+        }
         AppView appVO = new AppView();
-        BeanUtils.copyProperties(appDO, appVO);
+        BeanUtils.copyProperties(app, appVO);
         return appVO;
     }
 

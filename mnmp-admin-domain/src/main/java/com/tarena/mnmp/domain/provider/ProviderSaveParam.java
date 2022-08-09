@@ -20,7 +20,10 @@ package com.tarena.mnmp.domain.provider;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
+import lombok.Data;
+
 @ApiModel(value = "供应商新增入参")
+@Data
 public class ProviderSaveParam {
     @ApiModelProperty(
         value = "主键",
@@ -117,131 +120,12 @@ public class ProviderSaveParam {
     )
     private Date createTime;
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     @ApiModelProperty(
         value = "更新时间",
         name = "updateTime",
         required = false
     )
-
     private Date updateTime;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getNoticeType() {
-        return noticeType;
-    }
-
-    public void setNoticeType(Integer noticeType) {
-        this.noticeType = noticeType;
-    }
-
-    public String getOfficialWebsite() {
-        return officialWebsite;
-    }
-
-    public void setOfficialWebsite(String officialWebsite) {
-        this.officialWebsite = officialWebsite;
-    }
-
-    public String getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    public Integer getAuditStatus() {
-        return auditStatus;
-    }
-
-    public void setAuditStatus(Integer auditStatus) {
-        this.auditStatus = auditStatus;
-    }
-
-    public Integer getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getAccessKey() {
-        return accessKey;
-    }
-
-    public void setAccessKey(String accessKey) {
-        this.accessKey = accessKey;
-    }
-
-    public String getAccessKeySecret() {
-        return accessKeySecret;
-    }
-
-    public void setAccessKeySecret(String accessKeySecret) {
-        this.accessKeySecret = accessKeySecret;
-    }
-
-    public String getClientConfig() {
-        return clientConfig;
-    }
-
-    public void setClientConfig(String clientConfig) {
-        this.clientConfig = clientConfig;
-    }
 }

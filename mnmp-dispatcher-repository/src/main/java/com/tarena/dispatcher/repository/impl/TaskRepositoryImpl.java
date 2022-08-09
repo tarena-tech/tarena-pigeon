@@ -132,7 +132,7 @@ public class TaskRepositoryImpl implements TaskRepository {
         SmsTemplateDO templateDo = templateDao.selectById(templateId);
         BeanUtils.copyProperties(
             templateDo, template);
-        template.setProviderCode(this.providerDao.getCodeById(templateId));
+        template.setProviderCode(this.providerDao.getCodeById(templateDo.getProviderId()));
         return template;
     }
 

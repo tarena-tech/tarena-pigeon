@@ -33,9 +33,11 @@ public class AppService {
     @Autowired
     private AppDao appDao;
 
-    public void save(AppSaveParam appSaveParam) {
+    public void save(AppSaveParam appSaveParam) throws BusinessException {
         AppDO save = new AppDO();
         BeanUtils.copyProperties(appSaveParam, save);
+        checkOnlyOne(appSaveParam, save);
+
         if (null == appSaveParam.getId()) {
             appDao.save(save);
         } else {
@@ -43,6 +45,8 @@ public class AppService {
             appDao.modify(save);
         }
     }
+
+
 
     public void editApp(AppSaveParam appSaveParam) {
         AppDO appDO = new AppDO();
@@ -107,7 +111,23 @@ public class AppService {
         if (!Objects.equals(Enabled.YES.getVal(), app.getEnabled())) {
             throw new BusinessException("100", "[" + name + "]应用未启用");
         }
-
         return app;
+    }
+
+    private void checkOnlyOne(AppSaveParam appSaveParam, AppDO save) throws BusinessException {
+        AppQueryParam param = new AppQueryParam();
+        param.setName(save.getName());
+        param.setExcludeId(appSaveParam.getId());
+        Long count  = appDao.queryCount(param);
+        if (count > 0) {
+            throw new BusinessException("100", "[" + save.getName() + "]应用名称重复");
+        }
+
+        param.setName(null);
+        param.setCode(save.getCode());
+        count = appDao.queryCount(param);
+        if (count > 0) {
+            throw new BusinessException("100", "[" + save.getName() + "]应用编码重复");
+        }
     }
 }

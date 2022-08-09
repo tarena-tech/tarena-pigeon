@@ -17,7 +17,9 @@
 package com.tarena.mnmp.domain;
 
 import java.util.Date;
+import lombok.Data;
 
+@Data
 public class SmsRecordTargetDO {
     /**
      * 主键
@@ -84,108 +86,5 @@ public class SmsRecordTargetDO {
      */
     private Date updateTime;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public void setAppCode(String appCode) {
-        this.appCode = appCode;
-    }
-
-    public Long getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(Long taskId) {
-        this.taskId = taskId;
-    }
-
-    public String getTarget() {
-        return target;
-    }
-
-    public void setTarget(String target) {
-        this.target = target;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
-
-    public Date getTriggerTime() {
-        return triggerTime;
-    }
-
-    public void setTriggerTime(Date triggerTime) {
-        this.triggerTime = triggerTime;
-    }
-
-    public Date getPushTime() {
-        return pushTime;
-    }
-
-    public void setPushTime(Date pushTime) {
-        this.pushTime = pushTime;
-    }
-
-    public Date getPushReceiveTime() {
-        return pushReceiveTime;
-    }
-
-    public void setPushReceiveTime(Date pushReceiveTime) {
-        this.pushReceiveTime = pushReceiveTime;
-    }
-
-    public String getBizId() {
-        return bizId;
-    }
-
-    public void setBizId(String bizId) {
-        this.bizId = bizId;
-    }
-
-    public String getSendResult() {
-        return sendResult;
-    }
-
-    public void setSendResult(String sendResult) {
-        this.sendResult = sendResult;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 }
 

@@ -18,7 +18,9 @@
 package com.tarena.mnmp.domain;
 
 import java.util.Date;
+import lombok.Data;
 
+@Data
 public class ProviderDO {
     private Long id;
     private String code;
@@ -37,116 +39,5 @@ public class ProviderDO {
     private Date createTime;
     private Date updateTime;
 
-    public Integer getAuditStatus() {
-        return auditStatus;
-    }
-
-    public void setAuditStatus(Integer auditStatus) {
-        this.auditStatus = auditStatus;
-    }
-
-    public Integer getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getNoticeType() {
-        return noticeType;
-    }
-
-    public void setNoticeType(Integer noticeType) {
-        this.noticeType = noticeType;
-    }
-
-    public String getOfficialWebsite() {
-        return officialWebsite;
-    }
-
-    public void setOfficialWebsite(String officialWebsite) {
-        this.officialWebsite = officialWebsite;
-    }
-
-    public String getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getClientConfig() {
-        return clientConfig;
-    }
-
-    public void setClientConfig(String clientConfig) {
-        this.clientConfig = clientConfig;
-    }
-
-    public String getAuditResult() {
-        return auditResult;
-    }
-
-    public void setAuditResult(String auditResult) {
-        this.auditResult = auditResult;
-    }
 }
 

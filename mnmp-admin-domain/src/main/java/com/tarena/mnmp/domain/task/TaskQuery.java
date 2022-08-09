@@ -23,8 +23,10 @@ import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
+import lombok.Data;
 
 @ApiModel(value = "任务查询入参")
+@Data
 public class TaskQuery extends PagerResult {
 
     @ApiModelProperty(value = "任务名 支持模糊")
@@ -44,63 +46,8 @@ public class TaskQuery extends PagerResult {
 
     @JsonIgnore
     private Long templateId;
+
     @JsonIgnore
     private List<Integer> taskStatusList;
 
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getAppId() {
-        return appId;
-    }
-
-    public void setAppId(Long appId) {
-        this.appId = appId;
-    }
-
-    public Integer getTaskStatus() {
-        return taskStatus;
-    }
-
-    public void setTaskStatus(Integer taskStatus) {
-        this.taskStatus = taskStatus;
-    }
-
-    public Integer getAuditStatus() {
-        return auditStatus;
-    }
-
-    public void setAuditStatus(Integer auditStatus) {
-        this.auditStatus = auditStatus;
-    }
-
-    public Long getSignId() {
-        return signId;
-    }
-
-    public void setSignId(Long signId) {
-        this.signId = signId;
-    }
-
-    public List<Integer> getTaskStatusList() {
-        return taskStatusList;
-    }
-
-    public void setTaskStatusList(List<Integer> taskStatusList) {
-        this.taskStatusList = taskStatusList;
-    }
-
-    public Long getTemplateId() {
-        return templateId;
-    }
-
-    public void setTemplateId(Long templateId) {
-        this.templateId = templateId;
-    }
 }

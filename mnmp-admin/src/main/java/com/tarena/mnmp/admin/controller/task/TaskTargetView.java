@@ -17,6 +17,8 @@
 package com.tarena.mnmp.admin.controller.task;
 
 import com.tarena.mnmp.domain.TaskTargetDO;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,34 +26,27 @@ import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 @Data
+@ApiModel("任务目标数据模型")
 public class TaskTargetView {
-    /**
-     * 主键
-     */
+
     private Long id;
-    /**
-     * 消息任务ID
-     */
+
+    @ApiModelProperty("消息任务ID")
     private Long taskId;
-    /**
-     * 目标电话
-     */
+
+    @ApiModelProperty("目标电话")
     private String target;
-    /**
-     * 参数
-     */
+
+    @ApiModelProperty("参数")
     private String params;
-    /**
-     * 是否删除 0否 1是
-     */
+
+    @ApiModelProperty("是否删除 0否 1是")
     private Integer deleted;
-    /**
-     * 创建时间
-     */
+
+    @ApiModelProperty("创建时间")
     private Date createTime;
-    /**
-     * 更新时间
-     */
+
+    @ApiModelProperty("更新时间")
     private Date updateTime;
 
     public static List<TaskTargetView> convert(List<TaskTargetDO> sources) {

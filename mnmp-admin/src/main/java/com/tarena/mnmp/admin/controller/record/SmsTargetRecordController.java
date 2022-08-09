@@ -35,7 +35,6 @@ public class SmsTargetRecordController implements SmsTargetRecordApi {
         List<SmsRecordTargetDO> sources = smsTargetRecordService.queryList(param);
         Long count = smsTargetRecordService.count(param);
 
-
         PagerResult<SmsTargetRecordView> result = new PagerResult<>(param.getPageSize(), param.getCurrentPageIndex());
         result.setList(SmsTargetRecordView.convert(sources));
         result.setRecordCount(count);

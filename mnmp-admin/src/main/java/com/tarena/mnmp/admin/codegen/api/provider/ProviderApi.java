@@ -44,48 +44,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 )
 @RequestMapping("provider")
 public interface ProviderApi {
-    /**
-     * 新增服务商
-     *
-     * @param providerSaveParam
-     */
-    @ApiOperationSupport(order = 2001)
-    @ApiOperation(value = "新增服务商")
-    @PostMapping(value = "add")
-    @Deprecated
-    void addProvider(
-        @ApiParam(value = "新增服务商", required = true) @Valid @RequestBody ProviderSaveParam providerSaveParam);
-
-    @ApiOperationSupport(order = 2003)
-    @ApiOperation(value = "修改服务商信息")
-    @PostMapping(
-        value = {"/edit"},
-        consumes = {"application/json"}
-    )
-    @Deprecated
-    void editProvider(@ApiParam(value = "修改服务商信息", required = true) @Valid @RequestBody ProviderSaveParam providerSaveParam);
 
     @ApiOperation(value = "保存服务商 创建/更新")
     @PostMapping("save")
-    void save(@RequestBody ProviderSaveParam param);
-
-    @ApiOperationSupport(order = 2002)
-    @ApiOperation(
-        value = "关闭使用服务商"
-    )
-    @PostMapping({"/close"})
-    @Deprecated
-    void closeProvider(
-        @NotNull @ApiParam(value = "要关闭的服务商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
-
-    @ApiOperationSupport(order = 2004)
-    @ApiOperation(
-        value = "开启服务商"
-    )
-    @PostMapping({"/open"})
-    @Deprecated
-    void openProvider(
-        @NotNull @ApiParam(value = "要开启的服务商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+    void save(@RequestBody ProviderSaveParam param) throws BusinessException;
 
     @ApiOperationSupport(order = 2004)
     @ApiOperation(value = "切换服务商可用状态")

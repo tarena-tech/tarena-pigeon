@@ -19,8 +19,10 @@ package com.tarena.mnmp.domain.provider;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 @ApiModel("服务商查询模型")
+@Data
 public class ProviderQueryParam extends PagerResult {
 
     public ProviderQueryParam() {
@@ -47,51 +49,7 @@ public class ProviderQueryParam extends PagerResult {
     @ApiModelProperty("列表中必须包含某条数据")
     private Long appendId;
 
-    public String getName() {
-        return name;
-    }
+    @ApiModelProperty("列表中指定排除某个id")
+    private Long excludeId;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Integer getEnable() {
-        return enable;
-    }
-
-    public void setEnable(Integer enable) {
-        this.enable = enable;
-    }
-
-    public Integer getAuditStatus() {
-        return auditStatus;
-    }
-
-    public void setAuditStatus(Integer auditStatus) {
-        this.auditStatus = auditStatus;
-    }
-
-    public Boolean getOrderBy() {
-        return orderBy;
-    }
-
-    public void setOrderBy(Boolean orderBy) {
-        this.orderBy = orderBy;
-    }
-
-    public Long getAppendId() {
-        return appendId;
-    }
-
-    public void setAppendId(Long appendId) {
-        this.appendId = appendId;
-    }
 }

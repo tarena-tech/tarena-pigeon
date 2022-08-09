@@ -57,16 +57,19 @@ public class SignService {
         }
     }
 
+    @Deprecated
     public void closeSign(Long id) {
         signDao.disable(id);
     }
 
+    @Deprecated
     public void editSign(SignSaveParam signSaveParam) {
         SignDO signDO = new SignDO();
         BeanUtils.copyProperties(signSaveParam, signDO);
         signDao.modify(signDO);
     }
 
+    @Deprecated
     public void openSign(Long id) {
         signDao.enable(id);
     }

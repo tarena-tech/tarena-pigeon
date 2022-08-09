@@ -21,8 +21,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.Data;
 
 @ApiModel(value = "签名新增入参")
+@Data
 public class SignSaveParam {
     @ApiModelProperty(
         value = "主键",
@@ -51,6 +53,7 @@ public class SignSaveParam {
     )
     @NotNull(message = "请选择应用")
     private Long appId;
+
     @ApiModelProperty(
         value = "简介",
         name = "remark",
@@ -59,54 +62,4 @@ public class SignSaveParam {
     )
     private String remarks;
 
-    private Integer enabled;
-
-
-    public Integer getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getAppId() {
-        return appId;
-    }
-
-    public void setAppId(Long appId) {
-        this.appId = appId;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 }

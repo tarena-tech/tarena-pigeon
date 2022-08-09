@@ -17,8 +17,10 @@
 
 package com.tarena.mnmp.admin.controller.sign;
 
+import com.github.xiaoymin.knife4j.annotations.Ignore;
 import com.tarena.mnmp.domain.SignDO;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,24 +31,40 @@ import org.springframework.beans.BeanUtils;
 @Data
 public class SignView {
 
+    @ApiModelProperty("签名id")
     private Long id;
 
+    @ApiModelProperty("签名编码")
     private String code;
 
+    @ApiModelProperty("签名名称")
     private String name;
 
+    @ApiModelProperty("绑定的应用id")
     private Long appId;
+
+    @ApiModelProperty("绑定的应用编码")
     private String appCode;
 
+    @ApiModelProperty("备注/简介")
     private String remarks;
 
+    @ApiModelProperty("暂时无用")
     private String creator;
 
+    @ApiModelProperty("是否启用 0否 1是")
     private Integer enabled;
+
+    @ApiModelProperty("审核状态 -1未通过 0审核中 1通过")
     private Integer auditStatus;
+
+    @ApiModelProperty("创建时间")
     private Date createTime;
+
+    @ApiModelProperty("更新时间")
     private Date updateTime;
 
+    @Ignore
     public static List<SignView> convert(List<SignDO> sources) {
         List<SignView> list = new ArrayList<>();
         for (SignDO sign : sources) {

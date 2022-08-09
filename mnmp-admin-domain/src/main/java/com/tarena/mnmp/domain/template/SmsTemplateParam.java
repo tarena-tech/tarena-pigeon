@@ -21,12 +21,13 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.Data;
 
 @ApiModel(value = "创建模板入参")
+@Data
 public class SmsTemplateParam {
 
-
-    @Min(1)
+    @Min(value = 1, message = "非法数据")
     private Long id;
 
     @ApiModelProperty(value = "模板编码", required = true)
@@ -74,107 +75,4 @@ public class SmsTemplateParam {
     private Integer enabled;
 
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Long getAppId() {
-        return appId;
-    }
-
-    public void setAppId(Long appId) {
-        this.appId = appId;
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public void setAppCode(String appCode) {
-        this.appCode = appCode;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getTemplateType() {
-        return templateType;
-    }
-
-    public void setTemplateType(Integer templateType) {
-        this.templateType = templateType;
-    }
-
-    public Integer getNoticeType() {
-        return noticeType;
-    }
-
-    public void setNoticeType(Integer noticeType) {
-        this.noticeType = noticeType;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public Integer getAuditStatus() {
-        return auditStatus;
-    }
-
-    public void setAuditStatus(Integer auditStatus) {
-        this.auditStatus = auditStatus;
-    }
-
-    public String getAuditResult() {
-        return auditResult;
-    }
-
-    public void setAuditResult(String auditResult) {
-        this.auditResult = auditResult;
-    }
-
-    public Integer getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
-    }
-
-    public Long getProviderId() {
-        return providerId;
-    }
-
-    public void setProviderId(Long providerId) {
-        this.providerId = providerId;
-    }
 }

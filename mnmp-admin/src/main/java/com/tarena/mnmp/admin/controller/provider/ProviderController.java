@@ -42,26 +42,9 @@ public class ProviderController implements ProviderApi {
     @Resource
     private TemplateService templateService;
 
-    @Override public void addProvider(ProviderSaveParam providerSaveParam) {
-        providerService.addProvider(providerSaveParam);
-    }
 
-    @Override public void closeProvider(Long id) {
-        providerService.closeProvider(id);
-    }
-
-    @Override public void editProvider(ProviderSaveParam providerSaveParam) {
-        providerService.editProvider(providerSaveParam);
-    }
-
-    @Override public void save(ProviderSaveParam param) {
-        ProviderDO provider = new ProviderDO();
-        BeanUtils.copyProperties(param, provider);
-        providerService.save(provider);
-    }
-
-    @Override public void openProvider(Long id) {
-        providerService.openProvider(id);
+    @Override public void save(ProviderSaveParam param) throws BusinessException {
+        providerService.save(param);
     }
 
     @Override public void changeEnableStatus(Long id) throws BusinessException {
