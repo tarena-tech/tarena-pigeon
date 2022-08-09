@@ -50,25 +50,14 @@ public interface ProviderApi {
      * @param providerSaveParam
      */
     @ApiOperationSupport(order = 2001)
-    @ApiOperation(
-        value = "新增服务商",
-        nickname = "addProvider",
-        notes = ""
-    )
-    @PostMapping(
-        value = {"/add"},
-        consumes = {"application/json"}
-    )
+    @ApiOperation(value = "新增服务商")
+    @PostMapping(value = "add")
     @Deprecated
     void addProvider(
         @ApiParam(value = "新增服务商", required = true) @Valid @RequestBody ProviderSaveParam providerSaveParam);
 
     @ApiOperationSupport(order = 2003)
-    @ApiOperation(
-        value = "修改服务商信息",
-        nickname = "editProvider",
-        notes = ""
-    )
+    @ApiOperation(value = "修改服务商信息")
     @PostMapping(
         value = {"/edit"},
         consumes = {"application/json"}
@@ -82,9 +71,7 @@ public interface ProviderApi {
 
     @ApiOperationSupport(order = 2002)
     @ApiOperation(
-        value = "关闭使用服务商",
-        nickname = "closeProvider",
-        notes = ""
+        value = "关闭使用服务商"
     )
     @PostMapping({"/close"})
     @Deprecated
@@ -93,9 +80,7 @@ public interface ProviderApi {
 
     @ApiOperationSupport(order = 2004)
     @ApiOperation(
-        value = "开启服务商",
-        nickname = "openProvider",
-        notes = ""
+        value = "开启服务商"
     )
     @PostMapping({"/open"})
     @Deprecated
@@ -111,19 +96,14 @@ public interface ProviderApi {
 
     @ApiOperationSupport(order = 2005)
     @ApiOperation(
-        value = "查询服务分页商列表",
-        nickname = "queryPage",
-        notes = ""
+        value = "查询服务分页商列表"
     )
     @GetMapping(value = {"/query/page"})
     PagerResult<ProviderView> queryPage(ProviderQueryParam param);
 
     @ApiOperationSupport(order = 2006)
     @ApiOperation(
-        value = "查看服务商详情",
-        nickname = "queryProviderDetail",
-        notes = "",
-        response = ProviderView.class
+        value = "查看服务商详情"
     )
     @GetMapping(
         value = {"/query/detail"},

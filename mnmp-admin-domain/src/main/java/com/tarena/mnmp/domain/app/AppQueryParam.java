@@ -43,6 +43,9 @@ public class AppQueryParam extends PagerResult {
     @ApiModelProperty("审核状态 -1未通过 0审核中 1通过")
     private Integer auditStatus;
 
+    @ApiModelProperty("查询列表时指定返回的id")
+    private Long appendId;
+
     public String getName() {
         return name;
     }
@@ -81,5 +84,13 @@ public class AppQueryParam extends PagerResult {
 
     public void setAuditStatus(Integer auditStatus) {
         this.auditStatus = auditStatus;
+    }
+
+    public Long getAppendId() {
+        return appendId;
+    }
+
+    public void setAppendId(Long appendId) {
+        this.appendId = appendId;
     }
 }

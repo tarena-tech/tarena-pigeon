@@ -52,6 +52,9 @@ public class TemplateQuery extends SimplePager {
     )
     private String templateName;
 
+    @ApiModelProperty("列表中必须包含某一条数据")
+    private Long appendId;
+
     public String getAppCode() {
         return appCode;
     }
@@ -90,5 +93,13 @@ public class TemplateQuery extends SimplePager {
 
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
+    }
+
+    public Long getAppendId() {
+        return appendId;
+    }
+
+    public void setAppendId(Long appendId) {
+        this.appendId = appendId;
     }
 }

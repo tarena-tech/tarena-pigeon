@@ -17,9 +17,13 @@
 
 package com.tarena.mnmp.admin.controller.template;
 
+import com.tarena.mnmp.domain.SmsTemplateDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import org.springframework.beans.BeanUtils;
 
 @ApiModel(value = "短信模板控制层出参")
 public class TemplateView {
@@ -113,6 +117,16 @@ public class TemplateView {
 
     @ApiModelProperty("供应商id")
     private Long providerId;
+
+    public static List<TemplateView> convert(List<SmsTemplateDO> sources) {
+        List<TemplateView> list = new ArrayList<>();
+        for (SmsTemplateDO smsTemplateDO : sources) {
+            TemplateView view = new TemplateView();
+            BeanUtils.copyProperties(smsTemplateDO, view);
+            list.add(view);
+        }
+        return list;
+    }
 
     public Long getId() {
         return id;

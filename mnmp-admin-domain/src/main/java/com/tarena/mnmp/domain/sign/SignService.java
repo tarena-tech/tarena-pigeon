@@ -76,7 +76,15 @@ public class SignService {
     }
 
     public List<SignDO> querySignList(SignQuery signQuery) {
-        return signDao.querySigns(signQuery);
+        List<SignDO> sources = signDao.querySigns(signQuery);
+        if (null != signQuery.getAppendId()) {
+            boolean append = sources.stream().noneMatch(source -> source.getId().equals(signQuery.getAppendId()));
+            SignDO sign;
+            if (append && null != (sign = querySignDetail(signQuery.getAppendId()))) {
+                sources.add(sign);
+            }
+        }
+        return sources;
     }
 
     public void auditSign(Long id, Integer status, String auditResult) {

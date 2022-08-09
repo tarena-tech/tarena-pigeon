@@ -51,6 +51,10 @@ public class SignQuery extends PagerResult {
     @ApiModelProperty("true:倒叙， false：正序")
     private Boolean orderBy;
 
+    @ApiModelProperty("列表中必须存在的某一条数据")
+    private Long appendId;
+
+
     public String getAppCode() {
         return appCode;
     }
@@ -89,5 +93,13 @@ public class SignQuery extends PagerResult {
 
     public void setOrderBy(Boolean orderBy) {
         this.orderBy = orderBy;
+    }
+
+    public Long getAppendId() {
+        return appendId;
+    }
+
+    public void setAppendId(Long appendId) {
+        this.appendId = appendId;
     }
 }

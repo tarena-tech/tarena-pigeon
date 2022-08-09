@@ -44,6 +44,9 @@ public class ProviderQueryParam extends PagerResult {
     @ApiModelProperty("true：倒排， false：不排序")
     private Boolean orderBy;
 
+    @ApiModelProperty("列表中必须包含某条数据")
+    private Long appendId;
+
     public String getName() {
         return name;
     }
@@ -82,5 +85,13 @@ public class ProviderQueryParam extends PagerResult {
 
     public void setOrderBy(Boolean orderBy) {
         this.orderBy = orderBy;
+    }
+
+    public Long getAppendId() {
+        return appendId;
+    }
+
+    public void setAppendId(Long appendId) {
+        this.appendId = appendId;
     }
 }

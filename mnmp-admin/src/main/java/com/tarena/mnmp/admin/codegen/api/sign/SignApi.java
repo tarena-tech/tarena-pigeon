@@ -46,10 +46,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface SignApi {
     @ApiOperationSupport(order = 3001)
     @ApiOperation(
-        value = "新增签名",
-        nickname = "addSign",
-        notes = "",
-        response = String.class
+        value = "新增签名"
     )
     @PostMapping(
         value = {"/save"}
@@ -59,10 +56,7 @@ public interface SignApi {
 
     @ApiOperationSupport(order = 3003)
     @ApiOperation(
-        value = "编辑签名",
-        nickname = "editSign",
-        notes = "",
-        response = String.class
+        value = "编辑签名"
     )
     @PostMapping(
         value = {"/edit"},
@@ -77,10 +71,7 @@ public interface SignApi {
 
     @ApiOperationSupport(order = 3005)
     @ApiOperation(
-        value = "查看签名详情",
-        nickname = "querySignDetail",
-        notes = "",
-        response = SignView.class
+        value = "查看签名详情"
     )
     @GetMapping(
         value = {"/queryDetail"},
@@ -91,11 +82,7 @@ public interface SignApi {
 
     @ApiOperationSupport(order = 3006)
     @ApiOperation(
-        value = "查询签名列表",
-        nickname = "querySignList",
-        notes = "",
-        response = SignView.class,
-        responseContainer = "List"
+        value = "查询签名列表"
     )
     @GetMapping(
         value = {"/queryPage"}

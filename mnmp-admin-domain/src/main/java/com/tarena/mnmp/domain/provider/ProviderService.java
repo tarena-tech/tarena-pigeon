@@ -62,7 +62,15 @@ public class ProviderService {
     }
 
     public List<ProviderDO> queryList(ProviderQueryParam param) {
-        return providerDao.queryByParam(param);
+        List<ProviderDO> sources = providerDao.queryByParam(param);
+        if (null != param.getAppendId()) {
+            boolean append = sources.stream().noneMatch(source -> source.getId().equals(param.getAppendId()));
+            ProviderDO provider;
+            if (append && null != (provider = queryProviderDetail(param.getAppendId()))) {
+                sources.add(provider);
+            }
+        }
+        return sources;
     }
 
     public ProviderDO queryProviderDetail(Long id) {

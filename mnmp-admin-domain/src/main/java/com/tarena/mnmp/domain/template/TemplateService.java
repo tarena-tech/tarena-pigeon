@@ -84,7 +84,15 @@ public class TemplateService {
     }
 
     public List<SmsTemplateDO> queryList(TemplateQuery query) {
-        return smsTemplateDao.queryTemplates(query);
+        List<SmsTemplateDO> sources = smsTemplateDao.queryTemplates(query);
+        if (null != query.getAppendId()) {
+            boolean append = sources.stream().noneMatch(source -> source.getId().equals(query.getAppendId()));
+            SmsTemplateDO smsTemplate;
+            if (append && null != (smsTemplate = querySmsTemplateDetail(query.getAppendId()))) {
+                sources.add(smsTemplate);
+            }
+        }
+        return sources;
     }
 
     public Long queryCount(TemplateQuery query) {
