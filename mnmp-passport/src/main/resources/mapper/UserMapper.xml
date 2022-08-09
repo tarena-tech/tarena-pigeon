@@ -9,7 +9,7 @@
         <result property="password" column="password"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
-        <collection property="roles" ofType="String">
+        <collection property="authorities" ofType="String">
             <result column="name"/>
         </collection>
     </resultMap>

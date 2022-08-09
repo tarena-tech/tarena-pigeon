@@ -17,24 +17,16 @@
 
 package com.tarena.mnmp.passport.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     private Long id;
     private String username;
     private String password;
     private Date createTime;
     private Date updateTime;
-    private List<String> roles;
-
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
 
     public Date getCreateTime() {
         return createTime;

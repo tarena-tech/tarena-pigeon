@@ -57,7 +57,7 @@ public class JwtUtils {
     private static boolean isTokenExpired(Claims claims) {
         Date expiration = claims.getExpiration();
         //返回判断时间前后
-        return new Date().before(expiration);
+        return new Date().after(expiration);
     }
 
     public static String generateToken(LoginToken loginToken,String secret,Long expiration){

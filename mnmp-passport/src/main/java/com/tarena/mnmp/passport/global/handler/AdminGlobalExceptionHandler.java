@@ -23,6 +23,7 @@ import com.tarena.mnmp.protocol.Result;
 import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -30,18 +31,27 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * 全局异常捕获
  */
-@RestControllerAdvice(basePackages = "com.tarena.mnmp.passport.controller")
+@RestControllerAdvice(basePackages = "com.tarena.mnmp.admin.controller")
 public class AdminGlobalExceptionHandler {
     private static Logger logger = LoggerFactory.getLogger(AdminGlobalExceptionHandler.class);
 
     /**
      * 处理业务异常
      */
-    @ExceptionHandler(value = {BusinessException.class})
+    @ExceptionHandler({BusinessException.class})
     public Result handleBusinessException(BusinessException e) {
         logger.debug("出现业务异常，业务错误码={}，描述文本={}", e.getCode(), e.getMessage());
         e.printStackTrace();
         Result result = Result.fail(e);
+        logger.debug("即将返回：{}", result);
+        return result;
+    }
+
+    @ExceptionHandler({AccessDeniedException.class})
+    public Result handleAccessDeniedException(AccessDeniedException e) {
+        logger.debug("出现授权问题:{}", e.getMessage());
+        e.printStackTrace();
+        Result result = Result.fail("100", "您无权访问此资源");
         logger.debug("即将返回：{}", result);
         return result;
     }

@@ -42,6 +42,6 @@ public class AuthenticationExceptionController {
     public void error(HttpServletRequest request) throws BusinessException {
         AuthenticationException exception = (AuthenticationException) request.getAttribute("login_error");
         log.info("认证异常:{}", exception);
-        throw new BusinessException("100", "您的认证出现错误,请联系管理员");
+        throw new BusinessException("100", "您当前未登录认证");
     }
 }

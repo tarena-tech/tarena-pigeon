@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.passport.exception.redirect;
+package com.tarena.mnmp.passport.controller;
 
 import com.tarena.mnmp.protocol.BusinessException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +24,11 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @Slf4j
+@ApiIgnore
 public class AuthenticationExceptionController {
     @RequestMapping("/denied")
     public void denied(HttpServletRequest request) throws BusinessException {
@@ -39,7 +41,7 @@ public class AuthenticationExceptionController {
     @RequestMapping("/login/error")
     public void error(HttpServletRequest request) throws BusinessException {
         AuthenticationException exception = (AuthenticationException) request.getAttribute("login_error");
-        log.info("授权异常:{}", exception);
-        throw new BusinessException("100", "您的认证出现错误,请联系管理员");
+        log.info("认证异常:{}", exception);
+        throw new BusinessException("100", "您当前未登录认证");
     }
 }

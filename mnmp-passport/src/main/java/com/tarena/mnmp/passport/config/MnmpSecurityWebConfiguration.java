@@ -32,7 +32,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -86,7 +86,7 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
         //未认证处理器
         http.exceptionHandling().authenticationEntryPoint(mnmpAuthenticationEntryPoint());
         //添加过滤器
-        http.addFilterAfter(mnmpAuthenticationFilter(), SecurityContextPersistenceFilter.class);
+        http.addFilterAfter(mnmpAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override public void configure(WebSecurity web) throws Exception {

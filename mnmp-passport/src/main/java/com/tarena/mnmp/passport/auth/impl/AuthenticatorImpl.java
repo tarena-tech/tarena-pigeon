@@ -24,8 +24,6 @@ import com.tarena.mnmp.security.utils.JwtUtils;
 import com.tarena.mnmp.security.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
 import io.jsonwebtoken.lang.Assert;
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -36,7 +34,6 @@ public class AuthenticatorImpl implements Authenticator {
     private UserMapper userMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    private Map<String, String> tokenToDeviceIp = new HashMap<>();
 
     @Override public String sign(LoginToken login, String password) {
         String username = login.getUsername();
@@ -48,16 +45,16 @@ public class AuthenticatorImpl implements Authenticator {
         if (!matches) {
             return null;
         }
+        login.setAuthorities(user.getAuthorities());
         //认证成功,生成token返回
         return JwtUtils.generateToken(login, jwtConfig.getJwtSecret(), jwtConfig.getExpiration());
     }
 
     @Override public LoginToken authenticate(String token, String deviceIp) {
         LoginToken login = JwtUtils.getLoginFromToken(token, jwtConfig.getJwtSecret(), jwtConfig.getExpiration());
-        Assert.notNull(login, "登录状态以消失,请重新登录");
-        boolean containsToken = tokenToDeviceIp.containsKey(token);
-        Assert.isTrue(tokenToDeviceIp.get(token) != null && tokenToDeviceIp.get(token).equals(deviceIp), "您更换了设备,请重新登录");
-        Assert.isTrue(login.getDeviceIp() != null && login.getDeviceIp().equals(deviceIp), "当前使用设备非登录设备");
+        if (login.getDeviceIp() == null || !login.getDeviceIp().equals(deviceIp)) {
+            return null;
+        }
         return login;
     }
 

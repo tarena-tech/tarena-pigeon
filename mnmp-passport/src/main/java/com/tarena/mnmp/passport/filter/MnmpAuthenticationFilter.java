@@ -72,9 +72,10 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
                 authorities.add(simpleGrantedAuthority);
             }
             UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(loginToken.getUsername(), null, authorities);
+                new UsernamePasswordAuthenticationToken(loginToken.getUsername(), loginToken, authorities);
             SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
             securityContext.setAuthentication(authentication);
+            SecurityContextHolder.setContext(securityContext);
             filterChain.doFilter(request, response);
         }
 
@@ -83,7 +84,7 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
     public String getRequestToken(HttpServletRequest request) {
         //从Authorization头里获得
         String tokenHeader = "Authorization";
-        String tokenHeaderPrefix = "Bearer 11";
+        String tokenHeaderPrefix = "Bearer ";
         String tokenParam = "token";
         String token = request.getParameter(tokenParam);
         String tokenHeaderValue = "";
@@ -91,7 +92,7 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
             tokenHeaderValue = request.getHeader(tokenHeader);
         }
         if (!StringUtils.isEmpty(tokenHeaderValue) && tokenHeaderValue.startsWith(tokenHeaderPrefix)) {
-            token = tokenHeader.substring(tokenHeaderPrefix.length() + 1);
+            token = tokenHeaderValue.substring(tokenHeaderPrefix.length());
         }
         return token;
     }

@@ -24,6 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
+/**
+ * 使用注解形式的授权方式,不会进入这个处理器处理授权异常
+ */
+@Deprecated
 public class MnmpAccessDeniedHanldler implements AccessDeniedHandler {
     @Override public void handle(HttpServletRequest request, HttpServletResponse response,
         AccessDeniedException accessDeniedException) throws IOException, ServletException {
