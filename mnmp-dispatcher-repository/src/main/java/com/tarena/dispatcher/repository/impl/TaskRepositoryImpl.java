@@ -22,10 +22,12 @@ import com.tarena.dispatcher.bo.TaskBO;
 import com.tarena.dispatcher.bo.TaskTargetBO;
 import com.tarena.dispatcher.bo.TemplateBO;
 import com.tarena.dispatcher.respository.TaskRepository;
+import com.tarena.dispatcher.storage.mapper.ProviderDao;
 import com.tarena.dispatcher.storage.mapper.SmsSignDao;
 import com.tarena.dispatcher.storage.mapper.TaskDao;
 import com.tarena.dispatcher.storage.mapper.TaskTargetDao;
 import com.tarena.dispatcher.storage.mapper.TemplateDao;
+import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.TaskDO;
 import com.tarena.mnmp.domain.TaskTargetDO;
 import java.util.Date;
@@ -50,6 +52,8 @@ public class TaskRepositoryImpl implements TaskRepository {
     private TemplateDao templateDao;
     @Autowired
     private SmsSignDao smsSignDao;
+    @Autowired
+    private ProviderDao providerDao;
 
     /**
      * 修改任务下次执行时间
@@ -125,9 +129,10 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     @Override public TemplateBO queryTemplate(Long templateId) {
         TemplateBO template = new TemplateBO();
+        SmsTemplateDO templateDo = templateDao.selectById(templateId);
         BeanUtils.copyProperties(
-            templateDao.selectById(templateId), template);
-
+            templateDo, template);
+        template.setProviderCode(this.providerDao.getCodeById(templateId));
         return template;
     }
 

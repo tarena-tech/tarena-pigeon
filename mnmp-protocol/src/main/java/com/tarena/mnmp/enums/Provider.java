@@ -18,19 +18,17 @@
 package com.tarena.mnmp.enums;
 
 public enum Provider {
-    ALI_SMS(" {\"appId\":\"tedu\",\"accessKey\":\"key\",\"defaultTemplate\":\"template\"}");
+    ALI_EMAIL("阿里Email"),
 
-    private String example;
+    ALI_SMS("阿里短信");
 
-    Provider(String example) {
-        this.example = example;
+    private String description;
+
+    Provider(String description) {
+        this.description = description;
     }
 
-    public String getExample() {
-        return example;
-    }
-
-    public void setExample(String example) {
-        this.example = example;
+    public String getDescription() {
+        return description;
     }
 }

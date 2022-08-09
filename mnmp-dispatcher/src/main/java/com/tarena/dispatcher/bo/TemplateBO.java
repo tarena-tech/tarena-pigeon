@@ -49,6 +49,15 @@ public class TemplateBO {
      * 模型类型
      */
     private Integer templateType;
+    /**
+     *  供应商ID
+     */
+    private Long providerId;
+
+    /**
+     * 供应商编码
+     */
+    private String providerCode;
 
     public Long getId() {
         return id;
@@ -112,5 +121,21 @@ public class TemplateBO {
 
     public void setTemplateType(Integer templateType) {
         this.templateType = templateType;
+    }
+
+    public Long getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(Long providerId) {
+        this.providerId = providerId;
+    }
+
+    public String getProviderCode() {
+        return providerCode;
+    }
+
+    public void setProviderCode(String providerCode) {
+        this.providerCode = providerCode;
     }
 }

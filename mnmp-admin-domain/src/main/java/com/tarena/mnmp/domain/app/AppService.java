@@ -34,13 +34,13 @@ public class AppService {
     private AppDao appDao;
 
     public void save(AppSaveParam appSaveParam) {
-        AppDO appDO = new AppDO();
-        BeanUtils.copyProperties(appSaveParam, appDO);
+        AppDO save = new AppDO();
+        BeanUtils.copyProperties(appSaveParam, save);
         if (null == appSaveParam.getId()) {
-            appDao.save(appDO);
+            appDao.save(save);
         } else {
-            appDO.cleanSameData();
-            appDao.modify(appDO);
+            save.cleanSameData();
+            appDao.modify(save);
         }
     }
 
@@ -90,12 +90,13 @@ public class AppService {
             throw new BusinessException("100", "应用不存在");
         }
 
+        String name = app.getName();
         if (!Objects.equals(AuditStatus.PASS.getStatus(), app.getAuditStatus())) {
-            throw new BusinessException("100", "应用审核未通过");
+            throw new BusinessException("100","[" + name + "]应用审核未通过");
         }
 
         if (!Objects.equals(Enabled.YES.getVal(), app.getEnabled())) {
-            throw new BusinessException("100", "应用未启用");
+            throw new BusinessException("100", "[" + name + "]应用未启用");
         }
 
         return app;

@@ -87,7 +87,8 @@ public abstract class AbstractScheduler {
             notice.setTemplateContent(template.getContent());
             notice.setAppCode(template.getAppCode());
             notice.setSignName(sign.getName());
-            notice.setSignCode(sign.getName());
+            notice.setSignCode(sign.getCode());
+            notice.setProviderCode(template.getProviderCode());
             notices.add(notice);
         }
         return notices;

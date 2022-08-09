@@ -55,9 +55,9 @@ public class ProviderController implements ProviderApi {
     }
 
     @Override public void save(ProviderSaveParam param) {
-        ProviderDO pdo = new ProviderDO();
-        BeanUtils.copyProperties(param, pdo);
-        providerService.save(pdo);
+        ProviderDO provider = new ProviderDO();
+        BeanUtils.copyProperties(param, provider);
+        providerService.save(provider);
     }
 
     @Override public void openProvider(Long id) {
@@ -65,16 +65,15 @@ public class ProviderController implements ProviderApi {
     }
 
     @Override public void changeEnableStatus(Long id) throws BusinessException {
-        ProviderDO aDo = providerService.queryProviderDetail(id);
-        if (null == aDo) {
+        ProviderDO provider = providerService.queryProviderDetail(id);
+        if (null == provider) {
             throw new BusinessException("100", "服务商不存在");
         }
 
         ProviderDO up = new ProviderDO();
         up.setId(id);
-        up.setEnabled(aDo.getEnabled() == 1 ? 0 : 1);
+        up.setEnabled(Enabled.reverse(provider.getEnabled()).getVal());
         providerService.update(up);
-
         // 服务供应商被禁用 跟他有关系的全部禁用
         if (Objects.equals(Enabled.NO.getVal(), up.getEnabled())) {
             templateService.changeEnableByProviderId(id, up.getEnabled());
@@ -82,11 +81,10 @@ public class ProviderController implements ProviderApi {
     }
 
     @Override public PagerResult<ProviderView> queryPage(ProviderQueryParam param) {
-        List<ProviderDO> providerDOs = providerService.queryList(param);
+        List<ProviderDO> sources = providerService.queryList(param);
         Long count = providerService.queryCount(param);
-        List<ProviderView> providerViews = ProviderView.convert(providerDOs);
         PagerResult<ProviderView> pagerResult = new PagerResult<ProviderView>(param.getPageSize(), param.getCurrentPageIndex());
-        pagerResult.setList(providerViews);
+        pagerResult.setList(ProviderView.convert(sources));
         pagerResult.setRecordCount(count);
         return pagerResult;
     }
@@ -104,7 +102,7 @@ public class ProviderController implements ProviderApi {
 
     @Override public List<ProviderView> queryList(ProviderQueryParam param) {
         param.setOrderBy(false);
-        List<ProviderDO> dos = providerService.queryList(param);
-        return ProviderView.convert(dos);
+        List<ProviderDO> sources = providerService.queryList(param);
+        return ProviderView.convert(sources);
     }
 }

@@ -219,11 +219,6 @@ export default {
     toEditBtnFn(row) {
       this.$refs['updateSeriesClass'].show(row)
     },
-    // 详情
-    showSmsInfo(row) {
-      this.$refs['dialogSmsInfo'].show({name: row.code})
-      this.$refs['dialogSmsInfo'].show({name: row.code})
-    },
     // 创建
     save(data) {
       this.$refs.DialogSmsSave.show(data)

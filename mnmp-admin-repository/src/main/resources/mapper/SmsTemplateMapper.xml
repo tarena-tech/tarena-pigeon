@@ -22,7 +22,7 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="create_user_id" jdbcType="INTEGER" property="createUserId"/>
         <result column="create_user_name" jdbcType="VARCHAR" property="createUserName"/>
-        <result column="privider_id" jdbcType="BIGINT" property="providerId"/>
+        <result column="provider_id" jdbcType="BIGINT" property="providerId"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->

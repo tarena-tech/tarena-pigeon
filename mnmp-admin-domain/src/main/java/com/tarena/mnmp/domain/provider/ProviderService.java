@@ -34,16 +34,16 @@ public class ProviderService {
     private ProviderDao providerDao;
 
     public void addProvider(ProviderSaveParam providerSaveParam) {
-        ProviderDO providerDO = new ProviderDO();
-        BeanUtils.copyProperties(providerSaveParam, providerDO);
-        if (null == providerDO.getId()) {
-            providerDao.save(providerDO);
+        ProviderDO provider = new ProviderDO();
+        BeanUtils.copyProperties(providerSaveParam, provider);
+        if (null == provider.getId()) {
+            providerDao.save(provider);
         } else {
-            providerDO.setAuditResult(null);
-            providerDO.setEnabled(null);
-            providerDO.setAuditStatus(null);
-            providerDO.setCreateTime(null);
-            providerDao.modify(providerDO);
+            provider.setAuditResult(null);
+            provider.setEnabled(null);
+            provider.setAuditStatus(null);
+            provider.setCreateTime(null);
+            providerDao.modify(provider);
         }
     }
 
@@ -100,15 +100,15 @@ public class ProviderService {
     public ProviderDO checkStatus(Long providerId) throws BusinessException {
         ProviderDO provider = queryProviderDetail(providerId);
         if (null == provider) {
-            throw new BusinessException("100", "应用不存在");
+            throw new BusinessException("100", "提供商不存在");
         }
-
+        String name = provider.getName();
         if (!Objects.equals(AuditStatus.PASS.getStatus(), provider.getAuditStatus())) {
-            throw new BusinessException("100", "应用审核未通过");
+            throw new BusinessException("100", "[" + name + "]供应商审核未通过");
         }
 
         if (!Objects.equals(Enabled.YES.getVal(), provider.getEnabled())) {
-            throw new BusinessException("100", "应用未启用");
+            throw new BusinessException("100", "[" + name + "]供应商未启用");
         }
         return provider;
     }

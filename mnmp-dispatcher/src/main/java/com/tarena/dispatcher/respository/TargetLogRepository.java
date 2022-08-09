@@ -29,8 +29,6 @@ public interface TargetLogRepository {
 
     TargetStatus getSmsStatus(NoticeEvent noticeEvent, String target);
 
-    Integer modifySmsStatus(NoticeEvent noticeEvent, String target, TargetStatus targetStatus);
-
     void newSuccessSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus, String bizId);
 
     void newFailSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus, String errorMsg);

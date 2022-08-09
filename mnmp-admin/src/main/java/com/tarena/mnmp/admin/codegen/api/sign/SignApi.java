@@ -54,7 +54,7 @@ public interface SignApi {
     @PostMapping(
         value = {"/save"}
     )
-    void save(@ApiParam(value = "新增签名", required = true) @Valid @RequestBody SignSaveParam signParam);
+    void save(@ApiParam(value = "新增签名", required = true) @Valid @RequestBody SignSaveParam signParam) throws BusinessException;
 
 
     @ApiOperationSupport(order = 3003)
