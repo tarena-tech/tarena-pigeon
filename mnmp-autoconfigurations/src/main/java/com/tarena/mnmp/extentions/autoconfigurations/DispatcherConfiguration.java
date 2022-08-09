@@ -26,7 +26,6 @@ import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
 import com.tarena.dispatcher.properties.DispatcherConfig;
 import com.tarena.dispatcher.respository.ProviderRepository;
 import com.tarena.dispatcher.respository.TargetLogRepository;
-import com.tarena.dispatcher.respository.TaskRepository;
 import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.utils.DollarPlaceholderReplacer;
 import com.tarena.mnmp.monitor.Monitor;
@@ -89,9 +88,8 @@ public class DispatcherConfiguration {
     @ConditionalOnProperty(prefix = "dispatcher", value = "notice_sms_ali", havingValue = "true")
     public SmsAliNoticeDispatcher smsAliNoticeDispatcher(Json json,
         TargetLogRepository targetLogRepository,
-        TaskRepository taskRepository,
         ProviderRepository providerRepository,
-        Client smsAliClient,
+
         Monitor monitor) {
         ProviderClientConfig providerClientConfig = providerRepository.getClientConfig(this.dispatcherConfig.getSmsAliPigeonProviderCode());
         SmsAliNoticeDispatcher aliNoticeDispatcher = new SmsAliNoticeDispatcher();
