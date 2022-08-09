@@ -15,44 +15,44 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.security;
+package com.tarena.mnmp.admin.security.domain;
 
-import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
 
-public class LoginToken implements Serializable {
+public class User {
     private Long id;
     private String username;
+    private String password;
+    private Date createTime;
+    private Date updateTime;
+    private List<String> roles;
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
     private List<String> authorities;
-
-    private Object details;
-
-    private String deviceIp;
-
-    public String getDeviceIp() {
-        return deviceIp;
-    }
-
-    public void setDeviceIp(String deviceIp) {
-        this.deviceIp = deviceIp;
-    }
-
-    public List<String> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(List<String> authorities) {
-        this.authorities = authorities;
-    }
-
-    public Object getDetails() {
-        return details;
-    }
-
-    public void setDetails(Object details) {
-        this.details = details;
-    }
 
     public Long getId() {
         return id;
@@ -70,4 +70,19 @@ public class LoginToken implements Serializable {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<String> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<String> authorities) {
+        this.authorities = authorities;
+    }
 }

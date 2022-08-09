@@ -12,3 +12,7 @@ spring:
       minimum-idle: 1
 excel:
   path: "/home/op/pigeon/excel/"
+
+jwt:
+  secret: tarena-pigeon
+  expiration: 600000
