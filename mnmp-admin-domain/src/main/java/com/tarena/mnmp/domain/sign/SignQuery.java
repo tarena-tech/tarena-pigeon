@@ -20,8 +20,10 @@ package com.tarena.mnmp.domain.sign;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 @ApiModel(value = "签名查询入参")
+@Data
 public class SignQuery extends PagerResult {
 
     public SignQuery() {
@@ -54,52 +56,4 @@ public class SignQuery extends PagerResult {
     @ApiModelProperty("列表中必须存在的某一条数据")
     private Long appendId;
 
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public void setAppCode(String appCode) {
-        this.appCode = appCode;
-    }
-
-    public Integer getAuditStatus() {
-        return auditStatus;
-    }
-
-    public void setAuditStatus(Integer auditStatus) {
-        this.auditStatus = auditStatus;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getEnable() {
-        return enable;
-    }
-
-    public void setEnable(Integer enable) {
-        this.enable = enable;
-    }
-
-    public Boolean getOrderBy() {
-        return orderBy;
-    }
-
-    public void setOrderBy(Boolean orderBy) {
-        this.orderBy = orderBy;
-    }
-
-    public Long getAppendId() {
-        return appendId;
-    }
-
-    public void setAppendId(Long appendId) {
-        this.appendId = appendId;
-    }
 }

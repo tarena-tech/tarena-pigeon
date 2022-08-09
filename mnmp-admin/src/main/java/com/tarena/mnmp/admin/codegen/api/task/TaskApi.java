@@ -51,23 +51,15 @@ import org.springframework.web.multipart.MultipartFile;
 public interface TaskApi {
 
     @ApiOperationSupport(order = 5000)
-    @ApiOperation(
-        value = "获取excel文件"
-    )
-    @GetMapping(
-        value = {"excel"}
-    )
+    @ApiOperation(value = "获取excel文件")
+    @GetMapping("excel")
     @ApiParam(value = "获取excel， 当path为空表示获取模板")
     void getExcel(String path, HttpServletResponse response) throws BusinessException;
 
 
     @ApiOperationSupport(order = 5001)
-    @ApiOperation(
-        value = "上传文件"
-    )
-    @PostMapping(
-        value = {"uploadFile"}
-    )
+    @ApiOperation(value = "上传文件")
+    @PostMapping("uploadFile")
     Result<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException, BusinessException;
 
     @ApiOperationSupport(order = 5002)

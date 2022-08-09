@@ -54,18 +54,7 @@ public interface SignApi {
     void save(@ApiParam(value = "新增签名", required = true) @Valid @RequestBody SignSaveParam signParam) throws BusinessException;
 
 
-    @ApiOperationSupport(order = 3003)
-    @ApiOperation(
-        value = "编辑签名"
-    )
-    @PostMapping(
-        value = {"/edit"},
-        produces = {"application/json"},
-        consumes = {"application/json"}
-    )
-    void editSign(@ApiParam(value = "编辑签名", required = true) @Valid @RequestBody SignSaveParam signParam);
-
-
+    @ApiOperation("启用/禁用")
     @PostMapping("change/enable/status")
     void changeEnableStatus(Long id) throws BusinessException;
 
@@ -73,12 +62,10 @@ public interface SignApi {
     @ApiOperation(
         value = "查看签名详情"
     )
-    @GetMapping(
-        value = {"/queryDetail"},
-        produces = {"application/json"}
-    )
+    @GetMapping("/queryDetail")
+    @ApiParam(value = "签名id", required = true)
     SignView querySignDetail(
-        @NotNull @ApiParam(value = "签名id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+        @NotNull  @Valid @RequestParam(value = "id", required = true) Long id);
 
     @ApiOperationSupport(order = 3006)
     @ApiOperation(
@@ -87,12 +74,12 @@ public interface SignApi {
     @GetMapping(
         value = {"/queryPage"}
     )
-    PagerResult<SignView> queryPage(@ApiParam(value = "签名查询入参")SignQuery signQuery);
+    PagerResult<SignView> queryPage(@ApiParam(value = "签名查询入参") SignQuery signQuery);
 
     @GetMapping(
         value = {"/queryList"}
     )
-    List<SignView> queryList(@ApiParam(value = "签名查询入参")SignQuery signQuery);
+    List<SignView> queryList(@ApiParam(value = "签名查询入参") SignQuery signQuery);
 
     /**
      * 审核签名

@@ -30,7 +30,6 @@ import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
-import com.tarena.mnmp.protocol.Result;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
@@ -52,19 +51,8 @@ public class TemplateController implements TemplateApi {
     @Resource
     private TaskService taskService;
 
-    @Override public Result<String> save(SmsTemplateParam param) throws BusinessException {
-        SmsTemplateDO sms = new SmsTemplateDO();
-        BeanUtils.copyProperties(param, sms);
-        String str = templateService.save(sms);
-        return new Result<>(str);
-    }
-
-    @Override public void closeSmsTemplate(Long id) {
-        templateService.closeSmsTemplate(id);
-    }
-
-    @Override public void openSmsTemplate(Long id) {
-        templateService.openSmsTemplate(id);
+    @Override public void save(SmsTemplateParam param) throws BusinessException {
+        templateService.save(param);
     }
 
     @Override public void changeEnableStatus(Long id) throws BusinessException {
@@ -114,12 +102,6 @@ public class TemplateController implements TemplateApi {
         return view;
     }
 
-    @Override public Result<String> updateSmsTemplate(SmsTemplateParam templateSms) {
-        SmsTemplateDO sms = new SmsTemplateDO();
-        BeanUtils.copyProperties(templateSms, sms);
-        String str = templateService.updateSmsTemplate(sms);
-        return new Result<>(str);
-    }
 
     @Override public void doAuditSmsTemplate(AuditParam param) {
         templateService.doAuditSmsTemplate(param.getId(), param.getAuditStatus(), param.getAuditResult());

@@ -26,6 +26,9 @@ import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
 import com.tarena.dispatcher.properties.DispatcherConfig;
 import com.tarena.dispatcher.respository.ProviderRepository;
 import com.tarena.dispatcher.respository.TargetLogRepository;
+import com.tarena.dispatcher.respository.TaskRepository;
+import com.tarena.dispatcher.sender.AliSmsSender;
+import com.tarena.dispatcher.sender.SmsSender;
 import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.utils.DollarPlaceholderReplacer;
 import com.tarena.mnmp.monitor.Monitor;
@@ -84,18 +87,19 @@ public class DispatcherConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(SmsAliNoticeDispatcher.class)
-    @ConditionalOnBean({TargetLogRepository.class, ProviderRepository.class})
+    @ConditionalOnBean({TargetLogRepository.class, ProviderRepository.class, SmsSender.class})
     @ConditionalOnProperty(prefix = "dispatcher", value = "notice_sms_ali", havingValue = "true")
     public SmsAliNoticeDispatcher smsAliNoticeDispatcher(Json json,
         TargetLogRepository targetLogRepository,
+        TaskRepository taskRepository,
         ProviderRepository providerRepository,
-
-        Monitor monitor) {
+        Client smsAliClient,
+        Monitor monitor, SmsSender smsSender) {
         ProviderClientConfig providerClientConfig = providerRepository.getClientConfig(this.dispatcherConfig.getSmsAliPigeonProviderCode());
         SmsAliNoticeDispatcher aliNoticeDispatcher = new SmsAliNoticeDispatcher();
         aliNoticeDispatcher.setJsonProvider(json);
         aliNoticeDispatcher.setTargetLogRepository(targetLogRepository);
-
+        aliNoticeDispatcher.setSmsSender(smsSender);
         aliNoticeDispatcher.setMonitor(monitor);
         aliNoticeDispatcher.setReceipt(this.dispatcherConfig.getEnableReceipt());
         return aliNoticeDispatcher;
@@ -110,5 +114,17 @@ public class DispatcherConfiguration {
         emailAliNoticeDispatcher.setJsonProvider(json);
         emailAliNoticeDispatcher.setTargetLogRepository(targetLogRepository);
         return emailAliNoticeDispatcher;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(AliSmsSender.class)
+    @ConditionalOnBean({Client.class, TaskRepository.class})
+    public SmsSender smsSender(Client smsAliClient, TaskRepository taskRepository, ProviderRepository providerRepository) {
+        ProviderClientConfig providerClientConfig = providerRepository.getClientConfig(this.dispatcherConfig.getSmsAliPigeonProviderCode());
+        AliSmsSender sender = new AliSmsSender();
+        sender.setAliTemplateCode(providerClientConfig.getDefaultTemplate());
+        sender.setAliSmsClient(smsAliClient);
+        sender.setTaskRepository(taskRepository);
+        return sender;
     }
 }

@@ -20,86 +20,31 @@ package com.tarena.mnmp.domain.template;
 import com.tarena.mnmp.commons.pager.SimplePager;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 @ApiModel(value = "模板查询入参")
+@Data
 public class TemplateQuery extends SimplePager {
-    @ApiModelProperty(
-        value = "应用编码",
-        name = "appCode"
-    )
+
+    @ApiModelProperty(value = "应用编码")
     private String appCode;
-    @ApiModelProperty(
-        value = "审核状态",
-        name = "auditStatus"
-    )
+
+    @ApiModelProperty(value = "审核状态")
     private Integer auditStatus;
 
-    @ApiModelProperty(
-        value = "是否可用 (0否 1是）",
-        name = "enabled"
-    )
+    @ApiModelProperty(value = "是否可用 (0否 1是）")
     private Integer enabled;
 
-    @ApiModelProperty(
-        value = "模板编码",
-        name = "templateCode"
-    )
+    @ApiModelProperty(value = "模板编码")
     private String templateCode;
 
-    @ApiModelProperty(
-        value = "模板名称",
-        name = "templateName"
-    )
+    @ApiModelProperty(value = "模板名称")
     private String templateName;
 
     @ApiModelProperty("列表中必须包含某一条数据")
     private Long appendId;
 
-    public String getAppCode() {
-        return appCode;
-    }
+    @ApiModelProperty("需要排除的id")
+    private Long excludeId;
 
-    public void setAppCode(String appCode) {
-        this.appCode = appCode;
-    }
-
-    public Integer getAuditStatus() {
-        return auditStatus;
-    }
-
-    public void setAuditStatus(Integer auditStatus) {
-        this.auditStatus = auditStatus;
-    }
-
-    public Integer getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getTemplateCode() {
-        return templateCode;
-    }
-
-    public void setTemplateCode(String templateCode) {
-        this.templateCode = templateCode;
-    }
-
-    public String getTemplateName() {
-        return templateName;
-    }
-
-    public void setTemplateName(String templateName) {
-        this.templateName = templateName;
-    }
-
-    public Long getAppendId() {
-        return appendId;
-    }
-
-    public void setAppendId(Long appendId) {
-        this.appendId = appendId;
-    }
 }

@@ -23,7 +23,6 @@ import com.tarena.mnmp.passport.domain.User;
 import com.tarena.mnmp.security.utils.JwtUtils;
 import com.tarena.mnmp.security.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
-import io.jsonwebtoken.lang.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

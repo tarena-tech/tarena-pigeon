@@ -19,6 +19,7 @@ package com.tarena.mnmp.admin.controller.record;
 import com.github.xiaoymin.knife4j.annotations.Ignore;
 import com.tarena.mnmp.domain.SmsRecordTargetDO;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,64 +36,44 @@ public class SmsTargetRecordView {
      */
     private Long id;
 
-    /**
-     * 应用ID
-     */
+
+    @ApiModelProperty("应用编码")
     private String appCode;
 
-    /**
-     * 任务ID
-     */
+
+    @ApiModelProperty("任务ID")
     private Long taskId;
 
-    /**
-     * 目标
-     */
+
+    @ApiModelProperty("目标")
     private String target;
 
-    /**
-     * 短信具体内容
-     */
+    @ApiModelProperty("短信具体内容")
     private String content;
 
-    /**
-     * 消息发送状态 0发送给供应商失败 1发送给供应商成功 2发送给目标失败 3发送给目标成功
-     */
-    private Byte status;
 
-    /**
-     * 任务执行时间
-     */
+    @ApiModelProperty("消息发送状态 0发送给供应商失败 1发送给供应商成功 2发送给目标失败 3发送给目标成功")
+    private Integer status;
+
+    @ApiModelProperty("任务执行时间")
     private Date triggerTime;
 
-    /**
-     * 发送时间
-     */
+    @ApiModelProperty("发送时间")
     private Date pushTime;
 
-    /**
-     * 推送到达时间
-     */
+    @ApiModelProperty("推送到达时间")
     private Date pushReceiveTime;
 
-    /**
-     * 发送回执码
-     */
+    @ApiModelProperty("发送回执码")
     private String bizId;
 
-    /**
-     * 发送结果/失败原因
-     */
+    @ApiModelProperty("发送结果/失败原因")
     private String sendResult;
 
-    /**
-     * 创建时间
-     */
+    @ApiModelProperty("创建时间")
     private Date createTime;
 
-    /**
-     * 修改时间
-     */
+    @ApiModelProperty("修改时间")
     private Date updateTime;
 
     @Ignore

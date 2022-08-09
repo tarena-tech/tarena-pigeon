@@ -17,15 +17,19 @@
 
 package com.tarena.mnmp.admin.controller.provider;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.xiaoymin.knife4j.annotations.Ignore;
 import com.tarena.mnmp.domain.ProviderDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 @ApiModel(value = "供应商控制层出参")
+@Data
 public class ProviderView {
 
     @ApiModelProperty(
@@ -70,6 +74,7 @@ public class ProviderView {
     private String remarks;
 
 
+    @JsonIgnore
     private String clientConfig;
 
     @ApiModelProperty(
@@ -95,6 +100,7 @@ public class ProviderView {
     )
     private Date updateTime;
 
+    @Ignore
     public static List<ProviderView> convert(List<ProviderDO> source) {
         if (null == source) {
             return new ArrayList<>();
@@ -108,107 +114,4 @@ public class ProviderView {
         return list;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Integer getNoticeType() {
-        return noticeType;
-    }
-
-    public void setNoticeType(Integer noticeType) {
-        this.noticeType = noticeType;
-    }
-
-    public String getOfficialWebsite() {
-        return officialWebsite;
-    }
-
-    public void setOfficialWebsite(String officialWebsite) {
-        this.officialWebsite = officialWebsite;
-    }
-
-    public String getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    public Integer getAuditStatus() {
-        return auditStatus;
-    }
-
-    public void setAuditStatus(Integer auditStatus) {
-        this.auditStatus = auditStatus;
-    }
-
-    public Integer getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getClientConfig() {
-        return clientConfig;
-    }
-
-    public void setClientConfig(String clientConfig) {
-        this.clientConfig = clientConfig;
-    }
 }

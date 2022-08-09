@@ -1,4 +1,5 @@
 package com.tarena.test.mnmp.admin.service.template;
+import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.test.mnmp.admin.sql.app.AppSqlScript;
@@ -38,7 +39,7 @@ public class TemplateServiceTest {
     )
     public void addSmsTemplate() throws BusinessException {
         for (int i = 0 ; i < 100; i++) {
-            SmsTemplateDO sms = new SmsTemplateDO();
+            SmsTemplateParam sms = new SmsTemplateParam();
             sms.setCode("xx-ss-" + i);
             sms.setAppId(1L + i);
             sms.setName("测试模板00" + i);
@@ -48,15 +49,8 @@ public class TemplateServiceTest {
             sms.setAuditStatus(1);
             sms.setAuditResult("结果内容" + i);
             sms.setEnabled(1);
-            sms.setUseCount(0);
-            sms.setCreateTime(new Date());
-            sms.setDeleted(0);
-            sms.setCreateUserId(0);
-            sms.setCreateUserName("测试");
-            sms.setUpdateTime(new Date());
             sms.setNoticeType(1);
             sms.setAppCode("2qqq");
-
             templateService.save(sms);
         }
 

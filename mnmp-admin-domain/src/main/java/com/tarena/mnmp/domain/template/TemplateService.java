@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Resource;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,7 +45,12 @@ public class TemplateService {
     @Resource
     private ProviderService providerService;
 
-    public String save(SmsTemplateDO template) throws BusinessException {
+    public void save(SmsTemplateParam templateParam) throws BusinessException {
+
+        SmsTemplateDO template = new SmsTemplateDO();
+        BeanUtils.copyProperties(templateParam, template);
+
+        checkOnlyOne(templateParam);
 
         AppDO app = appService.checkStatus(template.getAppId());
         template.setAppCode(app.getCode());
@@ -66,9 +72,19 @@ public class TemplateService {
             template.setUseCount(null);
             smsTemplateDao.modify(template);
         }
-        return "ok";
     }
 
+    private void checkOnlyOne(SmsTemplateParam template) throws BusinessException {
+        TemplateQuery query = new TemplateQuery();
+        query.setExcludeId(template.getId());
+        query.setTemplateCode(template.getCode());
+        Long count = queryCount(query);
+        if (count > 0) {
+            throw new BusinessException("100", "[" + template.getCode() + "]编码已存在");
+        }
+    }
+
+    @Deprecated
     public void closeSmsTemplate(Long id) {
         SmsTemplateDO sms = new SmsTemplateDO();
         sms.setId(id);
@@ -76,6 +92,7 @@ public class TemplateService {
         smsTemplateDao.modify(sms);
     }
 
+    @Deprecated
     public void openSmsTemplate(Long id) {
         SmsTemplateDO sms = new SmsTemplateDO();
         sms.setId(id);
@@ -104,6 +121,7 @@ public class TemplateService {
         return smsTemplateDao.findById(id);
     }
 
+    @Deprecated
     public String updateSmsTemplate(SmsTemplateDO sms) {
         smsTemplateDao.modify(sms);
         return "ok";

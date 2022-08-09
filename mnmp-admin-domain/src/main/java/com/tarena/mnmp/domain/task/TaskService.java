@@ -201,6 +201,7 @@ public class TaskService {
     public void endTaskStatusByTargetId(TaskQuery query) {
         query.setTaskStatusList(TaskStatus.operable());
         List<TaskDO> list = taskDao.queryByTargetId(query);
+        // TODO 有bug 将来改
         list.forEach(this::changeTaskStatus);
     }
 

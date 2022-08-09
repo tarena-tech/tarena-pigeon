@@ -94,14 +94,26 @@ public class ProviderService {
         providerDao.modify(up);
     }
 
-    public void save(ProviderDO pdo) {
-        if (null == pdo.getId()) {
-            providerDao.save(pdo);
+    public void save(ProviderSaveParam saveParam) throws BusinessException {
+        ProviderDO provider = new ProviderDO();
+        BeanUtils.copyProperties(saveParam, provider);
+
+
+        ProviderQueryParam param = new ProviderQueryParam();
+        param.setExcludeId(saveParam.getId());
+        param.setCode(saveParam.getCode());
+        Long count = queryCount(param);
+        if (count > 0) {
+            throw new BusinessException("100", "[" + saveParam.getName() + "]编码已存在，请勿重复添加");
+        }
+
+        if (null == provider.getId()) {
+            providerDao.save(provider);
         } else {
-            pdo.setEnabled(null);
-            pdo.setAuditStatus(null);
-            pdo.setCreateTime(null);
-            providerDao.modify(pdo);
+            provider.setEnabled(null);
+            provider.setAuditStatus(null);
+            provider.setCreateTime(null);
+            providerDao.modify(provider);
         }
     }
 

@@ -21,8 +21,10 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.Data;
 
 @ApiModel(value = "task入参")
+@Data
 public class TaskParam {
 
     @ApiModelProperty(value = "主键id, 修改时必填", required = false)
@@ -60,11 +62,8 @@ public class TaskParam {
     @NotNull(message = "周期数为必填项")
     private Integer cycleNum;
 
-
     @ApiModelProperty(value = "创建人", required = true)
-//    @NotBlank(message = "创建人为必填项")
     private String creatorName;
-
 
     @ApiModelProperty(value = "结束时间", required = true)
     @NotNull(message = "结束时间为必填项")
@@ -76,110 +75,6 @@ public class TaskParam {
 
     @ApiModelProperty(value = "是否是mock接口， 0：否， 1：是", required = true)
     private Integer mock;
-
-    public Integer getMock() {
-        return mock;
-    }
-
-    public void setMock(Integer mock) {
-        this.mock = mock;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getTaskType() {
-        return taskType;
-    }
-
-    public void setTaskType(Integer taskType) {
-        this.taskType = taskType;
-    }
-
-    public Integer getNoticeType() {
-        return noticeType;
-    }
-
-    public void setNoticeType(Integer noticeType) {
-        this.noticeType = noticeType;
-    }
-
-    public Date getTriggerEndTime() {
-        return triggerEndTime;
-    }
-
-    public void setTriggerEndTime(Date triggerEndTime) {
-        this.triggerEndTime = triggerEndTime;
-    }
-
-    public Long getTemplateId() {
-        return templateId;
-    }
-
-    public void setTemplateId(Long templateId) {
-        this.templateId = templateId;
-    }
-
-    public Long getSignId() {
-        return signId;
-    }
-
-    public void setSignId(Long signId) {
-        this.signId = signId;
-    }
-
-    public Long getAppId() {
-        return appId;
-    }
-
-    public void setAppId(Long appId) {
-        this.appId = appId;
-    }
-
-    public Integer getCycleLevel() {
-        return cycleLevel;
-    }
-
-    public void setCycleLevel(Integer cycleLevel) {
-        this.cycleLevel = cycleLevel;
-    }
-
-    public Integer getCycleNum() {
-        return cycleNum;
-    }
-
-    public void setCycleNum(Integer cycleNum) {
-        this.cycleNum = cycleNum;
-    }
-
-    public String getCreatorName() {
-        return creatorName;
-    }
-
-    public void setCreatorName(String creatorName) {
-        this.creatorName = creatorName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
 
 
 }

@@ -20,81 +20,33 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.Data;
 
-@ApiModel(value = "应用新增入参") public class AppSaveParam {
+@ApiModel(value = "应用新增入参")
+@Data
+public class AppSaveParam {
     @ApiModelProperty(value = "主键 修改时必填", name = "id", required = false, example = "1")
     private Long id;
+
     @ApiModelProperty(value = "应用编码", name = "code", required = true, example = "APP_001")
     @NotBlank(message = "请填写应用编码")
     private String code;
+
     @ApiModelProperty(value = "应用名称", name = "name", required = true, example = "酷鲨商城用户中台")
     @NotNull(message = "请填写应用名称")
     private String name;
+
     @ApiModelProperty(value = "应用负责人", name = "leader", required = true, example = "charlie")
     @NotNull(message = "请填写应用负责人")
     private String leader;
+
     @ApiModelProperty(value = "应用组员", name = "teamMembers", notes = "使用,号隔开不同成员", example = "张三,李四,王五")
     private String teamMembers;
+
     @ApiModelProperty(value = "应用简介", name = "remarks", required = true, example = "java教学电商项目")
     @NotNull(message = "请填写应用简介")
     private String remarks;
 
-    @ApiModelProperty(value = "应用开启停用", name = "enabled", required = false) private Integer enabled;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLeader() {
-        return leader;
-    }
-
-    public void setLeader(String leader) {
-        this.leader = leader;
-    }
-
-    public String getTeamMembers() {
-        return teamMembers;
-    }
-
-    public void setTeamMembers(String teamMembers) {
-        this.teamMembers = teamMembers;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    public Integer getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
-    }
-
+    @ApiModelProperty(value = "应用开启停用", name = "enabled", required = false)
+    private Integer enabled;
 }

@@ -52,11 +52,6 @@ public class SignController implements SignApi {
         signService.save(signSaveParam);
     }
 
-    @Override public void editSign(SignSaveParam signSaveParam) {
-        signService.editSign(signSaveParam);
-    }
-
-
     @Override public void changeEnableStatus(Long id) throws BusinessException {
         SignDO sign = signService.querySignDetail(id);
         if (null == sign) {

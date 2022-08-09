@@ -22,6 +22,7 @@ import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.record.SmsTargetRecordParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,5 +42,5 @@ public interface SmsTargetRecordApi {
         value = "查询任务列表信息（分页）"
     )
     @PostMapping(value = {"/query/page"})
-    PagerResult<SmsTargetRecordView> queryPage(@RequestBody  SmsTargetRecordParam data);
+    PagerResult<SmsTargetRecordView> queryPage(@Valid @RequestBody SmsTargetRecordParam data);
 }

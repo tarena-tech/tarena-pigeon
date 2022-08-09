@@ -24,7 +24,6 @@ import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.protocol.BusinessException;
-import com.tarena.mnmp.protocol.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -52,69 +51,29 @@ public interface TemplateApi {
     @PostMapping(
         value = {"/sms/save"}
     )
-    Result<String> save(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate) throws BusinessException;
+    void save(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate) throws BusinessException;
 
-    @ApiOperationSupport(order = 4002)
-    @ApiOperation(
-        value = "关闭使用短信模板"
-    )
-    @PostMapping({"/sms/close"})
-    @Deprecated
-    void closeSmsTemplate(@Validated Long id);
 
-    @ApiOperationSupport(order = 4003)
-    @ApiOperation(
-        value = "开启使用短信模板"
-    )
-    @PostMapping({"/sms/open"})
-    @Deprecated
-    void openSmsTemplate(@Validated @RequestBody Long id);
 
     @PostMapping("sms/change/enable/status")
+    @ApiOperation("变更短信模板启用状态")
     void changeEnableStatus(Long id) throws BusinessException;
 
     @ApiOperationSupport(order = 4004)
-    @ApiOperation(
-        value = "查询短信模板信息（分页）"
-    )
-    @GetMapping(
-        value = {"/sms/query/page"},
-        produces = {"application/json"}
-    )
+    @ApiOperation(value = "查询短信模板信息（分页）")
+    @GetMapping("/sms/query/page")
     PagerResult<TemplateView> queryListByPage(TemplateQuery templateQuery);
 
-//    @ApiOperationSupport(order = 4005)
-    @ApiOperation(
-        value = "查询短信模板信息"
-    )
-    @GetMapping(
-        value = {"/sms/query/list"},
-        produces = {"application/json"}
-    )
+    @ApiOperation(value = "查询短信模板信息")
+    @GetMapping("/sms/query/list")
     List<TemplateView> queryListByParam(TemplateQuery templateQuery);
 
     @ApiOperationSupport(order = 4006)
-    @ApiOperation(
-        value = "查看短信模板详情"
-    )
-    @GetMapping(
-        value = {"/sms/queryDetail"},
-        produces = {"application/json"}
-    )
-    TemplateView querySmsTemplateDetail(
-        @NotNull @ApiParam(value = "模板id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
+    @ApiOperation(value = "查看短信模板详情")
+    @ApiParam(value = "模板id", required = true)
+    @GetMapping("/sms/queryDetail")
+    TemplateView querySmsTemplateDetail(@NotNull @Valid @RequestParam(value = "id", required = true) Long id);
 
-    @ApiOperationSupport(order = 4007)
-    @ApiOperation(
-        value = "修改短信模板"
-    )
-    @PostMapping(
-        value = {"/sms/update"},
-        produces = {"application/json"},
-        consumes = {"application/json"}
-    )
-    Result<String> updateSmsTemplate(
-        @ApiParam(value = "修改短信模板(未通过审核)", required = true) @Valid @RequestBody SmsTemplateParam templateSms);
 
     @ApiOperationSupport(order = 4008)
     @ApiOperation(
