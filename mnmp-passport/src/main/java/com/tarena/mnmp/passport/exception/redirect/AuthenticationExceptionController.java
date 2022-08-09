@@ -30,15 +30,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationExceptionController {
     @RequestMapping("/denied")
     public void denied(HttpServletRequest request) throws BusinessException {
-        AccessDeniedException exception= (AccessDeniedException) request.getAttribute("denied");
+        AccessDeniedException exception = (AccessDeniedException) request.getAttribute("denied");
         String uri = request.getRequestURI();
-        log.info("访问权限异常:{}",exception);
-        throw new BusinessException("100","您无权访问当前资源:"+uri);
+        log.info("访问权限异常:{}", exception);
+        throw new BusinessException("100", "您无权访问当前资源:" + uri);
     }
+
     @RequestMapping("/login/error")
     public void error(HttpServletRequest request) throws BusinessException {
-        AuthenticationException exception= (AuthenticationException) request.getAttribute("login_error");
-        log.info("授权异常:{}",exception);
-        throw new BusinessException("100","您的认证出现错误,请联系管理员");
+        AuthenticationException exception = (AuthenticationException) request.getAttribute("login_error");
+        log.info("授权异常:{}", exception);
+        throw new BusinessException("100", "您的认证出现错误,请联系管理员");
     }
 }

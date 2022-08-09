@@ -29,11 +29,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
 @Configuration
@@ -41,26 +39,31 @@ import org.springframework.security.web.context.SecurityContextPersistenceFilter
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    public MnmpAccessDeniedHanldler mnmpAccessDeniedHanldler(){
+    public MnmpAccessDeniedHanldler mnmpAccessDeniedHanldler() {
         return new MnmpAccessDeniedHanldler();
     }
-    @Bean MnmpAuthenticationEntryPoint mnmpAuthenticationEntryPoint(){
+
+    @Bean MnmpAuthenticationEntryPoint mnmpAuthenticationEntryPoint() {
         return new MnmpAuthenticationEntryPoint();
     }
+
     @Bean
-    public Authenticator authenticator(){
+    public Authenticator authenticator() {
         return new AuthenticatorImpl();
     }
+
     @Bean
-    public MnmpAuthenticationFilter mnmpAuthenticationFilter(){
-        MnmpAuthenticationFilter mnmpAuthenticationFilter=new MnmpAuthenticationFilter();
+    public MnmpAuthenticationFilter mnmpAuthenticationFilter() {
+        MnmpAuthenticationFilter mnmpAuthenticationFilter = new MnmpAuthenticationFilter();
         mnmpAuthenticationFilter.setAuthenticator(authenticator());
         return mnmpAuthenticationFilter;
     }
+
     @Override protected void configure(HttpSecurity http) throws Exception {
         // 权限放行
         String[] permitList = {
@@ -87,20 +90,16 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override public void configure(WebSecurity web) throws Exception {
-        String[] ignoreResources=
-            {
-                "/swagger-resources/**",    // Knife4j在线API文档的资源
-                "/v2/api-docs/**",          // Knife4j在线API文档的资源
-                "/favicon.ico",     // 网站图标文件
-                "/",                // 根页面，通常是主页
-                "/*.html",          // 任何html
-                "/**/*.html",       // 任何目录下的html
-                "/**/*.css",        // 任何目录下的css
-                "/**/*.js"     // 任何目录下的js)
-            };
         //静态页面,swagger页面不经过security过滤器
-        web.ignoring().antMatchers(ignoreResources);
-
+        web.ignoring().antMatchers(
+            "/swagger-resources/**",    // Knife4j在线API文档的资源
+            "/v2/api-docs/**",          // Knife4j在线API文档的资源
+            "/favicon.ico",     // 网站图标文件
+            "/",                // 根页面，通常是主页
+            "/*.html",          // 任何html
+            "/**/*.html",       // 任何目录下的html
+            "/**/*.css",        // 任何目录下的css
+            "/**/*.js");
 
     }
 }

@@ -37,7 +37,7 @@ public class AdminGlobalExceptionHandler {
     /**
      * 处理业务异常
      */
-    @ExceptionHandler(value={BusinessException.class})
+    @ExceptionHandler(value = {BusinessException.class})
     public Result handleBusinessException(BusinessException e) {
         logger.debug("出现业务异常，业务错误码={}，描述文本={}", e.getCode(), e.getMessage());
         e.printStackTrace();
@@ -51,10 +51,10 @@ public class AdminGlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public Result handleBindException(BindException e) {
-        logger.error("验证请求数据时出现异常：{}", e.getClass().getName(),e);
+        logger.error("验证请求数据时出现异常：{}", e.getClass().getName(), e);
         e.printStackTrace();
         String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
-        BusinessException businessException = new BusinessException(ErrorCode.SYSTEM_ERROR,message);
+        BusinessException businessException = new BusinessException(ErrorCode.SYSTEM_ERROR, message);
 
         return Result.fail(businessException);
     }

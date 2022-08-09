@@ -41,6 +41,7 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
 
     /**
      * 从请求获取token做认证授权处理
+     *
      * @param request
      * @param response
      * @param filterChain
@@ -53,46 +54,48 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
         SecurityContextHolder.clearContext();
         //获取token 这里我们要确定token的获取方式 可以在参数里,可以在头里
         String token = getRequestToken(request);
-        if (StringUtils.isEmpty(token)){
-            filterChain.doFilter(request,response);
+        if (StringUtils.isEmpty(token)) {
+            filterChain.doFilter(request, response);
             return;
         }
         //获取设备ip地址,绑定token使用
         String deviceIp = IPUtils.getIpAddress(request);
         LoginToken loginToken = authenticator.authenticate(token, deviceIp);
-        if (ObjectUtils.isEmpty(loginToken)){
-            filterChain.doFilter(request,response);
+        if (ObjectUtils.isEmpty(loginToken)) {
+            filterChain.doFilter(request, response);
             return;
-        }else{
-            List<String> strAuthorities=loginToken.getAuthorities();
-            List<GrantedAuthority> authorities=new ArrayList<>();
+        } else {
+            List<String> strAuthorities = loginToken.getAuthorities();
+            List<GrantedAuthority> authorities = new ArrayList<>();
             for (String authority : strAuthorities) {
-                SimpleGrantedAuthority simpleGrantedAuthority=new SimpleGrantedAuthority(authority);
+                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
                 authorities.add(simpleGrantedAuthority);
             }
-            UsernamePasswordAuthenticationToken authentication=
-                new UsernamePasswordAuthenticationToken(loginToken.getUsername(),null,authorities);
-            SecurityContext securityContext=SecurityContextHolder.createEmptyContext();
+            UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(loginToken.getUsername(), null, authorities);
+            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
             securityContext.setAuthentication(authentication);
-            filterChain.doFilter(request,response);
+            filterChain.doFilter(request, response);
         }
 
     }
-    public String getRequestToken(HttpServletRequest request){
+
+    public String getRequestToken(HttpServletRequest request) {
         //从Authorization头里获得
-        String tokenHeader="Authorization";
-        String tokenHeaderPrefix="Bearer 11";
-        String tokenParam="token";
+        String tokenHeader = "Authorization";
+        String tokenHeaderPrefix = "Bearer 11";
+        String tokenParam = "token";
         String token = request.getParameter(tokenParam);
-        String tokenHeaderValue="";
-        if (StringUtils.isEmpty(token)){
+        String tokenHeaderValue = "";
+        if (StringUtils.isEmpty(token)) {
             tokenHeaderValue = request.getHeader(tokenHeader);
         }
-        if ((!StringUtils.isEmpty(tokenHeaderValue))&&tokenHeaderValue.startsWith(tokenHeaderPrefix)){
-            token=tokenHeader.substring(tokenHeaderPrefix.length()+1);
+        if (!StringUtils.isEmpty(tokenHeaderValue) && tokenHeaderValue.startsWith(tokenHeaderPrefix)) {
+            token = tokenHeader.substring(tokenHeaderPrefix.length() + 1);
         }
         return token;
     }
+
     public Authenticator getAuthenticator() {
         return authenticator;
     }

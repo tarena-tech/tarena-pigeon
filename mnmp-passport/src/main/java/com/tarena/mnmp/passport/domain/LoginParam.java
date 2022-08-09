@@ -20,14 +20,13 @@ package com.tarena.mnmp.passport.domain;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
-@ApiModel(value="登录参数")
+@ApiModel(value = "登录参数")
 public class LoginParam {
     @ApiModelProperty(value = "用户名")
     @NotBlank(message = "请填写用户名")
     private String username;
-    @ApiModelProperty(value="密码")
+    @ApiModelProperty(value = "密码")
     @NotBlank(message = "请填写密码")
     private String password;
 

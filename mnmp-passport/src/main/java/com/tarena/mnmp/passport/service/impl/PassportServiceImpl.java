@@ -17,7 +17,6 @@
 
 package com.tarena.mnmp.passport.service.impl;
 
-import com.tarena.mnmp.passport.auth.impl.AuthenticatorImpl;
 import com.tarena.mnmp.passport.domain.LoginParam;
 import com.tarena.mnmp.passport.service.PassportService;
 import com.tarena.mnmp.security.LoginToken;
@@ -30,11 +29,12 @@ import org.springframework.stereotype.Service;
 public class PassportServiceImpl implements PassportService {
     @Autowired
     private Authenticator authenticator;
-    @Override public String doLogin(LoginParam param,String deviceIp) {
+
+    @Override public String doLogin(LoginParam param, String deviceIp) {
         //转化对象
-        LoginToken loginToken=new LoginToken();
-        BeanUtils.copyProperties(param,loginToken);
+        LoginToken loginToken = new LoginToken();
+        BeanUtils.copyProperties(param, loginToken);
         loginToken.setDeviceIp(deviceIp);
-        return authenticator.sign(loginToken,param.getPassword());
+        return authenticator.sign(loginToken, param.getPassword());
     }
 }

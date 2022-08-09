@@ -1,5 +1,6 @@
 package com.tarena.test.mnmp.admin.service.template;
 import com.tarena.mnmp.domain.template.TemplateQuery;
+import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.test.mnmp.admin.sql.app.AppSqlScript;
 import java.util.Date;
 
@@ -35,7 +36,7 @@ public class TemplateServiceTest {
         scripts = {AppSqlScript.TRUNCATE_TABLE},
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
-    public void addSmsTemplate() {
+    public void addSmsTemplate() throws BusinessException {
         for (int i = 0 ; i < 100; i++) {
             SmsTemplateDO sms = new SmsTemplateDO();
             sms.setCode("xx-ss-" + i);

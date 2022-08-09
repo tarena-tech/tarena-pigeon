@@ -43,6 +43,7 @@ public class PassportController {
 
     @Autowired
     private PassportService passportService;
+
     @ApiOperationSupport(order = 1)
     @ApiOperation(
         value = "登录",
@@ -51,12 +52,13 @@ public class PassportController {
         response = String.class
     )
     @PostMapping("/login")
-    public Result<String> doLogin(@Valid @RequestBody LoginParam loginParam, HttpServletRequest request) throws BusinessException {
+    public Result<String> doLogin(@Valid @RequestBody LoginParam loginParam,
+        HttpServletRequest request) throws BusinessException {
         String address = IPUtils.getIpAddress(request);
-        Asserts.isTrue(address==null,new BusinessException("100","无法获取请求路径"));
-        log.info("登录设备ip地址:{}",address);
-        String token = passportService.doLogin(loginParam,address);
-        Asserts.isTrue(token==null||token.length()==0,new BusinessException("100","用户名不存在或者密码不正确"));
+        Asserts.isTrue(address == null, new BusinessException("100", "无法获取请求路径"));
+        log.info("登录设备ip地址:{}", address);
+        String token = passportService.doLogin(loginParam, address);
+        Asserts.isTrue(token == null || token.length() == 0, new BusinessException("100", "用户名不存在或者密码不正确"));
 
         return new Result<>(token);
     }
