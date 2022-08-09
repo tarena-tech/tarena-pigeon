@@ -63,7 +63,16 @@ public class AppService {
     }
 
     public List<AppDO> queryList(AppQueryParam param) {
-        return appDao.queryByParam(param);
+        List<AppDO> sources = appDao.queryByParam(param);
+        // 查询集合是为了给前端修改时回显，但是数据量一旦上来无法回显用户已经选择的应用
+        if (null != param.getAppendId()) {
+            boolean append = sources.stream().noneMatch(source -> source.getId().equals(param.getAppendId()));
+            AppDO app;
+            if (append && null != (app = queryAppDetail(param.getAppendId()))) {
+                sources.add(app);
+            }
+        }
+        return sources;
     }
 
     public void auditApp(Long id, Integer auditStatus, String auditResult) {
