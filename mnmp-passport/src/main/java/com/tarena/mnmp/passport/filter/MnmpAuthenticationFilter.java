@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.passport.filter;
 
+import com.tarena.mnmp.passport.utils.IPUtils;
 import com.tarena.mnmp.security.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
 import java.io.IOException;
@@ -27,12 +28,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -42,6 +41,7 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
 
     /**
      * 从请求获取token做认证授权处理
+     *
      * @param request
      * @param response
      * @param filterChain
@@ -54,65 +54,49 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
         SecurityContextHolder.clearContext();
         //获取token 这里我们要确定token的获取方式 可以在参数里,可以在头里
         String token = getRequestToken(request);
-        if (StringUtils.isEmpty(token)){
-            filterChain.doFilter(request,response);
+        if (StringUtils.isEmpty(token)) {
+            filterChain.doFilter(request, response);
             return;
         }
         //获取设备ip地址,绑定token使用
-        String deviceIp = getIpAddress(request);
+        String deviceIp = IPUtils.getIpAddress(request);
         LoginToken loginToken = authenticator.authenticate(token, deviceIp);
-        if (ObjectUtils.isEmpty(loginToken)){
-            filterChain.doFilter(request,response);
+        if (ObjectUtils.isEmpty(loginToken)) {
+            filterChain.doFilter(request, response);
             return;
-        }else{
-            List<String> strAuthorities=loginToken.getAuthorities();
-            List<GrantedAuthority> authorities=new ArrayList<>();
+        } else {
+            List<String> strAuthorities = loginToken.getAuthorities();
+            List<GrantedAuthority> authorities = new ArrayList<>();
             for (String authority : strAuthorities) {
-                SimpleGrantedAuthority simpleGrantedAuthority=new SimpleGrantedAuthority(authority);
+                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
                 authorities.add(simpleGrantedAuthority);
             }
-            UsernamePasswordAuthenticationToken authentication=
-                new UsernamePasswordAuthenticationToken(loginToken.getUsername(),null,authorities);
-            SecurityContext securityContext=SecurityContextHolder.createEmptyContext();
+            UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(loginToken.getUsername(), loginToken, authorities);
+            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
             securityContext.setAuthentication(authentication);
-            filterChain.doFilter(request,response);
+            SecurityContextHolder.setContext(securityContext);
+            filterChain.doFilter(request, response);
         }
 
     }
-    public String getRequestToken(HttpServletRequest request){
+
+    public String getRequestToken(HttpServletRequest request) {
         //从Authorization头里获得
-        String tokenHeader="Authorization";
-        String tokenHeaderPrefix="Bearer 11";
-        String tokenParam="token";
+        String tokenHeader = "Authorization";
+        String tokenHeaderPrefix = "Bearer ";
+        String tokenParam = "token";
         String token = request.getParameter(tokenParam);
-        String tokenHeaderValue="";
-        if (StringUtils.isEmpty(token)){
+        String tokenHeaderValue = "";
+        if (StringUtils.isEmpty(token)) {
             tokenHeaderValue = request.getHeader(tokenHeader);
         }
-        if ((!StringUtils.isEmpty(tokenHeaderValue))&&tokenHeaderValue.startsWith(tokenHeaderPrefix)){
-            token=tokenHeader.substring(tokenHeaderPrefix.length()+1);
+        if (!StringUtils.isEmpty(tokenHeaderValue) && tokenHeaderValue.startsWith(tokenHeaderPrefix)) {
+            token = tokenHeaderValue.substring(tokenHeaderPrefix.length());
         }
         return token;
     }
-    public  String getIpAddress(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_CLIENT_IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        return ip;
-    }
+
     public Authenticator getAuthenticator() {
         return authenticator;
     }

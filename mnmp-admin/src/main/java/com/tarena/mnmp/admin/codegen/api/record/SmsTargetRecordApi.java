@@ -38,9 +38,7 @@ public interface SmsTargetRecordApi {
 
     @ApiOperationSupport(order = 6000)
     @ApiOperation(
-        value = "查询任务列表信息（分页）",
-        nickname = "query/page",
-        notes = ""
+        value = "查询任务列表信息（分页）"
     )
     @PostMapping(value = {"/query/page"})
     PagerResult<SmsTargetRecordView> queryPage(@RequestBody  SmsTargetRecordParam data);

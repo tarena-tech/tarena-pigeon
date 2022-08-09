@@ -84,7 +84,15 @@ public class TemplateService {
     }
 
     public List<SmsTemplateDO> queryList(TemplateQuery query) {
-        return smsTemplateDao.queryTemplates(query);
+        List<SmsTemplateDO> sources = smsTemplateDao.queryTemplates(query);
+        if (null != query.getAppendId()) {
+            boolean append = sources.stream().noneMatch(source -> source.getId().equals(query.getAppendId()));
+            SmsTemplateDO smsTemplate;
+            if (append && null != (smsTemplate = querySmsTemplateDetail(query.getAppendId()))) {
+                sources.add(smsTemplate);
+            }
+        }
+        return sources;
     }
 
     public Long queryCount(TemplateQuery query) {
@@ -123,12 +131,13 @@ public class TemplateService {
             throw new BusinessException("100", "短信模板不存在");
         }
 
+        String name = smsTemplate.getName();
         if (!Objects.equals(AuditStatus.PASS.getStatus(), smsTemplate.getAuditStatus())) {
-            throw new BusinessException("100", "短信模板未审核");
+            throw new BusinessException("100", "[" + name + "]" + "短信模板未审核");
         }
 
         if (!Objects.equals(Enabled.YES.getVal(), smsTemplate.getEnabled())) {
-            throw new BusinessException("100", "短信模板未启用");
+            throw new BusinessException("100",  "[" + name + "]" + "短信模板未启用");
         }
 
         return smsTemplate;

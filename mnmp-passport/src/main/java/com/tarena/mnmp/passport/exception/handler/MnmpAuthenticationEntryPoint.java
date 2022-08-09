@@ -27,6 +27,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 public class MnmpAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override public void commence(HttpServletRequest request, HttpServletResponse response,
         AuthenticationException authException) throws IOException, ServletException {
+        request.setAttribute("login_error",authException);
         //转发内部控制器统一处理异常
         request.getRequestDispatcher("/login/error").forward(request,response);
     }

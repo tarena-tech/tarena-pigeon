@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.security;
+package com.tarena.mnmp.security.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.tarena.mnmp.security.LoginToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -56,7 +57,7 @@ public class JwtUtils {
     private static boolean isTokenExpired(Claims claims) {
         Date expiration = claims.getExpiration();
         //返回判断时间前后
-        return new Date().before(expiration);
+        return new Date().after(expiration);
     }
 
     public static String generateToken(LoginToken loginToken,String secret,Long expiration){
@@ -74,9 +75,9 @@ public class JwtUtils {
         return builder.compact();
     }
     public static Date generateExpirationDate(Map<String, Object> claims,Long expiration){
-        String createTimeMili = (String) claims.get(CLAIM_KEY_CREATED);
-        Long createTime=Long.parseLong(createTimeMili);
-        Date expiredTime=new Date(createTime+expiration);
+        Date createTime = (Date) claims.get(CLAIM_KEY_CREATED);
+        Long createTimeMili=createTime.getTime();
+        Date expiredTime=new Date(createTimeMili+expiration);
         logger.info("荷载生成过期时间:{}",expiredTime.toGMTString());
         return expiredTime;
     }

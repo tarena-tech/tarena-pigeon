@@ -17,5 +17,14 @@
 
 package com.tarena.mnmp.passport;
 
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+@MapperScan("com.tarena.mnmp.passport.dao")
 public class PassportApiApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(PassportApiApplication.class,args);
+    }
 }

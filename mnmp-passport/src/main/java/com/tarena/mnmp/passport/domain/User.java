@@ -17,10 +17,11 @@
 
 package com.tarena.mnmp.passport.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     private Long id;
     private String username;
     private String password;

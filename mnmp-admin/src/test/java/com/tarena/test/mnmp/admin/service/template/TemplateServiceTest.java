@@ -37,28 +37,29 @@ public class TemplateServiceTest {
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
     public void addSmsTemplate() throws BusinessException {
-        int i = 100;
-        SmsTemplateDO sms = new SmsTemplateDO();
-        sms.setCode("xx-ss-" + i);
-        sms.setAppId(1L + i);
-        sms.setName("测试模板00" + i);
-        sms.setTemplateType(1);
-        sms.setContent("模板内容" + i);
-        sms.setRemark("备注" + i);
-        sms.setAuditStatus(1);
-        sms.setAuditResult("结果内容" + i);
-        sms.setEnabled(1);
-        sms.setUseCount(0);
-        sms.setCreateTime(new Date());
-        sms.setDeleted(0);
-        sms.setCreateUserId(0);
-        sms.setCreateUserName("测试");
-        sms.setUpdateTime(new Date());
-        sms.setNoticeType(1);
-        sms.setAppCode("2qqq");
-        sms.setProviderId(1L);
+        for (int i = 0 ; i < 100; i++) {
+            SmsTemplateDO sms = new SmsTemplateDO();
+            sms.setCode("xx-ss-" + i);
+            sms.setAppId(1L + i);
+            sms.setName("测试模板00" + i);
+            sms.setTemplateType(1);
+            sms.setContent("模板内容" + i);
+            sms.setRemark("备注" + i);
+            sms.setAuditStatus(1);
+            sms.setAuditResult("结果内容" + i);
+            sms.setEnabled(1);
+            sms.setUseCount(0);
+            sms.setCreateTime(new Date());
+            sms.setDeleted(0);
+            sms.setCreateUserId(0);
+            sms.setCreateUserName("测试");
+            sms.setUpdateTime(new Date());
+            sms.setNoticeType(1);
+            sms.setAppCode("2qqq");
 
-        templateService.save(sms);
+            templateService.save(sms);
+        }
+
 
     }
 

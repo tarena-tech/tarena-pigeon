@@ -23,6 +23,7 @@ import com.tarena.mnmp.protocol.Result;
 import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -46,15 +47,24 @@ public class AdminGlobalExceptionHandler {
         return result;
     }
 
+    @ExceptionHandler({AccessDeniedException.class})
+    public Result handleAccessDeniedException(AccessDeniedException e) {
+        logger.debug("出现授权问题:{}", e.getMessage());
+        e.printStackTrace();
+        Result result = Result.fail("100", "您无权访问此资源");
+        logger.debug("即将返回：{}", result);
+        return result;
+    }
+
     /**
      * 处理绑定异常（通过Validation框架验证请求参数时的异常）
      */
     @ExceptionHandler(BindException.class)
     public Result handleBindException(BindException e) {
-        logger.error("验证请求数据时出现异常：{}", e.getClass().getName(),e);
+        logger.error("验证请求数据时出现异常：{}", e.getClass().getName(), e);
         e.printStackTrace();
         String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
-        BusinessException businessException = new BusinessException(ErrorCode.SYSTEM_ERROR,message);
+        BusinessException businessException = new BusinessException(ErrorCode.SYSTEM_ERROR, message);
 
         return Result.fail(businessException);
     }

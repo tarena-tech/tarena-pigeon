@@ -20,23 +20,22 @@ package com.tarena.mnmp.passport.domain;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
-@ApiModel(value="登录参数")
+@ApiModel(value = "登录参数")
 public class LoginParam {
     @ApiModelProperty(value = "用户名")
     @NotBlank(message = "请填写用户名")
-    private String usename;
-    @ApiModelProperty(value="密码")
+    private String username;
+    @ApiModelProperty(value = "密码")
     @NotBlank(message = "请填写密码")
     private String password;
 
-    public String getUsename() {
-        return usename;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUsename(String usename) {
-        this.usename = usename;
+    public void setUsername(String usename) {
+        this.username = usename;
     }
 
     public String getPassword() {

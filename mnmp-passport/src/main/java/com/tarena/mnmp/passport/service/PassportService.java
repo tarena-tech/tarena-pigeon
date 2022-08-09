@@ -17,5 +17,8 @@
 
 package com.tarena.mnmp.passport.service;
 
+import com.tarena.mnmp.passport.domain.LoginParam;
+
 public interface PassportService {
+    String doLogin(LoginParam param,String deviceIp);
 }

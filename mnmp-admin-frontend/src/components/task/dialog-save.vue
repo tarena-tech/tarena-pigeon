@@ -229,7 +229,8 @@ export default {
       queryAppList({
         name: param,
         enable: 1,
-        auditStatus: 1
+        auditStatus: 1,
+        appendId: this.ruleForm.appId
       })
         .then(res => {
           this.apps = res
@@ -238,21 +239,20 @@ export default {
       })
     },
     querySigns(param) {
-      console.log("333333", param)
       querySignList({name: param})
         .then(res => {
           this.signs = res
-          console.dir(res)
         })
         .catch(err => {
-          console.log(err);
+          console.error(err);
         })
     },
     queryTemplates(param) {
       let params = {
         templateName: param,
         enable: 1,
-        auditStatus: 1
+        auditStatus: 1,
+        appendId: this.ruleForm.templateId
       }
       querySmsTemplateList(params)
         .then(res => {

@@ -63,6 +63,11 @@ public class SignController implements SignApi {
             throw new BusinessException("100", "签名不存在");
         }
 
+        // 启用 要判断关联的数据 是否在可用状态
+        if (Objects.equals(Enabled.NO.getVal(), sign.getEnabled())) {
+            appService.checkStatus(sign.getAppId());
+        }
+
         SignDO up = new SignDO();
         up.setId(id);
         up.setEnabled(Enabled.reverse(sign.getEnabled()).getVal());
@@ -72,9 +77,6 @@ public class SignController implements SignApi {
         if (Objects.equals(Enabled.NO.getVal(), up.getEnabled())) {
             TaskQuery query = new TaskQuery();
             taskService.endTaskStatusByTargetId(query);
-        } else {
-            // 启用 要判断管理的数据 是否在可用状态
-            appService.checkStatus(sign.getAppId());
         }
 
 
@@ -98,8 +100,8 @@ public class SignController implements SignApi {
 
     @Override public List<SignView> queryList(SignQuery signQuery) {
         signQuery.setOrderBy(false);
-        List<SignDO> signDOs = signService.querySignList(signQuery);
-        return SignView.convert(signDOs);
+        List<SignDO> sources = signService.querySignList(signQuery);
+        return SignView.convert(sources);
     }
 
     @Override public void auditSign(AuditParam param) {

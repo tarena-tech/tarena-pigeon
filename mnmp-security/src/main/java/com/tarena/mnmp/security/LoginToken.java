@@ -17,15 +17,26 @@
 
 package com.tarena.mnmp.security;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class LoginToken{
+public class LoginToken implements Serializable {
     private Long id;
     private String username;
 
     private List<String> authorities;
 
     private Object details;
+
+    private String deviceIp;
+
+    public String getDeviceIp() {
+        return deviceIp;
+    }
+
+    public void setDeviceIp(String deviceIp) {
+        this.deviceIp = deviceIp;
+    }
 
     public List<String> getAuthorities() {
         return authorities;

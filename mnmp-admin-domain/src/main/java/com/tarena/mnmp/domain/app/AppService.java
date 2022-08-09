@@ -34,13 +34,13 @@ public class AppService {
     private AppDao appDao;
 
     public void save(AppSaveParam appSaveParam) {
-        AppDO appDO = new AppDO();
-        BeanUtils.copyProperties(appSaveParam, appDO);
+        AppDO save = new AppDO();
+        BeanUtils.copyProperties(appSaveParam, save);
         if (null == appSaveParam.getId()) {
-            appDao.save(appDO);
+            appDao.save(save);
         } else {
-            appDO.cleanSameData();
-            appDao.modify(appDO);
+            save.cleanSameData();
+            appDao.modify(save);
         }
     }
 
@@ -63,7 +63,16 @@ public class AppService {
     }
 
     public List<AppDO> queryList(AppQueryParam param) {
-        return appDao.queryByParam(param);
+        List<AppDO> sources = appDao.queryByParam(param);
+        // 查询集合是为了给前端修改时回显，但是数据量一旦上来无法回显用户已经选择的应用
+        if (null != param.getAppendId()) {
+            boolean append = sources.stream().noneMatch(source -> source.getId().equals(param.getAppendId()));
+            AppDO app;
+            if (append && null != (app = queryAppDetail(param.getAppendId()))) {
+                sources.add(app);
+            }
+        }
+        return sources;
     }
 
     public void auditApp(Long id, Integer auditStatus, String auditResult) {
@@ -90,12 +99,13 @@ public class AppService {
             throw new BusinessException("100", "应用不存在");
         }
 
+        String name = app.getName();
         if (!Objects.equals(AuditStatus.PASS.getStatus(), app.getAuditStatus())) {
-            throw new BusinessException("100", "应用审核未通过");
+            throw new BusinessException("100","[" + name + "]应用审核未通过");
         }
 
         if (!Objects.equals(Enabled.YES.getVal(), app.getEnabled())) {
-            throw new BusinessException("100", "应用未启用");
+            throw new BusinessException("100", "[" + name + "]应用未启用");
         }
 
         return app;

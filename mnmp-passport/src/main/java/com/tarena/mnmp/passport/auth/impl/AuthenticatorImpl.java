@@ -20,41 +20,42 @@ package com.tarena.mnmp.passport.auth.impl;
 import com.tarena.mnmp.passport.config.JwtConfiguration;
 import com.tarena.mnmp.passport.dao.UserMapper;
 import com.tarena.mnmp.passport.domain.User;
-import com.tarena.mnmp.security.JwtUtils;
+import com.tarena.mnmp.security.utils.JwtUtils;
 import com.tarena.mnmp.security.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
 import io.jsonwebtoken.lang.Assert;
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
-@Component
-public class AuthenticatorImpl implements Authenticator{
+public class AuthenticatorImpl implements Authenticator {
     @Autowired
     private JwtConfiguration jwtConfig;
     @Autowired
     private UserMapper userMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    private Map<String,String> tokenToDeviceIp=new HashMap<>();
+
     @Override public String sign(LoginToken login, String password) {
-        String username=login.getUsername();
-        User user=userMapper.findByUsername(username);
-        Assert.notNull(user,"用户名不存在用户");
+        String username = login.getUsername();
+        User user = userMapper.findByUsername(username);
+        if (user == null) {
+            return null;
+        }
         boolean matches = passwordEncoder.matches(password, user.getPassword());
-        Assert.isTrue(matches,"密码正确");
+        if (!matches) {
+            return null;
+        }
+        login.setAuthorities(user.getAuthorities());
         //认证成功,生成token返回
-        return JwtUtils.generateToken(login,jwtConfig.getJwtSecret(),jwtConfig.getExpiration());
-    }
-    @Override public LoginToken authenticate(String token, String deviceIp) {
-        LoginToken login = JwtUtils.getLoginFromToken(token, jwtConfig.getJwtSecret(), jwtConfig.getExpiration());
-        Assert.notNull(login,"登录状态以消失,请重新登录");
-        boolean containsToken = tokenToDeviceIp.containsKey(token);
-        Assert.isTrue(tokenToDeviceIp.get(token)!=null&&tokenToDeviceIp.get(token).equals(deviceIp),"您更换了设备,请重新登录");
-        return login;
+        return JwtUtils.generateToken(login, jwtConfig.getJwtSecret(), jwtConfig.getExpiration());
     }
 
+    @Override public LoginToken authenticate(String token, String deviceIp) {
+        LoginToken login = JwtUtils.getLoginFromToken(token, jwtConfig.getJwtSecret(), jwtConfig.getExpiration());
+        if (login.getDeviceIp() == null || !login.getDeviceIp().equals(deviceIp)) {
+            return null;
+        }
+        return login;
+    }
 
 }
