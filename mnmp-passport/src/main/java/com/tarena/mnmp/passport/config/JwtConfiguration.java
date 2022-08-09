@@ -22,9 +22,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class JwtConfiguration {
-    @Value("jwt.secret")
+    @Value("${jwt.secret}")
     private String jwtSecret;
-    @Value("jwt.expired")
+    @Value("${jwt.expiration}")
     private Long expiration;
 
     public String getJwtSecret() {

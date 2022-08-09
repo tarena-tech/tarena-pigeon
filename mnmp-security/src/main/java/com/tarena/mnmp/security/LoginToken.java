@@ -27,6 +27,16 @@ public class LoginToken{
 
     private Object details;
 
+    private String deviceIp;
+
+    public String getDeviceIp() {
+        return deviceIp;
+    }
+
+    public void setDeviceIp(String deviceIp) {
+        this.deviceIp = deviceIp;
+    }
+
     public List<String> getAuthorities() {
         return authorities;
     }

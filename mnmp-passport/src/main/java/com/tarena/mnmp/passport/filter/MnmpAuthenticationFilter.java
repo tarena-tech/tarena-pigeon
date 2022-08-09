@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.passport.filter;
 
+import com.tarena.mnmp.passport.utils.IPUtils;
 import com.tarena.mnmp.security.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
 import java.io.IOException;
@@ -27,12 +28,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -59,7 +58,7 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         //获取设备ip地址,绑定token使用
-        String deviceIp = getIpAddress(request);
+        String deviceIp = IPUtils.getIpAddress(request);
         LoginToken loginToken = authenticator.authenticate(token, deviceIp);
         if (ObjectUtils.isEmpty(loginToken)){
             filterChain.doFilter(request,response);
@@ -93,25 +92,6 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
             token=tokenHeader.substring(tokenHeaderPrefix.length()+1);
         }
         return token;
-    }
-    public  String getIpAddress(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_CLIENT_IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        return ip;
     }
     public Authenticator getAuthenticator() {
         return authenticator;

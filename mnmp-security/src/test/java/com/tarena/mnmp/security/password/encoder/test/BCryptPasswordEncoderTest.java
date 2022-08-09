@@ -15,35 +15,15 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.passport.domain;
+package com.tarena.mnmp.security.password.encoder.test;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@ApiModel(value="登录参数")
-public class LoginParam {
-    @ApiModelProperty(value = "用户名")
-    @NotBlank(message = "请填写用户名")
-    private String username;
-    @ApiModelProperty(value="密码")
-    @NotBlank(message = "请填写密码")
-    private String password;
+public class BCryptPasswordEncoderTest {
+    public static void main(String[] args) {
+        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+        System.out.println(bCryptPasswordEncoder.encode("123456"));
+        System.out.println(bCryptPasswordEncoder.encode("tarena2017Up;"));
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String usename) {
-        this.username = usename;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

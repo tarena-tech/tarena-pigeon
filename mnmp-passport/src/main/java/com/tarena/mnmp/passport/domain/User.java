@@ -26,6 +26,15 @@ public class User {
     private String password;
     private Date createTime;
     private Date updateTime;
+    private List<String> roles;
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
 
     public Date getCreateTime() {
         return createTime;

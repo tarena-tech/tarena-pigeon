@@ -17,9 +17,11 @@
 
 package com.tarena.mnmp.passport.config;
 
+import com.tarena.mnmp.passport.auth.impl.AuthenticatorImpl;
 import com.tarena.mnmp.passport.exception.handler.MnmpAccessDeniedHanldler;
 import com.tarena.mnmp.passport.exception.handler.MnmpAuthenticationEntryPoint;
 import com.tarena.mnmp.passport.filter.MnmpAuthenticationFilter;
+import com.tarena.mnmp.security.authentication.Authenticator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -50,14 +52,20 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
         return new MnmpAuthenticationEntryPoint();
     }
     @Bean
+    public Authenticator authenticator(){
+        return new AuthenticatorImpl();
+    }
+    @Bean
     public MnmpAuthenticationFilter mnmpAuthenticationFilter(){
-        return mnmpAuthenticationFilter();
+        MnmpAuthenticationFilter mnmpAuthenticationFilter=new MnmpAuthenticationFilter();
+        mnmpAuthenticationFilter.setAuthenticator(authenticator());
+        return mnmpAuthenticationFilter;
     }
     @Override protected void configure(HttpSecurity http) throws Exception {
         // 权限放行
         String[] permitList = {
-            "/login",
-            "/logout"
+            "/passport/login",
+            "/passport/logout"
         };
         // 禁止跨域请求伪造过滤器
         http.csrf().disable();
