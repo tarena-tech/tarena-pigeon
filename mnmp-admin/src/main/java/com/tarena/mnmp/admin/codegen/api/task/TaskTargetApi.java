@@ -37,9 +37,7 @@ public interface TaskTargetApi {
 
     @ApiOperationSupport(order = 6000)
     @ApiOperation(
-        value = "查询任务列表信息（分页）",
-        nickname = "query/page",
-        notes = ""
+        value = "查询任务列表信息（分页）"
     )
     @GetMapping(
         value = {"/query/page"}

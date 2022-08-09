@@ -154,7 +154,8 @@ export default {
       queryAppList({
         name: param,
         enable: 1,
-        auditStatus: 1
+        auditStatus: 1,
+        appendId: this.ruleForm.appId
       })
         .then(res => {
           this.apps = res
@@ -167,7 +168,8 @@ export default {
       queryProviderList({
         name: param,
         auditStatus: 1,
-        enable: 1
+        enable: 1,
+        appendId: this.ruleForm.providerId
       })
         .then(res => {
           this.providers = res;

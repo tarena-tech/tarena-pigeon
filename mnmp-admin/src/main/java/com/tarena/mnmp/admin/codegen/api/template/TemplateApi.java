@@ -47,9 +47,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface TemplateApi {
     @ApiOperationSupport(order = 4001)
     @ApiOperation(
-        value = "新增短信模板",
-        nickname = "addSmsTemplate",
-        notes = ""
+        value = "新增短信模板"
     )
     @PostMapping(
         value = {"/sms/save"}
@@ -58,9 +56,7 @@ public interface TemplateApi {
 
     @ApiOperationSupport(order = 4002)
     @ApiOperation(
-        value = "关闭使用短信模板",
-        nickname = "closeSmsTemplate",
-        notes = ""
+        value = "关闭使用短信模板"
     )
     @PostMapping({"/sms/close"})
     @Deprecated
@@ -68,9 +64,7 @@ public interface TemplateApi {
 
     @ApiOperationSupport(order = 4003)
     @ApiOperation(
-        value = "开启使用短信模板",
-        nickname = "openSmsTemplate",
-        notes = ""
+        value = "开启使用短信模板"
     )
     @PostMapping({"/sms/open"})
     @Deprecated
@@ -81,9 +75,7 @@ public interface TemplateApi {
 
     @ApiOperationSupport(order = 4004)
     @ApiOperation(
-        value = "查询短信模板信息（分页）",
-        nickname = "queryListByPage",
-        notes = ""
+        value = "查询短信模板信息（分页）"
     )
     @GetMapping(
         value = {"/sms/query/page"},
@@ -93,9 +85,7 @@ public interface TemplateApi {
 
 //    @ApiOperationSupport(order = 4005)
     @ApiOperation(
-        value = "查询短信模板信息",
-        nickname = "queryListByParam",
-        notes = ""
+        value = "查询短信模板信息"
     )
     @GetMapping(
         value = {"/sms/query/list"},
@@ -105,10 +95,7 @@ public interface TemplateApi {
 
     @ApiOperationSupport(order = 4006)
     @ApiOperation(
-        value = "查看短信模板详情",
-        nickname = "querySmsTemplateDetail",
-        notes = "",
-        response = TemplateView.class
+        value = "查看短信模板详情"
     )
     @GetMapping(
         value = {"/sms/queryDetail"},
@@ -119,10 +106,7 @@ public interface TemplateApi {
 
     @ApiOperationSupport(order = 4007)
     @ApiOperation(
-        value = "修改短信模板",
-        nickname = "updateSmsTemplate",
-        notes = "",
-        response = String.class
+        value = "修改短信模板"
     )
     @PostMapping(
         value = {"/sms/update"},
@@ -134,9 +118,7 @@ public interface TemplateApi {
 
     @ApiOperationSupport(order = 4008)
     @ApiOperation(
-        value = "短信模板审核",
-        nickname = "doAuditSmsTemplate",
-        notes = ""
+        value = "短信模板审核"
     )
     @PostMapping({"/sms/doAudit"})
     void doAuditSmsTemplate(@RequestBody AuditParam param);

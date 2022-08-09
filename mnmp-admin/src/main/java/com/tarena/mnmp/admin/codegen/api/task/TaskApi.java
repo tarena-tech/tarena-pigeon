@@ -72,9 +72,7 @@ public interface TaskApi {
 
     @ApiOperationSupport(order = 5002)
     @ApiOperation(
-        value = "新增任务",
-        nickname = "addTask",
-        notes = ""
+        value = "新增任务"
     )
     @PostMapping(
         value = {"add"}
@@ -83,18 +81,14 @@ public interface TaskApi {
 
     @ApiOperationSupport(order = 5003)
     @ApiOperation(
-        value = "任务操作审核",
-        nickname = "doAudit",
-        notes = ""
+        value = "任务操作审核"
     )
     @PostMapping({"/audit"})
     void doAudit(@RequestBody AuditParam param) throws BusinessException;
 
     @ApiOperationSupport(order = 5004)
     @ApiOperation(
-        value = "查询任务列表信息（分页）",
-        nickname = "queryListByPage",
-        notes = ""
+        value = "查询任务列表信息（分页）"
     )
     @GetMapping(
         value = {"/query/page"}
@@ -103,9 +97,7 @@ public interface TaskApi {
 
     @ApiOperationSupport(order = 5005)
     @ApiOperation(
-        value = "查看任务详情",
-        nickname = "queryTaskDetail",
-        notes = ""
+        value = "查看任务详情"
     )
     @GetMapping(
         value = {"detail"},
@@ -115,9 +107,7 @@ public interface TaskApi {
 
     @ApiOperationSupport(order = 5006)
     @ApiOperation(
-        value = "查看任务发送统计",
-        nickname = "queryTaskStatistics",
-        notes = ""
+        value = "查看任务发送统计"
     )
     @GetMapping(
         value = {"/taskStatistics"},
@@ -129,9 +119,7 @@ public interface TaskApi {
 
     @ApiOperationSupport(order = 5009)
     @ApiOperation(
-        value = "修改任务",
-        nickname = "updateTask",
-        notes = ""
+        value = "修改任务"
     )
     @PutMapping({"modify"})
     void modify(@ApiParam(value = "更新任务", required = true) @Valid @RequestBody TaskParam taskParam);
