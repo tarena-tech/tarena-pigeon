@@ -31,7 +31,6 @@ import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
