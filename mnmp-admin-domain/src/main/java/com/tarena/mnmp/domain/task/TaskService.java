@@ -200,8 +200,8 @@ public class TaskService {
 
     public void endTaskStatusByTargetId(TaskQuery query) {
         query.setTaskStatusList(TaskStatus.operable());
+        // 此处只查询 未开始 进行中的 数据，所以调用下边方法 进行状态反向操作
         List<TaskDO> list = taskDao.queryByTargetId(query);
-        // TODO 有bug 将来改
         list.forEach(this::changeTaskStatus);
     }
 
