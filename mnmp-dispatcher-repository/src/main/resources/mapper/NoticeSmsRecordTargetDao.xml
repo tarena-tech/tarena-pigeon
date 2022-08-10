@@ -68,10 +68,83 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into notice_sms_record_target( task_id,app_code, target, content, status,trigger_time,
-        push_time,push_receive_time, biz_id, send_result,create_time, update_time)
-        values (#{taskId},#{appCode},#{target}, #{content}, #{status}, #{triggerTime}, #{pushTime},
-        #{pushReceiveTime},#{bizId},#{sendResult}, now(), #{updateTime})
+        insert into notice_sms_record_target
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appCode != null">
+                app_code,
+            </if>
+            <if test="taskId != null">
+                task_id,
+            </if>
+            <if test="target != null">
+                target,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="triggerTime != null">
+                trigger_time,
+            </if>
+            <if test="pushTime != null">
+                push_time,
+            </if>
+            <if test="pushReceiveTime != null">
+                push_receive_time,
+            </if>
+            <if test="bizId != null">
+                biz_id,
+            </if>
+            <if test="sendResult != null">
+                send_result,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appCode != null">
+                #{appCode,jdbcType=VARCHAR},
+            </if>
+            <if test="taskId != null">
+                #{taskId,jdbcType=BIGINT},
+            </if>
+            <if test="target != null">
+                #{target,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="triggerTime != null">
+                #{triggerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pushTime != null">
+                #{pushTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pushReceiveTime != null">
+                #{pushReceiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bizId != null">
+                #{bizId,jdbcType=VARCHAR},
+            </if>
+            <if test="sendResult != null">
+                #{sendResult,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
     </insert>
 
 

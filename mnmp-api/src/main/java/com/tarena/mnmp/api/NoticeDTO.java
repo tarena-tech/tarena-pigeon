@@ -132,4 +132,6 @@ public class NoticeDTO implements Serializable {
     public void setProviderCode(String providerCode) {
         this.providerCode = providerCode;
     }
+
+
 }

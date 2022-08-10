@@ -29,6 +29,7 @@ import com.tarena.mnmp.protocol.NoticeEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,7 +77,8 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
         NoticeSmsRecordTargetDO noticeSmsRecordTarget = new NoticeSmsRecordTargetDO();
         noticeSmsRecordTarget.setTaskId(event.getNoticeEvent().getTaskId());
         noticeSmsRecordTarget.setTarget(target.getTarget());
-        noticeSmsRecordTarget.setTriggerTime(event.getNoticeEvent().getTriggerTime());
+        // TODO 时间格式
+        // noticeSmsRecordTarget.setTriggerTime(event.getNoticeEvent().getTriggerTime());
         noticeSmsRecordTarget.setPushTime(current);
         noticeSmsRecordTarget.setCreateTime(current);
         noticeSmsRecordTarget.setUpdateTime(current);
