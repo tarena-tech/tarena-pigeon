@@ -57,6 +57,7 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
 //    }
 
     @Override protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
 //        // 权限放行
 //        String[] permitList = {
 //            "/passport/login",

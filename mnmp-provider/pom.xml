@@ -22,6 +22,38 @@
       <groupId>com.tarena.mnmp</groupId>
       <artifactId>mnmp-dispatcher</artifactId>
     </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.tarena.mnmp</groupId>-->
+<!--      <artifactId>mnmp-admin-repository</artifactId>-->
+<!--    </dependency>-->
+    <dependency>
+      <groupId>com.tarena.mnmp</groupId>
+      <artifactId>mnmp-dispatcher-repository</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.tarena.mnmp</groupId>
+      <artifactId>mnmp-autoconfigurations</artifactId>
+    </dependency>
+
+<!--    <dependency>-->
+<!--      <groupId>org.mybatis</groupId>-->
+<!--      <artifactId>mybatis</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.mybatis</groupId>-->
+<!--      <artifactId>mybatis-spring</artifactId>-->
+<!--    </dependency>-->
+
+    <dependency>
+      <groupId>org.mybatis.spring.boot</groupId>
+      <artifactId>mybatis-spring-boot-starter</artifactId>
+    </dependency>
+
   </dependencies>
 
 </project>

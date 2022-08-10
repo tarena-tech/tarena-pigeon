@@ -14,29 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.domain.provider.controller;
 
-package com.tarena.mnmp.api;
+import com.tarena.mnmp.api.TargetDTO;
+import com.tarena.mnmp.enums.NoticeType;
+import com.tarena.mnmp.enums.SendType;
+import java.util.List;
+import lombok.Data;
 
-import java.util.Map;
+@Data
+public class SendParam {
 
-public class TargetDTO {
-    private String target;
-    private Map<String, Object> params;
 
-    public TargetDTO() {
-
+    public SendParam() {
+        this.mock = 0;
     }
 
-    public TargetDTO(String target, Map<String, Object> params) {
-        this.target = target;
-        this.params = params;
-    }
-
-    public String getTarget() {
-        return target;
-    }
-
-    public Map<String, Object> getParams() {
-        return params;
-    }
+    private String triggerTime;
+    private SendType sendType;
+    private NoticeType noticeType;
+    private String appCode;
+    private String templateCode;
+    private String templateContent;
+    private List<TargetDTO> targets;
+    private String signCode;
+    private String signName;
+    private String providerCode;
+    private Integer mock;
+    private Long taskId;
 }

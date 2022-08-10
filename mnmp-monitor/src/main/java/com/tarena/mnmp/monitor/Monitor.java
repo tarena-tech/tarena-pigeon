@@ -22,14 +22,18 @@ import com.tarena.mnmp.enums.TargetStatus;
 import com.tarena.mnmp.protocol.NoticeEvent;
 
 public interface Monitor {
-    void alarms(String key, String msg);
+    default void alarms(String key, String msg) {
+
+    }
 
     /**
      * 监控前端请求
      *
      * @param notice
      */
-    void noticeRequest(NoticeDTO notice);
+    default void noticeRequest(NoticeDTO notice) {
+
+    }
 
     /**
      * 监控通知目标状态
@@ -38,10 +42,14 @@ public interface Monitor {
      * @param target
      * @param status
      */
-    void noticeStatus(NoticeEvent noticeEvent, String target, TargetStatus status);
+    default void noticeStatus(NoticeEvent noticeEvent, String target, TargetStatus status) {
+
+    }
 
     /**
      * 监控schedule 调度
      */
-    void schedule();
+    default void schedule() {
+
+    }
 }

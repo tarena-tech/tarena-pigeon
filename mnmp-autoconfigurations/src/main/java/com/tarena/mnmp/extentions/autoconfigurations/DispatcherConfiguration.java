@@ -34,6 +34,7 @@ import com.tarena.mnmp.commons.utils.DollarPlaceholderReplacer;
 import com.tarena.mnmp.monitor.Monitor;
 import com.tarena.mnmp.protocol.ProviderClientConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -87,7 +88,7 @@ public class DispatcherConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(SmsAliNoticeDispatcher.class)
-    @ConditionalOnBean({TargetLogRepository.class, ProviderRepository.class, SmsSender.class})
+    @ConditionalOnClass({TargetLogRepository.class, ProviderRepository.class, SmsSender.class})
     @ConditionalOnProperty(prefix = "dispatcher", value = "notice_sms_ali", havingValue = "true")
     public SmsAliNoticeDispatcher smsAliNoticeDispatcher(Json json,
         TargetLogRepository targetLogRepository,
@@ -101,7 +102,9 @@ public class DispatcherConfiguration {
         aliNoticeDispatcher.setTargetLogRepository(targetLogRepository);
         aliNoticeDispatcher.setSmsSender(smsSender);
         aliNoticeDispatcher.setMonitor(monitor);
-        aliNoticeDispatcher.setReceipt(this.dispatcherConfig.getEnableReceipt());
+        if (null != this.dispatcherConfig.getEnableReceipt()) {
+            aliNoticeDispatcher.setReceipt(this.dispatcherConfig.getEnableReceipt());
+        }
         return aliNoticeDispatcher;
     }
 

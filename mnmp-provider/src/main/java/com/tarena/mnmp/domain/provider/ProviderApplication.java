@@ -14,29 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.domain.provider;
 
-package com.tarena.mnmp.api;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Map;
+@SpringBootApplication(scanBasePackages = {"com.tarena.dispatcher.repository.impl", "com.tarena.mnmp.domain.provider.controller"})
+@MapperScan(basePackages = {"com.tarena.dispatcher.storage.mapper"})
+public class ProviderApplication {
 
-public class TargetDTO {
-    private String target;
-    private Map<String, Object> params;
-
-    public TargetDTO() {
-
-    }
-
-    public TargetDTO(String target, Map<String, Object> params) {
-        this.target = target;
-        this.params = params;
-    }
-
-    public String getTarget() {
-        return target;
-    }
-
-    public Map<String, Object> getParams() {
-        return params;
+    public static void main(String[] args) {
+        SpringApplication.run(ProviderApplication.class, args);
     }
 }
