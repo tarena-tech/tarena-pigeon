@@ -77,7 +77,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.version}</version>
                 <configuration>
-                    <mainClass>com.tarena.mnmp.admin.AdminApplication</mainClass>
+                    <mainClass>com.tarena.mnmp.passport.PassportApiApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
