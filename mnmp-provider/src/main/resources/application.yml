@@ -53,6 +53,7 @@ dispatcher:
   assembler_sms: true
   notice_sms_ali: true
   sms_ali_pigeon_provider_code: ALI_SMS
+  enableReceipt: false
 
 monitor:
   impl: default
