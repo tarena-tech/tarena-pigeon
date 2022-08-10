@@ -39,3 +39,4 @@ mybatis:
 
 json:
   provider: fastJson
+

@@ -86,7 +86,7 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
         //未认证处理器
         http.exceptionHandling().authenticationEntryPoint(mnmpAuthenticationEntryPoint());
         //添加过滤器
-        http.addFilterAfter(mnmpAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(mnmpAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override public void configure(WebSecurity web) throws Exception {
