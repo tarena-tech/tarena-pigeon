@@ -15,26 +15,29 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.security.authentication;
+package com.tarena.mnmp.passport.controller;
 
-import com.tarena.mnmp.security.LoginToken;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-public interface Authenticator {
-    /**
-     * sign
-     *
-     * @param login  login token
-     * @param password password
-     * @return
-     */
-    String sign(LoginToken login, String password);
+//@ApiIgnore
+@RestController
+@Api(tags = "授权测试")
+public class TestAuthorizationController {
+    @RequestMapping("/authorize/test1")
+    @PreAuthorize("hasRole('admin')")
+    @ApiOperation("test1")
+    public String test1() {
+        return "test1";
+    }
 
-    /**
-     *authenticate
-     *
-     * @param token
-     * @return
-     */
-    LoginToken authenticate(String token, String deviceIp);
+    @RequestMapping("/authorize/test2")
+    @ApiOperation("test2")
+    public String test2() {
+        return "test2";
+    }
 
 }
