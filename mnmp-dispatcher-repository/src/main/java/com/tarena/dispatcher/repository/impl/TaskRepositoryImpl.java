@@ -100,6 +100,9 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override public Map<Long, Integer> queryTaskMockStatus(LinkedHashSet<Long> taskIds) {
+        if (CollectionUtils.isEmpty(taskIds)) {
+            return new HashMap<>();
+        }
         List<TaskDO> mockStatusList = this.taskDao.queryMockStatusByIds(taskIds);
         if (CollectionUtils.isEmpty(mockStatusList)) {
             return new HashMap<>();
