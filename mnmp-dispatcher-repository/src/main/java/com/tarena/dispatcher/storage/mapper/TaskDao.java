@@ -30,7 +30,7 @@ public interface TaskDao {
 
     TaskDO queryById(Long id);
 
-    List<TaskDO> queryMockStatusByIds(Set<Long> ids);
+    List<TaskDO> queryMockStatusByIds(@Param("ids") Set<Long> ids);
 
     void update(TaskDO task);
 
@@ -43,9 +43,8 @@ public interface TaskDao {
         " where id = #{id}")
     int finishTask(@Param("taskStatus") Integer taskStatus, @Param("id") Long id);
 
-
     @Update("update notice_task set task_status = #{taskStatus},error=#{error}, update_time = now() where id = #{id}")
-    int errorTask(@Param("taskStatus") Integer taskStatus,@Param("error") String error, @Param("id") Long id);
+    int errorTask(@Param("taskStatus") Integer taskStatus, @Param("error") String error, @Param("id") Long id);
 
     @Update("update notice_task set task_status = #{taskStatus} , update_time = now()" +
         " where id = #{id}")
