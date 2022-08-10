@@ -25,7 +25,7 @@
 </template>
 <script>
 
-import {audit} from "@/api/app";
+import { audit } from '@/api/app'
 
 export default {
   name: 'DialogAppAudit',
@@ -54,15 +54,14 @@ export default {
   methods: {
     show(_id) {
       this.dialogFormVisible = true
-      this.ruleForm = {};
-      this.ruleForm.id = _id;
+      this.ruleForm = {}
+      this.ruleForm.id = _id
     },
     cancelForm() {
       this.loading = false
       // this.dialogVisible = false
       // this.$refs.drawer.closeDrawer()
       this.$emit('refresh')
-
     },
     auditing(status) {
       this.ruleForm.auditStatus = status;

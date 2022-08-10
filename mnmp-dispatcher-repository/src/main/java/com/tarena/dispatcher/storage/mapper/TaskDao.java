@@ -30,7 +30,7 @@ public interface TaskDao {
 
     TaskDO queryById(Long id);
 
-    List<Integer> queryMockStatusByIds(Set<Long> ids);
+    List<TaskDO> queryMockStatusByIds(Set<Long> ids);
 
     void update(TaskDO task);
 

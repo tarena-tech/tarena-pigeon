@@ -7,4 +7,4 @@ export const changeStatus = (data) => post('/task/change/task/status?id=' + data
 export const audit = (data) => post('/task/audit', data, null, null)
 export const addTask = (data) => post('/task/add', data, null, null)
 export const downExcel = (params) => get('/task/excel', params, null)
-export const detail = (params) =>get('/task/detail', params, null);
+export const detail = (params) => get('/task/detail', params, null)

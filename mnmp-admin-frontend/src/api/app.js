@@ -1,5 +1,5 @@
 import {
-  get,post
+  get, post
 } from '@/utils/request.js'
 
 export const queryPage = (data) => get('/app/query/page', data)
