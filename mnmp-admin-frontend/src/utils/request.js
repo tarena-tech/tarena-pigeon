@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+import Cookies from "js-cookie";
 
 // create an axios instance
 const instance = axios.create({
@@ -29,9 +30,8 @@ instance.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      const v = localStorage.getItem('Authorization')
-      console.log("Authorization", v)
-      config.headers['Authorization'] = v
+
+      config.headers['Authorization'] = store.getters.token
     }
     return config
   },
