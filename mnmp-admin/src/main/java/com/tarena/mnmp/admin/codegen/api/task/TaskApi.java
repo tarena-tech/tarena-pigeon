@@ -33,6 +33,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,12 +55,14 @@ public interface TaskApi {
     @ApiOperation(value = "获取excel文件")
     @GetMapping("excel")
     @ApiParam(value = "获取excel， 当path为空表示获取模板")
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     void getExcel(String path, HttpServletResponse response) throws BusinessException;
 
 
     @ApiOperationSupport(order = 5001)
     @ApiOperation(value = "上传文件")
     @PostMapping("uploadFile")
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     Result<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException, BusinessException;
 
     @ApiOperationSupport(order = 5002)
@@ -69,6 +72,7 @@ public interface TaskApi {
     @PostMapping(
         value = {"add"}
     )
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     void addTask(@Valid @RequestBody TaskParam taskParam, HttpServletResponse response) throws IOException, BusinessException;
 
     @ApiOperationSupport(order = 5003)
@@ -76,6 +80,7 @@ public interface TaskApi {
         value = "任务操作审核"
     )
     @PostMapping({"/audit"})
+    @PreAuthorize("hasAnyRole('admin','root')")
     void doAudit(@RequestBody AuditParam param) throws BusinessException;
 
     @ApiOperationSupport(order = 5004)
@@ -85,6 +90,7 @@ public interface TaskApi {
     @GetMapping(
         value = {"/query/page"}
     )
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     PagerResult<TaskView> queryListByPage(TaskQuery taskQuery);
 
     @ApiOperationSupport(order = 5005)
@@ -95,6 +101,7 @@ public interface TaskApi {
         value = {"detail"},
         produces = {"application/json"}
     )
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     TaskView queryTaskDetail(@ApiParam(value = "任务id", required = true)Long id) throws BusinessException;
 
     @ApiOperationSupport(order = 5006)
@@ -105,6 +112,7 @@ public interface TaskApi {
         value = {"/taskStatistics"},
         produces = {"application/json"}
     )
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     TaskStatistics queryTaskStatistics(
         @NotNull @ApiParam(value = "任务id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
@@ -114,6 +122,7 @@ public interface TaskApi {
         value = "修改任务"
     )
     @PutMapping({"modify"})
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     void modify(@ApiParam(value = "更新任务", required = true) @Valid @RequestBody TaskParam taskParam);
 
     @PutMapping("change/task/status")
