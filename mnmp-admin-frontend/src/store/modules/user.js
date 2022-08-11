@@ -33,12 +33,12 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        console.log('--2--', data)
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
+      login({ username: username.trim(), password: password })
+        .then(response => {
+          // commit('Authorization', response)
+          setToken(response)
+          this.$store.commit("Authorization", response)
+          resolve()
       }).catch(error => {
         reject(error)
       })

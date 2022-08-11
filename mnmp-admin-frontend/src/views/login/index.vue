@@ -111,27 +111,14 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          login(this.loginForm)
-            .then(res => {
-              Cookies.set("Authorization", res)
-              console.log("login", res)
-              this.$store.commit("Authorization", res)
-              localStorage.setItem("Authorization",res)
-              if (res.succeed) {
-                this.loading = true
-                this.$store.dispatch('user/login', this.loginForm).then(() => {
-                this.$router.push({ path: this.redirect || '/' })
-                this.loading = false
-                }).catch(() => {
-                  this.loading = false
-                })
-              }
-
-
-            }).catch(err => {
-            console.log("err", res)
+          this.loading = true
+          this.$store.dispatch('user/login', this.loginForm).then(() => {
+            console.log("3333333333333333333")
+            this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+            this.loading = false
+          }).catch(() => {
+            this.loading = false
           })
-
         } else {
           console.log('error submit!!')
           return false
