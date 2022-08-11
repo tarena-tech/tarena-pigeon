@@ -28,6 +28,7 @@ import com.tarena.dispatcher.respository.TaskRepository;
 import com.tarena.mnmp.commons.utils.SmsUtils;
 import com.tarena.mnmp.constant.Constant;
 import com.tarena.mnmp.constant.ErrorCode;
+import com.tarena.mnmp.enums.TargetStatus;
 import com.tarena.mnmp.protocol.BusinessException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,9 +80,8 @@ public class AliSmsSender implements SmsSender {
             Integer mockStatus = taskMockStatusMap.get(phoneReceipt.getTaskId());
             //mock数据
             if (mockStatus.equals(1)) {
-                phoneReceipt.setSuccess(true);
-                phoneReceipt.setSendTime(current);
-                phoneReceipt.setReceiveDate(current);
+                phoneReceipt.setStatus(TargetStatus.SENT_TO_TARGET.status());
+                phoneReceipt.setReceiveTime(current);
                 phoneReceipt.setCostNumbers(1);
                 receiptedList.add(phoneReceipt);
                 continue;
@@ -109,17 +109,14 @@ public class AliSmsSender implements SmsSender {
                          * 3：发送成功
                          */
                         if (detail.getSendStatus().equals(3L)) {
-                            phoneReceipt.setSuccess(true);
-                            if (StringUtils.isNotBlank(detail.getSendDate())) {
-                                phoneReceipt.setSendTime(DateUtils.parseDate(detail.getSendDate(), Constant.DATE_FORMAT_SECOND));
-                            }
+                            phoneReceipt.setStatus(TargetStatus.SENT_TO_TARGET.status());
                             if (StringUtils.isNotBlank(detail.getReceiveDate())) {
-                                phoneReceipt.setReceiveDate(DateUtils.parseDate(detail.getReceiveDate(), Constant.DATE_FORMAT_SECOND));
+                                phoneReceipt.setReceiveTime(DateUtils.parseDate(detail.getReceiveDate(), Constant.DATE_FORMAT_SECOND));
                             }
                             phoneReceipt.setCostNumbers(SmsUtils.smsCostCount(detail.getContent().length()));
                             receiptedList.add(phoneReceipt);
                         } else if (detail.getSendStatus().equals(2L)) {
-                            phoneReceipt.setSuccess(false);
+                            phoneReceipt.setStatus(TargetStatus.SENT_TARGET_FAIL.status());
                             receiptedList.add(phoneReceipt);
                         } else {
                             logger.error(" receipting {}", phoneReceipt.getPhone());
@@ -140,7 +137,7 @@ public class AliSmsSender implements SmsSender {
             //"阿里云短信测试"
             .setSignName(smsTarget.getSignName())
             .setTemplateCode(this.aliTemplateCode)
-            .setTemplateParam("{\"content\":\"" + smsTarget.getContent() + "\"}");
+            .setTemplateParam("{\"code\":\"" + smsTarget.getContent() + "\"}");
         SendSmsResponse sendResp = this.aliSmsClient.sendSms(sendReq);
         if (!Constant.OK.equals(sendResp.body.code)) {
             logger.error("错误信息: " + sendResp.body.message + "");

@@ -38,18 +38,18 @@ public class PhoneBizIdReceiptBO {
     private Integer costNumbers;
 
     /**
-     * 发送时间
-     */
-    private Date sendTime;
-
-    /**
      * 接收时间
      */
-    private Date receiveDate;
+    private Date receiveTime;
     /**
-     * 回执状态
+     * 消息发送状态 0发送给供应商失败 1发送给供应商成功 2发送给目标失败 3发送给目标成功
      */
-    private Boolean success;
+    private Integer status;
+
+    /**
+     * 发送结果
+     */
+    private String sendResult;
 
     public PhoneBizIdReceiptBO(String phone, String bizId, Long taskId) {
         this.phone = phone;
@@ -81,31 +81,31 @@ public class PhoneBizIdReceiptBO {
         this.costNumbers = costNumbers;
     }
 
-    public Boolean getSuccess() {
-        return success;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setSuccess(Boolean success) {
-        this.success = success;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public Date getSendTime() {
-        return sendTime;
+    public Date getReceiveTime() {
+        return receiveTime;
     }
 
-    public void setSendTime(Date sendTime) {
-        this.sendTime = sendTime;
-    }
-
-    public Date getReceiveDate() {
-        return receiveDate;
-    }
-
-    public void setReceiveDate(Date receiveDate) {
-        this.receiveDate = receiveDate;
+    public void setReceiveTime(Date receiveTime) {
+        this.receiveTime = receiveTime;
     }
 
     public Long getTaskId() {
         return taskId;
+    }
+
+    public String getSendResult() {
+        return sendResult;
+    }
+
+    public void setSendResult(String sendResult) {
+        this.sendResult = sendResult;
     }
 }
