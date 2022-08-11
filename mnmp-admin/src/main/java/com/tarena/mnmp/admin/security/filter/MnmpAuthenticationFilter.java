@@ -73,6 +73,7 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
         if (ObjectUtils.isEmpty(loginToken)) {
             filterChain.doFilter(request, response);
         } else {
+            request.setAttribute("admin_token", loginToken);
             List<String> strAuthorities = loginToken.getAuthorities();
             List<GrantedAuthority> authorities = new ArrayList<>();
             for (String authority : strAuthorities) {

@@ -23,6 +23,7 @@ import com.tarena.mnmp.security.authentication.Authenticator;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.MethodParameter;
@@ -30,18 +31,13 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
-    @Resource
-    @Lazy
-    private Authenticator authenticator;
-
-    @Resource
-    @Lazy
-    private MnmpAuthenticationFilter mnmpAuthenticationFilter;
 
     @Override protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new HandlerMethodArgumentResolver() {
@@ -52,10 +48,21 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
             @Override public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer container,
                 NativeWebRequest request, WebDataBinderFactory factory) throws Exception {
                 HttpServletRequest req = (HttpServletRequest) request.getNativeRequest();
-                String token = mnmpAuthenticationFilter.getRequestToken(req);
-                String deviceIp = IPUtils.getIpAddress(req);
-                return authenticator.authenticate(token, deviceIp);
+                return req.getAttribute("admin_token");
+            }
+        });
+    }
+
+    @Override protected void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new HandlerInterceptor() {
+            @Override
+            public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+                Exception ex) throws Exception {
+                request.removeAttribute("admin_token");
+                HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
             }
         });
     }
 }
+
+
