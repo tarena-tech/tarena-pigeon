@@ -27,6 +27,7 @@ import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.security.LoginToken;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
@@ -63,11 +64,12 @@ public class ProviderController implements ProviderApi {
         }
     }
 
-    @Override public PagerResult<ProviderView> queryPage(ProviderQueryParam param) {
+    @Override public PagerResult<ProviderView> queryPage(ProviderQueryParam param, LoginToken token) {
         List<ProviderDO> sources = providerService.queryList(param);
         Long count = providerService.queryCount(param);
-        PagerResult<ProviderView> pagerResult = new PagerResult<ProviderView>(param.getPageSize(), param.getCurrentPageIndex());
-        pagerResult.setList(ProviderView.convert(sources));
+        PagerResult<ProviderView> pagerResult = new PagerResult<>(param.getPageSize(), param.getCurrentPageIndex());
+        boolean show = null != token && "root".equals(token.getUsername());
+        pagerResult.setList(ProviderView.convert(sources, show));
         pagerResult.setRecordCount(count);
         return pagerResult;
     }
@@ -76,6 +78,7 @@ public class ProviderController implements ProviderApi {
         ProviderDO providerDO = providerService.queryProviderDetail(id);
         ProviderView providerView = new ProviderView();
         BeanUtils.copyProperties(providerDO, providerView);
+        providerView.setClientConfig(null);
         return providerView;
     }
 
@@ -86,6 +89,6 @@ public class ProviderController implements ProviderApi {
     @Override public List<ProviderView> queryList(ProviderQueryParam param) {
         param.setOrderBy(false);
         List<ProviderDO> sources = providerService.queryList(param);
-        return ProviderView.convert(sources);
+        return ProviderView.convert(sources, false);
     }
 }

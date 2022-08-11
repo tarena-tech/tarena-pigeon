@@ -17,7 +17,6 @@
 
 package com.tarena.mnmp.admin.controller.provider;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.xiaoymin.knife4j.annotations.Ignore;
 import com.tarena.mnmp.domain.ProviderDO;
 import io.swagger.annotations.ApiModel;
@@ -74,7 +73,6 @@ public class ProviderView {
     private String remarks;
 
 
-    @JsonIgnore
     private String clientConfig;
 
     @ApiModelProperty(
@@ -101,7 +99,7 @@ public class ProviderView {
     private Date updateTime;
 
     @Ignore
-    public static List<ProviderView> convert(List<ProviderDO> source) {
+    public static List<ProviderView> convert(List<ProviderDO> source, boolean showClientConfig) {
         if (null == source) {
             return new ArrayList<>();
         }
@@ -109,6 +107,9 @@ public class ProviderView {
         for (ProviderDO providerDO : source) {
             ProviderView providerView = new ProviderView();
             BeanUtils.copyProperties(providerDO, providerView);
+            if (!showClientConfig) {
+                providerView.setClientConfig(null);
+            }
             list.add(providerView);
         }
         return list;

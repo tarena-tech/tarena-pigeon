@@ -18,12 +18,14 @@
 package com.tarena.mnmp.admin.codegen.api.provider;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.controller.provider.ProviderView;
 import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.provider.ProviderQueryParam;
 import com.tarena.mnmp.domain.provider.ProviderSaveParam;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.security.LoginToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -65,7 +67,7 @@ public interface ProviderApi {
     )
     @GetMapping(value = {"/query/page"})
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    PagerResult<ProviderView> queryPage(ProviderQueryParam param);
+    PagerResult<ProviderView> queryPage(ProviderQueryParam param, @User LoginToken token);
 
     @ApiOperationSupport(order = 2006)
     @ApiOperation(
