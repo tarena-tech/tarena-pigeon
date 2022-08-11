@@ -33,6 +33,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -63,7 +66,16 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
         mnmpAuthenticationFilter.setAuthenticator(authenticator());
         return mnmpAuthenticationFilter;
     }
-
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("*");    //同源配置，*表示任何请求都视为同源，若需指定ip和端口可以改为如“localhost：8080”，多个以“，”分隔；
+        corsConfiguration.addAllowedHeader("*");//header，允许哪些header，本案中使用的是token，此处可将*替换为token；
+        corsConfiguration.addAllowedMethod("*");    //允许的请求方法，PSOT、GET等
+        ((UrlBasedCorsConfigurationSource) source).registerCorsConfiguration("/**", corsConfiguration); //配置允许跨域访问的url
+        return source;
+    }
     @Override protected void configure(HttpSecurity http) throws Exception {
         // 权限放行
         String[] permitList = {
@@ -72,7 +84,8 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
         };
         // 禁止跨域请求伪造过滤器
         http.csrf().disable();
-        http.cors().disable();
+        http.cors().configurationSource(corsConfigurationSource());
+
         // 关闭session管理
         http.sessionManagement().disable();
         //关闭security内置用户名密码认证
