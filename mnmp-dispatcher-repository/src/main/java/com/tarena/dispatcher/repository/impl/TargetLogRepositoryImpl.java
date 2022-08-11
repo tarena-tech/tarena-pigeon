@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class TargetLogRepositoryImpl implements TargetLogRepository {
@@ -67,7 +68,9 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
     }
 
     @Override public void modifyTargetReceiptStatus(Provider provider, List<PhoneBizIdReceiptBO> receiptedList) {
-        recordTargetDao.batchUpdate(receiptedList);
+        if (!CollectionUtils.isEmpty(receiptedList)) {
+            recordTargetDao.batchUpdate(receiptedList);
+        }
     }
 
     private void addSmsTargetByTask(SmsNoticeEvent event, SmsTarget target, Integer targetStatus,

@@ -79,7 +79,6 @@
           </template>
         </el-table-column>
 
-
         <el-table-column prop="error" label="描述">
           <template slot-scope="scope">
             <el-popover v-if="scope.row.remark" trigger="hover" placement="top">

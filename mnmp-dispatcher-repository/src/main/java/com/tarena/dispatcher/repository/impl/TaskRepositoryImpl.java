@@ -100,13 +100,15 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override public Map<Long, Integer> queryTaskMockStatus(LinkedHashSet<Long> taskIds) {
-        List<Integer> mockStatusList = this.taskDao.queryMockStatusByIds(taskIds);
-        Map<Long, Integer> taskIdMockStatusMap = new HashMap<>(mockStatusList.size());
-        int i = 0;
-        for (Long taskId : taskIds) {
-            taskIdMockStatusMap.put(taskId, mockStatusList.get(i++));
+        if (CollectionUtils.isEmpty(taskIds)) {
+            return new HashMap<>();
         }
-        return taskIdMockStatusMap;
+        List<TaskDO> mockStatusList = this.taskDao.queryMockStatusByIds(taskIds);
+        if (CollectionUtils.isEmpty(mockStatusList)) {
+            return new HashMap<>();
+        }
+
+        return mockStatusList.stream().collect(Collectors.toMap(TaskDO::getId, TaskDO::getMock));
     }
 
     /**

@@ -37,15 +37,15 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    proxy: {
-      [process.env.VUE_APP_BASE_API || '/mockapi']: {
-        target: 'https://dev-pigeon-admin.tctm.life',
-        changeOrigin: true,
-        pathRewrite: {
-          ['^' + (process.env.VUE_APP_BASE_API || '/mockapi')]: ''
-        }
-      }
-    }
+    // proxy: {
+    //   [process.env.VUE_APP_BASE_API || '/mockapi']: {
+    //     target: 'https://dev-pigeon-admin.tctm.life',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       ['^' + (process.env.VUE_APP_BASE_API || '/mockapi')]: ''
+    //     }
+    //   }
+    // }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
