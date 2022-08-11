@@ -54,6 +54,9 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
+import { login } from '@/api/login'
+import { getToken, setToken, removeToken } from '@/utils/auth'
+import Cookies from "js-cookie";
 
 export default {
   name: 'Login',
@@ -78,8 +81,8 @@ export default {
         password: '111111'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        // username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        // password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
       passwordType: 'password',
@@ -108,13 +111,27 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
+          login(this.loginForm)
+            .then(res => {
+              Cookies.set("Authorization", res)
+              console.log("login", res)
+              this.$store.commit("Authorization", res)
+              localStorage.setItem("Authorization",res)
+              if (res.succeed) {
+                this.loading = true
+                this.$store.dispatch('user/login', this.loginForm).then(() => {
+                this.$router.push({ path: this.redirect || '/' })
+                this.loading = false
+                }).catch(() => {
+                  this.loading = false
+                })
+              }
+
+
+            }).catch(err => {
+            console.log("err", res)
           })
+
         } else {
           console.log('error submit!!')
           return false

@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * 全局异常捕获
  */
-@RestControllerAdvice(basePackages = "com.tarena.mnmp.admin.controller")
+@RestControllerAdvice(basePackages = "com.tarena.mnmp.passport.controller")
 public class AdminGlobalExceptionHandler {
     private static Logger logger = LoggerFactory.getLogger(AdminGlobalExceptionHandler.class);
 

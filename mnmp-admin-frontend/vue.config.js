@@ -38,6 +38,15 @@ module.exports = {
       errors: true
     },
     proxy: {
+
+      [process.env.VUE_APP_SSO_API || '/mockapi']: {
+        target: 'https://dev-pigeon-passport.tctm.life/',
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + (process.env.VUE_APP_SSO_API || '/paaport')]: ''
+        }
+      },
+
       [process.env.VUE_APP_BASE_API || '/mockapi']: {
         target: 'https://dev-pigeon-admin.tctm.life',
         changeOrigin: true,
