@@ -28,7 +28,7 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface NoticeSmsRecordTargetDao {
 
-    int insert(NoticeSmsRecordTargetDO data);
+    Integer insert(NoticeSmsRecordTargetDO data);
 
     void update(NoticeSmsRecordTargetDO data);
 

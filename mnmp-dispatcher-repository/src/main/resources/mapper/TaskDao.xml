@@ -146,5 +146,12 @@
         where id = #{id}
     </update>
 
+    <select id="queryMockStatusByIds" resultMap="NoticeTaskMap">
+        select id, mock from notice_task
+        where id IN
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
 </mapper>
 

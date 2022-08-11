@@ -36,4 +36,5 @@ public interface Authenticator {
      * @return
      */
     LoginToken authenticate(String token, String deviceIp);
+
 }

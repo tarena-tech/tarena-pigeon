@@ -114,10 +114,10 @@
 </template>
 
 <script>
-import {queryListByPage, changeEnableStatus} from '@/api/sms.js'
+import { queryListByPage, changeEnableStatus } from '@/api/sms.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import DialogSmsAudit from "@/components/sms/dialog-audit";
-import DialogSmsSave from "@/components/sms/dialog-save"
+import DialogSmsAudit from '@/components/sms/dialog-audit'
+import DialogSmsSave from '@/components/sms/dialog-save'
 
 export default {
   name: 'DemoTable',
@@ -135,7 +135,7 @@ export default {
         auditStatus: null
       },
 
-      tableData: {recordCount: 0, list: []},
+      tableData: { recordCount: 0, list: [] },
       pagination: {
         // 数据表格配置项
         currentPageIndex: 1,
@@ -176,38 +176,38 @@ export default {
         })
     },
     refresh() {
-      this.toResetPageForList();
+      this.toResetPageForList()
     },
 
     changeStatus(_data) {
-      let msg = _data.enabled === 1 ? '禁用' : '启用';
-      let str = '是否要' + msg + '【' + _data.name + '】';
+      const msg = _data.enabled === 1 ? '禁用' : '启用'
+      const str = '是否要' + msg + '【' + _data.name + '】'
       this.$confirm(str, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         changeEnableStatus(_data.id).then(res => {
-          this.successMsg();
+          this.successMsg()
           console.dir(this.claForm)
           this.getTabelData()
         }).catch(err => {
           console.log('list-err:', err)
           this.$refs.tmp_table.loadingState(false)
         })
-      });
+      })
     },
 
     successMsg() {
       this.$message({
         type: 'success',
         message: '操作成功!'
-      });
+      })
     },
 
     // 审核
     showAudit(id) {
-      this.$refs.DialogSmsAudit.show(id);
+      this.$refs.DialogSmsAudit.show(id)
     },
 
     // 重置页码并搜索

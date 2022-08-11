@@ -26,8 +26,6 @@ public class LoginToken implements Serializable {
 
     private List<String> authorities;
 
-    private Object details;
-
     private String deviceIp;
 
     public String getDeviceIp() {
@@ -46,13 +44,6 @@ public class LoginToken implements Serializable {
         this.authorities = authorities;
     }
 
-    public Object getDetails() {
-        return details;
-    }
-
-    public void setDetails(Object details) {
-        this.details = details;
-    }
 
     public Long getId() {
         return id;

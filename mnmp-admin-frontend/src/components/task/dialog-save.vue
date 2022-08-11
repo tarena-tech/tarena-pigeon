@@ -16,8 +16,8 @@
         <el-form ref="ruleForm" class="cus-form" :model="ruleForm" :rules="rules" label-width="100px">
           <el-form-item>
             <el-upload
-              class="upload-demo"
               ref="upload"
+              class="upload-demo"
               :action=uploadUrl
               :on-success="uploadSuccess"
               :on-error="uploadError"
@@ -133,7 +133,6 @@ import { queryAppList } from '@/api/app'
 import { querySignList } from '@/api/sign'
 import { querySmsTemplateList } from '@/api/sms'
 
-
 export default {
   name: 'DialogTaskSave',
   data() {
@@ -142,7 +141,7 @@ export default {
       windowName: '创建',
       loading: false,
 
-      uploadUrl:  process.env.VUE_APP_BASE_API + '/task/uploadFile',
+      uploadUrl: process.env.VUE_APP_BASE_API + '/task/uploadFile',
       ruleForm: {
         name: null,
         templateType: null,
@@ -205,8 +204,6 @@ export default {
         taskType: [
           { required: true, message: '请选择任务类型', trigger: 'blur' }
         ],
-
-
       }
     }
   },
@@ -239,7 +236,7 @@ export default {
       })
     },
     querySigns(param) {
-      querySignList({name: param})
+      querySignList({name: param} )
         .then(res => {
           this.signs = res
         })

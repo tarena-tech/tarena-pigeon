@@ -35,7 +35,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
@@ -80,13 +80,14 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
         // 认证规则
         http.authorizeRequests()
             .antMatchers(permitList).permitAll()
+            .antMatchers("/authorize/test2").hasRole("admin")
             .anyRequest().authenticated();
         //权限不足处理器
         http.exceptionHandling().accessDeniedHandler(mnmpAccessDeniedHanldler());
         //未认证处理器
         http.exceptionHandling().authenticationEntryPoint(mnmpAuthenticationEntryPoint());
         //添加过滤器
-        http.addFilterAfter(mnmpAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(mnmpAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override public void configure(WebSecurity web) throws Exception {

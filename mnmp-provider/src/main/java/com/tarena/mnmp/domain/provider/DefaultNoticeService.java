@@ -29,7 +29,8 @@ import org.slf4j.LoggerFactory;
 
 public class DefaultNoticeService implements NoticeService {
     private static Logger logger = LoggerFactory.getLogger(DefaultNoticeService.class);
-    private Monitor monitor;
+    private Monitor monitor = new Monitor() {
+    };
 
     public void setMonitor(Monitor monitor) {
         this.monitor = monitor;
