@@ -56,7 +56,7 @@
 import { validUsername } from '@/utils/validate'
 import { login } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie'
 
 export default {
   name: 'Login',
@@ -78,7 +78,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '123456'
       },
       loginRules: {
         // username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -113,8 +113,9 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            console.log("3333333333333333333")
+            console.log('3333333333333333333')
             this.$router.push({ path: this.redirect || '/' })
+            console.log('444333')
             this.loading = false
           }).catch(() => {
             this.loading = false
