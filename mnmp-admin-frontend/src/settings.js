@@ -81,7 +81,7 @@ module.exports = {
       {
         value: 4,
         label: '失败'
-      },
+      }
     ],
     templateType: [
       {
@@ -99,7 +99,7 @@ module.exports = {
       {
         value: 3,
         label: '推广短信'
-      },
+      }
     ],
     noticeType: [
       {
@@ -135,7 +135,7 @@ module.exports = {
       {
         value: 3,
         label: '条件规则触发'
-      },
+      }
     ],
     sendStatus: [
       {
@@ -153,7 +153,7 @@ module.exports = {
       {
         value: 3,
         label: '发送给目标成功'
-      },
-    ],
+      }
+    ]
   }
 }

@@ -155,8 +155,8 @@ export const constantRoutes = [
         path: 'task/target/records',
         name: 'records',
         component: () => import('@/views/record-center/sms-record'),
-        meta: { title: '执行明细', icon: 'table' },
-      },
+        meta: { title: '执行明细', icon: 'table' }
+      }
 
     ]
   },

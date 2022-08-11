@@ -96,13 +96,11 @@
           关闭
         </el-button>
       </el-form-item>
-
-
     </el-form>
   </dev>
 </template>
 <script>
-import {detail} from '@/api/task.js'
+import { detail } from '@/api/task.js'
 export default {
   data() {
     return {
@@ -116,7 +114,7 @@ export default {
   },
   methods: {
     getDetail(_id) {
-      detail({id: _id})
+      detail({ id: _id })
         .then(res => {
           this.form = res
         })
@@ -125,18 +123,15 @@ export default {
         })
     },
     downExcel(path) {
-      var url = process.env.VUE_APP_BASE_API + '/task/excel';
+      let url = process.env.VUE_APP_BASE_API + '/task/excel';
       if (path) {
-        url += '?path=' + path;
+        url += '?path=' + path
       }
       window.open(url)
     },
     pre() {
-      this.$router.push({name: 'task'});
+      this.$router.push({ name: 'task' });
     },
-  },
-
-
-
+  }
 }
 </script>

@@ -203,7 +203,7 @@ export default {
         ],
         taskType: [
           { required: true, message: '请选择任务类型', trigger: 'blur' }
-        ],
+        ]
       }
     }
   },
@@ -232,11 +232,11 @@ export default {
         .then(res => {
           this.apps = res
         }).catch(err => {
-        console.error(err);
+        console.error(err)
       })
     },
     querySigns(param) {
-      querySignList({name: param} )
+      querySignList({ name: param } )
         .then(res => {
           this.signs = res
         })
@@ -260,7 +260,6 @@ export default {
         })
     },
 
-
     submitUpload() {
       this.$refs.upload.submit();
     },
@@ -273,14 +272,13 @@ export default {
     },
 
     downExcel(path) {
-      var url = process.env.VUE_APP_BASE_API + '/task/excel';
+      let url = process.env.VUE_APP_BASE_API + '/task/excel'
       if (path) {
-        url += '?path=' + path;
+        url += '?path=' + path
       }
       window.open(url)
     },
     submitForm() {
-      console.log("--------------", this.ruleForm.mock)
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           addTask(this.ruleForm)
@@ -303,7 +301,7 @@ export default {
     },
     show(data) {
       this.dialogVisible = true
-      this.ruleForm = {};
+      this.ruleForm = {}
       if (data != null) {
         this.windowName = '修改'
         this.ruleForm = data

@@ -87,10 +87,10 @@
 </template>
 
 <script>
-import { queryPage, changeEnable} from '@/api/app.js'
+import { queryPage, changeEnable } from '@/api/app.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import DialogAppSave from "@/components/app/dialog-save";
-import DialogAppAudit from "@/components/app/dialog-audit";
+import DialogAppSave from '@/components/app/dialog-save'
+import DialogAppAudit from '@/components/app/dialog-audit'
 export default {
   name: 'DemoTable',
   components: {
@@ -125,7 +125,7 @@ export default {
       console.log('click-row-data:', row)
     },
     refresh() {
-      this.toResetPageForList();
+      this.toResetPageForList()
     },
     resetForm() {
       this.$refs.claFrom.resetFields()
@@ -134,7 +134,7 @@ export default {
       this.$refs.DialogAppSave.show(data)
     },
     showAudit(_id) {
-      this.$refs.DialogAppAudit.show(_id);
+      this.$refs.DialogAppAudit.show(_id)
     },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)
@@ -146,7 +146,6 @@ export default {
         .then(res => {
           this.$refs.tmp_table.loadingState(false)
           this.tableData = res
-          console.log("2222", res)
         })
         .catch((err) => {
           console.error('list-err:', err)
