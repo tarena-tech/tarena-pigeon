@@ -45,7 +45,7 @@ export default {
       this.ruleForm.id = _id
     },
     auditing(status) {
-      this.ruleForm.auditStatus = statusxs
+      this.ruleForm.auditStatus = status
       console.dir(this.ruleForm)
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {

@@ -64,7 +64,7 @@ export default {
       this.$emit('refresh')
     },
     auditing(status) {
-      this.ruleForm.auditStatus = status;
+      this.ruleForm.auditStatus = status
       console.dir(this.ruleForm)
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
@@ -73,14 +73,13 @@ export default {
               this.$message({
                 type: 'success',
                 message: '操作成功!'
-              });
-              this.dialogFormVisible = false;
-              this.cancelForm();
+              })
+              this.dialogFormVisible = false
+              this.cancelForm()
             })
             .catch(err => {
-              console.error('audit fial', err);
+              console.error('audit fial', err)
             })
-
         }
       })
     }

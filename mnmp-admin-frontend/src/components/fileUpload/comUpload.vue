@@ -34,16 +34,16 @@ export default {
       )
     }
   },
-  beforeCreate () {
+  beforeCreate() {
   },
-  created () {
+  created() {
 
   },
-  mounted () {
+  mounted() {
 
   },
   methods: {
-    uploadError (response) {
+    uploadError(response) {
       const mes_ = (JSON.parse(response.message)).tip
       this.$message.error('上传失败:' + mes_)
     }

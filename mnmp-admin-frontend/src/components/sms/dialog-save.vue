@@ -158,9 +158,9 @@ export default {
         appendId: this.ruleForm.appId
       }).then(res => {
         this.apps = res
-        }).catch(err => {
-          console.error(err)
-        })
+      }).catch(err => {
+        console.error(err)
+      })
     },
 
     queryProviders(param) {
@@ -170,10 +170,10 @@ export default {
         enable: 1,
         appendId: this.ruleForm.providerId
       }).then(res => {
-          this.providers = res
-        }).catch(err => {
+        this.providers = res
+      }).catch(err => {
           console.error(err)
-        })
+      })
     }
   }
 }

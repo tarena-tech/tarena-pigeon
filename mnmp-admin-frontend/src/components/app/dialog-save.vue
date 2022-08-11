@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import {save} from "@/api/app";
+import { save } from '@/api/app'
 
 export default {
   name: 'AppDialogSave',
@@ -74,21 +74,21 @@ export default {
       // this.dialogVisible = false
       this.$refs.drawer.closeDrawer()
       this.$emit('refresh')
-
     },
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           save(this.ruleForm)
             .then(res => {
-              console.dir(res);
+              console.dir(res)
               this.$message({
                 type: 'success',
                 message: '操作成功!'
-              });
-              this.cancelForm();
+              })
+              this.cancelForm()
             })
             .catch(err => {
+              console.error(err)
             })
         } else {
           console.log('error submit!!')

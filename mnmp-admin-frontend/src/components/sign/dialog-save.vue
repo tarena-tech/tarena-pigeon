@@ -119,9 +119,9 @@ export default {
         auditStatus: 1,
         appendId: this.ruleForm.appId
       }).then(res => {
-          this.apps = res
-        }).catch(err => {
-          console.error(err)
+        this.apps = res
+      }).catch(err => {
+        console.error(err)
       })
     }
   }
