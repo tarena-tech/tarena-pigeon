@@ -1,3 +1,3 @@
-import {post} from "@/utils/request";
+import { post } from '@/utils/request';
 
-export const login = (data) => post('/passport/login', data, null)
+export const login = (data) => post('/passport/login', data, { baseURL: process.env.VUE_APP_PASS_PORT_API })
