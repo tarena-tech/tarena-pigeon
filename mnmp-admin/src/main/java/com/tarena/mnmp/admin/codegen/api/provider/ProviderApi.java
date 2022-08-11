@@ -30,6 +30,7 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,11 +48,13 @@ public interface ProviderApi {
 
     @ApiOperation(value = "保存服务商 创建/更新")
     @PostMapping("save")
+    @PreAuthorize("hasAnyRole('admin','root')")
     void save(@RequestBody ProviderSaveParam param) throws BusinessException;
 
     @ApiOperationSupport(order = 2004)
     @ApiOperation(value = "切换服务商可用状态")
     @PostMapping({"/change/enable/status"})
+    @PreAuthorize("hasAnyRole('admin','root')")
     void changeEnableStatus(@NotNull @ApiParam(value = "服务商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id) throws BusinessException;
 
 
@@ -61,6 +64,7 @@ public interface ProviderApi {
         value = "查询服务分页商列表"
     )
     @GetMapping(value = {"/query/page"})
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     PagerResult<ProviderView> queryPage(ProviderQueryParam param);
 
     @ApiOperationSupport(order = 2006)
@@ -71,6 +75,7 @@ public interface ProviderApi {
         value = {"/query/detail"},
         produces = {"application/json"}
     )
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     ProviderView queryProviderDetail(
         @NotNull @ApiParam(value = "服务商id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
@@ -85,6 +90,7 @@ public interface ProviderApi {
     @PostMapping(
         value = "/audit"
     )
+    @PreAuthorize("hasAnyRole('admin','root')")
     void auditProvider(@RequestBody AuditParam param);
 
     @ApiOperationSupport(order = 2008)
@@ -95,6 +101,7 @@ public interface ProviderApi {
     @GetMapping(
         value = "/query/list"
     )
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     List<ProviderView> queryList(ProviderQueryParam param);
 
 }

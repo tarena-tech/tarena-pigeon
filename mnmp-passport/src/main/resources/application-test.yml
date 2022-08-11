@@ -15,4 +15,4 @@ excel:
 
 jwt:
   secret: tarena-pigeon
-  expiration: 600000
+  expiration: 60000000
