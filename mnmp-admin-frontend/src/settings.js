@@ -59,7 +59,7 @@ module.exports = {
       {
         value: 5,
         label: '年'
-      },
+      }
     ],
     taskStatusOpts: [
       {

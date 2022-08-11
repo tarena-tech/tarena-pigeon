@@ -28,7 +28,7 @@ export function isLegalHttpUrl(rule, value, callback) {
 }
 export function isJson(rule, value, callback) {
   try {
-    JSON.parse(value);
+    JSON.parse(value)
   } catch (e) {
     callback(new Error('请输入json格式'))
     return

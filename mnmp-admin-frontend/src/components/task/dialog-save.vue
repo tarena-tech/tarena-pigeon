@@ -208,9 +208,9 @@ export default {
     }
   },
   mounted() {
-    this.queryApps();
-    this.queryTemplates();
-    this.querySigns();
+    this.queryApps()
+    this.queryTemplates()
+    this.querySigns()
   },
   methods: {
     handleClose(done) {
@@ -228,24 +228,23 @@ export default {
         enable: 1,
         auditStatus: 1,
         appendId: this.ruleForm.appId
-      })
-        .then(res => {
+      }).then(res => {
           this.apps = res
         }).catch(err => {
-        console.error(err)
-      })
+          console.error(err)
+        })
     },
     querySigns(param) {
-      querySignList({ name: param } )
+      querySignList({ name: param })
         .then(res => {
           this.signs = res
         })
         .catch(err => {
-          console.error(err);
+          console.error(err)
         })
     },
     queryTemplates(param) {
-      let params = {
+      const params = {
         templateName: param,
         enable: 1,
         auditStatus: 1,
@@ -256,19 +255,19 @@ export default {
           this.templates = res
         })
         .catch(err => {
-          console.log(err);
+          console.log(err)
         })
     },
 
     submitUpload() {
-      this.$refs.upload.submit();
+      this.$refs.upload.submit()
     },
 
     uploadSuccess(response, file, fileList) {
-      this.ruleForm.filePath = response.data;
+      this.ruleForm.filePath = response.data
     },
     uploadError(err, file, fileList) {
-      // TODO 提示错误 待实现
+      console.error(err)
     },
 
     downExcel(path) {

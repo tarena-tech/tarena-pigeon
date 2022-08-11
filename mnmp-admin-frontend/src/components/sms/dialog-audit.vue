@@ -13,7 +13,7 @@
 </template>
 <script>
 
-import {audit} from "@/api/sms.js";
+import { audit } from '@/api/sms.js'
 
 export default {
   name: 'DialogAppAudit',
@@ -46,7 +46,7 @@ export default {
       this.ruleForm.id = id
     },
     auditing(status) {
-      this.ruleForm.auditStatus = status;
+      this.ruleForm.auditStatus = status
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           audit(this.ruleForm)
@@ -54,23 +54,17 @@ export default {
               this.$message({
                 type: 'success',
                 message: '操作成功!'
-              });
-              this.dialogFormVisible = false;
+              })
+              this.dialogFormVisible = false
               this.$emit('refresh')
             })
             .catch(err => {
-              console.error('audit fial', err);
+              console.error('audit fial', err)
             })
-
         }
       })
     }
   }
-
-
 }
-
-
-
 
 </script>

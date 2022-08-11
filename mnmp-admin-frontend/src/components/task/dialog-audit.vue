@@ -13,7 +13,7 @@
 </template>
 <script>
 
-import {audit} from "@/api/task";
+import { audit } from '@/api/task'
 
 export default {
   name: 'DialogTaskAudit',
@@ -42,10 +42,10 @@ export default {
     show(_id) {
       this.dialogFormVisible = true
       this.ruleForm = {}
-      this.ruleForm.id = _id;
+      this.ruleForm.id = _id
     },
     auditing(status) {
-      this.ruleForm.auditStatus = status;
+      this.ruleForm.auditStatus = status
       console.dir(this.ruleForm)
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
@@ -54,23 +54,16 @@ export default {
               this.$message({
                 type: 'success',
                 message: '操作成功!'
-              });
-              this.dialogFormVisible = false;
+              })
+              this.dialogFormVisible = false
               this.$emit('refresh')
             })
             .catch(err => {
-              console.error('audit fial', err);
+              console.error('audit fial', err)
             })
-
         }
       })
     }
   }
-
-
 }
-
-
-
-
 </script>

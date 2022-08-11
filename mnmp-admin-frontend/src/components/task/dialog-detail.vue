@@ -64,7 +64,7 @@
       </el-form-item>
 
       <el-form-item label="目标文件地址">
-        <template slot-scope="scope" v-if="form.targetFileUrl">
+        <template v-if="form.targetFileUrl">
           <i class="el-icon-download"  @click="downExcel(form.targetFileUrl)"></i>
         </template>
       </el-form-item>
@@ -119,19 +119,19 @@ export default {
           this.form = res
         })
         .catch(err => {
-          console.dir(err);
+          console.dir(err)
         })
     },
     downExcel(path) {
-      let url = process.env.VUE_APP_BASE_API + '/task/excel';
+      let url = process.env.VUE_APP_BASE_API + '/task/excel'
       if (path) {
         url += '?path=' + path
       }
       window.open(url)
     },
     pre() {
-      this.$router.push({ name: 'task' });
-    },
+      this.$router.push({ name: 'task' })
+    }
   }
 }
 </script>

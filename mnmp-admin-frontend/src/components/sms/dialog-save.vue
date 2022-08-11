@@ -62,8 +62,8 @@
 
 <script>
 import { save } from '@/api/sms'
-import {queryAppList} from "@/api/app";
-import { queryProviderList } from "@/api/provider"
+import { queryAppList } from '@/api/app'
+import { queryProviderList } from '@/api/provider'
 export default {
   name: 'DialogSmsSave',
   data() {
@@ -144,7 +144,7 @@ export default {
     },
     show(data) {
       this.dialogVisible = true
-      this.ruleForm = {};
+      this.ruleForm = {}
       if (data != null) {
         this.windowName = '修改'
         this.ruleForm = data
@@ -156,12 +156,11 @@ export default {
         enable: 1,
         auditStatus: 1,
         appendId: this.ruleForm.appId
-      })
-        .then(res => {
-          this.apps = res
+      }).then(res => {
+        this.apps = res
         }).catch(err => {
-        console.error(err);
-      })
+          console.error(err)
+        })
     },
 
     queryProviders(param) {
@@ -170,12 +169,11 @@ export default {
         auditStatus: 1,
         enable: 1,
         appendId: this.ruleForm.providerId
-      })
-        .then(res => {
-          this.providers = res;
+      }).then(res => {
+          this.providers = res
         }).catch(err => {
           console.error(err)
-      })
+        })
     }
   }
 }

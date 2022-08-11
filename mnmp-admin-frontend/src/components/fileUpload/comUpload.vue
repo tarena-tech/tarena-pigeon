@@ -14,7 +14,7 @@ export default {
   name: 'ComUpload',
   inheritAttrs: false,
   props: {},
-  data () {
+  data() {
     return {
       defaultOpts: {
         headers: {
@@ -27,7 +27,7 @@ export default {
     }
   },
   computed: {
-    merageOpts () {
+    merageOpts() {
       return objectMerge(
         this.defaultOpts,
         this.$attrs

@@ -53,10 +53,6 @@
 </template>
 
 <script>
-// import { validUsername } from '@/utils/validate'
-// import { login } from '@/api/login'
-// import { getToken, setToken, removeToken } from '@/utils/auth'
-// import Cookies from 'js-cookie'
 
 export default {
   name: 'Login',

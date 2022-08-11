@@ -13,7 +13,7 @@
 </template>
 <script>
 
-import {audit} from "@/api/sign";
+import { audit } from '@/api/sign'
 
 export default {
   name: 'DialogSignAudit',
@@ -41,10 +41,10 @@ export default {
   methods: {
     show(_id) {
       this.dialogFormVisible = true
-      this.ruleForm.id = _id;
+      this.ruleForm.id = _id
     },
     auditing(status) {
-      this.ruleForm.auditStatus = status;
+      this.ruleForm.auditStatus = status
       console.dir(this.ruleForm)
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
@@ -53,23 +53,16 @@ export default {
               this.$message({
                 type: 'success',
                 message: '操作成功!'
-              });
-              this.dialogFormVisible = false;
+              })
+              this.dialogFormVisible = false
               this.$emit('refresh')
             })
             .catch(err => {
-              console.error('audit fial', err);
+              console.error('audit fial', err)
             })
-
         }
       })
     }
   }
-
-
 }
-
-
-
-
 </script>

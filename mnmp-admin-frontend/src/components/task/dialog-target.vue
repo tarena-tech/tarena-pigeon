@@ -40,7 +40,6 @@
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="updateTime" label="更新时间"/>
 
-
         <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="jumpSendRecord(scope.row)">
@@ -98,7 +97,7 @@ export default {
       this.$refs.claFrom.resetFields()
     },
     refresh() {
-      this.toResetPageForList();
+      this.toResetPageForList()
     },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)
@@ -120,8 +119,7 @@ export default {
 
     jumpSendRecord(data) {
       // this.$router.push({name: 'records', params: {target : data.target, taskId: data.taskId}});
-      this.$router.push({name: 'records', query: { target : data.target, taskId: data.taskId }})
-
+      this.$router.push({ name: 'records', query: { target: data.target, taskId: data.taskId }})
     },
 
     // 重置页码并搜索

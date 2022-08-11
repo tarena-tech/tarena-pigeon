@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import { save } from "@/api/provider";
-import { isLegalHttpUrl, isJson } from "@/utils/validate";
+import { save } from '@/api/provider'
+import { isLegalHttpUrl, isJson } from '@/utils/validate'
 
 export default {
   name: 'DialogProviderSave',
@@ -103,19 +103,17 @@ export default {
       // this.dialogVisible = false
       this.$refs.drawer.closeDrawer()
       this.$emit('refresh')
-
     },
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           save(this.ruleForm)
             .then(res => {
-              this.cancelForm();
+              this.cancelForm()
             })
             .catch(err => {
-              console.error("create fail", err);
+              console.error('create fail', err)
             })
-
         } else {
           console.log('error submit!!')
           return false
@@ -127,12 +125,12 @@ export default {
     },
     show(data) {
       this.dialogVisible = true
-      this.ruleForm = {};
-      if (null != data) {
-        this.windowName = "修改"
-        this.ruleForm = data;
+      this.ruleForm = {}
+      if (data != null) {
+        this.windowName = '修改'
+        this.ruleForm = data
       }
-    },
+    }
   }
 }
 </script>

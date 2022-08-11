@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import {save} from "@/api/sign";
-import {queryAppList} from "@/api/app";
+import { save } from '@/api/sign'
+import { queryAppList } from '@/api/app'
 
 export default {
   name: 'DialogSignSave',
@@ -84,17 +84,16 @@ export default {
       // this.dialogVisible = false
       this.$refs.drawer.closeDrawer()
       this.$emit('refresh')
-
     },
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           save(this.ruleForm)
             .then(res => {
-              this.cancelForm();
+              this.cancelForm()
             })
             .catch(err => {
-              console.error("create fail", err);
+              console.error('create fail', err)
             })
         } else {
           console.log('error submit!!')
@@ -108,9 +107,9 @@ export default {
     show(data) {
       this.ruleForm = {}
       this.dialogVisible = true
-      if (null != data) {
-        this.windowName = "修改"
-        this.ruleForm = data;
+      if (data != null) {
+        this.windowName = '修改'
+        this.ruleForm = data
       }
     },
     queryApps(param) {
@@ -119,13 +118,12 @@ export default {
         enable: 1,
         auditStatus: 1,
         appendId: this.ruleForm.appId
-      })
-        .then(res => {
+      }).then(res => {
           this.apps = res
         }).catch(err => {
-        console.error(err);
+          console.error(err)
       })
-    },
+    }
   }
 }
 </script>
