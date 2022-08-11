@@ -155,18 +155,13 @@
                 <if test="item.status != null">
                     status = #{item.status},
                 </if>
-                <if test="item.pushTime != null">
-                    push_time = #{item.pushTime},
-                </if>
-                <if test="item.pushTime != null">
-                    push_receive_time = #{item.pushReceiveTime},
+                <if test="item.receiveTime != null">
+                    push_receive_time = #{item.receiveTime},
                 </if>
                 <if test="item.sendResult != null">
                     send_result = #{item.sendResult},
                 </if>
-                <if test="item.updateTime != null">
-                    update_time = #{item.updateTime},
-                </if>
+                update_time =now()
             </set>
             where biz_id = #{item.bizId}
         </foreach>

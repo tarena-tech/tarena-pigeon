@@ -30,6 +30,7 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,11 +52,13 @@ public interface SignApi {
     @PostMapping(
         value = {"/save"}
     )
+    @PreAuthorize("hasAnyRole('admin','root')")
     void save(@ApiParam(value = "新增签名", required = true) @Valid @RequestBody SignSaveParam signParam) throws BusinessException;
 
 
     @ApiOperation("启用/禁用")
     @PostMapping("change/enable/status")
+    @PreAuthorize("hasAnyRole('admin','root')")
     void changeEnableStatus(Long id) throws BusinessException;
 
     @ApiOperationSupport(order = 3005)
@@ -64,6 +67,7 @@ public interface SignApi {
     )
     @GetMapping("/queryDetail")
     @ApiParam(value = "签名id", required = true)
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     SignView querySignDetail(
         @NotNull  @Valid @RequestParam(value = "id", required = true) Long id);
 
@@ -74,16 +78,19 @@ public interface SignApi {
     @GetMapping(
         value = {"/queryPage"}
     )
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     PagerResult<SignView> queryPage(@ApiParam(value = "签名查询入参") SignQuery signQuery);
 
     @GetMapping(
         value = {"/queryList"}
     )
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     List<SignView> queryList(@ApiParam(value = "签名查询入参") SignQuery signQuery);
 
     /**
      * 审核签名
      */
     @PostMapping("audit")
+    @PreAuthorize("hasAnyRole('admin','root')")
     void auditSign(@RequestBody AuditParam param);
 }

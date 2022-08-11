@@ -79,8 +79,7 @@ public class TargetLogRepositoryImpl implements TargetLogRepository {
         NoticeSmsRecordTargetDO noticeSmsRecordTarget = new NoticeSmsRecordTargetDO();
         noticeSmsRecordTarget.setTaskId(event.getNoticeEvent().getTaskId());
         noticeSmsRecordTarget.setTarget(target.getTarget());
-        // TODO 时间格式
-        // noticeSmsRecordTarget.setTriggerTime(event.getNoticeEvent().getTriggerTime());
+        noticeSmsRecordTarget.setTriggerTime(event.getNoticeEvent().getTriggerTime());
         noticeSmsRecordTarget.setPushTime(current);
         noticeSmsRecordTarget.setCreateTime(current);
         noticeSmsRecordTarget.setUpdateTime(current);

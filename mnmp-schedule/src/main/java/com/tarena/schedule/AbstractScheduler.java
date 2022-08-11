@@ -28,6 +28,7 @@ import com.tarena.dispatcher.respository.TaskRepository;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.commons.json.Json;
+import com.tarena.mnmp.commons.utils.ExceptionUtils;
 import com.tarena.mnmp.constant.Constant;
 import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.enums.NoticeType;
@@ -128,8 +129,9 @@ public abstract class AbstractScheduler {
                 this.taskRepository.updateNextTriggerTimeAndStatus(trigger.getTaskId(), nextTriggerTime, TaskStatus.TASK_DOING.status());
             }
         } catch (Exception e) {
-            this.monitor.alarms(ErrorCode.DISPATCHER_TASK_ERROR, e.getMessage());
-            this.taskRepository.errorTask(trigger.getTaskId(), TaskStatus.TASK_ERROR.status(), e.getMessage());
+            String exceptionMsg = ExceptionUtils.getStackTrace(e, 1000);
+            this.monitor.alarms(ErrorCode.DISPATCHER_TASK_ERROR, exceptionMsg);
+            this.taskRepository.errorTask(trigger.getTaskId(), TaskStatus.TASK_ERROR.status(), exceptionMsg);
             logger.error("task-id {} app-id {} ", trigger.getTaskId(), trigger.getAppId(), e);
         }
     }

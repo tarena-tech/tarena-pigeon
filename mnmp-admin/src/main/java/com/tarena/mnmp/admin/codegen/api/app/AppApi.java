@@ -30,6 +30,7 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,7 +51,7 @@ public interface AppApi {
     @ApiOperation(value = "新增/修改 应用")
     @PostMapping("save")
     @ApiParam(name = "appSaveParam", value = "新增应用", required = true)
-    //@PreAuthorize("hasAnyRole('admin','root')")
+    @PreAuthorize("hasAnyRole('admin','root')")
     void save(@Valid @RequestBody AppSaveParam appSaveParam) throws BusinessException;
 
 
@@ -58,7 +59,7 @@ public interface AppApi {
     @ApiOperationSupport(order = 1004)
     @ApiOperation(value = "更改可用状态")
     @PostMapping("change/enable/status")
-    //@PreAuthorize("hasAnyRole('admin','root')")
+    @PreAuthorize("hasAnyRole('admin','root')")
     void changeEnableStatus(Long id) throws BusinessException;
 
     /**
@@ -69,7 +70,7 @@ public interface AppApi {
     @ApiOperationSupport(order = 1005)
     @ApiOperation(value = "查看应用详情")
     @GetMapping("query/detail")
-    //@PreAuthorize("hasAnyRole('admin','root')")
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     AppView queryAppDetail(
         @NotNull @ApiParam(value = "应用id", required = true) @Valid @RequestParam(value = "id", required = true) Long id);
 
@@ -79,13 +80,13 @@ public interface AppApi {
     @ApiOperationSupport(order = 1006)
     @ApiOperation(value = "查询应用管理分页列表")
     @GetMapping("query/page")
-    //@PreAuthorize("hasAnyRole('admin','root')")
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     PagerResult<AppView> queryPage(AppQueryParam param);
 
     @ApiOperationSupport(order = 1006)
     @ApiOperation(value = "查询应用管理列表")
     @GetMapping("query/list")
-    //@PreAuthorize("hasAnyRole('admin','root')")
+    @PreAuthorize("hasAnyRole('admin','root','user')")
     List<AppView> queryList(AppQueryParam param);
 
     /**
@@ -94,6 +95,6 @@ public interface AppApi {
     @ApiOperationSupport(order = 1007)
     @ApiOperation(value = "审核应用")
     @PostMapping("audit")
-    //@PreAuthorize("hasAnyRole('admin','root')")
+    @PreAuthorize("hasAnyRole('admin','root')")
     void auditApp(@RequestBody AuditParam param);
 }

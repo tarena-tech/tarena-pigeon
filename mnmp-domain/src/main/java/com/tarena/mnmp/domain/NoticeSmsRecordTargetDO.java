@@ -52,7 +52,8 @@ public class NoticeSmsRecordTargetDO implements Serializable {
      * 消息发送状态
      */
     private Integer status;
-    private Date triggerTime;
+
+    private String triggerTime;
     /**
      * 发送时间
      */
