@@ -14,17 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.commons.utils;
 
-package com.tarena.dispatcher.storage.mapper;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
-import com.tarena.mnmp.domain.SmsTemplateDO;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+public class ExceptionUtils {
+    public static String getStackTrace(Throwable throwable, int maxLength) {
+        String error = getStackTrace(throwable);
+        if (error == null) {
+            return "NPE";
+        }
+        if (error.length() > maxLength) {
+            return error.substring(0, maxLength);
+        }
+        return error;
+    }
 
-@Mapper
-public interface TemplateDao {
-    @Select("select id,name,code,content,template_type,notice_type,app_id,app_code,provider_id from notice_sms_template where id = #{templateId}")
-    SmsTemplateDO selectById(@Param("templateId") Long templateId);
+    public static String getStackTrace(Throwable throwable) {
+        StringWriter sw = new StringWriter();
+        try (PrintWriter pw = new PrintWriter(sw)) {
+            throwable.printStackTrace(pw);
+            return sw.toString();
+        }
+    }
 }
-
