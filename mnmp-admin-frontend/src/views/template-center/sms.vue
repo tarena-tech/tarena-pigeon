@@ -108,8 +108,8 @@
     <dialog-sms-info ref="dialogSmsInfo"/>
     <dialog-sms-info ref="dialogSmsInfo"/>
     <!-- 创建弹窗 -->
-    <dialog-sms-save ref="DialogSmsSave" @refresh="refresh"/>
-    <dialog-sms-audit ref="DialogSmsAudit" @refresh="refresh"/>
+    <dialog-sms-save ref="DialogSmsSave" @refresh="refresh" />
+    <dialog-sms-audit ref="DialogSmsAudit" @refresh="refresh" />
   </div>
 </template>
 

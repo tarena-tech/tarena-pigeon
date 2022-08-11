@@ -70,7 +70,6 @@
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="updateTime" label="更新时间"/>
 
-
         <el-table-column fixed="right" width="100"  label="操作">
           <template slot-scope="scope">
             <el-button type="text" size="mini" @click="changeStatus(scope.row)">
@@ -92,10 +91,10 @@
 </template>
 
 <script>
-import {queryPage, changeEnable} from '@/api/provider.js'
+import { queryPage, changeEnable } from '@/api/provider.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import DialogProviderAudit from "@/components/provider/dialog-audit";
-import DialogProviderSave from "@/components/provider/dialog-save";
+import DialogProviderAudit from '@/components/provider/dialog-audit'
+import DialogProviderSave from '@/components/provider/dialog-save'
 
 export default {
   name: 'DemoTable',
@@ -111,7 +110,7 @@ export default {
         code: null // 应用code
       },
 
-      tableData: {recordCount: 0, list: []},
+      tableData: { recordCount: 0, list: [] },
       pagination: {
         // 数据表格配置项
         currentPageIndex: 1,
@@ -135,10 +134,10 @@ export default {
       this.$refs.claFrom.resetFields()
     },
     refresh() {
-      this.toResetPageForList();
+      this.toResetPageForList()
     },
     reload() {
-      this.getTabelData();
+      this.getTabelData()
     },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)
@@ -167,31 +166,31 @@ export default {
     },
 
     changeStatus(_data) {
-      let msg = _data.enabled === 1 ? '禁用' : '启用';
-      let str = '是否要' + msg + '【' + _data.name + '】';
+      const msg = _data.enabled === 1 ? '禁用' : '启用'
+      const str = '是否要' + msg + '【' + _data.name + '】'
       this.$confirm(str, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         changeEnable(_data.id).then(res => {
-          this.successMsg();
+          this.successMsg()
           this.getTabelData()
         }).catch(err => {
           console.log('list-err:', err)
           this.$refs.tmp_table.loadingState(false)
         })
-      });
+      })
     },
     successMsg() {
       this.$message({
         type: 'success',
         message: '操作成功!'
-      });
+      })
     },
     showAudit(_id) {
-      this.$refs.DialogProviderAudit.show(_id);
-    },
+      this.$refs.DialogProviderAudit.show(_id)
+    }
   }
 }
 </script>

@@ -120,7 +120,6 @@
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="updateTime" label="更新时间"/>
 
-
         <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
             <el-button v-if="scope.row.taskStatus === 0 || scope.row.taskStatus === 1"  type="text" size="small" @click="changeStatus(scope.row)" >
@@ -146,7 +145,7 @@
 
 <script>
 import { changeStatus, queryPage } from '@/api/task.js'
-import {queryAppList} from "@/api/app";
+import { queryAppList } from '@/api/app'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogTaskAudit from '@/components/task/dialog-audit'
 import DialogTaskSave from '@/components/task/dialog-save'
@@ -192,7 +191,7 @@ export default {
       this.$refs.claFrom.resetFields()
     },
     refresh() {
-      this.toResetPageForList();
+      this.toResetPageForList()
     },
     getTabelData() {
       this.$refs.tmp_table.loadingState(true)
@@ -221,13 +220,13 @@ export default {
       })
     },
     showAudit(_id) {
-      this.$refs.DialogTaskAudit.show(_id);
+      this.$refs.DialogTaskAudit.show(_id)
     },
     save(data) {
       this.$refs.DialogTaskSave.show(data)
     },
     downExcel(path) {
-      var url = process.env.VUE_APP_BASE_API + '/task/excel';
+      var url = process.env.VUE_APP_BASE_API + '/task/excel'
       if (path) {
         url += '?path=' + path;
       }
@@ -238,25 +237,24 @@ export default {
         name: param,
         enable: 1,
         auditStatus: 1
-      })
-        .then(res => {
+      }).then(res => {
           this.apps = res
         }).catch(err => {
-        console.error(err);
-      })
-    },
+        console.error(err)
+      })},
+
     jump(_id) {
-      this.$router.push({name: 'detail', query: {id : _id}});
+      this.$router.push({ name: 'detail', query: { id: _id }})
     },
     target(_id) {
-      this.$router.push({name: 'targets', query: {id : _id}});
+      this.$router.push({ name: 'targets', query: { id: _id }})
     },
 
     // 重置页码并搜索
     toResetPageForList() {
       this.pagination.currentPageIndex = 1
       this.getTabelData()
-    },
+    }
   }
 }
 </script>

@@ -83,8 +83,8 @@
 <script>
 import { queryPage, changeEnable } from '@/api/sign.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import DialogSignSave from "@/components/sign/dialog-save";
-import DialogSignAudit from "@/components/sign/dialog-audit";
+import DialogSignSave from '@/components/sign/dialog-save'
+import DialogSignAudit from '@/components/sign/dialog-audit'
 export default {
   name: 'DemoTable',
   components: {
@@ -145,37 +145,37 @@ export default {
       this.getTabelData()
     },
     changeStatus(_data) {
-      let msg = _data.enabled === 1 ? '禁用' : '启用';
-      let str = '是否要' + msg + '【' + _data.name + '】';
+      const msg = _data.enabled === 1 ? '禁用' : '启用'
+      const str = '是否要' + msg + '【' + _data.name + '】'
       this.$confirm(str, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         changeEnable(_data.id).then(res => {
-          this.successMsg();
+          this.successMsg()
           this.getTabelData()
         }).catch(err => {
           console.log('list-err:', err)
           this.$refs.tmp_table.loadingState(false)
         })
-      });
+      })
     },
     successMsg() {
       this.$message({
         type: 'success',
         message: '操作成功!'
-      });
+      })
     },
 
     showAudit(_id) {
-      this.$refs.DialogSignAudit.show(_id);
+      this.$refs.DialogSignAudit.show(_id)
     },
     save(data) {
       this.$refs.DialogSignSave.show(data)
     },
     refresh() {
-      this.toResetPageForList();
+      this.toResetPageForList()
     }
   }
 }

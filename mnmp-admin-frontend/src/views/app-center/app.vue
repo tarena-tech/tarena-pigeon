@@ -154,34 +154,34 @@ export default {
         })
     },
     changeStatus(_data) {
-      let msg = _data.enabled === 1 ? '禁用' : '启用';
-      let str = '是否要' + msg + '【' + _data.name + '】';
+      const msg = _data.enabled === 1 ? '禁用' : '启用'
+      const str = '是否要' + msg + '【' + _data.name + '】'
       this.$confirm(str, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         changeEnable(_data.id).then(res => {
-          this.successMsg();
+          this.successMsg()
           this.getTabelData()
         }).catch(err => {
           console.log('list-err:', err)
           this.$refs.tmp_table.loadingState(false)
         })
-      });
+      })
     },
     successMsg() {
       this.$message({
         type: 'success',
         message: '操作成功!'
-      });
+      })
     },
 
     // 重置页码并搜索
     toResetPageForList() {
       this.pagination.currentPageIndex = 1
       this.getTabelData()
-    },
+    }
   }
 }
 </script>

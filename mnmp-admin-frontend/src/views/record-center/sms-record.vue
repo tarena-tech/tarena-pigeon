@@ -102,12 +102,12 @@
 
 <script>
 import { queryPage } from '@/api/SmsRecord'
-import {queryAppList} from "@/api/app";
+import { queryAppList } from '@/api/app'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 export default {
   name: 'DemoTable',
   components: {
-    TmpTablePagination,
+    TmpTablePagination
   },
   data() {
     return {
@@ -135,8 +135,8 @@ export default {
   computed: {},
   watch: {},
   mounted() {
-    this.claForm.target = this.$route.query.target;
-    this.claForm.taskId = this.$route.query.taskId;
+    this.claForm.target = this.$route.query.target
+    this.claForm.taskId = this.$route.query.taskId
 
     this.getTabelData()
   },
@@ -150,8 +150,8 @@ export default {
       this.$refs.tmp_table.loadingState(true)
 
       if (this.claForm.triggerTimes.length === 2) {
-        this.claForm.startTriggerTime = this.claForm.triggerTimes[0];
-        this.claForm.endTriggerTime = this.claForm.triggerTimes[1];
+        this.claForm.startTriggerTime = this.claForm.triggerTimes[0]
+        this.claForm.endTriggerTime = this.claForm.triggerTimes[1]
       }
       const _data = {
         ...this.claForm,
@@ -177,11 +177,8 @@ export default {
         .then(res => {
           this.apps = res
         }).catch(err => {
-        console.error(err);
-      })
-    },
-
-
+        console.error(err)
+      })},
 
     // 重置页码并搜索
     toResetPageForList() {
@@ -192,7 +189,7 @@ export default {
       console.dir(this.claForm.triggerTimes)
       console.log(this.claForm.triggerTimes.length)
       this.getTabelData()
-    },
+    }
   }
 }
 </script>
