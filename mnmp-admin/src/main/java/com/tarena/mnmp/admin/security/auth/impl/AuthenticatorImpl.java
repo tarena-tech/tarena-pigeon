@@ -40,8 +40,9 @@ public class AuthenticatorImpl implements Authenticator {
     @Override public LoginToken authenticate(String token, String deviceIp) {
         LoginToken login = JwtUtils.getLoginFromToken(token, jwtConfig.getJwtSecret(), jwtConfig.getExpiration());
 
-        log.info("deviceIp:{}", deviceIp);
-        log.info("loginId: {}", login.getDeviceIp());
+        if (null == login) {
+            return null;
+        }
 
         if (null == login.getDeviceIp() || !deviceIp.equals(login.getDeviceIp())) {
             return null;

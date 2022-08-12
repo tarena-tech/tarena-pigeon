@@ -27,6 +27,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,6 +38,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+@Slf4j
 public class MnmpAuthenticationFilter extends OncePerRequestFilter {
     private Authenticator authenticator;
     private static final AntPathRequestMatcher DEFAULT_PASS_LOGIN_REQUEST = new AntPathRequestMatcher("/passport/login",
@@ -71,8 +73,12 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
         String deviceIp = IPUtils.getIpAddress(request);
         LoginToken loginToken = authenticator.authenticate(token, deviceIp);
         if (ObjectUtils.isEmpty(loginToken)) {
+            log.info("认证失败 客户端ip:{}", deviceIp);
+            log.info("token中的ip: {}", loginToken.getDeviceIp());
             filterChain.doFilter(request, response);
         } else {
+            log.info("认证成功 客户端ip:{}", deviceIp);
+            log.info("认证成功，token中的ip: {}", loginToken.getDeviceIp());
             List<String> strAuthorities = loginToken.getAuthorities();
             List<GrantedAuthority> authorities = new ArrayList<>();
             for (String authority : strAuthorities) {
