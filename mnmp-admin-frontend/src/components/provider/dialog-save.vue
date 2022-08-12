@@ -32,7 +32,7 @@
         <el-form-item label="联系电话" prop="phone">
           <el-input v-model="ruleForm.phone" />
         </el-form-item>
-        <el-form-item label="JSON配置" prop="clientConfig">
+        <el-form-item label="JSON配置" prop="clientConfig" v-if="name === 'root'">
           <el-input v-model="ruleForm.clientConfig" type="textarea" />
         </el-form-item>
         <el-form-item label="简介" prop="remarks">
@@ -51,6 +51,7 @@
 <script>
 import { save } from '@/api/provider'
 import { isLegalHttpUrl, isJson } from '@/utils/validate'
+import {mapGetters} from "vuex";
 
 export default {
   name: 'DialogProviderSave',
@@ -87,12 +88,14 @@ export default {
         ],
         phone: [
           { required: true, message: '请输入联系电话', trigger: 'blur' }
-        ],
-        clientConfig: [
-          { required: true, validator: isJson, trigger: 'blur' }
         ]
       }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'name'
+    ])
   },
   methods: {
     handleClose(done) {
