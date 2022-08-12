@@ -29,21 +29,21 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebMvcConfig extends WebMvcConfigurationSupport {
-
-    @Override
-    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+public class WebMvcConfig implements WebMvcConfigurer {
+    @Override public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")
             .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
             .addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+        WebMvcConfigurer.super.addResourceHandlers(registry);
     }
 
-    @Override protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+    @Override public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new HandlerMethodArgumentResolver() {
             @Override public boolean supportsParameter(MethodParameter parameter) {
                 return parameter.hasParameterAnnotation(User.class);
@@ -57,7 +57,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         });
     }
 
-    @Override protected void addInterceptors(InterceptorRegistry registry) {
+    @Override public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HandlerInterceptor() {
             @Override
             public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
