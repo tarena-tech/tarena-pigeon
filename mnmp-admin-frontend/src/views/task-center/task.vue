@@ -63,16 +63,16 @@
             <span v-else>未知</span>
           </template>
         </el-table-column>
-        <el-table-column prop="cycleLvel" label="周期类型/周期数">
+        <el-table-column prop="cycleLvel" label="周期类型">
           <template slot-scope="scope">
-            <span v-if="scope.row.cycleLevel === 1">小时 / {{scope.row.cycleNum}}</span>
-            <span v-if="scope.row.cycleLevel === 2">日 / {{scope.row.cycleNum}}</span>
-            <span v-if="scope.row.cycleLevel === 3">周 / {{scope.row.cycleNum}}</span>
-            <span v-if="scope.row.cycleLevel === 4">月 / {{scope.row.cycleNum}}</span>
-            <span v-if="scope.row.cycleLevel === 5">年 / {{scope.row.cycleNum}}</span>
+            <span v-if="scope.row.cycleLevel === 1">小时</span>
+            <span v-if="scope.row.cycleLevel === 2">日</span>
+            <span v-if="scope.row.cycleLevel === 3">周</span>
+            <span v-if="scope.row.cycleLevel === 4">月</span>
+            <span v-if="scope.row.cycleLevel === 5">年</span>
           </template>
         </el-table-column>
-<!--        <el-table-column prop="cycleNum" label="周期数"/>-->
+        <el-table-column prop="cycleNum" label="周期数" />
         <el-table-column prop="targetFileUrl" label="文件地址">
           <template slot-scope="scope" v-if="scope.row.targetFileUrl">
             <i class="el-icon-download"  @click="downExcel(scope.row.targetFileUrl)"></i>

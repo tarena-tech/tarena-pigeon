@@ -20,7 +20,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = {"com.tarena.dispatcher.repository.impl", "com.tarena.mnmp.domain.provider.controller"})
+@SpringBootApplication(scanBasePackages = {"com.tarena.dispatcher.repository.impl", "com.tarena.mnmp.domain.provider"})
 @MapperScan(basePackages = {"com.tarena.dispatcher.storage.mapper"})
 public class ProviderApplication {
 
