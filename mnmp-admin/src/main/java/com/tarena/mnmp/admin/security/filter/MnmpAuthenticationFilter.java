@@ -27,6 +27,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,6 +38,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+@Slf4j
 public class MnmpAuthenticationFilter extends OncePerRequestFilter {
     private Authenticator authenticator;
     private static final AntPathRequestMatcher DEFAULT_PASS_LOGIN_REQUEST = new AntPathRequestMatcher("/passport/login",
@@ -69,6 +71,7 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
         }
         //获取设备ip地址,绑定token使用
         String deviceIp = IPUtils.getIpAddress(request);
+        log.info("ip: {}", deviceIp);
         LoginToken loginToken = authenticator.authenticate(token, deviceIp);
         if (ObjectUtils.isEmpty(loginToken)) {
             filterChain.doFilter(request, response);
