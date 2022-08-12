@@ -72,7 +72,7 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
         String[] permitList = {
             "/passport/login",
             "/passport/logout",
-            "/doc.html/**",
+            "/doc.html",
             "/webjars/**",
             "/img.icons/**",
             "/swagger-resources/**",
@@ -99,15 +99,15 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override public void configure(WebSecurity web) throws Exception {
         //静态页面,swagger页面不经过security过滤器
-        web.ignoring().mvcMatchers(
-            "/swagger-resources/**",    // Knife4j在线API文档的资源
-            "/v2/api-docs/**",          // Knife4j在线API文档的资源
-            "/favicon.ico",     // 网站图标文件
-            "/",                // 根页面，通常是主页
-            "/**/*.html",          // 任何html
-            "/**/*.html",       // 任何目录下的html
-            "/**/*.css",        // 任何目录下的css
-            "/**/*.js");
+        web.ignoring().antMatchers("/swagger/**")
+            .antMatchers("/swagger-ui.html")
+            .antMatchers("/webjars/**")
+            .antMatchers("/v2/**")
+            .antMatchers("/v2/api-docs-ext/**")
+            .antMatchers("/swagger-resources/**")
+            .antMatchers("/doc.html");
 
     }
+
+
 }
