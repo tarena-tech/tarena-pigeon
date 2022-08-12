@@ -9,6 +9,8 @@ server:
       force: true
       charset: UTF-8
 spring:
+  profiles:
+    active: test
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
