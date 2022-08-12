@@ -72,14 +72,9 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
         //获取设备ip地址,绑定token使用
         String deviceIp = IPUtils.getIpAddress(request);
         LoginToken loginToken = authenticator.authenticate(token, deviceIp);
-        log.info("请求地址：{}", request.getRequestURL());
         if (ObjectUtils.isEmpty(loginToken)) {
-            log.info("认证失败 客户端ip:{}", deviceIp);
-            log.info("token中的ip: {}", loginToken.getDeviceIp());
             filterChain.doFilter(request, response);
         } else {
-            log.info("认证成功 客户端ip:{}", deviceIp);
-            log.info("认证成功，token中的ip: {}", loginToken.getDeviceIp());
             List<String> strAuthorities = loginToken.getAuthorities();
             List<GrantedAuthority> authorities = new ArrayList<>();
             for (String authority : strAuthorities) {
