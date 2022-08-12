@@ -21,14 +21,13 @@ import com.tarena.mnmp.admin.security.config.JwtConfiguration;
 import com.tarena.mnmp.security.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
 import com.tarena.mnmp.security.utils.JwtUtils;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Slf4j
 public class AuthenticatorImpl implements Authenticator {
     @Autowired private JwtConfiguration jwtConfig;
     @Autowired private PasswordEncoder passwordEncoder;
@@ -40,13 +39,11 @@ public class AuthenticatorImpl implements Authenticator {
 
     @Override public LoginToken authenticate(String token, String deviceIp) {
         LoginToken login = JwtUtils.getLoginFromToken(token, jwtConfig.getJwtSecret(), jwtConfig.getExpiration());
-        if (null == login.getDeviceIp()) {
-            return null;
-        }
-        String[] split = login.getDeviceIp().split(", ");
-        Set<String> ips = new HashSet<>();
-        Collections.addAll(ips, split);
-        if (!ips.contains(deviceIp)) {
+
+        log.info("deviceIp:{}", deviceIp);
+        log.info("loginId: {}", login.getDeviceIp());
+
+        if (null == login.getDeviceIp() || !deviceIp.equals(login.getDeviceIp())) {
             return null;
         }
 
