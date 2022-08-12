@@ -51,7 +51,7 @@ public interface ProviderApi {
     @ApiOperation(value = "保存服务商 创建/更新")
     @PostMapping("save")
     @PreAuthorize("hasAnyRole('admin','root')")
-    void save(@RequestBody ProviderSaveParam param) throws BusinessException;
+    void save(@RequestBody ProviderSaveParam param, @User LoginToken token) throws BusinessException;
 
     @ApiOperationSupport(order = 2004)
     @ApiOperation(value = "切换服务商可用状态")

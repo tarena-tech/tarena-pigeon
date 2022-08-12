@@ -31,6 +31,7 @@ import com.tarena.mnmp.security.LoginToken;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,7 +45,10 @@ public class ProviderController implements ProviderApi {
     private TemplateService templateService;
 
 
-    @Override public void save(ProviderSaveParam param) throws BusinessException {
+    @Override public void save(ProviderSaveParam param, LoginToken token) throws BusinessException {
+        if (StringUtils.isNotBlank(param.getClientConfig()) && !"root".equals(token.getUsername())) {
+            param.setClientConfig(null);
+        }
         providerService.save(param);
     }
 

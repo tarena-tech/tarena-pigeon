@@ -290,6 +290,9 @@
             <if test="templateName != null and templateName != ''">
                 and name = #{templateName,jdbcType=VARCHAR}
             </if>
+            <if test="excludeId != null">
+                and id != #{excludeId,jdbcType=BIGINT}
+            </if>
             <if test="true">
                 and deleted = 0
             </if>
