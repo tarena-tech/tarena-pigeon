@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("send")
-public class sendController {
+public class SendController {
 
     private static NoticeService noticeService = null;
 
