@@ -13,7 +13,7 @@ spring:
     active: test
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: Asia/Shanghai
+    time-zone: GMT+8
 
 knife4j:
   # 开启增强配置
