@@ -33,6 +33,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 @Configuration
 @EnableWebSecurity
@@ -64,6 +66,18 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
         MnmpAuthenticationFilter mnmpAuthenticationFilter = new MnmpAuthenticationFilter();
         mnmpAuthenticationFilter.setAuthenticator(authenticator());
         return mnmpAuthenticationFilter;
+    }
+
+    /**
+     * 配置地址栏不能识别 // 的情况
+     * @return
+     */
+    @Bean
+    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        //此处可添加别的规则,目前只设置 允许双 //
+        firewall.setAllowUrlEncodedDoubleSlash(true);
+        return firewall;
     }
 
     @Override protected void configure(HttpSecurity http) throws Exception {
