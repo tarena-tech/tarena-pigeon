@@ -90,7 +90,6 @@ public class AppService {
     public Long queryCount(AppQueryParam param) {
         Long count = appDao.queryCount(param);
         return Optional.ofNullable(count).orElse(0L);
-
     }
 
     public void updateById(AppDO up) {

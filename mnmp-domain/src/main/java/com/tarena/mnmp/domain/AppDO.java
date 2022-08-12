@@ -51,5 +51,4 @@ public class AppDO {
         this.auditStatus = null;
         this.enabled = null;
     }
-
 }

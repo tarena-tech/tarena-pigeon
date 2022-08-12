@@ -77,7 +77,6 @@ public class AppController implements AppApi {
             query.setAppId(id);
             taskService.endTaskStatusByTargetId(query);
         }
-
     }
 
     @Override public AppView queryAppDetail(Long id) {
