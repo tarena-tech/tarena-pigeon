@@ -72,7 +72,7 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
         String[] permitList = {
             "/passport/login",
             "/passport/logout",
-            "/doc.html",
+            "/doc.html/**",
             "/webjars/**",
             "/img.icons/**",
             "/swagger-resources/**",
