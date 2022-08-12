@@ -21,8 +21,12 @@ import com.tarena.mnmp.admin.security.config.JwtConfiguration;
 import com.tarena.mnmp.security.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
 import com.tarena.mnmp.security.utils.JwtUtils;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -37,9 +41,17 @@ public class AuthenticatorImpl implements Authenticator {
 
     @Override public LoginToken authenticate(String token, String deviceIp) {
         LoginToken login = JwtUtils.getLoginFromToken(token, jwtConfig.getJwtSecret(), jwtConfig.getExpiration());
-        if (login.getDeviceIp() == null || !login.getDeviceIp().equals(deviceIp)) {
+        Set<String> ips = new HashSet<>();
+        if (null == login.getDeviceIp()) {
             return null;
         }
+        String[] split = login.getDeviceIp().split(", ");
+        Collections.addAll(ips, split);
+
+        if (!ips.contains(deviceIp)) {
+            return null;
+        }
+
         return login;
     }
 
