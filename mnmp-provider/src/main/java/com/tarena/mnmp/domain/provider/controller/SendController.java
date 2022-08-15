@@ -22,6 +22,7 @@ import com.tarena.mnmp.domain.provider.DefaultNoticeService;
 import com.tarena.mnmp.enums.NoticeType;
 import com.tarena.mnmp.enums.SendType;
 import com.tarena.mnmp.protocol.BusinessException;
+import java.util.concurrent.atomic.AtomicLong;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("send")
 public class SendController {
+
+    AtomicLong id = new AtomicLong();
 
     private static NoticeService noticeService = null;
 
@@ -53,6 +56,7 @@ public class SendController {
         dto.setSendType(SendType.IMMEDIATELY);
         dto.setNoticeType(NoticeType.SMS);
         try {
+            dto.setTaskId(id.addAndGet(1L));
             noticeService.send(dto);
         } catch (BusinessException e) {
             log.error("send error", e);
