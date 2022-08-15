@@ -24,6 +24,16 @@ public class LoginToken implements Serializable {
     private Long id;
     private String username;
 
+    private Role role;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     private List<String> authorities;
 
     private String deviceIp;

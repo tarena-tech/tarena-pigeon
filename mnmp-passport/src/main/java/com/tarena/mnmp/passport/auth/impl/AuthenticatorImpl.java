@@ -20,9 +20,11 @@ package com.tarena.mnmp.passport.auth.impl;
 import com.tarena.mnmp.passport.config.JwtConfiguration;
 import com.tarena.mnmp.passport.dao.UserMapper;
 import com.tarena.mnmp.passport.domain.User;
+import com.tarena.mnmp.security.Role;
 import com.tarena.mnmp.security.utils.JwtUtils;
 import com.tarena.mnmp.security.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -44,6 +46,9 @@ public class AuthenticatorImpl implements Authenticator {
         if (!matches) {
             return null;
         }
+        List<String> authorities = user.getAuthorities();
+        String role = authorities.get(0);
+        login.setRole(Role.valueOf(role));
         login.setAuthorities(user.getAuthorities());
         //认证成功,生成token返回
         return JwtUtils.generateToken(login, jwtConfig.getJwtSecret(), jwtConfig.getExpiration());
