@@ -25,6 +25,7 @@ import com.tarena.mnmp.enums.Provider;
 import com.tarena.mnmp.enums.TargetStatus;
 import com.tarena.mnmp.protocol.NoticeEvent;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -55,9 +56,9 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
 
     protected String doDispatcher(SmsNoticeEvent notice, SmsTarget smsTarget) throws Exception {
         if (notice.getNoticeEvent().getMock().equals(1)) {
-//            int delayTime = new Random().nextInt(200);
-//            Thread.sleep(delayTime);
-            return "delayTime" + "-" + System.currentTimeMillis();
+            int delayTime = new Random().nextInt(50);
+            Thread.sleep(delayTime);
+            return delayTime + "-" + System.currentTimeMillis();
         }
         return this.smsSender.send(smsTarget);
     }
