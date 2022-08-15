@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.passport.service;
+package com.tarena.mnmp.passport.domain;
 
-import com.tarena.mnmp.passport.domain.LoginParam;
-import com.tarena.mnmp.passport.domain.RegisterParam;
-
-public interface PassportService {
-    String doLogin(LoginParam param,String deviceIp);
-
-    void doRegister(RegisterParam param);
+public class RegisterParam {
 }

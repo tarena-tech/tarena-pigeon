@@ -23,14 +23,14 @@ public interface Authenticator {
     /**
      * sign
      *
-     * @param login  login token
+     * @param login    login token
      * @param password password
      * @return
      */
     String sign(LoginToken login, String password);
 
     /**
-     *authenticate
+     * authenticate
      *
      * @param token
      * @return

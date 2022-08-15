@@ -20,13 +20,13 @@ package com.tarena.mnmp.passport.controller;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.commons.utils.Asserts;
 import com.tarena.mnmp.passport.domain.LoginParam;
+import com.tarena.mnmp.passport.domain.RegisterParam;
 import com.tarena.mnmp.passport.service.PassportService;
 import com.tarena.mnmp.passport.utils.IPUtils;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -57,7 +57,7 @@ public class PassportController {
     )
     @PostMapping("/login")
     public Result<String> doLogin(@Valid @RequestBody LoginParam loginParam,
-        @ApiIgnore HttpServletRequest request,@ApiIgnore HttpServletResponse response) throws BusinessException {
+        @ApiIgnore HttpServletRequest request, @ApiIgnore HttpServletResponse response) throws BusinessException {
         String address = IPUtils.getIpAddress(request);
         Asserts.isTrue(address == null, new BusinessException("100", "无法获取请求路径"));
         log.info("登录设备ip地址:{}", address);
@@ -67,10 +67,15 @@ public class PassportController {
          *cookie值value不能有空格,所以使用cookie会非常麻烦
          */
         //response.addCookie(new Cookie("Authorization","Bearer "+token));
-        response.addHeader("Authorization","Bearer "+token);
+        response.addHeader("Authorization", "Bearer " + token);
 
         return new Result<>(token);
     }
 
+    @PostMapping("/register")
+    public Result doRegister(@Valid @RequestBody RegisterParam registerParam) {
+        passportService.doRegister(registerParam);
+        return Result.success();
+    }
 
 }

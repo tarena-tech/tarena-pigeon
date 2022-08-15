@@ -18,6 +18,7 @@
 package com.tarena.mnmp.passport.service.impl;
 
 import com.tarena.mnmp.passport.domain.LoginParam;
+import com.tarena.mnmp.passport.domain.RegisterParam;
 import com.tarena.mnmp.passport.service.PassportService;
 import com.tarena.mnmp.security.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
@@ -36,5 +37,9 @@ public class PassportServiceImpl implements PassportService {
         BeanUtils.copyProperties(param, loginToken);
         loginToken.setDeviceIp(deviceIp);
         return authenticator.sign(loginToken, param.getPassword());
+    }
+
+    @Override public void doRegister(RegisterParam param) {
+
     }
 }
