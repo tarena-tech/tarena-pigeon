@@ -34,7 +34,7 @@
             <el-input v-model="ruleForm.name" />
           </el-form-item>
           <el-form-item label="任务类型" prop="taskType">
-            <com-dict :val.sync="ruleForm.taskType" dict-name="taskType" :is-all="false" />
+            <com-dict :val.sync="ruleForm.taskType" dict-name="taskType" :is-all="false" @change="taskType" />
           </el-form-item>
           <el-form-item label="模板类型" prop="templateType">
             <com-dict :val.sync="ruleForm.templateType" dict-name="templateType" :is-all="false" />
@@ -92,10 +92,10 @@
             </template>
           </el-form-item>
 
-          <el-form-item label="周期类型" prop="cycleLevel">
+          <el-form-item label="周期类型" prop="cycleLevel" v-if="cycleShow">
             <com-dict :val.sync="ruleForm.cycleLevel" dict-name="cycleLevel" :is-all="false" />
           </el-form-item>
-          <el-form-item label="周期数" prop="cycleNum">
+          <el-form-item label="周期数" prop="cycleNum" v-if="cycleShow">
             <el-input v-model="ruleForm.cycleNum" />
           </el-form-item>
 
@@ -140,6 +140,7 @@ export default {
       dialogVisible: false,
       windowName: '创建',
       loading: false,
+      cycleShow: false,
 
       uploadUrl: process.env.VUE_APP_BASE_API + '/task/uploadFile',
       ruleForm: {
@@ -189,18 +190,18 @@ export default {
         templateId: [
           { required: true, message: '请选择短信模板', trigger: 'blur' }
         ],
-        cycleLevel: [
-          { required: true, message: '请选择周期类型', trigger: 'blur' }
-        ],
-        cycleNum: [
-          { required: true, message: '请选择周期数', trigger: 'blur' }
-        ],
+        // cycleLevel: [
+        //   { required: true, message: '请选择周期类型', trigger: 'blur' }
+        // ],
+        // cycleNum: [
+        //   { required: true, message: '请选择周期数', trigger: 'blur' }
+        // ],
         filePath: [
           { required: true, message: '请选择上传文件', trigger: 'blur' }
         ],
-        triggerEndTime: [
-          { required: true, message: '请选择结束时间', trigger: 'blur' }
-        ],
+        // triggerEndTime: [
+        //   { required: true, message: '请选择结束时间', trigger: 'blur' }
+        // ],
         taskType: [
           { required: true, message: '请选择任务类型', trigger: 'blur' }
         ]
@@ -304,6 +305,16 @@ export default {
       if (data != null) {
         this.windowName = '修改'
         this.ruleForm = data
+        if (this.ruleForm.taskType === 2) {
+          this.cycleShow = true
+        }
+      }
+    },
+    taskType(e) {
+      if (e.value === 2) {
+        this.cycleShow = true
+      } else {
+        this.cycleShow = false
       }
     }
   }
