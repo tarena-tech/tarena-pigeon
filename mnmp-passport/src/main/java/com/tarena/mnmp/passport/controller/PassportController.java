@@ -21,6 +21,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.commons.utils.Asserts;
 import com.tarena.mnmp.passport.domain.LoginParam;
 import com.tarena.mnmp.passport.domain.RegisterParam;
+import com.tarena.mnmp.passport.domain.Token;
 import com.tarena.mnmp.passport.service.PassportService;
 import com.tarena.mnmp.passport.utils.IPUtils;
 import com.tarena.mnmp.protocol.BusinessException;
@@ -56,18 +57,13 @@ public class PassportController {
         response = String.class
     )
     @PostMapping("/login")
-    public Result<String> doLogin(@Valid @RequestBody LoginParam loginParam,
+    public Result<Token> doLogin(@Valid @RequestBody LoginParam loginParam,
         @ApiIgnore HttpServletRequest request, @ApiIgnore HttpServletResponse response) throws BusinessException {
         String address = IPUtils.getIpAddress(request);
-        Asserts.isTrue(address == null, new BusinessException("100", "无法获取请求路径"));
+        Asserts.isTrue(address == null, new BusinessException("100", "无法获取设备ip"));
         log.info("登录设备ip地址:{}", address);
-        String token = passportService.doLogin(loginParam, address);
-        Asserts.isTrue(token == null || token.length() == 0, new BusinessException("100", "用户名不存在或者密码不正确"));
-        /*
-         *cookie值value不能有空格,所以使用cookie会非常麻烦
-         */
-        //response.addCookie(new Cookie("Authorization","Bearer "+token));
-        response.addHeader("Authorization", "Bearer " + token);
+        Token token = passportService.doLogin(loginParam, address);
+        response.addHeader("Authorization", "Bearer " + token.getToken());
 
         return new Result<>(token);
     }

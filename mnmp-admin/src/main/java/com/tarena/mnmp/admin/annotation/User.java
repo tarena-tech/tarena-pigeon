@@ -23,6 +23,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * 标识一个参数需要经过springmvc参数解析,放到request作用域中供后续使用
+ * @see com.tarena.mnmp.admin.config.WebMvcConfig
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
 @Documented

@@ -15,15 +15,20 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.passport.service;
+package com.tarena.mnmp.passport.domain;
 
-import com.tarena.mnmp.passport.domain.LoginParam;
-import com.tarena.mnmp.passport.domain.RegisterParam;
-import com.tarena.mnmp.passport.domain.Token;
-import com.tarena.mnmp.protocol.BusinessException;
+import lombok.Data;
 
-public interface PassportService {
-    Token doLogin(LoginParam param,String deviceIp) throws BusinessException;
+@Data
+public class Token {
+    private String token;
+    private String role;
 
-    void doRegister(RegisterParam param);
+    public Token(String token, String role) {
+        this.token = token;
+        this.role = role;
+    }
+
+    public Token() {
+    }
 }
