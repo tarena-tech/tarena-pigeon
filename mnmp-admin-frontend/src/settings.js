@@ -41,6 +41,10 @@ module.exports = {
     ],
     cycleLevel: [
       {
+        value: 0,
+        label: '分钟'
+      },
+      {
         value: 1,
         label: '小时'
       },

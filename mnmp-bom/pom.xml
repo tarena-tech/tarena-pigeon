@@ -63,6 +63,7 @@
         <spring.framework.version>5.3.9</spring.framework.version>
         <spring.boot.version>2.5.4</spring.boot.version>
         <easyexcel.version>3.1.1</easyexcel.version>
+        <sentinel.version>1.8.5</sentinel.version>
     </properties>
 
 
@@ -302,6 +303,24 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-core</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-web-servlet</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-transport-simple-http</artifactId>
+                <version>${sentinel.version}</version>
             </dependency>
 
         </dependencies>

@@ -32,8 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("test")
-public class TestController {
+@RequestMapping("send")
+public class SendController {
 
     private static NoticeService noticeService = null;
 
@@ -46,7 +46,7 @@ public class TestController {
         return "hello";
     }
 
-    @PostMapping("send")
+    @PostMapping("sms")
     public void send(@RequestBody SendParam param) {
         NoticeDTO dto = new NoticeDTO();
         BeanUtils.copyProperties(param, dto);

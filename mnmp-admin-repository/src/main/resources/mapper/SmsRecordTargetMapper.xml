@@ -176,7 +176,7 @@
                 and app_code = #{appCode,jdbcType=VARCHAR}
             </if>
             <if test="startTriggerTime != null and endTriggerTime != null">
-                and trigger_time between #{startTriggerTime,jdbcType=TIMESTAMP} and #{endTriggerTime,jdbcType=TIMESTAMP}
+                and trigger_time between  DATE_FORMAT(#{startTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s') and DATE_FORMAT(#{endTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s')
             </if>
         </where>
         ${limitClause}
@@ -203,7 +203,7 @@
                 and app_code = #{appCode,jdbcType=VARCHAR}
             </if>
             <if test="startTriggerTime != null and endTriggerTime != null">
-                and trigger_time between #{startTriggerTime,jdbcType=TIMESTAMP} and #{endTriggerTime,jdbcType=TIMESTAMP}
+                and trigger_time between  DATE_FORMAT(#{startTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s') and DATE_FORMAT(#{endTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s')
             </if>
         </where>
     </select>

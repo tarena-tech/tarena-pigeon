@@ -56,7 +56,7 @@ public class SmsAliNoticeDispatcher extends AbstractNoticeDispatcher<SmsNoticeEv
 
     protected String doDispatcher(SmsNoticeEvent notice, SmsTarget smsTarget) throws Exception {
         if (notice.getNoticeEvent().getMock().equals(1)) {
-            int delayTime = new Random().nextInt(200);
+            int delayTime = new Random().nextInt(30) + 20;
             Thread.sleep(delayTime);
             return delayTime + "-" + System.currentTimeMillis();
         }

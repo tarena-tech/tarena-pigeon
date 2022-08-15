@@ -14,17 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.domain.provider;
+package com.tarena.mnmp.domain.provider.config;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.alibaba.csp.sentinel.adapter.servlet.CommonFilter;
+import javax.servlet.Filter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@SpringBootApplication(scanBasePackages = {"com.tarena.dispatcher.repository.impl", "com.tarena.mnmp.domain.provider"})
-@MapperScan(basePackages = {"com.tarena.dispatcher.storage.mapper"})
-public class ProviderApplication {
+@Configuration
+public class SentinelFilterConfig {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ProviderApplication.class, args);
+
+    @Bean
+    public FilterRegistrationBean sentinelFilterRegistration() {
+        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
+        registration.setFilter(new CommonFilter());
+        registration.addUrlPatterns("/*");
+        registration.setName("sentinelFilter");
+        registration.setOrder(1);
+        return registration;
     }
 }

@@ -48,7 +48,7 @@ module.exports = {
       },
 
       [process.env.VUE_APP_BASE_API || '/mockapi']: {
-        target: 'https://dev-pigeon-admin.tctm.life',
+        target: 'https://dev-pigeon-admin.tctm.life/admin',
         changeOrigin: true,
         pathRewrite: {
           ['^' + (process.env.VUE_APP_BASE_API || '/mockapi')]: ''

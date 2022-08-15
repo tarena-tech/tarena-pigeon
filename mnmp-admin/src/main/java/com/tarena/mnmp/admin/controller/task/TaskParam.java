@@ -70,7 +70,7 @@ public class TaskParam {
     private Date triggerEndTime;
 
     @ApiModelProperty(value = "文件路径", required = true)
-    @NotBlank(message = "文件路径为必填项")
+    @NotBlank(message = "请上传目标文件")
     private String filePath;
 
     @ApiModelProperty(value = "是否是mock接口， 0：否， 1：是", required = true)
