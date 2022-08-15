@@ -64,7 +64,6 @@ public class TaskParam {
     private String creatorName;
 
     @ApiModelProperty(value = "结束时间", required = true)
-    @NotNull(message = "结束时间为必填项")
     private Date triggerEndTime;
 
     @ApiModelProperty(value = "文件路径", required = true)

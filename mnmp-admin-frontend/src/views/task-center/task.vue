@@ -65,6 +65,7 @@
         </el-table-column>
         <el-table-column prop="cycleLvel" label="周期类型">
           <template slot-scope="scope">
+            <span v-if="scope.row.cycleLevel === 0">分钟</span>
             <span v-if="scope.row.cycleLevel === 1">小时</span>
             <span v-if="scope.row.cycleLevel === 2">日</span>
             <span v-if="scope.row.cycleLevel === 3">周</span>
