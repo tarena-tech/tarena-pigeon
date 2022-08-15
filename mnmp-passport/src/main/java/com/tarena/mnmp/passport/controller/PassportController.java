@@ -68,6 +68,7 @@ public class PassportController {
          */
         //response.addCookie(new Cookie("Authorization","Bearer "+token));
         response.addHeader("Authorization","Bearer "+token);
+
         return new Result<>(token);
     }
 

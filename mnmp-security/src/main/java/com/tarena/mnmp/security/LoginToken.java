@@ -24,13 +24,13 @@ public class LoginToken implements Serializable {
     private Long id;
     private String username;
 
-    private Role role;
+    private String role;
 
-    public Role getRole() {
-        return role;
+    public String getRole() {
+        return this.authorities.get(0);
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

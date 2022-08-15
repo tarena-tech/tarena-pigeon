@@ -48,7 +48,6 @@ public class AuthenticatorImpl implements Authenticator {
         }
         List<String> authorities = user.getAuthorities();
         String role = authorities.get(0);
-        login.setRole(Role.valueOf(role));
         login.setAuthorities(user.getAuthorities());
         //认证成功,生成token返回
         return JwtUtils.generateToken(login, jwtConfig.getJwtSecret(), jwtConfig.getExpiration());
