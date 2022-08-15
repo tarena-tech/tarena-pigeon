@@ -3,10 +3,5 @@
 
 # quick start
 ```$xslt
-cd mnmp-bom
-mvn clean install -Dmaven.test.skip
-cd ..
-mvn clean install -Dmaven.test.skip
-
-
+sh build
 ```

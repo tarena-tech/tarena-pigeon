@@ -19,8 +19,5 @@
         inner join notice_role tr on tur.role_id=tr.id
         where tu.username=#{username}
     </select>
-
-
-
 </mapper>
 
