@@ -35,7 +35,7 @@
             </template>
           </el-form-item>
 
-          <el-form-item label="供应商" prop="">
+          <el-form-item label="供应商" prop="" v-if="$store.state.user.role !== 'ROLE_user'">
             <template>
               <el-select v-model="ruleForm.providerId" filterable placeholder="请选择" :filter-method="queryProviders">
                 <el-option v-for="item in providers" :key="item.id" :label="item.name" :value="item.id" />
@@ -64,6 +64,7 @@
 import { save } from '@/api/sms'
 import { queryAppList } from '@/api/app'
 import { queryProviderList } from '@/api/provider'
+import store from "@/store";
 export default {
   name: 'DialogSmsSave',
   data() {
@@ -164,6 +165,9 @@ export default {
     },
 
     queryProviders(param) {
+      if (store.state.user.role === 'ROLE_user') {
+        return
+      }
       queryProviderList({
         name: param,
         auditStatus: 1,

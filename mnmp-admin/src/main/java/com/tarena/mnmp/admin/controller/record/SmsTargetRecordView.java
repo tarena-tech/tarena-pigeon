@@ -56,7 +56,7 @@ public class SmsTargetRecordView {
     private Integer status;
 
     @ApiModelProperty("任务执行时间")
-    private Date triggerTime;
+    private String triggerTime;
 
     @ApiModelProperty("发送时间")
     private Date pushTime;

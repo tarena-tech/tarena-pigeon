@@ -94,7 +94,8 @@
             <el-button type="text" size="small" @click="changeStatus(scope.row)">
               {{ scope.row.enabled === 1 ? '禁用' : '启用' }}
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
+            <el-button v-if="scope.row.auditStatus === 0 && $store.state.user.role !== 'ROLE_user'"
+                       @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
             <el-button type="text" size="mini" @click="save(scope.row)">

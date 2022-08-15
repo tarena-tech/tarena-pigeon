@@ -20,7 +20,7 @@
             <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
           </el-form-item>
         </div>
-        <div class="form-right-box" v-if="name === 'root'">
+        <div class="form-right-box" v-if="this.role === 'ROLE_admin'">
           <el-button type="success" icon="el-icon-plus" @click="save(null)">新建</el-button>
         </div>
       </div>
@@ -70,7 +70,7 @@
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="updateTime" label="更新时间"/>
 
-        <el-table-column fixed="right" width="100"  label="操作">
+        <el-table-column fixed="right" width="100"  label="操作" v-if="$store.state.user.role === 'ROLE_root'">
           <template slot-scope="scope">
             <el-button type="text" size="mini" @click="changeStatus(scope.row)">
               {{ scope.row.enabled === 1 ? '禁用' : '启用' }}

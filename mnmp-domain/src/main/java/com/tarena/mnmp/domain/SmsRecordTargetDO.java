@@ -54,7 +54,7 @@ public class SmsRecordTargetDO {
     /**
      * 任务执行时间
      */
-    private Date triggerTime;
+    private String triggerTime;
 
     /**
      * 发送时间

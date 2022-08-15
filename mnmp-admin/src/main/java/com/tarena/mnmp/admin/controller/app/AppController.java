@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.admin.controller.app;
 
+import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.codegen.api.app.AppApi;
 import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
@@ -30,6 +31,7 @@ import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.security.LoginToken;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
@@ -52,16 +54,19 @@ public class AppController implements AppApi {
     @Resource
     private SignService signService;
 
-    @Override public void save(AppSaveParam appAddParam) throws BusinessException {
+    @Override public void save(AppSaveParam appAddParam, LoginToken token) throws BusinessException {
+        appAddParam.setSysUserId(token.getId());
         appService.save(appAddParam);
     }
 
 
-    @Override public void changeEnableStatus(Long id) throws BusinessException {
+    @Override public void changeEnableStatus(Long id, LoginToken token) throws BusinessException {
         AppDO app = appService.queryAppDetail(id);
         if (app == null) {
             throw new BusinessException("100", "应用不存在");
         }
+
+        // TODO 判断权限
 
         AppDO up = new AppDO();
         up.setId(id);

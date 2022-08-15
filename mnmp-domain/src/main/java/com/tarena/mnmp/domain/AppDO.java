@@ -25,6 +25,8 @@ public class AppDO {
 
     private Long id;
 
+    private Long ownId;
+
     private String code;
 
     private String name;
@@ -46,6 +48,7 @@ public class AppDO {
     private Date updateTime;
 
     public void cleanSameData () {
+        this.ownId = null;
         this.createTime = null;
         this.auditResult = null;
         this.auditStatus = null;

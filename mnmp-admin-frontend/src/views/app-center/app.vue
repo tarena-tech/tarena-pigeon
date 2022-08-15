@@ -70,7 +70,7 @@
             <el-button size="mini"  type="text" @click="changeStatus(scope.row)" >
               {{scope.row.enabled === 1 ? '禁用' : '启用'}}
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0 && role !== 'ROLE_user'" @click="showAudit(scope.row.id)" type="text" size="small">
+            <el-button v-if="scope.row.auditStatus === 0 && $store.state.user.role !== 'ROLE_user'" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
             <el-button  type="text" size="small" @click="save(scope.row)" >
@@ -91,6 +91,7 @@ import { queryPage, changeEnable } from '@/api/app.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogAppSave from '@/components/app/dialog-save'
 import DialogAppAudit from '@/components/app/dialog-audit'
+
 export default {
   name: 'DemoTable',
   components: {

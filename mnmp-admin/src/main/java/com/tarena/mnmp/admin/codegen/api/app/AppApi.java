@@ -18,12 +18,14 @@
 package com.tarena.mnmp.admin.codegen.api.app;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.controller.app.AppView;
 import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.domain.app.AppQueryParam;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.security.LoginToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -51,16 +53,16 @@ public interface AppApi {
     @ApiOperation(value = "新增/修改 应用")
     @PostMapping("save")
     @ApiParam(name = "appSaveParam", value = "新增应用", required = true)
-    @PreAuthorize("hasAnyRole('admin','root')")
-    void save(@Valid @RequestBody AppSaveParam appSaveParam) throws BusinessException;
+    @PreAuthorize("hasAnyRole('admin', 'root', 'user')")
+    void save(@Valid @RequestBody AppSaveParam appSaveParam, @User LoginToken token) throws BusinessException;
 
 
 
     @ApiOperationSupport(order = 1004)
     @ApiOperation(value = "更改可用状态")
     @PostMapping("change/enable/status")
-    @PreAuthorize("hasAnyRole('admin','root')")
-    void changeEnableStatus(Long id) throws BusinessException;
+    @PreAuthorize("hasAnyRole('admin','root', 'user')")
+    void changeEnableStatus(Long id , @User LoginToken token) throws BusinessException;
 
     /**
      * 查看应用详情

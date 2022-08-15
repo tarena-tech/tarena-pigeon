@@ -16,6 +16,7 @@
  */
 package com.tarena.mnmp.domain.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
@@ -49,4 +50,7 @@ public class AppSaveParam {
 
     @ApiModelProperty(value = "应用开启停用", name = "enabled", required = false)
     private Integer enabled;
+
+    @JsonIgnore
+    private Long sysUserId;
 }

@@ -40,6 +40,7 @@ public class AppService {
         checkOnlyOne(appSaveParam, save);
 
         if (null == appSaveParam.getId()) {
+            save.setOwnId(appSaveParam.getSysUserId());
             appDao.save(save);
         } else {
             save.cleanSameData();
