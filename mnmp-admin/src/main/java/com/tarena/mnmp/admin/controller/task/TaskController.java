@@ -20,7 +20,7 @@ package com.tarena.mnmp.admin.controller.task;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.util.StringUtils;
 import com.tarena.mnmp.admin.codegen.api.task.TaskApi;
-import com.tarena.mnmp.admin.param.AuditParam;
+import com.tarena.mnmp.domain.common.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.commons.utils.DateUtils;
 import com.tarena.mnmp.commons.utils.ExcelUtils;

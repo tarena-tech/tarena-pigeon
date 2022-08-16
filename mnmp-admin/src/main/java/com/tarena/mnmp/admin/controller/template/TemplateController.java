@@ -18,13 +18,13 @@
 package com.tarena.mnmp.admin.controller.template;
 
 import com.tarena.mnmp.admin.codegen.api.template.TemplateApi;
-import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskService;
+import com.tarena.mnmp.domain.template.SmsTemplateAuditParam;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.domain.template.TemplateService;
@@ -116,8 +116,8 @@ public class TemplateController implements TemplateApi {
     }
 
 
-    @Override public void doAuditSmsTemplate(AuditParam param) {
-        templateService.doAuditSmsTemplate(param.getId(), param.getAuditStatus(), param.getAuditResult());
+    @Override public void doAuditSmsTemplate(SmsTemplateAuditParam param) {
+        templateService.doAuditSmsTemplate(param);
     }
 //
 //    @Override public String addWecomTemplate(WecomTemplateVO wecomTemplateVO) {

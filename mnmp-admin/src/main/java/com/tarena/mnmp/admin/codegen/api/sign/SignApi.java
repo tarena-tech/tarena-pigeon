@@ -21,7 +21,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.Ignore;
 import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.controller.sign.SignView;
-import com.tarena.mnmp.admin.param.AuditParam;
+import com.tarena.mnmp.domain.common.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.sign.SignSaveParam;
 import com.tarena.mnmp.domain.sign.SignQuery;

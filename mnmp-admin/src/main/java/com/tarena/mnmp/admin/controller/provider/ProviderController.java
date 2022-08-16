@@ -18,7 +18,7 @@
 package com.tarena.mnmp.admin.controller.provider;
 
 import com.tarena.mnmp.admin.codegen.api.provider.ProviderApi;
-import com.tarena.mnmp.admin.param.AuditParam;
+import com.tarena.mnmp.domain.common.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.ProviderDO;
 import com.tarena.mnmp.domain.provider.ProviderQueryParam;

@@ -51,10 +51,20 @@
             <el-link :href="scope.row.officialWebsite" target="_blank">链接地址</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="remarks" label="简介"/>
         <el-table-column prop="contacts" label="联系人"/>
         <el-table-column prop="phone" label="联系电话"/>
-        <el-table-column prop="remarks" label="简介"/>
+        <el-table-column prop="remarks" label="简介">
+          <template slot-scope="scope">
+            <el-popover v-if="scope.row.remarks" trigger="hover" placement="top">
+              <p>{{ scope.row.remarks }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">描述</el-tag>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
+
+
         <el-table-column prop="auditStatus" label="审核状态">
           <template slot-scope="scope">
             <span v-if="scope.row.auditStatus === 1">通过</span>

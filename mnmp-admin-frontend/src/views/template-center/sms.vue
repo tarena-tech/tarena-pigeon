@@ -69,8 +69,6 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="useCount" label="使用次数" />
-
         <el-table-column prop="appCode" label="应用编码" />
 
         <el-table-column prop="auditStatus" label="审核状态">
@@ -95,10 +93,10 @@
               {{ scope.row.enabled === 1 ? '禁用' : '启用' }}
             </el-button>
             <el-button v-if="scope.row.auditStatus === 0 && $store.state.user.role !== 'ROLE_user'"
-                       @click="showAudit(scope.row.id)" type="text" size="small">
+                       @click="showAudit(scope.row)" type="text" size="small">
               审核
             </el-button>
-            <el-button type="text" size="mini" @click="save(scope.row)">
+            <el-button type="text" size="mini" @click="save(scope.row)" v-if="scope.row.auditStatus !== 0">
               修改
             </el-button>
           </template>
@@ -207,8 +205,8 @@ export default {
     },
 
     // 审核
-    showAudit(id) {
-      this.$refs.DialogSmsAudit.show(id)
+    showAudit(data) {
+      this.$refs.DialogSmsAudit.show(data)
     },
 
     // 重置页码并搜索

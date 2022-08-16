@@ -67,13 +67,13 @@
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini"  type="text" @click="changeStatus(scope.row)" >
+            <el-button size="mini"  type="text" @click="changeStatus(scope.row)"  v-if="scope.row.auditStatus === 1">
               {{scope.row.enabled === 1 ? '禁用' : '启用'}}
             </el-button>
             <el-button v-if="scope.row.auditStatus === 0 && $store.state.user.role !== 'ROLE_user'" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
-            <el-button  type="text" size="small" @click="save(scope.row)" >
+            <el-button  type="text" size="small" @click="save(scope.row)" v-if="scope.row.auditStatus !== 0">
               修改
             </el-button>
           </template>

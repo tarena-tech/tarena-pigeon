@@ -127,11 +127,13 @@ public class TemplateService {
         return "ok";
     }
 
-    public void doAuditSmsTemplate(Long id, Integer status, String auditResult) {
+    public void doAuditSmsTemplate(SmsTemplateAuditParam param) {
         SmsTemplateDO bo = new SmsTemplateDO();
-        bo.setId(id);
-        bo.setAuditStatus(status);
-        bo.setAuditResult(auditResult);
+        bo.setId(param.getId());
+        bo.setAuditStatus(param.getAuditStatus());
+        bo.setAuditResult(param.getAuditResult());
+        bo.setProviderId(param.getProviderId());
+        bo.setContent(param.getContent());
         smsTemplateDao.modify(bo);
     }
 

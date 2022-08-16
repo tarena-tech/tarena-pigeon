@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.admin.param;
+package com.tarena.mnmp.domain.common;
 
 import io.swagger.annotations.ApiModel;
 import javax.validation.constraints.Max;

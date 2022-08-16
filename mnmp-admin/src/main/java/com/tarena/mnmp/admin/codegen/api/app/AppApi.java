@@ -20,7 +20,7 @@ package com.tarena.mnmp.admin.codegen.api.app;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.controller.app.AppView;
-import com.tarena.mnmp.admin.param.AuditParam;
+import com.tarena.mnmp.domain.common.AuditParam;
 import com.tarena.mnmp.domain.app.AppQueryParam;
 import com.tarena.mnmp.domain.app.AppSaveParam;
 import com.tarena.mnmp.commons.pager.PagerResult;

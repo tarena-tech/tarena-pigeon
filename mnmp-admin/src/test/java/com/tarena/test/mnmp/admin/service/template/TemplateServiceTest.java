@@ -162,7 +162,7 @@ public class TemplateServiceTest {
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
     public void doAuditSmsTemplate() {
-        templateService.doAuditSmsTemplate(1L, -1, "文案不通过");
+        templateService.doAuditSmsTemplate(null);
     }
 
 

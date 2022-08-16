@@ -21,8 +21,8 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.Ignore;
 import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.controller.template.TemplateView;
-import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
+import com.tarena.mnmp.domain.template.SmsTemplateAuditParam;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.protocol.BusinessException;
@@ -91,7 +91,7 @@ public interface TemplateApi {
     )
     @PostMapping({"/sms/doAudit"})
     @PreAuthorize("hasAnyRole('admin','root')")
-    void doAuditSmsTemplate(@RequestBody AuditParam param);
+    void doAuditSmsTemplate(@RequestBody SmsTemplateAuditParam param);
 
 //    @ApiOperationSupport(order = 4101)
 //    @ApiOperation(

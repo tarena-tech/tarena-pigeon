@@ -15,46 +15,24 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.domain;
+package com.tarena.mnmp.domain.template;
 
-import java.util.Date;
+import com.tarena.mnmp.domain.common.AuditParam;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class AppDO {
+@ApiModel("短信审核模型")
+public class SmsTemplateAuditParam extends AuditParam {
 
-    private Long id;
+    @ApiModelProperty("供货商Id")
+    @NotNull(message = "供货商不能为空")
+    private Long providerId;
 
-    private Long createUserId;
-
-    private String code;
-
-    private String name;
-
-    private String leader;
-
-    private String teamMembers;
-
-    private String remarks;
-
-    private Integer enabled;
-
-    private Integer auditStatus;
-
-    private String auditResult;
-
-    private Date createTime;
-
-    private Date updateTime;
-
-    public void cleanSameData () {
-        this.createUserId = null;
-        this.createTime = null;
-        this.auditResult = null;
-        this.auditStatus = null;
-        this.enabled = null;
-        this.name = null;
-        this.code = null;
-    }
+    @ApiModelProperty("模板内容")
+    @NotNull(message = "模板内容不能为空")
+    private String content;
 
 }

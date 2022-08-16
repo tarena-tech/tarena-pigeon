@@ -42,6 +42,14 @@ public class AppService {
         if (null == appSaveParam.getId()) {
             appDao.save(save);
         } else {
+            AppDO app = appDao.findById(appSaveParam.getId());
+            if (null == app) {
+                throw new BusinessException("100", "要修改的app不存在");
+            }
+
+            if (Objects.equals(AuditStatus.WAITING.getStatus(), app.getAuditStatus())) {
+                throw new BusinessException("100", "待审核状态下禁止修改");
+            }
             save.cleanSameData();
             appDao.modify(save);
         }
