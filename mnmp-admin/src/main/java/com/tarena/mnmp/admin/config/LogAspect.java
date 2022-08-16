@@ -45,7 +45,7 @@ public class LogAspect {
     @Autowired
     private Json json;
 
-    @Pointcut("@within(org.springframework.web.bind.annotation.RequestMapping)")
+    @Pointcut("within(@org.springframework.stereotype.Controller *)")
     public void requestMappingCut() {
     }
 
