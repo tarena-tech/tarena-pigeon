@@ -45,12 +45,12 @@ public class LogAspect {
     @Autowired
     private Json json;
 
-    @Pointcut("within(@org.springframework.stereotype.Controller *)")
-    public void requestMappingCut() {
+    @Pointcut("execution(* com.tarena.mnmp.admin.controller..*.*(..))")
+    public void controllerCut() {
     }
 
 
-    @Around("requestMappingCut()")
+    @Around("controllerCut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
         String methodName = point.getTarget().getClass().getName() + "." + signature.getName();
