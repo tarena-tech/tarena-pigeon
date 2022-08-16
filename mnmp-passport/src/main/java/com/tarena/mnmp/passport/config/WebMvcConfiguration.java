@@ -16,9 +16,21 @@
  */
 package com.tarena.mnmp.passport.config;
 
+import com.tarena.mnmp.passport.annotation.User;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.MethodParameter;
+import org.springframework.web.bind.support.WebDataBinderFactory;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.method.support.ModelAndViewContainer;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -34,6 +46,31 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
             .allowedHeaders("*")
             .allowCredentials(true)
             .maxAge(3600);
+    }
+
+    @Override public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new HandlerMethodArgumentResolver() {
+            @Override public boolean supportsParameter(MethodParameter parameter) {
+                return parameter.hasParameterAnnotation(User.class);
+            }
+
+            @Override public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer container,
+                NativeWebRequest request, WebDataBinderFactory factory) throws Exception {
+                HttpServletRequest req = (HttpServletRequest) request.getNativeRequest();
+                return req.getAttribute("admin_token");
+            }
+        });
+    }
+
+    @Override public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new HandlerInterceptor() {
+            @Override
+            public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+                Exception ex) throws Exception {
+                request.removeAttribute("admin_token");
+                HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+            }
+        });
     }
 
 }

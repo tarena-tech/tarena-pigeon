@@ -14,16 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.passport.annotation;
 
-package cn.tedu.password.test;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import com.tarena.mnmp.security.Role;
-
-public class RoleEnumTest {
-    public static void main(String[] args) {
-        String role="ROLE_admin";
-        String roleName="aldsjflsjasdlfls.aldjflsd.sadlfj";
-        System.out.println(role.indexOf("ROLE"));
-        System.out.println(roleName.lastIndexOf("."));
-    }
+/**
+ * 标识一个参数需要经过springmvc参数解析,放到request作用域中供后续使用
+ * @see com.tarena.mnmp.admin.config.WebMvcConfig
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.PARAMETER)
+@Documented
+@Inherited
+public @interface User {
 }

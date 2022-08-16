@@ -20,6 +20,7 @@ package com.tarena.mnmp.passport.controller;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.commons.utils.Asserts;
 
+import com.tarena.mnmp.passport.annotation.User;
 import com.tarena.mnmp.passport.domain.LoginParam;
 import com.tarena.mnmp.passport.domain.RegisterParam;
 import com.tarena.mnmp.passport.domain.Token;
@@ -28,6 +29,7 @@ import com.tarena.mnmp.passport.service.PassportService;
 import com.tarena.mnmp.passport.utils.IPUtils;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
+import com.tarena.mnmp.security.LoginToken;
 import com.tarena.mnmp.security.Role;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -79,13 +81,26 @@ public class PassportController {
     )
     @PostMapping("/register")
     @PreAuthorize("hasAnyRole('admin','root')")
-    public Result doRegister(@Valid @RequestBody RegisterParam registerParam) throws BusinessException {
-        String role = registerParam.getRole();
+    public Result doRegister(@Valid @RequestBody RegisterParam registerParam, @ApiIgnore @User LoginToken loginToken) throws BusinessException {
+        //如果当前登录者的权限小于添加角色权限权重,抛异常
+        //登录角色名
+        String loginRoleName = loginToken.getRole();
+        loginRoleName=loginRoleName.substring(5);
+        log.info("删除ROLE_前缀,登录角色是:{}",loginRoleName);
+        //登录角色枚举
+        Role loginRole = Role.valueOf(loginRoleName.toUpperCase());
+        //添加角色名称
+        String roleName = registerParam.getRole();
+        //添加角色枚举
+        Role role;
         try {
-            log.info("role:{}", role);
-            Role r = Role.valueOf(role);
+            log.info("role:{}", roleName);
+            role=Role.valueOf(roleName.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new BusinessException("100", "您选择的角色不存在");
+        }
+        if (loginRole.getWeight()<role.getWeight()){
+            throw new BusinessException("100","当前用户角色:"+loginRoleName+",无权添加角色:"+roleName);
         }
         passportService.doRegister(registerParam);
         return Result.success();
