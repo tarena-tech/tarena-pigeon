@@ -36,6 +36,7 @@ import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.domain.task.TaskStatistics;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.mnmp.protocol.Result;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -162,16 +163,11 @@ public class TaskController implements TaskApi {
         taskService.doAudit(param.getId(), param.getAuditStatus(), param.getAuditResult());
     }
 
-    @Override public PagerResult<TaskView> queryListByPage(TaskQuery taskQuery) {
+    @Override public PagerResult<TaskView> queryListByPage(TaskQuery taskQuery, LoginToken token) {
+        taskQuery.setCreateUserId(token.getId());
         PagerResult<TaskDO> res = taskService.queryListByPage(taskQuery);
-        List<TaskView> list = new ArrayList<>();
-        res.getList().forEach(task -> {
-            TaskView tv = new TaskView();
-            BeanUtils.copyProperties(task, tv);
-            list.add(tv);
-        });
         PagerResult<TaskView> result = new PagerResult<>(taskQuery.getPageSize(), taskQuery.getCurrentPageIndex());
-        result.setList(list);
+        result.setList(TaskView.convert(res.getList()));
         result.setRecordCount(res.getRecordCount());
         return result;
     }

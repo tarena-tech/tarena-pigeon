@@ -50,4 +50,7 @@ public class TaskQuery extends PagerResult {
     @JsonIgnore
     private List<Integer> taskStatusList;
 
+    @JsonIgnore
+    private Long createUserId;
+
 }

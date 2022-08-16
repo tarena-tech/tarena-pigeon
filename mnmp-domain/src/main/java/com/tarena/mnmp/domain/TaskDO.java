@@ -150,35 +150,7 @@ public class TaskDO {
 
     private Integer mock;
 
-    @Override public String toString() {
-        return "TaskDO{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", taskStatus=" + taskStatus +
-            ", taskType=" + taskType +
-            ", noticeType=" + noticeType +
-            ", templateId=" + templateId +
-            ", signId=" + signId +
-            ", appId=" + appId +
-            ", cycleLevel=" + cycleLevel +
-            ", cycleNum=" + cycleNum +
-            ", firstTriggerTime=" + firstTriggerTime +
-            ", triggerEndTime=" + triggerEndTime +
-            ", nextTriggerTime=" + nextTriggerTime +
-            ", targetType=" + targetType +
-            ", targetFileName='" + targetFileName + '\'' +
-            ", targetFileUrl='" + targetFileUrl + '\'' +
-            ", creator=" + creator +
-            ", creatorEmail='" + creatorEmail + '\'' +
-            ", creatorName='" + creatorName + '\'' +
-            ", deptId=" + deptId +
-            ", remark='" + remark + '\'' +
-            ", error='" + error + '\'' +
-            ", createTime=" + createTime +
-            ", updateTime=" + updateTime +
-            ", auditStatus=" + auditStatus +
-            ", auditResult='" + auditResult + '\'' +
-            '}';
-    }
+    private Long createUserId;
+
 }
 
