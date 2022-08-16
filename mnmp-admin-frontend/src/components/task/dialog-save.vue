@@ -22,6 +22,7 @@
               :on-success="uploadSuccess"
               :on-error="uploadError"
               :multiple="false"
+              :headers=headers
               :on-change="fileCallback"
               :limit="1"
               :auto-upload="false">
@@ -132,6 +133,7 @@ import { addTask } from '@/api/task'
 import { queryAppList } from '@/api/app'
 import { querySignList } from '@/api/sign'
 import { querySmsTemplateList } from '@/api/sms'
+import store from "@/store";
 
 export default {
   name: 'DialogTaskSave',
@@ -141,7 +143,9 @@ export default {
       windowName: '创建',
       loading: false,
       cycleShow: false,
-
+      headers: {
+        'Authorization': 'Bearer ' + store.getters.token
+      },
       uploadUrl: process.env.VUE_APP_BASE_API + '/task/uploadFile',
       ruleForm: {
         name: null,
