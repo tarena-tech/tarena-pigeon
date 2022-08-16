@@ -23,7 +23,10 @@
         insert into notice_user (username,password,create_time,update_time)
         values (#{username},#{password},now(),now());
     </insert>
-
+    <select id="countByUsername" resultType="int">
+        select count(*) from notice_user
+        where username=#{username}
+    </select>
 
 </mapper>
 

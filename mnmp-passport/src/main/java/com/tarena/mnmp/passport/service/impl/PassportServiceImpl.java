@@ -76,6 +76,10 @@ public class PassportServiceImpl implements PassportService {
 
     @Transactional
     @Override public void doRegister(RegisterParam param) throws BusinessException {
+        int count = userMapper.countByUsername(param.getUsername());
+        if (count != 0) {
+            throw new BusinessException("100", "用户名重复");
+        }
         UserDO userDO = new UserDO();
         BeanUtils.copyProperties(param, userDO);
         //加密
