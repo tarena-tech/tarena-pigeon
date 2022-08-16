@@ -21,16 +21,17 @@ import com.tarena.mnmp.protocol.LoginToken;
 import java.util.Objects;
 
 public enum Role {
-    ROOT(3,"ROLE_root"),
-    ADMIN(2,"ROLE_admin"),
-    USER(1,"ROLE_user");
+    ROOT(3, "ROLE_root"),
+    ADMIN(2, "ROLE_admin"),
+    USER(1, "ROLE_user");
     private int weight;
     private String roleName;
 
-    Role(int weight,String roleName){
-        this.weight=weight;
-        this.roleName=roleName;
+    Role(int weight, String roleName) {
+        this.weight = weight;
+        this.roleName = roleName;
     }
+
     public String getRoleName() {
         return roleName;
     }
@@ -55,7 +56,7 @@ public enum Role {
         return executable(token.getRole(), ownId, token.getId());
     }
 
-    public static boolean executable (String role, Long ownId, Long curId) {
+    public static boolean executable(String role, Long ownId, Long curId) {
         return manager(role) && Objects.equals(ownId, curId);
     }
 }
