@@ -19,13 +19,16 @@ package com.tarena.mnmp.passport.controller;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.commons.utils.Asserts;
+
 import com.tarena.mnmp.passport.domain.LoginParam;
 import com.tarena.mnmp.passport.domain.RegisterParam;
 import com.tarena.mnmp.passport.domain.Token;
+
 import com.tarena.mnmp.passport.service.PassportService;
 import com.tarena.mnmp.passport.utils.IPUtils;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
+import com.tarena.mnmp.security.Role;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.servlet.http.HttpServletRequest;
@@ -64,12 +67,24 @@ public class PassportController {
         log.info("登录设备ip地址:{}", address);
         Token token = passportService.doLogin(loginParam, address);
         response.addHeader("Authorization", "Bearer " + token.getToken());
-
         return new Result<>(token);
     }
 
+    @ApiOperation(
+        value = "注册功能",
+        nickname = "register",
+        produces = "application/json",
+        response = Result.class
+    )
     @PostMapping("/register")
-    public Result doRegister(@Valid @RequestBody RegisterParam registerParam) {
+    public Result doRegister(@Valid @RequestBody RegisterParam registerParam) throws BusinessException {
+        String role = registerParam.getRole();
+        try {
+            log.info("role:{}", role);
+            Role r = Role.valueOf(role);
+        } catch (IllegalArgumentException e) {
+            throw new BusinessException("100", "您选择的角色不存在");
+        }
         passportService.doRegister(registerParam);
         return Result.success();
     }

@@ -17,10 +17,13 @@
 
 package com.tarena.mnmp.passport.dao;
 
-import com.tarena.mnmp.passport.domain.User;
+import java.sql.Date;
+import lombok.Data;
 
-public interface UserMapper {
-    User findByUsername(String username);
-
-    int save(UserDO param);
+@Data
+public class RoleDO {
+    private Long id;
+    private String name;
+    private Date createTime;
+    private Date updateTime;
 }

@@ -19,7 +19,10 @@
         inner join notice_role tr on tur.role_id=tr.id
         where tu.username=#{username}
     </select>
-
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.tarena.mnmp.passport.dao.UserDO">
+        insert into notice_user (username,password,create_time,update_time)
+        values (#{username},#{password},now(),now());
+    </insert>
 
 
 </mapper>

@@ -25,5 +25,5 @@ import com.tarena.mnmp.protocol.BusinessException;
 public interface PassportService {
     Token doLogin(LoginParam param,String deviceIp) throws BusinessException;
 
-    void doRegister(RegisterParam param);
+    void doRegister(RegisterParam param) throws BusinessException;
 }

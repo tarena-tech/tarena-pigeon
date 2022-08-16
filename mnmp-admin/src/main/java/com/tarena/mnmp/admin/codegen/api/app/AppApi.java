@@ -40,14 +40,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * 统一了后台管理中应用C端管理功能接口,添加knife4j增强swagger接口文件生成
+ */
 @Validated
 @Api(value = "app", tags = "应用管理")
 @RequestMapping("/app")
 public interface AppApi {
     /**
      * 新增应用
-     *
-     * @param appSaveParam
+     * @param appSaveParam 新增应用参数封装对象
+     * @param token 授权token,包含用户id 权限集合 角色
      */
     @ApiOperationSupport(order = 1001)
     @ApiOperation(value = "新增/修改 应用")
@@ -56,8 +59,12 @@ public interface AppApi {
     @PreAuthorize("hasAnyRole('admin', 'root', 'user')")
     void save(@Valid @RequestBody AppSaveParam appSaveParam, @User LoginToken token) throws BusinessException;
 
-
-
+    /**
+     * 修改应用发布状态:审核通过,审核不通过
+     * @param id 应用id
+     * @param token 授权token,包含用户id 权限集合 角色
+     * @throws BusinessException
+     */
     @ApiOperationSupport(order = 1004)
     @ApiOperation(value = "更改可用状态")
     @PostMapping("change/enable/status")

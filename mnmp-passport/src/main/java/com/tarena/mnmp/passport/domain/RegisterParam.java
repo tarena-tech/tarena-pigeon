@@ -17,5 +17,15 @@
 
 package com.tarena.mnmp.passport.domain;
 
-public class RegisterParam {
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.NotBlank;
+import lombok.Data;
+
+@Data @ApiModel(value = "注册参数") public class RegisterParam {
+    @ApiModelProperty(value = "用户名", name = "username", example = "zhangsan") @NotBlank(message = "用户名不能为空")
+    private String username;
+    @ApiModelProperty(value = "密码", name = "password", example = "123456") @NotBlank(message = "密码不能为空")
+    private String password;
+    @ApiModelProperty(value = "角色", name = "role", example = "admin") @NotBlank private String role;
 }

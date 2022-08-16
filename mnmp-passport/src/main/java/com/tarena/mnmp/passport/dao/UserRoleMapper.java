@@ -17,10 +17,10 @@
 
 package com.tarena.mnmp.passport.dao;
 
-import com.tarena.mnmp.passport.domain.User;
+import org.apache.ibatis.annotations.Param;
 
-public interface UserMapper {
-    User findByUsername(String username);
-
-    int save(UserDO param);
+public interface UserRoleMapper {
+    int save(
+        @Param("userId") Long userId,
+        @Param("roleId")Long roleId);
 }

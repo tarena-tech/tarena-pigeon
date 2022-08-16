@@ -17,10 +17,6 @@
 
 package com.tarena.mnmp.passport.dao;
 
-import com.tarena.mnmp.passport.domain.User;
-
-public interface UserMapper {
-    User findByUsername(String username);
-
-    int save(UserDO param);
+public interface RoleMapper {
+    int save(RoleDO aDo);
 }

@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.passport.dao;
+package cn.tedu.password.test;
 
-import com.tarena.mnmp.passport.domain.User;
+import com.tarena.mnmp.security.Role;
 
-public interface UserMapper {
-    User findByUsername(String username);
-
-    int save(UserDO param);
+public class RoleEnumTest {
+    public static void main(String[] args) {
+        Role haha = Role.valueOf("ROOT");
+        System.out.println(haha);
+    }
 }
