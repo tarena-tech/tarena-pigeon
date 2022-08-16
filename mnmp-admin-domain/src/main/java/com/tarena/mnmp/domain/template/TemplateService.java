@@ -60,6 +60,7 @@ public class TemplateService {
 
         Date now = new Date();
         if (null == template.getId()) {
+            template.setCreateUserId(token.getId());
             template.setDeleted(Deleted.NO.getVal());
             template.setEnabled(Enabled.YES.getVal());
             template.setAuditStatus(AuditStatus.WAITING.getStatus());

@@ -64,6 +64,11 @@ public class AppService {
             throw new BusinessException("100", "待审核状态下禁止修改");
         }
         save.noChangeParam();
+
+        if (Objects.equals(AuditStatus.REJECT.getStatus(), app.getAuditStatus())) {
+            save.setAuditStatus(AuditStatus.WAITING.getStatus());
+        }
+
         appDao.modify(save);
     }
 
