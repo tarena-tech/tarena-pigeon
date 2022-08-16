@@ -14,33 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.tarena.mnmp.domain.task;
+package com.tarena.mnmp.domain.param;
 
 import io.swagger.annotations.ApiModel;
-import java.util.Map;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import lombok.Data;
 
-/**
- * 通知人群
- */
-@ApiModel(value = "通知人群")
+@Data
+@ApiModel("审核模型")
+public class AuditParam {
 
-public class NoticeTargetData {
-    private String target;
-    private Map<String, Object> templateParams;
-    public String getTarget() {
-        return target;
-    }
+    @NotNull(message = "id不能为空")
+    @Min(1)
+    private Long id;
 
-    public void setTarget(String target) {
-        this.target = target;
-    }
+    @Min(value = -1, message = "非法参数")
+    @Max(value = 1, message = "非法参数")
+    @NotNull(message = "审核状态不能为空")
+    private Integer auditStatus;
 
-    public Map<String, Object> getTemplateParams() {
-        return templateParams;
-    }
+    @NotBlank(message = "审核意见不能为空")
+    private String auditResult;
 
-    public void setTemplateParams(Map<String, Object> templateParams) {
-        this.templateParams = templateParams;
-    }
 }

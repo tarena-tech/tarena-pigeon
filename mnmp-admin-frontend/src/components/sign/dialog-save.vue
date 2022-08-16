@@ -15,14 +15,14 @@
       <el-form ref="ruleForm" class="cus-form" :model="ruleForm" :rules="rules" label-width="100px">
 
         <el-form-item label="签名名称" prop="name">
-          <el-input v-model="ruleForm.name" />
+          <el-input v-model="ruleForm.name" :disabled="disabled" />
         </el-form-item>
         <el-form-item label="签名编码" prop="code">
-          <el-input v-model="ruleForm.code" />
+          <el-input v-model="ruleForm.code" :disabled="disabled" />
         </el-form-item>
         <el-form-item label="应用" prop="">
           <template>
-            <el-select v-model="ruleForm.appId" filterable placeholder="请选择" :filter-method="queryApps">
+            <el-select :disabled="disabled" v-model="ruleForm.appId" filterable placeholder="请选择" :filter-method="queryApps">
               <el-option v-for="item in apps" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
           </template>
@@ -50,6 +50,7 @@ export default {
       dialogVisible: false,
       windowName: '创建',
       loading: false,
+      disabled: false,
       ruleForm: {
         name: null,
         code: null,
@@ -107,9 +108,11 @@ export default {
     show(data) {
       this.ruleForm = {}
       this.dialogVisible = true
+      this.disabled = false
       if (data != null) {
         this.windowName = '修改'
         this.ruleForm = data
+        this.disabled = true
       }
     },
     queryApps(param) {

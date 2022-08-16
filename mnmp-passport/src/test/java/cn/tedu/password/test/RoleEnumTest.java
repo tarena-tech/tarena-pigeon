@@ -17,7 +17,6 @@
 
 package cn.tedu.password.test;
 
-import com.tarena.mnmp.security.Role;
 
 public class RoleEnumTest {
     public static void main(String[] args) {

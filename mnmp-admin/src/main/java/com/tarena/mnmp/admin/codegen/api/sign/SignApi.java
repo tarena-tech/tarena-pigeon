@@ -21,12 +21,12 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.Ignore;
 import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.controller.sign.SignView;
-import com.tarena.mnmp.domain.common.AuditParam;
+import com.tarena.mnmp.domain.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.domain.sign.SignSaveParam;
-import com.tarena.mnmp.domain.sign.SignQuery;
+import com.tarena.mnmp.domain.param.SignSaveParam;
+import com.tarena.mnmp.domain.param.SignQuery;
 import com.tarena.mnmp.protocol.BusinessException;
-import com.tarena.mnmp.security.LoginToken;
+import com.tarena.mnmp.protocol.LoginToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -91,7 +91,7 @@ public interface SignApi {
         value = {"/queryList"}
     )
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    List<SignView> queryList(@ApiParam(value = "签名查询入参") SignQuery signQuery);
+    List<SignView> queryList(@ApiParam(value = "签名查询入参") SignQuery signQuery, @Ignore @User LoginToken token);
 
     /**
      * 审核签名

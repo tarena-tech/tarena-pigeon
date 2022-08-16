@@ -18,7 +18,7 @@
 package com.tarena.mnmp.admin.security.auth.impl;
 
 import com.tarena.mnmp.admin.security.config.JwtConfiguration;
-import com.tarena.mnmp.security.LoginToken;
+import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
 import com.tarena.mnmp.security.utils.JwtUtils;
 import java.util.HashMap;

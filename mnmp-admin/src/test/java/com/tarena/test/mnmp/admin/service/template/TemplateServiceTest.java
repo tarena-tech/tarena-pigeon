@@ -1,9 +1,8 @@
 package com.tarena.test.mnmp.admin.service.template;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
-import com.tarena.mnmp.domain.template.TemplateQuery;
+import com.tarena.mnmp.domain.param.TemplateQuery;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.test.mnmp.admin.sql.app.AppSqlScript;
-import java.util.Date;
 
 import com.tarena.mnmp.admin.AdminApplication;
 import com.tarena.mnmp.domain.SmsTemplateDO;

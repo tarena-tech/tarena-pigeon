@@ -20,7 +20,7 @@ package com.tarena.test.mnmp.admin.service.app;
 import com.alibaba.fastjson.JSON;
 import com.tarena.mnmp.admin.AdminApplication;
 import com.tarena.mnmp.domain.AppDO;
-import com.tarena.mnmp.domain.app.AppSaveParam;
+import com.tarena.mnmp.domain.param.AppSaveParam;
 import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.commons.utils.Asserts;
 import com.tarena.mnmp.constant.ErrorCode;

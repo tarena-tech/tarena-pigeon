@@ -47,7 +47,7 @@ public class AppDO {
 
     private Date updateTime;
 
-    public void cleanSameData () {
+    public void noChangeParam() {
         this.createUserId = null;
         this.createTime = null;
         this.auditResult = null;

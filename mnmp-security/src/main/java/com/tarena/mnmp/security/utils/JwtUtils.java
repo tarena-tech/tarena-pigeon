@@ -18,7 +18,7 @@
 package com.tarena.mnmp.security.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.tarena.mnmp.security.LoginToken;
+import com.tarena.mnmp.protocol.LoginToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;

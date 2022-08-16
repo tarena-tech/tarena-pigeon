@@ -14,42 +14,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.domain.provider;
 
-import com.tarena.mnmp.commons.pager.PagerResult;
+package com.tarena.mnmp.domain.param;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tarena.mnmp.commons.pager.SimplePager;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-@ApiModel("服务商查询模型")
+@ApiModel(value = "模板查询入参")
 @Data
-public class ProviderQueryParam extends PagerResult {
+public class TemplateQuery extends SimplePager {
 
-    public ProviderQueryParam() {
+    public TemplateQuery() {
         super();
-        this.orderBy = true;
+        this.desc = true;
     }
 
-    @ApiModelProperty("供应商名称")
-    private String name;
+    @ApiModelProperty(value = "应用编码")
+    private String appCode;
 
-    @ApiModelProperty("供应商编码")
-    private String code;
-
-
-    @ApiModelProperty("是否启用 0：未启用， 1：启用")
-    private Integer enable;
-
-    @ApiModelProperty("审核状态 -1未通过 0审核中 1通过")
+    @ApiModelProperty(value = "审核状态")
     private Integer auditStatus;
 
-    @ApiModelProperty("true：倒排， false：不排序")
-    private Boolean orderBy;
+    @ApiModelProperty(value = "是否可用 (0否 1是）")
+    private Integer enabled;
 
-    @ApiModelProperty("列表中必须包含某条数据")
+    @ApiModelProperty(value = "模板编码")
+    private String templateCode;
+
+    @ApiModelProperty(value = "模板名称")
+    private String templateName;
+
+    @ApiModelProperty("列表中必须包含某一条数据")
     private Long appendId;
 
-    @ApiModelProperty("列表中指定排除某个id")
+    @ApiModelProperty("需要排除的id")
     private Long excludeId;
+
+    @ApiModelProperty("是否倒叙 ture 倒叙, false 正序")
+    private Boolean desc;
+
+    @JsonIgnore
+    private Long createUserId;
 
 }

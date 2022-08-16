@@ -15,6 +15,10 @@
             <el-input v-model.trim="claForm.code" placeholder="" style="width: 120px" />
           </el-form-item>
 
+          <el-form-item prop="auditStatus" label="审核状态">
+            <com-dict :val.sync="claForm.auditStatus" dict-name="auditStatus" :is-all="false" />
+          </el-form-item>
+
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" @click="toResetPageForList">查询</el-button>
             <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>

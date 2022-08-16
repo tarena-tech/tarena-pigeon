@@ -18,6 +18,7 @@
 package com.tarena.mnmp.domain.template;
 
 import com.tarena.mnmp.domain.SmsTemplateDO;
+import com.tarena.mnmp.domain.param.TemplateQuery;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

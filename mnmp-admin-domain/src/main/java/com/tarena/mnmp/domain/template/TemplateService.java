@@ -20,11 +20,14 @@ package com.tarena.mnmp.domain.template;
 import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.domain.param.TemplateQuery;
 import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Deleted;
 import com.tarena.mnmp.enums.Enabled;
+import com.tarena.mnmp.enums.Role;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -32,6 +35,7 @@ import java.util.Optional;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @Service
 public class TemplateService {
@@ -45,7 +49,7 @@ public class TemplateService {
     @Resource
     private ProviderService providerService;
 
-    public void save(SmsTemplateParam templateParam) throws BusinessException {
+    public void save(SmsTemplateParam templateParam, LoginToken token) throws BusinessException {
 
         SmsTemplateDO template = new SmsTemplateDO();
         BeanUtils.copyProperties(templateParam, template);
@@ -60,19 +64,22 @@ public class TemplateService {
         if (null == template.getId()) {
             template.setDeleted(Deleted.NO.getVal());
             template.setEnabled(Enabled.YES.getVal());
-            template.setAuditStatus(0);
+            template.setAuditStatus(AuditStatus.WAITING.getStatus());
             template.setCreateTime(now);
             template.setUpdateTime(now);
             smsTemplateDao.save(template);
-        } else {
-            template.setCreateTime(null);
-            template.setEnabled(null);
-            template.setAuditStatus(null);
-            template.setAuditResult(null);
-            template.setUseCount(null);
-            template.setCreateUserId(null);
-            smsTemplateDao.modify(template);
+            return;
         }
+
+        SmsTemplateDO detail = querySmsTemplateDetail(template.getId());
+
+        if (!Role.executable(token, detail.getCreateUserId())) {
+            throw new BusinessException("100", "无权限");
+        }
+
+
+        template.noChangeParam();
+        smsTemplateDao.modify(template);
     }
 
     private void checkOnlyOne(SmsTemplateParam template) throws BusinessException {

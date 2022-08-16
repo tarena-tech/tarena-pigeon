@@ -45,4 +45,17 @@ public class SignDO {
     private Date createTime;
     private Date updateTime;
 
+    public void noChangeParam() {
+        this.createUserId = null;
+        this.code = null;
+        this.name = null;
+        this.appId = null;
+        this.appCode = null;
+        this.enabled = null;
+        this.creator = null;
+        this.auditResult = null;
+        this.auditStatus = null;
+        this.createTime = null;
+    }
+
 }

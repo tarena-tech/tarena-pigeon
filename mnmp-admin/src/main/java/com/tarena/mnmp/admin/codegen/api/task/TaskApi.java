@@ -20,7 +20,7 @@ package com.tarena.mnmp.admin.codegen.api.task;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.controller.task.TaskParam;
 import com.tarena.mnmp.admin.controller.task.TaskView;
-import com.tarena.mnmp.domain.common.AuditParam;
+import com.tarena.mnmp.domain.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskStatistics;

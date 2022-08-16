@@ -17,7 +17,7 @@
 
 package com.tarena.mnmp.domain.template;
 
-import com.tarena.mnmp.domain.common.AuditParam;
+import com.tarena.mnmp.domain.param.AuditParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotNull;

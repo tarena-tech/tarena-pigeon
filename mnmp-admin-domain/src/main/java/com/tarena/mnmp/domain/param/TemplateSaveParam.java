@@ -15,69 +15,60 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.domain;
+package com.tarena.mnmp.domain.param;
 
-import java.util.Date;
-import lombok.Data;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-@Data
-public class SmsTemplateDO {
-
+@ApiModel(value = "模板入参")
+public class TemplateSaveParam {
+    @ApiModelProperty(
+        value = "主键",
+        name = "id")
     private Long id;
 
+    @ApiModelProperty(
+        value = "模板編碼",
+        name = "code")
     private String code;
 
+    @ApiModelProperty(
+        value = "应用ID",
+        name = "appId")
     private Long appId;
 
+    @ApiModelProperty(
+        value = "应用编码",
+        name = "appCode")
     private String appCode;
 
+    @ApiModelProperty(
+        value = "模板名称",
+        name = "name")
     private String name;
 
+    @ApiModelProperty(
+        value = "模板模型",
+        name = "templateType")
     private Integer templateType;
 
+    @ApiModelProperty(
+        value = "通知类型",
+        name = "noticeType")
     private Integer noticeType;
 
+    @ApiModelProperty(
+        value = "模板内容",
+        name = "content")
     private String content;
 
+    @ApiModelProperty(
+        value = "备注",
+        name = "remark")
     private String remark;
 
-    private Integer auditStatus;
-
-    private String auditResult;
-
+    @ApiModelProperty(
+        value = "是否可用",
+        name = "enabled")
     private Integer enabled;
-
-    private Integer useCount;
-
-    private Date createTime;
-
-    private Date updateTime;
-
-    private Integer deleted;
-
-    private Long createUserId;
-
-    private String createUserName;
-
-    private Long providerId;
-
-    public void noChangeParam() {
-        this.code = null;
-        this.appId = null;
-        this.appCode = null;
-        this.name = null;
-        this.templateType = null;
-        this.noticeType = null;
-        this.auditResult = null;
-        this.auditStatus = null;
-        this.enabled = null;
-        this.useCount = null;
-        this.createTime = null;
-        this.deleted = null;
-        this.createUserId = null;
-        this.createUserName = null;
-        this.providerId = null;
-    }
-
-
 }

@@ -20,12 +20,12 @@ package com.tarena.mnmp.admin.codegen.api.provider;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.controller.provider.ProviderView;
-import com.tarena.mnmp.domain.common.AuditParam;
+import com.tarena.mnmp.domain.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.domain.provider.ProviderQueryParam;
-import com.tarena.mnmp.domain.provider.ProviderSaveParam;
+import com.tarena.mnmp.domain.param.ProviderQueryParam;
+import com.tarena.mnmp.domain.param.ProviderSaveParam;
 import com.tarena.mnmp.protocol.BusinessException;
-import com.tarena.mnmp.security.LoginToken;
+import com.tarena.mnmp.protocol.LoginToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -50,7 +50,7 @@ public interface ProviderApi {
 
     @ApiOperation(value = "保存服务商 创建/更新")
     @PostMapping("save")
-    @PreAuthorize("hasAnyRole('admin','root')")
+    @PreAuthorize("hasAnyRole('root')")
     void save(@RequestBody ProviderSaveParam param, @User LoginToken token) throws BusinessException;
 
     @ApiOperationSupport(order = 2004)

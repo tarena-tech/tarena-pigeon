@@ -15,7 +15,10 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.security;
+package com.tarena.mnmp.enums;
+
+import com.tarena.mnmp.protocol.LoginToken;
+import java.util.Objects;
 
 public enum Role {
     ROOT(3,"ROLE_root"),
@@ -44,8 +47,15 @@ public enum Role {
         this.weight = weight;
     }
 
-    public static boolean check(String role) {
+    public static boolean manager(String role) {
         return ROOT.getRoleName().equals(role) || ADMIN.getRoleName().equals(role);
     }
 
+    public static boolean executable(LoginToken token, Long ownId) {
+        return executable(token.getRole(), ownId, token.getId());
+    }
+
+    public static boolean executable (String role, Long ownId, Long curId) {
+        return manager(role) && Objects.equals(ownId, curId);
+    }
 }

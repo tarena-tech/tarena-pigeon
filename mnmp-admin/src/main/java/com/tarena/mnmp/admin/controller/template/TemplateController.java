@@ -26,12 +26,12 @@ import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.domain.template.SmsTemplateAuditParam;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
-import com.tarena.mnmp.domain.template.TemplateQuery;
+import com.tarena.mnmp.domain.param.TemplateQuery;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
-import com.tarena.mnmp.security.LoginToken;
-import com.tarena.mnmp.security.Role;
+import com.tarena.mnmp.protocol.LoginToken;
+import com.tarena.mnmp.enums.Role;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
@@ -54,8 +54,7 @@ public class TemplateController implements TemplateApi {
     private TaskService taskService;
 
     @Override public void save(SmsTemplateParam param, LoginToken token) throws BusinessException {
-        param.setCreateUserId(token.getId());
-        templateService.save(param);
+        templateService.save(param, token);
     }
 
     @Override public void changeEnableStatus(Long id, LoginToken token) throws BusinessException {
@@ -64,7 +63,7 @@ public class TemplateController implements TemplateApi {
             throw new BusinessException("100", "模板不存在");
         }
 
-        if (!Role.check(token.getRole()) && !Objects.equals(smstempalte.getCreateUserId(), token.getId())) {
+        if (!Role.manager(token.getRole()) && !Objects.equals(smstempalte.getCreateUserId(), token.getId())) {
             throw new BusinessException("100", "无权限");
         }
 
@@ -89,7 +88,7 @@ public class TemplateController implements TemplateApi {
 
     @Override
     public PagerResult<TemplateView> queryListByPage(TemplateQuery templateQuery, LoginToken token) {
-        if (!Role.check(token.getRole())) {
+        if (!Role.manager(token.getRole())) {
             templateQuery.setCreateUserId(token.getId());
         }
         List<SmsTemplateDO> sources = templateService.queryList(templateQuery);
@@ -100,7 +99,7 @@ public class TemplateController implements TemplateApi {
     }
 
     @Override public List<TemplateView> queryListByParam(TemplateQuery templateQuery, LoginToken token) {
-        if (!Role.check(token.getRole())) {
+        if (!Role.manager(token.getRole())) {
             templateQuery.setCreateUserId(token.getId());
         }
         List<SmsTemplateDO> sources = templateService.queryList(templateQuery);

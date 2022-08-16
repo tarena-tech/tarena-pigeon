@@ -234,7 +234,7 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="queryTemplates" resultMap="BaseResultMap" parameterType="com.tarena.mnmp.domain.template.TemplateQuery">
+    <select id="queryTemplates" resultMap="BaseResultMap" parameterType="com.tarena.mnmp.domain.param.TemplateQuery">
         select
         <include refid="Base_Column_List"/>
         from notice_sms_template

@@ -18,19 +18,19 @@
 package com.tarena.mnmp.admin.controller.sign;
 
 import com.tarena.mnmp.admin.codegen.api.sign.SignApi;
-import com.tarena.mnmp.domain.common.AuditParam;
+import com.tarena.mnmp.domain.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SignDO;
 import com.tarena.mnmp.domain.app.AppService;
-import com.tarena.mnmp.domain.sign.SignQuery;
-import com.tarena.mnmp.domain.sign.SignSaveParam;
+import com.tarena.mnmp.domain.param.SignQuery;
+import com.tarena.mnmp.domain.param.SignSaveParam;
 import com.tarena.mnmp.domain.sign.SignService;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
-import com.tarena.mnmp.security.LoginToken;
-import com.tarena.mnmp.security.Role;
+import com.tarena.mnmp.protocol.LoginToken;
+import com.tarena.mnmp.enums.Role;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
@@ -51,8 +51,7 @@ public class SignController implements SignApi {
 
 
     @Override public void save(SignSaveParam signSaveParam, LoginToken token) throws BusinessException {
-        signSaveParam.setCreateUserId(token.getId());
-        signService.save(signSaveParam);
+        signService.save(signSaveParam, token);
     }
 
     @Override public void changeEnableStatus(Long id, LoginToken token) throws BusinessException {
@@ -61,7 +60,7 @@ public class SignController implements SignApi {
             throw new BusinessException("100", "签名不存在");
         }
 
-        if (!Role.check(token.getRole()) && !Objects.equals(sign.getCreateUserId(), token.getId())) {
+        if (!Role.manager(token.getRole()) && !Objects.equals(sign.getCreateUserId(), token.getId())) {
             throw new BusinessException("100", "暂无权限");
         }
 
@@ -92,7 +91,7 @@ public class SignController implements SignApi {
     }
 
     @Override public PagerResult<SignView> queryPage(SignQuery signQuery, LoginToken token) {
-        if (!Role.check(token.getRole())) {
+        if (!Role.manager(token.getRole())) {
             signQuery.setCreateUserId(token.getId());
         }
         List<SignDO> signs = signService.querySignList(signQuery);
@@ -103,7 +102,10 @@ public class SignController implements SignApi {
         return rest;
     }
 
-    @Override public List<SignView> queryList(SignQuery signQuery) {
+    @Override public List<SignView> queryList(SignQuery signQuery, LoginToken token) {
+        if (!Role.manager(token.getRole())) {
+            signQuery.setCreateUserId(token.getId());
+        }
         signQuery.setDesc(false);
         List<SignDO> sources = signService.querySignList(signQuery);
         return SignView.convert(sources);

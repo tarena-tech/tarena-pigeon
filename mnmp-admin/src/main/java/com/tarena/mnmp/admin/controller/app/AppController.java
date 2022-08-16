@@ -18,11 +18,11 @@
 package com.tarena.mnmp.admin.controller.app;
 
 import com.tarena.mnmp.admin.codegen.api.app.AppApi;
-import com.tarena.mnmp.domain.common.AuditParam;
+import com.tarena.mnmp.domain.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.AppDO;
-import com.tarena.mnmp.domain.app.AppQueryParam;
-import com.tarena.mnmp.domain.app.AppSaveParam;
+import com.tarena.mnmp.domain.param.AppQueryParam;
+import com.tarena.mnmp.domain.param.AppSaveParam;
 import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.domain.sign.SignService;
 import com.tarena.mnmp.domain.task.TaskQuery;
@@ -30,8 +30,8 @@ import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
-import com.tarena.mnmp.security.LoginToken;
-import com.tarena.mnmp.security.Role;
+import com.tarena.mnmp.protocol.LoginToken;
+import com.tarena.mnmp.enums.Role;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
@@ -58,8 +58,7 @@ public class AppController implements AppApi {
     private SignService signService;
 
     @Override public void save(AppSaveParam appAddParam, LoginToken token) throws BusinessException {
-        appAddParam.setCreateUserId(token.getId());
-        appService.save(appAddParam);
+        appService.save(appAddParam, token);
     }
 
 
@@ -69,7 +68,7 @@ public class AppController implements AppApi {
             throw new BusinessException("100", "应用不存在");
         }
 
-        if (!Role.check(token.getRole()) && ObjectUtils.notEqual(app.getCreateUserId(), token.getId())) {
+        if (!Role.manager(token.getRole()) && ObjectUtils.notEqual(app.getCreateUserId(), token.getId())) {
             throw new BusinessException("100", "无权限");
         }
 
@@ -101,7 +100,7 @@ public class AppController implements AppApi {
     }
 
     @Override public PagerResult<AppView> queryPage(AppQueryParam param, LoginToken token) {
-        if (!Role.check(token.getRole())) {
+        if (!Role.manager(token.getRole())) {
             param.setCreateUserId(token.getId());
         }
         List<AppDO> sources = appService.queryList(param);
@@ -114,7 +113,7 @@ public class AppController implements AppApi {
 
     @GetMapping("query/list") @Override public List<AppView> queryList(AppQueryParam param, LoginToken token) {
         param.setDesc(false);
-        if (!Role.check(token.getRole())) {
+        if (!Role.manager(token.getRole())) {
             param.setCreateUserId(token.getId());
         }
         List<AppDO> sources = appService.queryList(param);

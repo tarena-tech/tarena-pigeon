@@ -20,16 +20,22 @@ package com.tarena.mnmp.domain.sign;
 import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.SignDO;
 import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.domain.param.SignQuery;
+import com.tarena.mnmp.domain.param.SignSaveParam;
 import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Enabled;
+import com.tarena.mnmp.enums.Role;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @Service
 public class SignService {
@@ -42,20 +48,26 @@ public class SignService {
     @Resource
     private ProviderService providerService;
 
-    public void save(SignSaveParam signSaveParam) throws BusinessException {
+    public void save(SignSaveParam signSaveParam, LoginToken token) throws BusinessException {
         SignDO sign = new SignDO();
         BeanUtils.copyProperties(signSaveParam, sign);
         AppDO app = appService.checkStatus(sign.getAppId());
         sign.setAppCode(app.getCode());
         if (null == sign.getId()) {
+            sign.setCreateUserId(token.getId());
+            sign.setCreateTime(new Date());
             signDao.save(sign);
-        } else {
-            sign.setEnabled(null);
-            sign.setAuditStatus(null);
-            sign.setCreateTime(null);
-            sign.setCreateUserId(null);
-            signDao.modify(sign);
+            return;
         }
+
+        SignDO signDetail = querySignDetail(signSaveParam.getId());
+
+        if (!Role.manager(token.getRole()) && !ObjectUtils.nullSafeEquals(signDetail.getCreateUserId(), token.getId())) {
+            throw new BusinessException("100", "无权限");
+        }
+
+        sign.noChangeParam();
+        signDao.modify(sign);
     }
 
     @Deprecated
