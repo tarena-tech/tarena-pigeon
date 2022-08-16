@@ -115,7 +115,7 @@ public class TemplateController implements TemplateApi {
     }
 
 
-    @Override public void doAuditSmsTemplate(SmsTemplateAuditParam param) throws BusinessException {
+    @Override public void doAuditSmsTemplate(SmsTemplateAuditParam param) {
         templateService.doAuditSmsTemplate(param);
     }
 //
