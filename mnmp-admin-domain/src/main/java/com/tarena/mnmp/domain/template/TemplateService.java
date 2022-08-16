@@ -57,7 +57,6 @@ public class TemplateService {
 
         AppDO app = appService.checkStatus(template.getAppId());
         template.setAppCode(app.getCode());
-        providerService.checkStatus(template.getProviderId());
 
         Date now = new Date();
         if (null == template.getId()) {
@@ -133,7 +132,9 @@ public class TemplateService {
         return "ok";
     }
 
-    public void doAuditSmsTemplate(SmsTemplateAuditParam param) {
+    public void doAuditSmsTemplate(SmsTemplateAuditParam param) throws BusinessException {
+        providerService.checkStatus(param.getProviderId());
+
         SmsTemplateDO bo = new SmsTemplateDO();
         bo.setId(param.getId());
         bo.setAuditStatus(param.getAuditStatus());

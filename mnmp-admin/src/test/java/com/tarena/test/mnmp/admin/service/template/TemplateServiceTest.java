@@ -2,6 +2,7 @@ package com.tarena.test.mnmp.admin.service.template;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.param.TemplateQuery;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.test.mnmp.admin.sql.app.AppSqlScript;
 
 import com.tarena.mnmp.admin.AdminApplication;
@@ -50,7 +51,7 @@ public class TemplateServiceTest {
             sms.setEnabled(1);
             sms.setNoticeType(1);
             sms.setAppCode("2qqq");
-            templateService.save(sms);
+            templateService.save(sms, new LoginToken());
         }
 
 
@@ -160,7 +161,7 @@ public class TemplateServiceTest {
         scripts = {AppSqlScript.TRUNCATE_TABLE},
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
-    public void doAuditSmsTemplate() {
+    public void doAuditSmsTemplate() throws BusinessException {
         templateService.doAuditSmsTemplate(null);
     }
 
