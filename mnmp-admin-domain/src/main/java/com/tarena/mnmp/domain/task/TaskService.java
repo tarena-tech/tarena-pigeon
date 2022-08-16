@@ -33,9 +33,11 @@ import com.tarena.mnmp.domain.sign.SignService;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Deleted;
+import com.tarena.mnmp.enums.Role;
 import com.tarena.mnmp.enums.SendType;
 import com.tarena.mnmp.enums.TaskStatus;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -180,8 +182,10 @@ public class TaskService {
         taskDao.update(task);
     }
 
-    public PagerResult<TaskDO> queryListByPage(TaskQuery query) {
-
+    public PagerResult<TaskDO> queryListByPage(TaskQuery query, LoginToken token) {
+        if (!Role.manager(token.getRole())) {
+            query.setCreateUserId(token.getId());
+        }
         List<TaskDO> list = taskDao.queryList(query);
         Long count = taskDao.queryCount(query);
 

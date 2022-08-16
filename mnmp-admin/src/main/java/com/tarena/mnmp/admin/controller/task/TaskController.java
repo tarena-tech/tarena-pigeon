@@ -163,8 +163,7 @@ public class TaskController implements TaskApi {
     }
 
     @Override public PagerResult<TaskView> queryListByPage(TaskQuery taskQuery, LoginToken token) {
-        taskQuery.setCreateUserId(token.getId());
-        PagerResult<TaskDO> res = taskService.queryListByPage(taskQuery);
+        PagerResult<TaskDO> res = taskService.queryListByPage(taskQuery, token);
         PagerResult<TaskView> result = new PagerResult<>(taskQuery.getPageSize(), taskQuery.getCurrentPageIndex());
         result.setList(TaskView.convert(res.getList()));
         result.setRecordCount(res.getRecordCount());
