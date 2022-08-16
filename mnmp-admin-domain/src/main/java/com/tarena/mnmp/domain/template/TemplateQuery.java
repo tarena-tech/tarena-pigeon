@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.domain.template;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tarena.mnmp.commons.pager.SimplePager;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -25,6 +26,11 @@ import lombok.Data;
 @ApiModel(value = "模板查询入参")
 @Data
 public class TemplateQuery extends SimplePager {
+
+    public TemplateQuery() {
+        super();
+        this.desc = true;
+    }
 
     @ApiModelProperty(value = "应用编码")
     private String appCode;
@@ -46,5 +52,11 @@ public class TemplateQuery extends SimplePager {
 
     @ApiModelProperty("需要排除的id")
     private Long excludeId;
+
+    @ApiModelProperty("是否倒叙 ture 倒叙, false 正序")
+    private Boolean desc;
+
+    @JsonIgnore
+    private Long createUserId;
 
 }

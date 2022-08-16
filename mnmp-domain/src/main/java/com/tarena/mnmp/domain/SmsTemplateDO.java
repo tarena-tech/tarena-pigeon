@@ -55,10 +55,11 @@ public class SmsTemplateDO {
 
     private Integer deleted;
 
-    private Integer createUserId;
+    private Long createUserId;
 
     private String createUserName;
 
     private Long providerId;
+
 
 }

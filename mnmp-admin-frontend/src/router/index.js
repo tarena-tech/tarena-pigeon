@@ -107,7 +107,7 @@ export const constantRoutes = [
         path: 'sms',
         name: 'TemplateSms',
         component: () => import('@/views/template-center/sms'),
-        meta: { title: '短信', icon: 'table' }
+        meta: { title: '短信模版', icon: 'table' }
       }
     ]
   },

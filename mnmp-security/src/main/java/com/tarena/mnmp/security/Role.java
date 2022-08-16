@@ -43,4 +43,9 @@ public enum Role {
     public void setWeight(int weight) {
         this.weight = weight;
     }
+
+    public static boolean check(String role) {
+        return ROOT.getRoleName().equals(role) || ADMIN.getRoleName().equals(role);
+    }
+
 }

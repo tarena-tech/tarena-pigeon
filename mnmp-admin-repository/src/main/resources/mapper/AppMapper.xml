@@ -64,8 +64,8 @@
             <if test="auditResult != null">
                 audit_result,
             </if>
-            <if test="ownId != null">
-                own_id,
+            <if test="createUserId != null">
+                create_user_id,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -99,8 +99,8 @@
             <if test="auditResult != null">
                 #{auditResult,jdbcType=VARCHAR},
             </if>
-            <if test="ownId != null">
-                #{ownId,jdbcType=BIGINT},
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=BIGINT},
             </if>
         </trim>
     </insert>
@@ -125,11 +125,11 @@
             <if test="excludeId != null">
                 and id != #{excludeId,jdbcType=BIGINT}
             </if>
-            <if test="ownId != null">
-                and own_id = #{ownId,jdbcType=BIGINT}
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
             </if>
         </where>
-        <if test="orderBy != null and orderBy == true">
+        <if test="desc != null and desc == true">
             order by id desc
         </if>
         ${limitClause}
@@ -155,8 +155,8 @@
             <if test="excludeId != null">
                 and id != #{excludeId,jdbcType=BIGINT}
             </if>
-            <if test="ownId != null">
-                and own_id = #{ownId,jdbcType=BIGINT}
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
             </if>
         </where>
     </select>

@@ -53,6 +53,7 @@ public class SignService {
             sign.setEnabled(null);
             sign.setAuditStatus(null);
             sign.setCreateTime(null);
+            sign.setCreateUserId(null);
             signDao.modify(sign);
         }
     }

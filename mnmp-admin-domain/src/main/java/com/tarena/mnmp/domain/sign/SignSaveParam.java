@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.domain.sign;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
@@ -61,5 +62,8 @@ public class SignSaveParam {
         example = "测试签名简介"
     )
     private String remarks;
+
+    @JsonIgnore
+    private Long createUserId;
 
 }

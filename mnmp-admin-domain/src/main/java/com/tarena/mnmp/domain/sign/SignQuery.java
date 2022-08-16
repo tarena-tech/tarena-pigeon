@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.domain.sign;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -28,7 +29,7 @@ public class SignQuery extends PagerResult {
 
     public SignQuery() {
         super();
-        this.orderBy = true;
+        this.desc = true;
     }
 
     @ApiModelProperty(
@@ -51,9 +52,12 @@ public class SignQuery extends PagerResult {
     private Integer enable;
 
     @ApiModelProperty("true:倒叙， false：正序")
-    private Boolean orderBy;
+    private Boolean desc;
 
     @ApiModelProperty("列表中必须存在的某一条数据")
     private Long appendId;
+
+    @JsonIgnore
+    private Long createUserId;
 
 }

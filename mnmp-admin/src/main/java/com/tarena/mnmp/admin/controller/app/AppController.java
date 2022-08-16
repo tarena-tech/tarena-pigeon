@@ -58,7 +58,7 @@ public class AppController implements AppApi {
     private SignService signService;
 
     @Override public void save(AppSaveParam appAddParam, LoginToken token) throws BusinessException {
-        appAddParam.setSysUserId(token.getId());
+        appAddParam.setCreateUserId(token.getId());
         appService.save(appAddParam);
     }
 
@@ -69,7 +69,7 @@ public class AppController implements AppApi {
             throw new BusinessException("100", "应用不存在");
         }
 
-        if (Role.USER.getRoleName().equals(token.getRole()) && ObjectUtils.notEqual(app.getOwnId(), token.getId())) {
+        if (!Role.check(token.getRole()) && ObjectUtils.notEqual(app.getCreateUserId(), token.getId())) {
             throw new BusinessException("100", "无权限");
         }
 
@@ -101,8 +101,8 @@ public class AppController implements AppApi {
     }
 
     @Override public PagerResult<AppView> queryPage(AppQueryParam param, LoginToken token) {
-        if (Role.USER.getRoleName().equals(token.getRole())) {
-            param.setOwnId(token.getId());
+        if (!Role.check(token.getRole())) {
+            param.setCreateUserId(token.getId());
         }
         List<AppDO> sources = appService.queryList(param);
         Long count = appService.queryCount(param);
@@ -112,8 +112,11 @@ public class AppController implements AppApi {
         return pagerResult;
     }
 
-    @GetMapping("query/list") @Override public List<AppView> queryList(AppQueryParam param) {
-        param.setOrderBy(false);
+    @GetMapping("query/list") @Override public List<AppView> queryList(AppQueryParam param, LoginToken token) {
+        param.setDesc(false);
+        if (!Role.check(token.getRole())) {
+            param.setCreateUserId(token.getId());
+        }
         List<AppDO> sources = appService.queryList(param);
         return AppView.convert(sources);
     }

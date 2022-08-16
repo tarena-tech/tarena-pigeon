@@ -25,6 +25,8 @@ public class SignDO {
 
     private Long id;
 
+    private Long createUserId;
+
     private String code;
 
     private String name;

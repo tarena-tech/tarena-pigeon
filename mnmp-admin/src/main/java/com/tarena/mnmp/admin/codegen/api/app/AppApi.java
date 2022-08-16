@@ -96,7 +96,7 @@ public interface AppApi {
     @ApiOperation(value = "查询应用管理列表")
     @GetMapping("query/list")
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    List<AppView> queryList(AppQueryParam param);
+    List<AppView> queryList(AppQueryParam param, @User LoginToken token);
 
     /**
      * 审核应用

@@ -70,6 +70,7 @@ public class TemplateService {
             template.setAuditStatus(null);
             template.setAuditResult(null);
             template.setUseCount(null);
+            template.setCreateUserId(null);
             smsTemplateDao.modify(template);
         }
     }
@@ -121,7 +122,6 @@ public class TemplateService {
         return smsTemplateDao.findById(id);
     }
 
-    @Deprecated
     public String updateSmsTemplate(SmsTemplateDO sms) {
         smsTemplateDao.modify(sms);
         return "ok";

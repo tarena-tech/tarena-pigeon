@@ -52,5 +52,5 @@ public class AppSaveParam {
     private Integer enabled;
 
     @JsonIgnore
-    private Long sysUserId;
+    private Long createUserId;
 }

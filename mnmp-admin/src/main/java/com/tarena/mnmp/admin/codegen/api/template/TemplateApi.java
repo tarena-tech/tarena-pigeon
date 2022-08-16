@@ -18,12 +18,15 @@
 package com.tarena.mnmp.admin.codegen.api.template;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.github.xiaoymin.knife4j.annotations.Ignore;
+import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.controller.template.TemplateView;
 import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
 import com.tarena.mnmp.domain.template.TemplateQuery;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.security.LoginToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -53,25 +56,26 @@ public interface TemplateApi {
         value = {"/sms/save"}
     )
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    void save(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate) throws BusinessException;
+    void save(@ApiParam(value = "新增短信模板", required = true) @Valid @RequestBody SmsTemplateParam smsTemplate,
+        @Ignore @User LoginToken token) throws BusinessException;
 
 
 
     @PostMapping("sms/change/enable/status")
     @ApiOperation("变更短信模板启用状态")
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    void changeEnableStatus(Long id) throws BusinessException;
+    void changeEnableStatus(Long id, @Ignore @User LoginToken token) throws BusinessException;
 
     @ApiOperationSupport(order = 4004)
     @ApiOperation(value = "查询短信模板信息（分页）")
     @GetMapping("/sms/query/page")
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    PagerResult<TemplateView> queryListByPage(TemplateQuery templateQuery);
+    PagerResult<TemplateView> queryListByPage(TemplateQuery templateQuery, @Ignore @User LoginToken token);
 
     @ApiOperation(value = "查询短信模板信息")
     @GetMapping("/sms/query/list")
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    List<TemplateView> queryListByParam(TemplateQuery templateQuery);
+    List<TemplateView> queryListByParam(TemplateQuery templateQuery, @Ignore @User LoginToken token);
 
     @ApiOperationSupport(order = 4006)
     @ApiOperation(value = "查看短信模板详情")

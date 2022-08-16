@@ -28,7 +28,7 @@ public class AppQueryParam extends PagerResult {
 
     public AppQueryParam() {
         super();
-        this.orderBy = true;
+        this.desc = true;
     }
 
     @ApiModelProperty("app名字 可模糊")
@@ -38,7 +38,7 @@ public class AppQueryParam extends PagerResult {
     private String code;
 
     @ApiModelProperty("true: 倒叙， false：不排序，默认倒叙")
-    private Boolean orderBy;
+    private Boolean desc;
 
     @ApiModelProperty("是否启用 0：未启用， 1：启用")
     private Integer enable;
@@ -53,6 +53,6 @@ public class AppQueryParam extends PagerResult {
     private Long excludeId;
 
     @JsonIgnore
-    private Long ownId;
+    private Long createUserId;
 
 }
