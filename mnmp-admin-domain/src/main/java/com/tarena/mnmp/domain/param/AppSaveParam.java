@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.domain.app;
+package com.tarena.mnmp.domain.param;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
@@ -52,5 +52,5 @@ public class AppSaveParam {
     private Integer enabled;
 
     @JsonIgnore
-    private Long sysUserId;
+    private Long createUserId;
 }

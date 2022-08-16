@@ -19,7 +19,7 @@ package com.tarena.mnmp.admin.codegen.api.record;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.admin.controller.record.SmsTargetRecordView;
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.domain.record.SmsTargetRecordParam;
+import com.tarena.mnmp.domain.param.SmsTargetRecordParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;

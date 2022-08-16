@@ -14,31 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.domain.app;
+package com.tarena.mnmp.domain.param;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-@ApiModel("app查询模型")
+@ApiModel("服务商查询模型")
 @Data
-public class AppQueryParam extends PagerResult {
+public class ProviderQueryParam extends PagerResult {
 
-    public AppQueryParam() {
+    public ProviderQueryParam() {
         super();
         this.orderBy = true;
     }
 
-    @ApiModelProperty("app名字 可模糊")
+    @ApiModelProperty("供应商名称")
     private String name;
 
-    @ApiModelProperty("app code")
+    @ApiModelProperty("供应商编码")
     private String code;
 
-    @ApiModelProperty("true: 倒叙， false：不排序，默认倒叙")
-    private Boolean orderBy;
 
     @ApiModelProperty("是否启用 0：未启用， 1：启用")
     private Integer enable;
@@ -46,13 +43,13 @@ public class AppQueryParam extends PagerResult {
     @ApiModelProperty("审核状态 -1未通过 0审核中 1通过")
     private Integer auditStatus;
 
-    @ApiModelProperty("查询列表时指定在列表中返回的id")
+    @ApiModelProperty("true：倒排， false：不排序")
+    private Boolean orderBy;
+
+    @ApiModelProperty("列表中必须包含某条数据")
     private Long appendId;
 
-    @ApiModelProperty("查询列表时指定排除某个id")
+    @ApiModelProperty("列表中指定排除某个id")
     private Long excludeId;
-
-    @JsonIgnore
-    private Long ownId;
 
 }

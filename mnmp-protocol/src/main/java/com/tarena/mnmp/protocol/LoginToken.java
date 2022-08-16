@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.security;
+package com.tarena.mnmp.protocol;
 
 import java.io.Serializable;
 import java.util.List;

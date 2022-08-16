@@ -14,29 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.admin.param;
 
+package com.tarena.mnmp.domain.template;
+
+import com.tarena.mnmp.domain.param.AuditParam;
 import io.swagger.annotations.ApiModel;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-@ApiModel("审核模型")
-public class AuditParam {
+@ApiModel("短信审核模型")
+public class SmsTemplateAuditParam extends AuditParam {
 
-    @NotNull(message = "id不能为空")
-    @Min(1)
-    private Long id;
+    @ApiModelProperty("供货商Id")
+    @NotNull(message = "供货商不能为空")
+    private Long providerId;
 
-    @Min(value = -1, message = "非法参数")
-    @Max(value = 1, message = "非法参数")
-    @NotNull(message = "审核状态不能为空")
-    private Integer auditStatus;
-
-    @NotBlank(message = "审核意见不能为空")
-    private String auditResult;
+    @ApiModelProperty("模板内容")
+    @NotNull(message = "模板内容不能为空")
+    private String content;
 
 }

@@ -15,60 +15,55 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.domain.template;
+package com.tarena.mnmp.domain.param;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import lombok.Data;
 
-@ApiModel(value = "模板入参")
-public class TemplateSaveParam {
+@ApiModel(value = "签名新增入参")
+@Data
+public class SignSaveParam {
     @ApiModelProperty(
         value = "主键",
-        name = "id")
+        name = "id",
+        required = false
+    )
     private Long id;
 
     @ApiModelProperty(
-        value = "模板編碼",
-        name = "code")
-    private String code;
-
-    @ApiModelProperty(
-        value = "应用ID",
-        name = "appId")
-    private Long appId;
-
-    @ApiModelProperty(
-        value = "应用编码",
-        name = "appCode")
-    private String appCode;
-
-    @ApiModelProperty(
-        value = "模板名称",
-        name = "name")
+        value = "签名名称",
+        required = true
+    )
+    @NotBlank(message = "签名名称不能为空")
     private String name;
 
     @ApiModelProperty(
-        value = "模板模型",
-        name = "templateType")
-    private Integer templateType;
+        value = "签名编码",
+        required = true
+    )
+    @NotBlank(message = "签名编码不能为空")
+    private String code;
 
     @ApiModelProperty(
-        value = "通知类型",
-        name = "noticeType")
-    private Integer noticeType;
+        value = "应用主键",
+        required = false
+    )
+    @NotNull(message = "请选择应用")
+    private Long appId;
 
     @ApiModelProperty(
-        value = "模板内容",
-        name = "content")
-    private String content;
+        value = "简介",
+        name = "remark",
+        required = false,
+        example = "测试签名简介"
+    )
+    private String remarks;
 
-    @ApiModelProperty(
-        value = "备注",
-        name = "remark")
-    private String remark;
+    @JsonIgnore
+    private Long createUserId;
 
-    @ApiModelProperty(
-        value = "是否可用",
-        name = "enabled")
-    private Integer enabled;
 }

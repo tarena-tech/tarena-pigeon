@@ -25,6 +25,8 @@ public class SignDO {
 
     private Long id;
 
+    private Long createUserId;
+
     private String code;
 
     private String name;
@@ -42,5 +44,18 @@ public class SignDO {
     private String auditResult;
     private Date createTime;
     private Date updateTime;
+
+    public void noChangeParam() {
+        this.createUserId = null;
+        this.code = null;
+        this.name = null;
+        this.appId = null;
+        this.appCode = null;
+        this.enabled = null;
+        this.creator = null;
+        this.auditResult = null;
+        this.auditStatus = null;
+        this.createTime = null;
+    }
 
 }

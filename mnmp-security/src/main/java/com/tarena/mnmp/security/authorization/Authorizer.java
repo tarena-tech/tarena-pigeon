@@ -18,7 +18,7 @@
 package com.tarena.mnmp.security.authorization;
 
 import com.tarena.mnmp.protocol.BusinessException;
-import com.tarena.mnmp.security.LoginToken;
+import com.tarena.mnmp.protocol.LoginToken;
 
 public interface Authorizer {
     /**

@@ -18,17 +18,19 @@
 package com.tarena.mnmp.admin.controller.sign;
 
 import com.tarena.mnmp.admin.codegen.api.sign.SignApi;
-import com.tarena.mnmp.admin.param.AuditParam;
+import com.tarena.mnmp.domain.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SignDO;
 import com.tarena.mnmp.domain.app.AppService;
-import com.tarena.mnmp.domain.sign.SignQuery;
-import com.tarena.mnmp.domain.sign.SignSaveParam;
+import com.tarena.mnmp.domain.param.SignQuery;
+import com.tarena.mnmp.domain.param.SignSaveParam;
 import com.tarena.mnmp.domain.sign.SignService;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
+import com.tarena.mnmp.enums.Role;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
@@ -48,14 +50,18 @@ public class SignController implements SignApi {
     private TaskService taskService;
 
 
-    @Override public void save(SignSaveParam signSaveParam) throws BusinessException {
-        signService.save(signSaveParam);
+    @Override public void save(SignSaveParam signSaveParam, LoginToken token) throws BusinessException {
+        signService.save(signSaveParam, token);
     }
 
-    @Override public void changeEnableStatus(Long id) throws BusinessException {
+    @Override public void changeEnableStatus(Long id, LoginToken token) throws BusinessException {
         SignDO sign = signService.querySignDetail(id);
         if (null == sign) {
             throw new BusinessException("100", "签名不存在");
+        }
+
+        if (!Role.manager(token.getRole()) && !Objects.equals(sign.getCreateUserId(), token.getId())) {
+            throw new BusinessException("100", "暂无权限");
         }
 
         // 启用 要判断关联的数据 是否在可用状态
@@ -84,17 +90,23 @@ public class SignController implements SignApi {
         return signView;
     }
 
-    @Override public PagerResult<SignView> queryPage(SignQuery signQuery) {
-        List<SignDO> signDOs = signService.querySignList(signQuery);
+    @Override public PagerResult<SignView> queryPage(SignQuery signQuery, LoginToken token) {
+        if (!Role.manager(token.getRole())) {
+            signQuery.setCreateUserId(token.getId());
+        }
+        List<SignDO> signs = signService.querySignList(signQuery);
         Long count = signService.queryCount(signQuery);
         PagerResult<SignView> rest = new PagerResult<>(signQuery.getPageSize(), signQuery.getCurrentPageIndex());
-        rest.setList(SignView.convert(signDOs));
+        rest.setList(SignView.convert(signs));
         rest.setRecordCount(count);
         return rest;
     }
 
-    @Override public List<SignView> queryList(SignQuery signQuery) {
-        signQuery.setOrderBy(false);
+    @Override public List<SignView> queryList(SignQuery signQuery, LoginToken token) {
+        if (!Role.manager(token.getRole())) {
+            signQuery.setCreateUserId(token.getId());
+        }
+        signQuery.setDesc(false);
         List<SignDO> sources = signService.querySignList(signQuery);
         return SignView.convert(sources);
     }

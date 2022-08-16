@@ -28,7 +28,7 @@ import com.tarena.mnmp.passport.domain.Token;
 import com.tarena.mnmp.passport.domain.User;
 import com.tarena.mnmp.passport.service.PassportService;
 import com.tarena.mnmp.protocol.BusinessException;
-import com.tarena.mnmp.security.LoginToken;
+import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;

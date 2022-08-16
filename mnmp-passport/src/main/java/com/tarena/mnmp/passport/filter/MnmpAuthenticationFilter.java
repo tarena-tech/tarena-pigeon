@@ -18,7 +18,7 @@
 package com.tarena.mnmp.passport.filter;
 
 import com.tarena.mnmp.passport.utils.IPUtils;
-import com.tarena.mnmp.security.LoginToken;
+import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
 import java.io.IOException;
 import java.util.ArrayList;

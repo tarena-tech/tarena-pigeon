@@ -14,42 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.domain.provider;
+package com.tarena.mnmp.domain.param;
 
-import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 
-@ApiModel("服务商查询模型")
 @Data
-public class ProviderQueryParam extends PagerResult {
+@ApiModel("审核模型")
+public class AuditParam {
 
-    public ProviderQueryParam() {
-        super();
-        this.orderBy = true;
-    }
+    @NotNull(message = "id不能为空")
+    @Min(1)
+    private Long id;
 
-    @ApiModelProperty("供应商名称")
-    private String name;
-
-    @ApiModelProperty("供应商编码")
-    private String code;
-
-
-    @ApiModelProperty("是否启用 0：未启用， 1：启用")
-    private Integer enable;
-
-    @ApiModelProperty("审核状态 -1未通过 0审核中 1通过")
+    @Min(value = -1, message = "非法参数")
+    @Max(value = 1, message = "非法参数")
+    @NotNull(message = "审核状态不能为空")
     private Integer auditStatus;
 
-    @ApiModelProperty("true：倒排， false：不排序")
-    private Boolean orderBy;
-
-    @ApiModelProperty("列表中必须包含某条数据")
-    private Long appendId;
-
-    @ApiModelProperty("列表中指定排除某个id")
-    private Long excludeId;
+    @NotBlank(message = "审核意见不能为空")
+    private String auditResult;
 
 }

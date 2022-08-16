@@ -25,7 +25,7 @@ public class AppDO {
 
     private Long id;
 
-    private Long ownId;
+    private Long createUserId;
 
     private String code;
 
@@ -47,12 +47,14 @@ public class AppDO {
 
     private Date updateTime;
 
-    public void cleanSameData () {
-        this.ownId = null;
+    public void noChangeParam() {
+        this.createUserId = null;
         this.createTime = null;
         this.auditResult = null;
         this.auditStatus = null;
         this.enabled = null;
+        this.name = null;
+        this.code = null;
     }
 
 }

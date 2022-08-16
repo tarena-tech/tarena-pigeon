@@ -14,46 +14,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.domain.param;
 
-package com.tarena.mnmp.domain.sign;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
 import lombok.Data;
 
-@ApiModel(value = "签名查询入参")
 @Data
-public class SignQuery extends PagerResult {
+@ApiModel("任务发送记录查询模型")
+public class SmsTargetRecordParam extends PagerResult {
 
-    public SignQuery() {
-        super();
-        this.orderBy = true;
-    }
+    @ApiModelProperty("手机号，该字段为精确搜索")
+    private String eqTarget;
 
-    @ApiModelProperty(
-        value = "应用编码",
-        name = "appCode"
-    )
+    @ApiModelProperty("手机号，该字段为模糊搜索")
+    private String target;
+
+    @ApiModelProperty("任务id")
+    private Long taskId;
+
+    @ApiModelProperty("回执码搜索")
+    private String bizId;
+
+    @ApiModelProperty("应用编码")
     private String appCode;
-    @ApiModelProperty(
-        value = "审核状态",
-        name = "auditStatus"
-    )
-    private Integer auditStatus;
-    @ApiModelProperty(
-        value = "签名名称",
-        name = "name"
-    )
-    private String name;
 
-    @ApiModelProperty("0:禁用， 1：启用")
-    private Integer enable;
+    @ApiModelProperty("发送状态")
+    private Integer status;
 
-    @ApiModelProperty("true:倒叙， false：正序")
-    private Boolean orderBy;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @ApiModelProperty("任务执行时间 时间格式 yyyy-MM-dd HH:mm:ss ")
+    private Date startTriggerTime;
 
-    @ApiModelProperty("列表中必须存在的某一条数据")
-    private Long appendId;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @ApiModelProperty("任务执行时间 时间格式 yyyy-MM-dd HH:mm:ss ")
+    private Date endTriggerTime;
 }

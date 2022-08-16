@@ -158,6 +158,20 @@ module.exports = {
         value: 3,
         label: '发送给目标成功'
       }
+    ],
+    auditStatus: [
+      {
+        value: 0,
+        label: '待审核'
+      },
+      {
+        value: 1,
+        label: '已通过'
+      },
+      {
+        value: -1,
+        label: '已拒绝'
+      },
     ]
   }
 }

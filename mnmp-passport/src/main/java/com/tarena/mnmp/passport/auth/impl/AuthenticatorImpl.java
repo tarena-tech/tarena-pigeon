@@ -20,7 +20,7 @@ package com.tarena.mnmp.passport.auth.impl;
 import com.tarena.mnmp.passport.config.JwtConfiguration;
 
 import com.tarena.mnmp.security.utils.JwtUtils;
-import com.tarena.mnmp.security.LoginToken;
+import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -18,16 +18,17 @@
 package com.tarena.mnmp.admin.controller.provider;
 
 import com.tarena.mnmp.admin.codegen.api.provider.ProviderApi;
-import com.tarena.mnmp.admin.param.AuditParam;
+import com.tarena.mnmp.domain.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.ProviderDO;
-import com.tarena.mnmp.domain.provider.ProviderQueryParam;
-import com.tarena.mnmp.domain.provider.ProviderSaveParam;
+import com.tarena.mnmp.domain.param.ProviderQueryParam;
+import com.tarena.mnmp.domain.param.ProviderSaveParam;
 import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.Enabled;
+import com.tarena.mnmp.enums.Role;
 import com.tarena.mnmp.protocol.BusinessException;
-import com.tarena.mnmp.security.LoginToken;
+import com.tarena.mnmp.protocol.LoginToken;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
@@ -46,9 +47,6 @@ public class ProviderController implements ProviderApi {
 
 
     @Override public void save(ProviderSaveParam param, LoginToken token) throws BusinessException {
-        if (StringUtils.isNotBlank(param.getClientConfig()) && !"root".equals(token.getUsername())) {
-            param.setClientConfig(null);
-        }
         providerService.save(param);
     }
 

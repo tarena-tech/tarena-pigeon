@@ -19,7 +19,7 @@ package com.tarena.mnmp.admin.controller.record;
 import com.tarena.mnmp.admin.codegen.api.record.SmsTargetRecordApi;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SmsRecordTargetDO;
-import com.tarena.mnmp.domain.record.SmsTargetRecordParam;
+import com.tarena.mnmp.domain.param.SmsTargetRecordParam;
 import com.tarena.mnmp.domain.record.SmsTargetRecordService;
 import java.util.List;
 import javax.annotation.Resource;
