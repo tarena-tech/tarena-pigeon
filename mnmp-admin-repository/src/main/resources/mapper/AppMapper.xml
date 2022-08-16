@@ -18,7 +18,7 @@
 
     <sql id="AppAllFields">
         id,
-        own_id,
+        create_user_id,
         code,
         name,
         leader,
