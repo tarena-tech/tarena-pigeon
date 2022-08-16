@@ -80,7 +80,7 @@ public class PassportController {
         response = Result.class
     )
     @PostMapping("/register")
-    @PreAuthorize("hasAnyRole('admin','root')")
+    @PreAuthorize("hasAnyRole('ROLE_admin','ROLE_root')")
     public Result doRegister(@Valid @RequestBody RegisterParam registerParam,
         @ApiIgnore @User LoginToken loginToken) throws BusinessException {
         //如果当前登录者的权限小于添加角色权限权重,抛异常
