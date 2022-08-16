@@ -31,9 +31,11 @@ import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.security.LoginToken;
+import com.tarena.mnmp.security.Role;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,7 +67,9 @@ public class AppController implements AppApi {
             throw new BusinessException("100", "应用不存在");
         }
 
-        // TODO 判断权限
+        if (Role.USER.getRoleName().equals(token.getRole()) && ObjectUtils.notEqual(app.getOwnId(), token.getId())) {
+            throw new BusinessException("100", "无权限");
+        }
 
         AppDO up = new AppDO();
         up.setId(id);
@@ -94,7 +98,10 @@ public class AppController implements AppApi {
         return appVO;
     }
 
-    @Override public PagerResult<AppView> queryPage(AppQueryParam param) {
+    @Override public PagerResult<AppView> queryPage(AppQueryParam param, LoginToken token) {
+        if (Role.USER.getRoleName().equals(token.getRole())) {
+            param.setOwnId(token.getId());
+        }
         List<AppDO> sources = appService.queryList(param);
         Long count = appService.queryCount(param);
         PagerResult<AppView> pagerResult = new PagerResult<>(param.getPageSize(), param.getCurrentPageIndex());
