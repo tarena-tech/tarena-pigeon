@@ -18,6 +18,7 @@
 
     <sql id="AppAllFields">
         id,
+        own_id,
         code,
         name,
         leader,
