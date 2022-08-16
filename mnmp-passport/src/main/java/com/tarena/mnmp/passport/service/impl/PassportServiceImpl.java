@@ -91,7 +91,7 @@ public class PassportServiceImpl implements PassportService {
             throw new BusinessException("100", "注册用户新增失败");
         }
         RoleDO roleDO = new RoleDO();
-        roleDO.setName("ROLE_"+param.getRole().toLowerCase());
+        roleDO.setName("ROLE_" + param.getRole().toLowerCase());
         result = roleMapper.save(roleDO);
         if (result == 0) {
             throw new BusinessException("100", "注册角色新增失败");

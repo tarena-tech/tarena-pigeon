@@ -81,12 +81,13 @@ public class PassportController {
     )
     @PostMapping("/register")
     @PreAuthorize("hasAnyRole('admin','root')")
-    public Result doRegister(@Valid @RequestBody RegisterParam registerParam, @ApiIgnore @User LoginToken loginToken) throws BusinessException {
+    public Result doRegister(@Valid @RequestBody RegisterParam registerParam,
+        @ApiIgnore @User LoginToken loginToken) throws BusinessException {
         //如果当前登录者的权限小于添加角色权限权重,抛异常
         //登录角色名
         String loginRoleName = loginToken.getRole();
-        loginRoleName=loginRoleName.substring(5);
-        log.info("删除ROLE_前缀,登录角色是:{}",loginRoleName);
+        loginRoleName = loginRoleName.substring(5);
+        log.info("删除ROLE_前缀,登录角色是:{}", loginRoleName);
         //登录角色枚举
         Role loginRole = Role.valueOf(loginRoleName.toUpperCase());
         //添加角色名称
@@ -95,12 +96,12 @@ public class PassportController {
         Role role;
         try {
             log.info("role:{}", roleName);
-            role=Role.valueOf(roleName.toUpperCase());
+            role = Role.valueOf(roleName.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new BusinessException("100", "您选择的角色不存在");
         }
-        if (loginRole.getWeight()<role.getWeight()){
-            throw new BusinessException("100","当前用户角色:"+loginRoleName+",无权添加角色:"+roleName);
+        if (loginRole.getWeight() < role.getWeight()) {
+            throw new BusinessException("100", "当前用户角色:" + loginRoleName + ",无权添加角色:" + roleName);
         }
         passportService.doRegister(registerParam);
         return Result.success();
