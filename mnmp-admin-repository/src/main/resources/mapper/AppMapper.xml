@@ -64,6 +64,9 @@
             <if test="auditResult != null">
                 audit_result,
             </if>
+            <if test="ownId != null">
+                own_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="code != null">
@@ -95,6 +98,9 @@
             </if>
             <if test="auditResult != null">
                 #{auditResult,jdbcType=VARCHAR},
+            </if>
+            <if test="ownId != null">
+                #{ownId,jdbcType=BIGINT},
             </if>
         </trim>
     </insert>

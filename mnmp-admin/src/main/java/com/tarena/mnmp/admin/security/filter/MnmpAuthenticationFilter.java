@@ -74,6 +74,7 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
         log.info("ip: {}", deviceIp);
         log.info("请求地址：{}", request.getRequestURL());
         LoginToken loginToken = authenticator.authenticate(token, deviceIp);
+        log.info("token: {}", loginToken);
         if (ObjectUtils.isEmpty(loginToken)) {
             log.info("认证失败 客户端ip:{}", deviceIp);
             log.info("token中的ip: {}", loginToken.getDeviceIp());

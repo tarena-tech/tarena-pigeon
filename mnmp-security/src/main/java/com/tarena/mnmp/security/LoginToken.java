@@ -71,4 +71,13 @@ public class LoginToken implements Serializable {
         this.username = username;
     }
 
+    @Override public String toString() {
+        return "LoginToken{" +
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", role='" + role + '\'' +
+            ", authorities=" + authorities +
+            ", deviceIp='" + deviceIp + '\'' +
+            '}';
+    }
 }
