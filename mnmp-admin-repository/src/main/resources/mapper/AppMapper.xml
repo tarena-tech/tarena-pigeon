@@ -118,6 +118,9 @@
             <if test="excludeId != null">
                 and id != #{excludeId,jdbcType=BIGINT}
             </if>
+            <if test="ownId != null">
+                and own_id = #{ownId,jdbcType=BIGINT}
+            </if>
         </where>
         <if test="orderBy != null and orderBy == true">
             order by id desc
@@ -144,6 +147,9 @@
             </if>
             <if test="excludeId != null">
                 and id != #{excludeId,jdbcType=BIGINT}
+            </if>
+            <if test="ownId != null">
+                and own_id = #{ownId,jdbcType=BIGINT}
             </if>
         </where>
     </select>

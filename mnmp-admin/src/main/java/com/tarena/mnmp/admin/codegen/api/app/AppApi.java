@@ -83,7 +83,7 @@ public interface AppApi {
     @ApiOperation(value = "查询应用管理分页列表")
     @GetMapping("query/page")
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    PagerResult<AppView> queryPage(AppQueryParam param);
+    PagerResult<AppView> queryPage(AppQueryParam param, @User LoginToken token);
 
     @ApiOperationSupport(order = 1006)
     @ApiOperation(value = "查询应用管理列表")

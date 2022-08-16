@@ -16,6 +16,7 @@
  */
 package com.tarena.mnmp.domain.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -50,5 +51,8 @@ public class AppQueryParam extends PagerResult {
 
     @ApiModelProperty("查询列表时指定排除某个id")
     private Long excludeId;
+
+    @JsonIgnore
+    private Long ownId;
 
 }
