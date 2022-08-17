@@ -29,6 +29,11 @@ import lombok.Data;
 @Data
 public class TaskQuery extends PagerResult {
 
+    public TaskQuery() {
+        super();
+        this.desc = true;
+    }
+
     @ApiModelProperty(value = "任务名 支持模糊")
     private String name;
 
@@ -52,5 +57,8 @@ public class TaskQuery extends PagerResult {
 
     @JsonIgnore
     private Long createUserId;
+
+    @ApiModelProperty(value = "是否倒叙 true:倒叙, false:正序")
+    private Boolean desc;
 
 }

@@ -330,6 +330,9 @@
                 and create_user_id = #{createUserId,jdbcType=BIGINT}
             </if>
         </where>
+        <if test="desc != null">
+            order by #{desc}
+        </if>
         ${limitClause}
     </select>
 
