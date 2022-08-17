@@ -16,9 +16,8 @@
  */
 package com.tarena.mnmp.admin.config;
 
+import com.alibaba.fastjson.JSON;
 import com.tarena.mnmp.admin.utils.IPUtils;
-import com.tarena.mnmp.commons.json.Json;
-import java.io.Serializable;
 import java.lang.reflect.Method;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -29,7 +28,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -41,9 +39,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Aspect
 @Component
 public class LogAspect {
-
-    @Autowired
-    private Json json;
 
     @Pointcut("execution(* com.tarena.mnmp.admin.controller..*.*(..))")
     public void controllerCut() {
@@ -70,7 +65,7 @@ public class LogAspect {
 
         log.info("request  ip: {}, http_method: {}, method:{}, reqParam:{}", ip, httMethod, methodName, params);
         Object proceed = point.proceed();
-        log.info("response, res: {}", json.toString((Serializable) proceed));
+        log.info("response, res: {}", JSON.toJSONString(proceed));
         return proceed;
     }
 

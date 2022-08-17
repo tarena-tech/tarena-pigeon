@@ -23,7 +23,6 @@
               :on-error="uploadError"
               :multiple="false"
               :headers=headers
-              :on-change="fileCallback"
               :limit="1"
               :auto-upload="false">
               <el-button size="small" style="margin-left: 10px;" type="primary" @click="downExcel(null)">下载Excel模板
