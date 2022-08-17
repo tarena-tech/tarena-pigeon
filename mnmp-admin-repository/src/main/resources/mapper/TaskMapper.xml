@@ -331,7 +331,7 @@
             </if>
         </where>
         <if test="desc != null">
-            order by #{desc}
+            order by id desc
         </if>
         ${limitClause}
     </select>
