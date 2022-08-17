@@ -86,6 +86,7 @@ public class TaskController implements TaskApi {
         response.reset();
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
         response.setHeader("excel-name", fileName);
         response.setContentLength(is.available());
         OutputStream os = response.getOutputStream();

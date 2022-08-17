@@ -8,7 +8,6 @@ export function downloadFileByBlob (blobData, fileName, type) {
   if (!blobData || !fileName) {
     return false
   }
-  console.log(blobData)
   const blob_ = new Blob([blobData], { type: type })
   if ('download' in document.createElement('a')) {
     const url_ = window.URL.createObjectURL(blob_)
