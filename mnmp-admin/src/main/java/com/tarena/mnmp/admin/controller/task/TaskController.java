@@ -148,7 +148,7 @@ public class TaskController implements TaskApi {
         return new Result<>(dir + name);
     }
 
-    @Override public void addTask(TaskParam taskParam, HttpServletResponse response) throws IOException, BusinessException {
+    @Override public Result<Void> addTask(TaskParam taskParam, HttpServletResponse response) throws IOException, BusinessException {
         TaskDO bo = new TaskDO();
         BeanUtils.copyProperties(taskParam, bo);
         List<TargetExcelData> fial = taskService.addTask(bo, taskParam.getFilePath());
@@ -159,6 +159,7 @@ public class TaskController implements TaskApi {
             response.setHeader("Content-excelname", fileName);
             EasyExcel.write(response.getOutputStream(), TargetExcelData.class).sheet().doWrite(fial);
         }
+        return Result.success();
     }
 
     @Override public void doAudit(AuditParam param) throws BusinessException {

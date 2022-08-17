@@ -76,7 +76,7 @@ public interface TaskApi {
         value = {"add"}
     )
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    void addTask(@Valid @RequestBody TaskParam taskParam, HttpServletResponse response) throws IOException, BusinessException;
+    Result<Void> addTask(@Valid @RequestBody TaskParam taskParam, HttpServletResponse response) throws IOException, BusinessException;
 
     @ApiOperationSupport(order = 5003)
     @ApiOperation(
