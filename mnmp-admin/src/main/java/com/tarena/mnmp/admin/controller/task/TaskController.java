@@ -87,6 +87,7 @@ public class TaskController implements TaskApi {
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+        response.setHeader("Content-fileName", "fileName");
         response.setContentLength(is.available());
         OutputStream os = response.getOutputStream();
         byte[] buff = new byte[1024];

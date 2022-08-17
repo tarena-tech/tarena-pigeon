@@ -26,22 +26,25 @@
               :on-change="fileCallback"
               :limit="1"
               :auto-upload="false">
-              <el-button size="small"  style="margin-left: 10px;" type="primary" @click="downExcel(null)" >下载Excel模板</el-button>
-              <el-button slot="trigger" size="small" type="primary" >选取Excel文件</el-button>
-              <el-button prop="filePath" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+              <el-button size="small" style="margin-left: 10px;" type="primary" @click="downExcel(null)">下载Excel模板
+              </el-button>
+              <el-button slot="trigger" size="small" type="primary">选取Excel文件</el-button>
+              <el-button prop="filePath" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">
+                上传到服务器
+              </el-button>
             </el-upload>
           </el-form-item>
           <el-form-item label="任务名称" prop="name">
-            <el-input v-model="ruleForm.name" />
+            <el-input v-model="ruleForm.name"/>
           </el-form-item>
           <el-form-item label="任务类型" prop="taskType">
-            <com-dict :val.sync="ruleForm.taskType" dict-name="taskType" :is-all="false" @change="taskType" />
+            <com-dict :val.sync="ruleForm.taskType" dict-name="taskType" :is-all="false" @change="taskType"/>
           </el-form-item>
           <el-form-item label="模板类型" prop="templateType">
-            <com-dict :val.sync="ruleForm.templateType" dict-name="templateType" :is-all="false" />
+            <com-dict :val.sync="ruleForm.templateType" dict-name="templateType" :is-all="false"/>
           </el-form-item>
           <el-form-item label="消息类型" prop="noticeType">
-            <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false" />
+            <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false"/>
           </el-form-item>
 
           <el-form-item label="模拟发送" prop="mock">
@@ -94,10 +97,10 @@
           </el-form-item>
 
           <el-form-item label="周期类型" prop="cycleLevel" v-if="cycleShow">
-            <com-dict :val.sync="ruleForm.cycleLevel" dict-name="cycleLevel" :is-all="false" />
+            <com-dict :val.sync="ruleForm.cycleLevel" dict-name="cycleLevel" :is-all="false"/>
           </el-form-item>
           <el-form-item label="周期数" prop="cycleNum" v-if="cycleShow">
-            <el-input v-model="ruleForm.cycleNum" />
+            <el-input v-model="ruleForm.cycleNum"/>
           </el-form-item>
 
           <el-form-item label="结束时间" prop="triggerEndTime">
@@ -115,7 +118,7 @@
           </el-form-item>
 
           <el-form-item label="描述" prop="remark">
-            <el-input v-model="ruleForm.remark" type="textarea" />
+            <el-input v-model="ruleForm.remark" type="textarea"/>
           </el-form-item>
 
         </el-form>
@@ -129,10 +132,11 @@
 </template>
 
 <script>
-import { addTask } from '@/api/task'
+import { addTask, downExcel } from '@/api/task'
 import { queryAppList } from '@/api/app'
 import { querySignList } from '@/api/sign'
 import { querySmsTemplateList } from '@/api/sms'
+import { downloadFileByBlob } from '@/utils/download-file'
 import store from "@/store";
 
 export default {
@@ -160,39 +164,33 @@ export default {
         filePath: null,
         mock: 1
       },
-      apps: {
-
-      },
-      signs: {
-
-      },
-      templates: {
-
-      },
+      apps: {},
+      signs: {},
+      templates: {},
       sign: null,
       app: null,
       template: null,
       rules: {
         name: [
-          { required: true, message: '请输入模板名称', trigger: 'blur' }
+          {required: true, message: '请输入模板名称', trigger: 'blur'}
         ],
         templateType: [
-          { required: true, message: '请输入code码', trigger: 'blur' }
+          {required: true, message: '请输入code码', trigger: 'blur'}
         ],
         appId: [
-          { required: true, message: '请选择应用', trigger: 'blur' }
+          {required: true, message: '请选择应用', trigger: 'blur'}
         ],
         noticeType: [
-          { required: true, message: '请选择通知类型', trigger: 'blur' }
+          {required: true, message: '请选择通知类型', trigger: 'blur'}
         ],
         content: [
-          { required: true, message: '请填写模板内容', trigger: 'blur' }
+          {required: true, message: '请填写模板内容', trigger: 'blur'}
         ],
         signId: [
-          { required: true, message: '请选择签名模板', trigger: 'blur' }
+          {required: true, message: '请选择签名模板', trigger: 'blur'}
         ],
         templateId: [
-          { required: true, message: '请选择短信模板', trigger: 'blur' }
+          {required: true, message: '请选择短信模板', trigger: 'blur'}
         ],
         // cycleLevel: [
         //   { required: true, message: '请选择周期类型', trigger: 'blur' }
@@ -201,13 +199,13 @@ export default {
         //   { required: true, message: '请选择周期数', trigger: 'blur' }
         // ],
         filePath: [
-          { required: true, message: '请选择上传文件', trigger: 'blur' }
+          {required: true, message: '请选择上传文件', trigger: 'blur'}
         ],
         // triggerEndTime: [
         //   { required: true, message: '请选择结束时间', trigger: 'blur' }
         // ],
         taskType: [
-          { required: true, message: '请选择任务类型', trigger: 'blur' }
+          {required: true, message: '请选择任务类型', trigger: 'blur'}
         ]
       }
     }
@@ -234,13 +232,13 @@ export default {
         auditStatus: 1,
         appendId: this.ruleForm.appId
       }).then(res => {
-          this.apps = res
-        }).catch(err => {
-          console.error(err)
-        })
+        this.apps = res
+      }).catch(err => {
+        console.error(err)
+      })
     },
     querySigns(param) {
-      querySignList({ name: param })
+      querySignList({name: param})
         .then(res => {
           this.signs = res
         })
@@ -276,11 +274,52 @@ export default {
     },
 
     downExcel(path) {
-      let url = process.env.VUE_APP_BASE_API + '/task/excel'
-      if (path) {
-        url += '?path=' + path
+      // axios.defaults.headers.common['Authorization'] = 'Bearer ' + store.getters.token
+      // axios.get(process.env.VUE_APP_BASE_API + '/task/excel', {
+      //   params: {
+      //     path: path
+      //   }
+      // }).then(function (res) {
+      //   console.log('2fsfsdfs', res)
+      //   }).catch(err => {
+      //   console.log('222222', err)
+      // })
+
+      downExcel({path: path}, {responseType: 'blob'}).then(res => {
+
+        downloadFileByBlob(res.data, res.headers.Content-fileName, res.data.type)
+      })
+
+    },
+    doExcel(res) {
+      let blob = new Blob([res], {
+        type: 'application/octet-stream',
+      });
+      let filename = '自定义文件名称.xls'
+      // 将blob对象转为一个URL
+      var blobURL = window.URL.createObjectURL(blob);
+      // 创建一个a标签
+      var tempLink = document.createElement("a");
+      // 隐藏a标签
+      tempLink.style.display = "none";
+      // 设置a标签的href属性为blob对象转化的URL
+      tempLink.href = blobURL;
+      // 给a标签添加下载属性
+      tempLink.setAttribute("download", filename);
+      if (typeof tempLink.download === "undefined") {
+        tempLink.setAttribute("target", "_blank");
       }
-      window.open(url)
+      // 将a标签添加到body当中
+      document.body.appendChild(tempLink);
+      // 启动下载
+      tempLink.click();
+      // 下载完毕删除a标签
+      document.body.removeChild(tempLink);
+      window.URL.revokeObjectURL(blobURL);
+      this.$message({
+        message: "导出成功~",
+        type: "success",
+      })
     },
     submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
@@ -331,18 +370,23 @@ export default {
   flex-direction: column;
   padding: 0 15px 15px 15px;
   height: 100%;
-  .cus-form{
+
+  .cus-form {
     padding-right: 15px;
   }
-  .cus-scrollbar{
+
+  .cus-scrollbar {
     flex: 1 1 0;
   }
-  ::v-deep .el-scrollbar__wrap{
+
+  ::v-deep .el-scrollbar__wrap {
     overflow-x: hidden;
   }
 }
-.cus-drawer__footer{
+
+.cus-drawer__footer {
   display: flex;
+
   button {
     flex: 1;
   }
