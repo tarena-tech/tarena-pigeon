@@ -48,8 +48,8 @@ instance.interceptors.response.use(
    */
   response => {
     const res = response.data
-
-    if (response.request.responseType === 'blob') {
+    console.log(response)
+    if (response.request.responseType === 'blob' || response.headers['content-excelname']) {
       console.log('ress', response)
       return response
     }

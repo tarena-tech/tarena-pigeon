@@ -274,53 +274,8 @@ export default {
     },
 
     downExcel(path) {
-      // axios.defaults.headers.common['Authorization'] = 'Bearer ' + store.getters.token
-      // axios.get(process.env.VUE_APP_BASE_API + '/task/excel', {
-      //   params: {
-      //     path: path
-      //   }
-      // }).then(function (res) {
-      //   console.log('2fsfsdfs', res)
-      //   }).catch(err => {
-      //   console.log('222222', err)
-      // })
-
       downExcel({ path: path }, { responseType: 'blob' }).then(res => {
-        console.log('222222221122', res)
-        console.log('2222222222211122', )
-
         downloadFileByBlob(res.data, res.headers['content-excelname'], res.data.type)
-      })
-
-    },
-    doExcel(res) {
-      let blob = new Blob([res], {
-        type: 'application/octet-stream',
-      });
-      let filename = '自定义文件名称.xls'
-      // 将blob对象转为一个URL
-      var blobURL = window.URL.createObjectURL(blob);
-      // 创建一个a标签
-      var tempLink = document.createElement("a");
-      // 隐藏a标签
-      tempLink.style.display = "none";
-      // 设置a标签的href属性为blob对象转化的URL
-      tempLink.href = blobURL;
-      // 给a标签添加下载属性
-      tempLink.setAttribute("download", filename);
-      if (typeof tempLink.download === "undefined") {
-        tempLink.setAttribute("target", "_blank");
-      }
-      // 将a标签添加到body当中
-      document.body.appendChild(tempLink);
-      // 启动下载
-      tempLink.click();
-      // 下载完毕删除a标签
-      document.body.removeChild(tempLink);
-      window.URL.revokeObjectURL(blobURL);
-      this.$message({
-        message: "导出成功~",
-        type: "success",
       })
     },
     submitForm() {
@@ -328,13 +283,24 @@ export default {
         if (valid) {
           addTask(this.ruleForm)
             .then(res => {
-              console.dir(res)
+              let msg = '操作成功!'
+              let mt = 'success'
+              let excelName = res.headers['content-excelname']
+              if (excelName) {
+                downloadFileByBlob(res.data, res.headers['content-excelname'], res.data.type)
+                msg = '部分成功,存在非法数据!'
+                mt = 'warning'
+              }
+
+              this.$message({
+                type: mt,
+                message: msg
+              })
               this.cancelForm()
             })
             .catch(err => {
               console.error('create fail', err)
             })
-          this.$emit('callback')
         } else {
           console.log('error submit!!')
           return false
