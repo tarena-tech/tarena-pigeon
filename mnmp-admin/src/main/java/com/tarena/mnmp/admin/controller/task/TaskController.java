@@ -51,6 +51,7 @@ import java.util.List;
 import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.util.Streams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,6 +63,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @RestController
 public class TaskController implements TaskApi {
 
@@ -90,6 +92,7 @@ public class TaskController implements TaskApi {
         response.setHeader("Content-excelname", fileName);
         response.setContentLength(is.available());
         OutputStream os = response.getOutputStream();
+        log.info("file.size: {}", is.available());
         byte[] buff = new byte[1024];
         int i;
         while ((i = is.read(buff)) != -1) {

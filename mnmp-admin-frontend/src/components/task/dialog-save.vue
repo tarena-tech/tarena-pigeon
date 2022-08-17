@@ -285,11 +285,11 @@ export default {
       //   console.log('222222', err)
       // })
 
-      downExcel({path: path}, {responseType: 'blob'}).then(res => {
+      downExcel({ path: path }, { responseType: 'blob' }).then(res => {
         console.log('222222221122', res)
         console.log('2222222222211122', )
 
-        downloadFileByBlob(res.data, res.headers['excel-name'], res.data.type)
+        downloadFileByBlob(res.data, res.headers['content-excelname'], res.data.type)
       })
 
     },

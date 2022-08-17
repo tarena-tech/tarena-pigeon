@@ -145,8 +145,9 @@
 </template>
 
 <script>
-import { changeStatus, queryPage } from '@/api/task.js'
+import {changeStatus, downExcel, queryPage} from '@/api/task.js'
 import { queryAppList } from '@/api/app'
+import { downloadFileByBlob } from '@/utils/download-file'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogTaskAudit from '@/components/task/dialog-audit'
 import DialogTaskSave from '@/components/task/dialog-save'
@@ -227,11 +228,12 @@ export default {
       this.$refs.DialogTaskSave.show(data)
     },
     downExcel(path) {
-      var url = process.env.VUE_APP_BASE_API + '/task/excel'
-      if (path) {
-        url += '?path=' + path;
-      }
-      window.open(url)
+      downExcel({ path: path }, { responseType: 'blob' }).then(res => {
+        console.log('222222221122', res)
+        console.log('2222222222211122', )
+
+        downloadFileByBlob(res.data, res.headers['content-excelname'], res.data.type)
+      })
     },
     queryApps(param) {
       queryAppList({
