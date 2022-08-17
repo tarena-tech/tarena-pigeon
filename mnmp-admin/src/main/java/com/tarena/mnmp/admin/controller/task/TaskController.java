@@ -90,9 +90,7 @@ public class TaskController implements TaskApi {
         response.setCharacterEncoding("utf-8");
         response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
         response.setHeader("Content-excelname", fileName);
-        response.setContentLength(is.available());
         OutputStream os = response.getOutputStream();
-        log.info("file.size: {}", is.available());
         byte[] buff = new byte[1024];
         int i;
         while ((i = is.read(buff)) != -1) {
@@ -107,6 +105,7 @@ public class TaskController implements TaskApi {
                 ClassPathResource classPathResource = new ClassPathResource("target.xlsx");
                 InputStream stream = classPathResource.getInputStream();
                 export(response, stream, "target.xlsx");
+                log.info("file name: {}", classPathResource.getFilename());
                 return;
             } catch (IOException e) {
                 logger.error("读取resource文件异常", e);
