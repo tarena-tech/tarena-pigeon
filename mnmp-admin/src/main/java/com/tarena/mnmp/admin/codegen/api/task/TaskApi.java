@@ -65,7 +65,7 @@ public interface TaskApi {
     @ApiOperationSupport(order = 5001)
     @ApiOperation(value = "上传文件")
     @PostMapping("uploadFile")
-    @PreAuthorize("hasAnyRole('admin','root','user')")
+//    @PreAuthorize("hasAnyRole('admin','root','user')")
     Result<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException, BusinessException;
 
     @ApiOperationSupport(order = 5002)
