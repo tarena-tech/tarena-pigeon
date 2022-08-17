@@ -283,6 +283,7 @@ export default {
         if (valid) {
           addTask(this.ruleForm)
             .then(res => {
+              this.cancelForm()
               let msg = '操作成功!'
               let mt = 'success'
               let excelName = res.headers['content-excelname']
@@ -291,12 +292,11 @@ export default {
                 msg = '部分成功,存在非法数据!'
                 mt = 'warning'
               }
-
               this.$message({
                 type: mt,
                 message: msg
               })
-              this.cancelForm()
+
             })
             .catch(err => {
               console.error('create fail', err)

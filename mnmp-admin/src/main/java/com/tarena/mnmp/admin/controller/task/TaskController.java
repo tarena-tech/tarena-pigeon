@@ -153,11 +153,10 @@ public class TaskController implements TaskApi {
         BeanUtils.copyProperties(taskParam, bo);
         List<TargetExcelData> fial = taskService.addTask(bo, taskParam.getFilePath());
         if (!CollectionUtils.isEmpty(fial)) {
-            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setContentType("application/octet-stream");
             response.setCharacterEncoding("utf-8");
-            String fileName = URLEncoder.encode("非法数据", "UTF-8").replaceAll("\\+", "%20");
-            response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-            response.setHeader("Content-excelname", fileName + ".xlsx");
+            String fileName = "非法数据.xlsx";
+            response.setHeader("Content-excelname", fileName);
             EasyExcel.write(response.getOutputStream(), TargetExcelData.class).sheet().doWrite(fial);
         }
     }
