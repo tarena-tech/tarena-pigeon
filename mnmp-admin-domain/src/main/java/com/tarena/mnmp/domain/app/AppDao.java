@@ -37,5 +37,5 @@ public interface AppDao {
 
     Integer modify(AppDO appDO);
 
-    List<String> findAppCodesByCreateUserId(Long UserId);
+    List<String> findAppCodesByCreateUserId(Long userId);
 }
