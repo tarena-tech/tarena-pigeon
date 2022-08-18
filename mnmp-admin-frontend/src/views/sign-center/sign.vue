@@ -44,9 +44,9 @@
         <el-table-column prop="appCode" label="应用编码" />
         <el-table-column prop="remarks" label="应用简介" />
         <el-table-column prop="enabled" label="应用状态">
-          <templat slot-scope="scope">
+          <template slot-scope="scope">
             <span>{{scope.row.enabled === 1 ? '启用' : '禁用'}}</span>
-          </templat>
+          </template>
         </el-table-column>
 
         <el-table-column prop="auditStatus" label="审核状态">
@@ -62,13 +62,14 @@
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button  type="text" size="small" @click="changeStatus(scope.row)" >
+            <el-button  type="text" size="small" @click="changeStatus(scope.row)" v-if="scope.row.auditStatus === 1">
               {{scope.row.enabled === 1 ? '禁用' : '启用'}}
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
+            <el-button v-if="scope.row.auditStatus === 0 && $store.state.user.role !== 'ROLE_user'"
+                       @click="showAudit(scope.row)" type="text" size="small" >
               审核
             </el-button>
-            <el-button  type="text" size="small" @click="save(scope.row)" >
+            <el-button  type="text" size="small" @click="save(scope.row)" v-if="scope.row.auditStatus !== 0">
               修改
             </el-button>
           </template>
@@ -168,8 +169,8 @@ export default {
       })
     },
 
-    showAudit(_id) {
-      this.$refs.DialogSignAudit.show(_id)
+    showAudit(data) {
+      this.$refs.DialogSignAudit.show(data)
     },
     save(data) {
       this.$refs.DialogSignSave.show(data)

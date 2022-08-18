@@ -15,45 +15,23 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.domain.sign;
+package com.tarena.mnmp.passport.domain;
 
-import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
-@ApiModel(value = "签名查询入参")
 @Data
-public class SignQuery extends PagerResult {
-
-    public SignQuery() {
-        super();
-        this.orderBy = true;
-    }
-
-    @ApiModelProperty(
-        value = "应用编码",
-        name = "appCode"
-    )
-    private String appCode;
-    @ApiModelProperty(
-        value = "审核状态",
-        name = "auditStatus"
-    )
-    private Integer auditStatus;
-    @ApiModelProperty(
-        value = "签名名称",
-        name = "name"
-    )
-    private String name;
-
-    @ApiModelProperty("0:禁用， 1：启用")
-    private Integer enable;
-
-    @ApiModelProperty("true:倒叙， false：正序")
-    private Boolean orderBy;
-
-    @ApiModelProperty("列表中必须存在的某一条数据")
-    private Long appendId;
-
+@ApiModel(value = "注册参数")
+public class RegisterParam {
+    @ApiModelProperty(value = "用户名", name = "username", example = "zhangsan")
+    @NotBlank(message = "用户名不能为空")
+    private String username;
+    @ApiModelProperty(value = "密码", name = "password", example = "123456")
+    @NotBlank(message = "密码不能为空")
+    private String password;
+    @NotBlank
+    @ApiModelProperty(value = "角色", name = "role", example = "admin")
+    private String role;
 }

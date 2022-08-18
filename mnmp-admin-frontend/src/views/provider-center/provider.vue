@@ -20,7 +20,7 @@
             <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
           </el-form-item>
         </div>
-        <div class="form-right-box">
+        <div class="form-right-box" v-if="$store.state.user.role === 'ROLE_root'">
           <el-button type="success" icon="el-icon-plus" @click="save(null)">新建</el-button>
         </div>
       </div>
@@ -51,10 +51,20 @@
             <el-link :href="scope.row.officialWebsite" target="_blank">链接地址</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="remarks" label="简介"/>
         <el-table-column prop="contacts" label="联系人"/>
         <el-table-column prop="phone" label="联系电话"/>
-        <el-table-column prop="remarks" label="简介"/>
+        <el-table-column prop="remarks" label="简介">
+          <template slot-scope="scope">
+            <el-popover v-if="scope.row.remarks" trigger="hover" placement="top">
+              <p>{{ scope.row.remarks }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">描述</el-tag>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
+
+
         <el-table-column prop="auditStatus" label="审核状态">
           <template slot-scope="scope">
             <span v-if="scope.row.auditStatus === 1">通过</span>
@@ -63,14 +73,14 @@
           </template>
         </el-table-column>
         <el-table-column prop="enabled" label="应用状态">
-          <templat slot-scope="scope">
+          <template slot-scope="scope">
             <span>{{ scope.row.enabled === 1 ? '启用' : '禁用' }}</span>
-          </templat>
+          </template>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="updateTime" label="更新时间"/>
 
-        <el-table-column fixed="right" width="100"  label="操作">
+        <el-table-column fixed="right" width="100"  label="操作" v-if="$store.state.user.role === 'ROLE_root'">
           <template slot-scope="scope">
             <el-button type="text" size="mini" @click="changeStatus(scope.row)">
               {{ scope.row.enabled === 1 ? '禁用' : '启用' }}

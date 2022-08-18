@@ -55,10 +55,29 @@ public class SmsTemplateDO {
 
     private Integer deleted;
 
-    private Integer createUserId;
+    private Long createUserId;
 
     private String createUserName;
 
     private Long providerId;
+
+    public void noChangeParam() {
+        this.code = null;
+        this.appId = null;
+        this.appCode = null;
+        this.name = null;
+        this.templateType = null;
+        this.noticeType = null;
+        this.auditResult = null;
+        this.auditStatus = null;
+        this.enabled = null;
+        this.useCount = null;
+        this.createTime = null;
+        this.deleted = null;
+        this.createUserId = null;
+        this.createUserName = null;
+        this.providerId = null;
+    }
+
 
 }

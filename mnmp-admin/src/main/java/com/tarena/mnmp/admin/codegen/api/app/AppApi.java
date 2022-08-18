@@ -18,12 +18,14 @@
 package com.tarena.mnmp.admin.codegen.api.app;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.controller.app.AppView;
-import com.tarena.mnmp.admin.param.AuditParam;
-import com.tarena.mnmp.domain.app.AppQueryParam;
-import com.tarena.mnmp.domain.app.AppSaveParam;
+import com.tarena.mnmp.domain.param.AuditParam;
+import com.tarena.mnmp.domain.param.AppQueryParam;
+import com.tarena.mnmp.domain.param.AppSaveParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -38,29 +40,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * 统一了后台管理中应用C端管理功能接口,添加knife4j增强swagger接口文件生成
+ */
 @Validated
 @Api(value = "app", tags = "应用管理")
 @RequestMapping("/app")
 public interface AppApi {
     /**
      * 新增应用
-     *
-     * @param appSaveParam
+     * @param appSaveParam 新增应用参数封装对象
+     * @param token 授权token,包含用户id 权限集合 角色
      */
     @ApiOperationSupport(order = 1001)
     @ApiOperation(value = "新增/修改 应用")
     @PostMapping("save")
     @ApiParam(name = "appSaveParam", value = "新增应用", required = true)
-    @PreAuthorize("hasAnyRole('admin','root')")
-    void save(@Valid @RequestBody AppSaveParam appSaveParam) throws BusinessException;
+    @PreAuthorize("hasAnyRole('admin', 'root', 'user')")
+    void save(@Valid @RequestBody AppSaveParam appSaveParam, @User LoginToken token) throws BusinessException;
 
-
-
+    /**
+     * 修改应用发布状态:审核通过,审核不通过
+     * @param id 应用id
+     * @param token 授权token,包含用户id 权限集合 角色
+     * @throws BusinessException
+     */
     @ApiOperationSupport(order = 1004)
     @ApiOperation(value = "更改可用状态")
     @PostMapping("change/enable/status")
-    @PreAuthorize("hasAnyRole('admin','root')")
-    void changeEnableStatus(Long id) throws BusinessException;
+    @PreAuthorize("hasAnyRole('admin','root', 'user')")
+    void changeEnableStatus(Long id , @User LoginToken token) throws BusinessException;
 
     /**
      * 查看应用详情
@@ -81,13 +90,13 @@ public interface AppApi {
     @ApiOperation(value = "查询应用管理分页列表")
     @GetMapping("query/page")
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    PagerResult<AppView> queryPage(AppQueryParam param);
+    PagerResult<AppView> queryPage(AppQueryParam param, @User LoginToken token);
 
     @ApiOperationSupport(order = 1006)
     @ApiOperation(value = "查询应用管理列表")
     @GetMapping("query/list")
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    List<AppView> queryList(AppQueryParam param);
+    List<AppView> queryList(AppQueryParam param, @User LoginToken token);
 
     /**
      * 审核应用

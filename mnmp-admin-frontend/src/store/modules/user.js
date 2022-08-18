@@ -7,7 +7,8 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    role: ''
   }
 }
 
@@ -25,6 +26,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_ROLE: (state, role) => {
+    state.role = role
   }
 }
 
@@ -36,8 +40,10 @@ const actions = {
       login({ username: username.trim(), password: password })
         .then(response => {
           // commit('Authorization', response)
-          commit('SET_TOKEN', response)
+          commit('SET_TOKEN', response.token)
+          commit('SET_ROLE', response.role)
           commit('SET_NAME', username.trim())
+
           resolve()
         }).catch(error => {
           reject(error)
@@ -68,16 +74,22 @@ const actions = {
 
   // user logout
   logout({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      logout({ token: state.token }).then(() => {
-        removeToken() // must remove  token  first
-        resetRouter()
-        commit('RESET_STATE')
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
+
+    removeToken() // must remove  token  first
+    resetRouter()
+    commit('RESET_STATE')
+    // resolve()
+
+    // return new Promise((resolve, reject) => {
+    //   logout({ token: state.token }).then(() => {
+    //     removeToken() // must remove  token  first
+    //     resetRouter()
+    //     commit('RESET_STATE')
+    //     resolve()
+    //   }).catch(error => {
+    //     reject(error)
+    //   })
+    // })
   },
 
   // remove token

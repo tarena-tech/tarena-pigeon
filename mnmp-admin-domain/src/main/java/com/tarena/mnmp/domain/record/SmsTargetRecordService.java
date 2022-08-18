@@ -17,6 +17,8 @@
 package com.tarena.mnmp.domain.record;
 
 import com.tarena.mnmp.domain.SmsRecordTargetDO;
+import com.tarena.mnmp.domain.param.SmsTargetRecordParam;
+import com.tarena.mnmp.protocol.LoginToken;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -27,11 +29,11 @@ public class SmsTargetRecordService {
     @Resource
     private SmsTargetRecordDao smsTargetRecordDao;
 
-    public List<SmsRecordTargetDO> queryList(SmsTargetRecordParam param) {
+    public List<SmsRecordTargetDO> queryList(SmsTargetRecordParam param, LoginToken token) {
         return smsTargetRecordDao.queryList(param);
     }
 
-    public Long count(SmsTargetRecordParam param) {
+    public Long count(SmsTargetRecordParam param, LoginToken token) {
         return smsTargetRecordDao.queryCount(param);
     }
 }

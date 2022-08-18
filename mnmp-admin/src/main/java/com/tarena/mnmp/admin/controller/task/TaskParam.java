@@ -54,19 +54,16 @@ public class TaskParam {
     @NotNull(message = "appId为必填项")
     private Long appId;
 
-    @ApiModelProperty(value = "周期类型 1:小时 2:日 3:周 4:月 5:年", required = true)
-    @NotNull(message = "周期类型为必填项")
+    @ApiModelProperty(value = "周期类型 0:分钟 1:小时 2:日 3:周 4:月 5:年", required = true)
     private Integer cycleLevel;
 
     @ApiModelProperty(value = "周期数", required = true)
-    @NotNull(message = "周期数为必填项")
     private Integer cycleNum;
 
     @ApiModelProperty(value = "创建人", required = true)
     private String creatorName;
 
     @ApiModelProperty(value = "结束时间", required = true)
-    @NotNull(message = "结束时间为必填项")
     private Date triggerEndTime;
 
     @ApiModelProperty(value = "文件路径", required = true)

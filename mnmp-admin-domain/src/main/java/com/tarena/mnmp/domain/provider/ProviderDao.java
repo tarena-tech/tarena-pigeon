@@ -18,6 +18,7 @@
 package com.tarena.mnmp.domain.provider;
 
 import com.tarena.mnmp.domain.ProviderDO;
+import com.tarena.mnmp.domain.param.ProviderQueryParam;
 import java.util.List;
 
 public interface ProviderDao {

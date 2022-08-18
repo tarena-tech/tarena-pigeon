@@ -19,22 +19,32 @@ package com.tarena.mnmp.passport.controller;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.tarena.mnmp.commons.utils.Asserts;
+
+import com.tarena.mnmp.passport.annotation.User;
 import com.tarena.mnmp.passport.domain.LoginParam;
+import com.tarena.mnmp.passport.domain.RegisterParam;
+import com.tarena.mnmp.passport.domain.Token;
+
 import com.tarena.mnmp.passport.service.PassportService;
 import com.tarena.mnmp.passport.utils.IPUtils;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.Result;
+import com.tarena.mnmp.protocol.LoginToken;
+import com.tarena.mnmp.enums.Role;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Api(value = "passport", tags = "用户中台")
 @RestController
@@ -53,15 +63,48 @@ public class PassportController {
         response = String.class
     )
     @PostMapping("/login")
-    public Result<String> doLogin(@Valid @RequestBody LoginParam loginParam,
-        HttpServletRequest request) throws BusinessException {
+    public Result<Token> doLogin(@Valid @RequestBody LoginParam loginParam,
+        @ApiIgnore HttpServletRequest request, @ApiIgnore HttpServletResponse response) throws BusinessException {
         String address = IPUtils.getIpAddress(request);
-        Asserts.isTrue(address == null, new BusinessException("100", "无法获取请求路径"));
+        Asserts.isTrue(address == null, new BusinessException("100", "无法获取设备ip"));
         log.info("登录设备ip地址:{}", address);
-        String token = passportService.doLogin(loginParam, address);
-        Asserts.isTrue(token == null || token.length() == 0, new BusinessException("100", "用户名不存在或者密码不正确"));
-
+        Token token = passportService.doLogin(loginParam, address);
+        response.addHeader("Authorization", "Bearer " + token.getToken());
         return new Result<>(token);
+    }
+
+    @ApiOperation(
+        value = "注册功能",
+        nickname = "register",
+        produces = "application/json",
+        response = Result.class
+    )
+    @PostMapping("/register")
+    @PreAuthorize("hasAnyRole('admin','root')")
+    public Result doRegister(@Valid @RequestBody RegisterParam registerParam,
+        @ApiIgnore @User LoginToken loginToken) throws BusinessException {
+        //如果当前登录者的权限小于添加角色权限权重,抛异常
+        //登录角色名
+        String loginRoleName = loginToken.getRole();
+        loginRoleName = loginRoleName.substring(5);
+        log.info("删除ROLE_前缀,登录角色是:{}", loginRoleName);
+        //登录角色枚举
+        Role loginRole = Role.valueOf(loginRoleName.toUpperCase());
+        //添加角色名称
+        String roleName = registerParam.getRole();
+        //添加角色枚举
+        Role role;
+        try {
+            log.info("role:{}", roleName);
+            role = Role.valueOf(roleName.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new BusinessException("100", "您选择的角色不存在");
+        }
+        if (loginRole.getWeight() < role.getWeight()) {
+            throw new BusinessException("100", "当前用户角色:" + loginRoleName + ",无权添加角色:" + roleName);
+        }
+        passportService.doRegister(registerParam);
+        return Result.success();
     }
 
 }

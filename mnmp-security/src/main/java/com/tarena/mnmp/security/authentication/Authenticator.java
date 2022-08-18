@@ -17,20 +17,20 @@
 
 package com.tarena.mnmp.security.authentication;
 
-import com.tarena.mnmp.security.LoginToken;
+import com.tarena.mnmp.protocol.LoginToken;
 
 public interface Authenticator {
     /**
      * sign
      *
-     * @param login  login token
+     * @param login    login token
      * @param password password
      * @return
      */
     String sign(LoginToken login, String password);
 
     /**
-     *authenticate
+     * authenticate
      *
      * @param token
      * @return

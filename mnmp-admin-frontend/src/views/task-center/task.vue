@@ -65,6 +65,7 @@
         </el-table-column>
         <el-table-column prop="cycleLvel" label="周期类型">
           <template slot-scope="scope">
+            <span v-if="scope.row.cycleLevel === 0">分钟</span>
             <span v-if="scope.row.cycleLevel === 1">小时</span>
             <span v-if="scope.row.cycleLevel === 2">日</span>
             <span v-if="scope.row.cycleLevel === 3">周</span>
@@ -109,13 +110,13 @@
           </template>
         </el-table-column>
         <el-table-column prop="taskStatus" label="当前状态">
-          <templat slot-scope="scope">
+          <template slot-scope="scope">
             <span v-if="scope.row.taskStatus === 0">未开启</span>
             <span v-if="scope.row.taskStatus === 1">推送中</span>
             <span v-if="scope.row.taskStatus === 2">终止</span>
             <span v-if="scope.row.taskStatus === 3">已结束</span>
             <span v-if="scope.row.taskStatus === 4">失败</span>
-          </templat>
+          </template>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="updateTime" label="更新时间"/>
@@ -125,7 +126,7 @@
             <el-button v-if="scope.row.taskStatus === 0 || scope.row.taskStatus === 1"  type="text" size="small" @click="changeStatus(scope.row)" >
               终止
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
+            <el-button v-if="scope.row.auditStatus === 0 && $store.state.user.role !== 'ROLE_user'" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
             <el-button type="text" size="small" @click="jump(scope.row.id)">
@@ -144,8 +145,9 @@
 </template>
 
 <script>
-import { changeStatus, queryPage } from '@/api/task.js'
+import {changeStatus, downExcel, queryPage} from '@/api/task.js'
 import { queryAppList } from '@/api/app'
+import { downloadFileByBlob } from '@/utils/download-file'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogTaskAudit from '@/components/task/dialog-audit'
 import DialogTaskSave from '@/components/task/dialog-save'
@@ -226,11 +228,9 @@ export default {
       this.$refs.DialogTaskSave.show(data)
     },
     downExcel(path) {
-      var url = process.env.VUE_APP_BASE_API + '/task/excel'
-      if (path) {
-        url += '?path=' + path;
-      }
-      window.open(url)
+      downExcel({ path: path }, { responseType: 'blob' }).then(res => {
+        downloadFileByBlob(res.data, res.headers['content-excelname'], res.data.type)
+      })
     },
     queryApps(param) {
       queryAppList({

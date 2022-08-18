@@ -14,52 +14,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tarena.mnmp.domain.param;
 
-package com.tarena.mnmp.domain.sign;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import lombok.Data;
 
-@ApiModel(value = "签名新增入参")
+@ApiModel("app查询模型")
 @Data
-public class SignSaveParam {
-    @ApiModelProperty(
-        value = "主键",
-        name = "id",
-        required = false
-    )
-    private Long id;
+public class AppQueryParam extends PagerResult {
 
-    @ApiModelProperty(
-        value = "签名名称",
-        required = true
-    )
-    @NotBlank(message = "签名名称不能为空")
+    public AppQueryParam() {
+        super();
+        this.desc = true;
+    }
+
+    @ApiModelProperty("app名字 可模糊")
     private String name;
 
-    @ApiModelProperty(
-        value = "签名编码",
-        required = true
-    )
-    @NotBlank(message = "签名编码不能为空")
+    @ApiModelProperty("app code")
     private String code;
 
-    @ApiModelProperty(
-        value = "应用主键",
-        required = false
-    )
-    @NotNull(message = "请选择应用")
-    private Long appId;
+    @ApiModelProperty("true: 倒叙， false：不排序，默认倒叙")
+    private Boolean desc;
 
-    @ApiModelProperty(
-        value = "简介",
-        name = "remark",
-        required = false,
-        example = "测试签名简介"
-    )
-    private String remarks;
+    @ApiModelProperty("是否启用 0：未启用， 1：启用")
+    private Integer enable;
+
+    @ApiModelProperty("审核状态 -1未通过 0审核中 1通过")
+    private Integer auditStatus;
+
+    @ApiModelProperty("查询列表时指定在列表中返回的id")
+    private Long appendId;
+
+    @ApiModelProperty("查询列表时指定排除某个id")
+    private Long excludeId;
+
+    @JsonIgnore
+    private Long createUserId;
 
 }

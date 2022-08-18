@@ -18,6 +18,7 @@
 package com.tarena.mnmp.domain.sign;
 
 import com.tarena.mnmp.domain.SignDO;
+import com.tarena.mnmp.domain.param.SignQuery;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -15,6 +15,10 @@
             <el-input v-model.trim="claForm.code" placeholder="" style="width: 120px" />
           </el-form-item>
 
+          <el-form-item prop="auditStatus" label="审核状态">
+            <com-dict :val.sync="claForm.auditStatus" dict-name="auditStatus" :is-all="false" />
+          </el-form-item>
+
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" @click="toResetPageForList">查询</el-button>
             <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
@@ -58,22 +62,22 @@
           </template>
         </el-table-column>
         <el-table-column prop="enabled" label="应用状态">
-          <templat slot-scope="scope">
+          <template slot-scope="scope">
             <span>{{scope.row.enabled === 1 ? '启用' : '禁用'}}</span>
-          </templat>
+          </template>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column prop="updateTime" label="修改时间"   />
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini"  type="text" @click="changeStatus(scope.row)" >
+            <el-button size="mini"  type="text" @click="changeStatus(scope.row)"  v-if="scope.row.auditStatus === 1">
               {{scope.row.enabled === 1 ? '禁用' : '启用'}}
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
+            <el-button v-if="scope.row.auditStatus === 0 && $store.state.user.role !== 'ROLE_user'" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
-            <el-button  type="text" size="small" @click="save(scope.row)" >
+            <el-button  type="text" size="small" @click="save(scope.row)" v-if="scope.row.auditStatus !== 0">
               修改
             </el-button>
           </template>
@@ -91,6 +95,7 @@ import { queryPage, changeEnable } from '@/api/app.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogAppSave from '@/components/app/dialog-save'
 import DialogAppAudit from '@/components/app/dialog-audit'
+
 export default {
   name: 'DemoTable',
   components: {

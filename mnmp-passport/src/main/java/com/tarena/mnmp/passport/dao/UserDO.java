@@ -15,50 +15,17 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.security;
+package com.tarena.mnmp.passport.dao;
 
-import java.io.Serializable;
-import java.util.List;
+import java.sql.Date;
+import lombok.Data;
 
-public class LoginToken implements Serializable {
+@Data
+public class UserDO {
     private Long id;
     private String username;
-
-    private List<String> authorities;
-
-    private String deviceIp;
-
-    public String getDeviceIp() {
-        return deviceIp;
-    }
-
-    public void setDeviceIp(String deviceIp) {
-        this.deviceIp = deviceIp;
-    }
-
-    public List<String> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(List<String> authorities) {
-        this.authorities = authorities;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    private String password;
+    private Date createTime;
+    private Date updateTime;
 
 }

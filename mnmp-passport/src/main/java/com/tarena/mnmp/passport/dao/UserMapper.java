@@ -21,4 +21,8 @@ import com.tarena.mnmp.passport.domain.User;
 
 public interface UserMapper {
     User findByUsername(String username);
+
+    int save(UserDO param);
+
+    int countByUsername(String username);
 }

@@ -25,7 +25,7 @@ import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.domain.SignDO;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.domain.sign.SignDao;
-import com.tarena.mnmp.domain.sign.SignQuery;
+import com.tarena.mnmp.domain.param.SignQuery;
 import com.tarena.test.mnmp.admin.sql.sign.SignSqlScript;
 import java.util.List;
 import org.junit.jupiter.api.Test;

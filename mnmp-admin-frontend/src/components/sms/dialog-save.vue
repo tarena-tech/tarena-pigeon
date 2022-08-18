@@ -16,28 +16,28 @@
         <el-form ref="ruleForm" class="cus-form" :model="ruleForm" :rules="rules" label-width="100px">
 
           <el-form-item label="模板名称" prop="name">
-            <el-input v-model="ruleForm.name" />
+            <el-input v-model="ruleForm.name" :disabled="disabled" />
           </el-form-item>
           <el-form-item label="模板编码" prop="code">
-            <el-input v-model="ruleForm.code" />
+            <el-input v-model="ruleForm.code" :disabled="disabled" />
           </el-form-item>
           <el-form-item label="模板类型" prop="templateType">
-            <com-dict :val.sync="ruleForm.templateType" dict-name="templateType" :is-all="false" />
+            <com-dict :val.sync="ruleForm.templateType" dict-name="templateType" :is-all="false" :disabled="disabled" />
           </el-form-item>
           <el-form-item label="通知类型" prop="noticeType">
-            <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false" />
+            <com-dict :val.sync="ruleForm.noticeType" dict-name="noticeType" :is-all="false" :disabled="disabled" />
           </el-form-item>
-          <el-form-item label="应用" prop="appId">
+          <el-form-item label="应用" prop="appId" :disabled="disabled">
             <template>
-              <el-select v-model="ruleForm.appId" filterable placeholder="请选择" :filter-method="queryApps">
+              <el-select :disabled="disabled" v-model="ruleForm.appId" filterable placeholder="请选择" :filter-method="queryApps">
                 <el-option v-for="item in apps" :key="item.id" :label="item.name" :value="item.id" />
               </el-select>
             </template>
           </el-form-item>
 
-          <el-form-item label="供应商" prop="">
+          <el-form-item label="供应商" prop="" v-if="$store.state.user.role !== 'ROLE_user'" :disabled="disabled">
             <template>
-              <el-select v-model="ruleForm.providerId" filterable placeholder="请选择" :filter-method="queryProviders">
+              <el-select :disabled="disabled" v-model="ruleForm.providerId" filterable placeholder="请选择" :filter-method="queryProviders">
                 <el-option v-for="item in providers" :key="item.id" :label="item.name" :value="item.id" />
               </el-select>
             </template>
@@ -64,6 +64,7 @@
 import { save } from '@/api/sms'
 import { queryAppList } from '@/api/app'
 import { queryProviderList } from '@/api/provider'
+import store from "@/store";
 export default {
   name: 'DialogSmsSave',
   data() {
@@ -71,6 +72,7 @@ export default {
       dialogVisible: false,
       windowName: '创建',
       loading: false,
+      disabled: false,
       ruleForm: {
         name: null,
         code: null,
@@ -109,6 +111,7 @@ export default {
   },
   mounted() {
     this.ruleForm = {}
+    this.disabled = false
     this.queryApps()
     this.queryProviders()
   },
@@ -145,9 +148,11 @@ export default {
     show(data) {
       this.dialogVisible = true
       this.ruleForm = {}
+      this.disabled = false
       if (data != null) {
         this.windowName = '修改'
         this.ruleForm = data
+        this.disabled = true
       }
     },
     queryApps(param) {
@@ -164,6 +169,9 @@ export default {
     },
 
     queryProviders(param) {
+      if (store.state.user.role === 'ROLE_user') {
+        return
+      }
       queryProviderList({
         name: param,
         auditStatus: 1,

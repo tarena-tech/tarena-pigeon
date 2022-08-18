@@ -18,18 +18,20 @@
 package com.tarena.mnmp.admin.controller.template;
 
 import com.tarena.mnmp.admin.codegen.api.template.TemplateApi;
-import com.tarena.mnmp.admin.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskService;
+import com.tarena.mnmp.domain.template.SmsTemplateAuditParam;
 import com.tarena.mnmp.domain.template.SmsTemplateParam;
-import com.tarena.mnmp.domain.template.TemplateQuery;
+import com.tarena.mnmp.domain.param.TemplateQuery;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
+import com.tarena.mnmp.enums.Role;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
@@ -51,14 +53,18 @@ public class TemplateController implements TemplateApi {
     @Resource
     private TaskService taskService;
 
-    @Override public void save(SmsTemplateParam param) throws BusinessException {
-        templateService.save(param);
+    @Override public void save(SmsTemplateParam param, LoginToken token) throws BusinessException {
+        templateService.save(param, token);
     }
 
-    @Override public void changeEnableStatus(Long id) throws BusinessException {
+    @Override public void changeEnableStatus(Long id, LoginToken token) throws BusinessException {
         SmsTemplateDO smstempalte = templateService.querySmsTemplateDetail(id);
         if (null == smstempalte) {
             throw new BusinessException("100", "模板不存在");
+        }
+
+        if (!Role.manager(token.getRole()) && !Objects.equals(smstempalte.getCreateUserId(), token.getId())) {
+            throw new BusinessException("100", "无权限");
         }
 
         // 如果之前禁用 改为 启用， 则需要校验管理数据
@@ -81,7 +87,10 @@ public class TemplateController implements TemplateApi {
     }
 
     @Override
-    public PagerResult<TemplateView> queryListByPage(TemplateQuery templateQuery) {
+    public PagerResult<TemplateView> queryListByPage(TemplateQuery templateQuery, LoginToken token) {
+        if (!Role.manager(token.getRole())) {
+            templateQuery.setCreateUserId(token.getId());
+        }
         List<SmsTemplateDO> sources = templateService.queryList(templateQuery);
         PagerResult<TemplateView> page = new PagerResult<>(templateQuery.getPageSize(), templateQuery.getCurrentPageIndex());
         page.setList(TemplateView.convert(sources));
@@ -89,7 +98,10 @@ public class TemplateController implements TemplateApi {
         return page;
     }
 
-    @Override public List<TemplateView> queryListByParam(TemplateQuery templateQuery) {
+    @Override public List<TemplateView> queryListByParam(TemplateQuery templateQuery, LoginToken token) {
+        if (!Role.manager(token.getRole())) {
+            templateQuery.setCreateUserId(token.getId());
+        }
         List<SmsTemplateDO> sources = templateService.queryList(templateQuery);
         return TemplateView.convert(sources);
     }
@@ -103,8 +115,8 @@ public class TemplateController implements TemplateApi {
     }
 
 
-    @Override public void doAuditSmsTemplate(AuditParam param) {
-        templateService.doAuditSmsTemplate(param.getId(), param.getAuditStatus(), param.getAuditResult());
+    @Override public void doAuditSmsTemplate(SmsTemplateAuditParam param) throws BusinessException {
+        templateService.doAuditSmsTemplate(param);
     }
 //
 //    @Override public String addWecomTemplate(WecomTemplateVO wecomTemplateVO) {

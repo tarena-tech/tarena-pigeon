@@ -69,8 +69,6 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="useCount" label="使用次数" />
-
         <el-table-column prop="appCode" label="应用编码" />
 
         <el-table-column prop="auditStatus" label="审核状态">
@@ -82,31 +80,29 @@
         </el-table-column>
 
         <el-table-column prop="enabled" label="应用状态">
-          <templat slot-scope="scope">
+          <template slot-scope="scope">
             <span>{{ scope.row.enabled === 1 ? '启用' : '禁用' }}</span>
-          </templat>
+          </template>
         </el-table-column>
 
         <el-table-column prop="createTime" label="创建时间" />
 
         <el-table-column label="操作" fixed="right">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="changeStatus(scope.row)">
+            <el-button type="text" size="small" @click="changeStatus(scope.row)" v-if="scope.row.auditStatus === 1">
               {{ scope.row.enabled === 1 ? '禁用' : '启用' }}
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0" @click="showAudit(scope.row.id)" type="text" size="small">
+            <el-button v-if="scope.row.auditStatus === 0 && $store.state.user.role !== 'ROLE_user'"
+                       @click="showAudit(scope.row)" type="text" size="small">
               审核
             </el-button>
-            <el-button type="text" size="mini" @click="save(scope.row)">
+            <el-button type="text" size="mini" @click="save(scope.row)" v-if="scope.row.auditStatus === 1">
               修改
             </el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
     </div>
-    <!-- 详情弹窗 -->
-    <dialog-sms-info ref="dialogSmsInfo"/>
-    <dialog-sms-info ref="dialogSmsInfo"/>
     <!-- 创建弹窗 -->
     <dialog-sms-save ref="DialogSmsSave" @refresh="refresh" />
     <dialog-sms-audit ref="DialogSmsAudit" @refresh="refresh" />
@@ -206,8 +202,8 @@ export default {
     },
 
     // 审核
-    showAudit(id) {
-      this.$refs.DialogSmsAudit.show(id)
+    showAudit(data) {
+      this.$refs.DialogSmsAudit.show(data)
     },
 
     // 重置页码并搜索

@@ -18,6 +18,7 @@
 package com.tarena.mnmp.domain.app;
 
 import com.tarena.mnmp.domain.AppDO;
+import com.tarena.mnmp.domain.param.AppQueryParam;
 import java.util.List;
 
 public interface AppDao {
@@ -35,4 +36,6 @@ public interface AppDao {
     void enable(Long appId);
 
     Integer modify(AppDO appDO);
+
+    List<String> findAppCodesByCreateUserId(Long userId);
 }

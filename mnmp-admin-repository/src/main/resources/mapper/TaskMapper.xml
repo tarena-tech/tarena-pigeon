@@ -31,6 +31,7 @@
         <result column="audit_status" jdbcType="TINYINT" property="auditStatus"/>
         <result column="audit_result" jdbcType="VARCHAR" property="auditResult"/>
         <result column="mock" jdbcType="INTEGER" property="mock"/>
+        <result column="create_user_id" jdbcType="BIGINT" property="createUserId"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -38,7 +39,7 @@
         id, `name`, task_status, task_type, notice_type, template_id, sign_id, app_id, cycle_level,
         cycle_num, first_trigger_time, trigger_end_time, next_trigger_time, target_type,
         target_file_name, target_file_url, creator, creator_email, creator_name, dept_id,
-        remark, error, create_time, update_time, audit_status, audit_result,mock
+        remark, error, create_time, update_time, audit_status, audit_result,mock, create_user_id
     </sql>
 
     <!--查询单个-->
@@ -225,6 +226,9 @@
             <if test="mock != null">
                 mock,
             </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null">
@@ -305,6 +309,9 @@
             <if test="mock != null">
                 #{mock,jdbcType=INTEGER},
             </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=BIGINT}
+            </if>
         </trim>
     </insert>
 
@@ -325,7 +332,13 @@
             <if test="auditStatus != null">
                 and audit_status = #{auditStatus,jdbcType=INTEGER}
             </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
+            </if>
         </where>
+        <if test="desc != null">
+            order by id desc
+        </if>
         ${limitClause}
     </select>
 
@@ -344,6 +357,9 @@
             </if>
             <if test="auditStatus != null">
                 and audit_status = #{auditStatus,jdbcType=INTEGER}
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
             </if>
         </where>
     </select>

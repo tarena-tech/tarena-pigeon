@@ -90,8 +90,7 @@ public class MnmpSecurityWebConfiguration extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             "/img.icons/**",
             "/swagger-resources/**",
-            "/v2/api-docs",
-            "task/excel"
+            "/v2/api-docs"
         };
         // 禁止跨域请求伪造过滤器
         http.csrf().disable();

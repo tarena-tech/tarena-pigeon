@@ -18,7 +18,12 @@
 package com.tarena.mnmp.passport.service;
 
 import com.tarena.mnmp.passport.domain.LoginParam;
+import com.tarena.mnmp.passport.domain.RegisterParam;
+import com.tarena.mnmp.passport.domain.Token;
+import com.tarena.mnmp.protocol.BusinessException;
 
 public interface PassportService {
-    String doLogin(LoginParam param,String deviceIp);
+    Token doLogin(LoginParam param,String deviceIp) throws BusinessException;
+
+    void doRegister(RegisterParam param) throws BusinessException;
 }

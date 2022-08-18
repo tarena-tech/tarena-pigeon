@@ -18,6 +18,8 @@
 package com.tarena.mnmp.domain.provider;
 
 import com.tarena.mnmp.domain.ProviderDO;
+import com.tarena.mnmp.domain.param.ProviderQueryParam;
+import com.tarena.mnmp.domain.param.ProviderSaveParam;
 import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;

@@ -14,42 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.domain.provider;
 
-import com.tarena.mnmp.commons.pager.PagerResult;
+package com.tarena.mnmp.domain.template;
+
+import com.tarena.mnmp.domain.param.AuditParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 
-@ApiModel("服务商查询模型")
 @Data
-public class ProviderQueryParam extends PagerResult {
+@ApiModel("短信审核模型")
+public class SmsTemplateAuditParam extends AuditParam {
 
-    public ProviderQueryParam() {
-        super();
-        this.orderBy = true;
-    }
+    @ApiModelProperty("供货商Id")
+    @NotNull(message = "供货商不能为空")
+    private Long providerId;
 
-    @ApiModelProperty("供应商名称")
-    private String name;
-
-    @ApiModelProperty("供应商编码")
-    private String code;
-
-
-    @ApiModelProperty("是否启用 0：未启用， 1：启用")
-    private Integer enable;
-
-    @ApiModelProperty("审核状态 -1未通过 0审核中 1通过")
-    private Integer auditStatus;
-
-    @ApiModelProperty("true：倒排， false：不排序")
-    private Boolean orderBy;
-
-    @ApiModelProperty("列表中必须包含某条数据")
-    private Long appendId;
-
-    @ApiModelProperty("列表中指定排除某个id")
-    private Long excludeId;
+    @ApiModelProperty("模板内容")
+    @NotNull(message = "模板内容不能为空")
+    private String content;
 
 }

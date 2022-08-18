@@ -18,12 +18,15 @@
 package com.tarena.mnmp.admin.codegen.api.sign;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.github.xiaoymin.knife4j.annotations.Ignore;
+import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.controller.sign.SignView;
-import com.tarena.mnmp.admin.param.AuditParam;
+import com.tarena.mnmp.domain.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.domain.sign.SignSaveParam;
-import com.tarena.mnmp.domain.sign.SignQuery;
+import com.tarena.mnmp.domain.param.SignSaveParam;
+import com.tarena.mnmp.domain.param.SignQuery;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -37,6 +40,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Validated
 @Api(
@@ -52,14 +56,15 @@ public interface SignApi {
     @PostMapping(
         value = {"/save"}
     )
-    @PreAuthorize("hasAnyRole('admin','root')")
-    void save(@ApiParam(value = "新增签名", required = true) @Valid @RequestBody SignSaveParam signParam) throws BusinessException;
+    @PreAuthorize("hasAnyRole('admin','root', 'user')")
+    void save(@ApiParam(value = "新增签名", required = true) @Valid @RequestBody SignSaveParam signParam,
+        @ApiIgnore @User LoginToken token) throws BusinessException;
 
 
     @ApiOperation("启用/禁用")
     @PostMapping("change/enable/status")
-    @PreAuthorize("hasAnyRole('admin','root')")
-    void changeEnableStatus(Long id) throws BusinessException;
+    @PreAuthorize("hasAnyRole('admin','root', 'user')")
+    void changeEnableStatus(Long id, @Ignore @User LoginToken token) throws BusinessException;
 
     @ApiOperationSupport(order = 3005)
     @ApiOperation(
@@ -79,13 +84,14 @@ public interface SignApi {
         value = {"/queryPage"}
     )
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    PagerResult<SignView> queryPage(@ApiParam(value = "签名查询入参") SignQuery signQuery);
+    PagerResult<SignView> queryPage(@ApiParam(value = "签名查询入参") SignQuery signQuery,
+        @ApiIgnore @User LoginToken token);
 
     @GetMapping(
         value = {"/queryList"}
     )
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    List<SignView> queryList(@ApiParam(value = "签名查询入参") SignQuery signQuery);
+    List<SignView> queryList(@ApiParam(value = "签名查询入参") SignQuery signQuery, @Ignore @User LoginToken token);
 
     /**
      * 审核签名

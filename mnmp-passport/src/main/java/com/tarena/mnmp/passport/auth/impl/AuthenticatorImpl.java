@@ -18,35 +18,21 @@
 package com.tarena.mnmp.passport.auth.impl;
 
 import com.tarena.mnmp.passport.config.JwtConfiguration;
-import com.tarena.mnmp.passport.dao.UserMapper;
-import com.tarena.mnmp.passport.domain.User;
+
 import com.tarena.mnmp.security.utils.JwtUtils;
-import com.tarena.mnmp.security.LoginToken;
+import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class AuthenticatorImpl implements Authenticator {
     @Autowired
     private JwtConfiguration jwtConfig;
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
+
 
     @Override public String sign(LoginToken login, String password) {
-        String username = login.getUsername();
-        User user = userMapper.findByUsername(username);
-        if (user == null) {
-            return null;
-        }
-        boolean matches = passwordEncoder.matches(password, user.getPassword());
-        if (!matches) {
-            return null;
-        }
-        login.setAuthorities(user.getAuthorities());
-        //认证成功,生成token返回
-        return JwtUtils.generateToken(login, jwtConfig.getJwtSecret(), jwtConfig.getExpiration());
+        return JwtUtils.generateToken(login,jwtConfig.getJwtSecret(),jwtConfig.getExpiration());
     }
 
     @Override public LoginToken authenticate(String token, String deviceIp) {

@@ -23,7 +23,7 @@
 
           <el-form-item prop="triggerTime" label="执行时间">
             <template>
-              <dev class="block">
+              <div class="block">
                 <el-date-picker
                   v-model="claForm.triggerTimes"
                   format="yyyy-MM-dd HH:mm:ss"
@@ -33,7 +33,7 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期">
                 </el-date-picker>
-              </dev>
+              </div>
             </template>
           </el-form-item>
           <el-form-item>
@@ -42,8 +42,8 @@
           </el-form-item>
         </div>
       </div>
-
     </el-form>
+
     <div class="cus-main-wrap">
       <tmp-table-pagination
         ref="tmp_table"
@@ -59,12 +59,12 @@
         <el-table-column prop="target" label="目标电话" />
         <el-table-column prop="pushTime" label="发送时间"/>
         <el-table-column prop="status" label="发送状态">
-          <templat slot-scope="scope">
+          <template slot-scope="scope">
             <span v-if="scope.row.status === 0">发送给供应商失败</span>
             <span v-if="scope.row.status === 1">发送给供应商成功</span>
             <span v-if="scope.row.status === 2">发送给目标失败</span>
             <span v-if="scope.row.status === 3">发送给目标成功</span>
-          </templat>
+          </template>
         </el-table-column>
 
         <el-table-column prop="triggerTime" label="执行时间"/>
@@ -139,6 +139,7 @@ export default {
     this.claForm.taskId = this.$route.query.taskId
 
     this.getTabelData()
+    this.queryApps()
   },
   created() {},
   methods: {

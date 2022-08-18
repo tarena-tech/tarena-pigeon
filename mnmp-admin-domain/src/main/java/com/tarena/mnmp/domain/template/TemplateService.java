@@ -20,11 +20,14 @@ package com.tarena.mnmp.domain.template;
 import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.SmsTemplateDO;
 import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.domain.param.TemplateQuery;
 import com.tarena.mnmp.domain.provider.ProviderService;
 import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Deleted;
 import com.tarena.mnmp.enums.Enabled;
+import com.tarena.mnmp.enums.Role;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -45,7 +48,7 @@ public class TemplateService {
     @Resource
     private ProviderService providerService;
 
-    public void save(SmsTemplateParam templateParam) throws BusinessException {
+    public void save(SmsTemplateParam templateParam, LoginToken token) throws BusinessException {
 
         SmsTemplateDO template = new SmsTemplateDO();
         BeanUtils.copyProperties(templateParam, template);
@@ -54,24 +57,28 @@ public class TemplateService {
 
         AppDO app = appService.checkStatus(template.getAppId());
         template.setAppCode(app.getCode());
-        providerService.checkStatus(template.getProviderId());
 
         Date now = new Date();
         if (null == template.getId()) {
+            template.setCreateUserId(token.getId());
             template.setDeleted(Deleted.NO.getVal());
             template.setEnabled(Enabled.YES.getVal());
-            template.setAuditStatus(0);
+            template.setAuditStatus(AuditStatus.WAITING.getStatus());
             template.setCreateTime(now);
             template.setUpdateTime(now);
             smsTemplateDao.save(template);
-        } else {
-            template.setCreateTime(null);
-            template.setEnabled(null);
-            template.setAuditStatus(null);
-            template.setAuditResult(null);
-            template.setUseCount(null);
-            smsTemplateDao.modify(template);
+            return;
         }
+
+        SmsTemplateDO detail = querySmsTemplateDetail(template.getId());
+
+        if (!Role.executable(token, detail.getCreateUserId())) {
+            throw new BusinessException("100", "无权限");
+        }
+
+
+        template.noChangeParam();
+        smsTemplateDao.modify(template);
     }
 
     private void checkOnlyOne(SmsTemplateParam template) throws BusinessException {
@@ -121,17 +128,20 @@ public class TemplateService {
         return smsTemplateDao.findById(id);
     }
 
-    @Deprecated
     public String updateSmsTemplate(SmsTemplateDO sms) {
         smsTemplateDao.modify(sms);
         return "ok";
     }
 
-    public void doAuditSmsTemplate(Long id, Integer status, String auditResult) {
+    public void doAuditSmsTemplate(SmsTemplateAuditParam param) throws BusinessException {
+        providerService.checkStatus(param.getProviderId());
+
         SmsTemplateDO bo = new SmsTemplateDO();
-        bo.setId(id);
-        bo.setAuditStatus(status);
-        bo.setAuditResult(auditResult);
+        bo.setId(param.getId());
+        bo.setAuditStatus(param.getAuditStatus());
+        bo.setAuditResult(param.getAuditResult());
+        bo.setProviderId(param.getProviderId());
+        bo.setContent(param.getContent());
         smsTemplateDao.modify(bo);
     }
 

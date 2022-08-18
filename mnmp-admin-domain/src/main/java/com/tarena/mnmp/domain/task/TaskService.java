@@ -23,6 +23,7 @@ import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.util.ListUtils;
 import com.tarena.mnmp.commons.json.Json;
 import com.tarena.mnmp.commons.pager.PagerResult;
+import com.tarena.mnmp.commons.utils.Asserts;
 import com.tarena.mnmp.commons.utils.DateUtils;
 import com.tarena.mnmp.commons.utils.RegexUtils;
 import com.tarena.mnmp.domain.TaskDO;
@@ -32,8 +33,11 @@ import com.tarena.mnmp.domain.sign.SignService;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Deleted;
+import com.tarena.mnmp.enums.Role;
+import com.tarena.mnmp.enums.SendType;
 import com.tarena.mnmp.enums.TaskStatus;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -91,7 +95,10 @@ public class TaskService {
     }
 
     public List<TargetExcelData> addTask(TaskDO taskDO, String filePath) throws BusinessException {
-
+        if (Objects.equals(SendType.CYCLE.getType(), taskDO.getTaskType())) {
+            Asserts.isTrue(null == taskDO.getCycleLevel(), new BusinessException("-1", "周期类型不能为空"));
+            Asserts.isTrue(null == taskDO.getCycleNum(), new BusinessException("-1", "周期数量不能为空"));
+        }
         // check
         appService.checkStatus(taskDO.getAppId());
         signService.checkStatus(taskDO.getSignId());
@@ -175,8 +182,10 @@ public class TaskService {
         taskDao.update(task);
     }
 
-    public PagerResult<TaskDO> queryListByPage(TaskQuery query) {
-
+    public PagerResult<TaskDO> queryListByPage(TaskQuery query, LoginToken token) {
+        if (!Role.manager(token.getRole())) {
+            query.setCreateUserId(token.getId());
+        }
         List<TaskDO> list = taskDao.queryList(query);
         Long count = taskDao.queryCount(query);
 

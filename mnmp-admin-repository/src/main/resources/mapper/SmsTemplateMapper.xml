@@ -20,7 +20,7 @@
         <result column="use_count" jdbcType="INTEGER" property="useCount"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <result column="create_user_id" jdbcType="INTEGER" property="createUserId"/>
+        <result column="create_user_id" jdbcType="BIGINT" property="createUserId"/>
         <result column="create_user_name" jdbcType="VARCHAR" property="createUserName"/>
         <result column="provider_id" jdbcType="BIGINT" property="providerId"/>
     </resultMap>
@@ -164,7 +164,7 @@
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="createUserId != null">
-                #{createUserId,jdbcType=INTEGER},
+                #{createUserId,jdbcType=BIGINT},
             </if>
             <if test="createUserName != null">
                 #{createUserName,jdbcType=VARCHAR},
@@ -234,7 +234,7 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="queryTemplates" resultMap="BaseResultMap" parameterType="com.tarena.mnmp.domain.template.TemplateQuery">
+    <select id="queryTemplates" resultMap="BaseResultMap" parameterType="com.tarena.mnmp.domain.param.TemplateQuery">
         select
         <include refid="Base_Column_List"/>
         from notice_sms_template
@@ -261,8 +261,13 @@
             <if test="true">
                 and deleted = 0
             </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
+            </if>
         </where>
-        group by id desc
+        <if test="desc != null and desc == true">
+            group by id desc
+        </if>
         ${limitClause};
     </select>
 
@@ -295,6 +300,9 @@
             </if>
             <if test="true">
                 and deleted = 0
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
             </if>
         </where>
     </select>

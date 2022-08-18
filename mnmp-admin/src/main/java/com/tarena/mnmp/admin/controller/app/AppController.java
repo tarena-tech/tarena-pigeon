@@ -18,11 +18,11 @@
 package com.tarena.mnmp.admin.controller.app;
 
 import com.tarena.mnmp.admin.codegen.api.app.AppApi;
-import com.tarena.mnmp.admin.param.AuditParam;
+import com.tarena.mnmp.domain.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.AppDO;
-import com.tarena.mnmp.domain.app.AppQueryParam;
-import com.tarena.mnmp.domain.app.AppSaveParam;
+import com.tarena.mnmp.domain.param.AppQueryParam;
+import com.tarena.mnmp.domain.param.AppSaveParam;
 import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.domain.sign.SignService;
 import com.tarena.mnmp.domain.task.TaskQuery;
@@ -30,15 +30,20 @@ import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
+import com.tarena.mnmp.enums.Role;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 public class AppController implements AppApi {
     @Autowired
     private AppService appService;
@@ -52,15 +57,19 @@ public class AppController implements AppApi {
     @Resource
     private SignService signService;
 
-    @Override public void save(AppSaveParam appAddParam) throws BusinessException {
-        appService.save(appAddParam);
+    @Override public void save(AppSaveParam appAddParam, LoginToken token) throws BusinessException {
+        appService.save(appAddParam, token);
     }
 
 
-    @Override public void changeEnableStatus(Long id) throws BusinessException {
+    @Override public void changeEnableStatus(Long id, LoginToken token) throws BusinessException {
         AppDO app = appService.queryAppDetail(id);
         if (app == null) {
             throw new BusinessException("100", "应用不存在");
+        }
+
+        if (!Role.manager(token.getRole()) && ObjectUtils.notEqual(app.getCreateUserId(), token.getId())) {
+            throw new BusinessException("100", "无权限");
         }
 
         AppDO up = new AppDO();
@@ -89,7 +98,10 @@ public class AppController implements AppApi {
         return appVO;
     }
 
-    @Override public PagerResult<AppView> queryPage(AppQueryParam param) {
+    @Override public PagerResult<AppView> queryPage(AppQueryParam param, LoginToken token) {
+        if (!Role.manager(token.getRole())) {
+            param.setCreateUserId(token.getId());
+        }
         List<AppDO> sources = appService.queryList(param);
         Long count = appService.queryCount(param);
         PagerResult<AppView> pagerResult = new PagerResult<>(param.getPageSize(), param.getCurrentPageIndex());
@@ -98,8 +110,11 @@ public class AppController implements AppApi {
         return pagerResult;
     }
 
-    @GetMapping("query/list") @Override public List<AppView> queryList(AppQueryParam param) {
-        param.setOrderBy(false);
+    @GetMapping("query/list") @Override public List<AppView> queryList(AppQueryParam param, LoginToken token) {
+        param.setDesc(false);
+        if (!Role.manager(token.getRole())) {
+            param.setCreateUserId(token.getId());
+        }
         List<AppDO> sources = appService.queryList(param);
         return AppView.convert(sources);
     }

@@ -21,7 +21,7 @@
     <sql id="SignAllFields">
         <!--@mbg.generated-->
         id, `name`, code, audit_status, app_id, app_code, remarks, enabled, creator, create_time,
-        update_time, audit_result
+        update_time, audit_result,create_user_id
     </sql>
     <insert id="save">
         <!--@mbg.generated-->
@@ -54,11 +54,14 @@
             <if test="createTime != null">
                 create_time,
             </if>
-            <if test="updateTime != null">
+            <if test="true">
                 update_time,
             </if>
             <if test="auditResult != null">
                 audit_result,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -89,11 +92,14 @@
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="updateTime != null">
-                #{updateTime,jdbcType=TIMESTAMP},
+            <if test="true">
+                now(),
             </if>
             <if test="auditResult != null">
                 #{auditResult,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=BIGINT},
             </if>
         </trim>
      </insert>
@@ -117,8 +123,11 @@
             <if test="auditStatus != null">
                 and audit_status = #{auditStatus,jdbcType=INTEGER}
             </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
+            </if>
         </where>
-        <if test="orderBy != null and orderBy == true">
+        <if test="desc != null and desc == true">
             order by id desc
         </if>
         ${limitClause}
@@ -137,6 +146,15 @@
             </if>
             <if test="appCode!=null">
                 and app_code like concat('%',#{appCode},'%')
+            </if>
+            <if test="enable != null">
+                and enabled = #{enable,jdbcType=INTEGER}
+            </if>
+            <if test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
             </if>
         </where>
     </select>

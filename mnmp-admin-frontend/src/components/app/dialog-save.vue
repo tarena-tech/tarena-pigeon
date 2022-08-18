@@ -15,10 +15,10 @@
       <el-form ref="ruleForm" class="cus-form" :model="ruleForm" :rules="rules" label-width="100px">
 
         <el-form-item label="应用名称" prop="name">
-          <el-input v-model="ruleForm.name" />
+          <el-input v-model="ruleForm.name" :disabled="disabledName" />
         </el-form-item>
         <el-form-item label="应用编码" prop="code">
-          <el-input v-model="ruleForm.code" />
+          <el-input v-model="ruleForm.code" :disabled="disabledCode" />
         </el-form-item>
         <el-form-item label="负责人" prop="leader">
           <el-input v-model="ruleForm.leader" />
@@ -48,6 +48,8 @@ export default {
       dialogVisible: false,
       windowName: '创建',
       loading: false,
+      disabledName: false,
+      disabledCode: false,
       ruleForm: {
         name: null,
         code: null,
@@ -102,9 +104,13 @@ export default {
     show(data) {
       this.dialogVisible = true
       this.ruleForm = {}
+      this.disabledName = false;
+      this.disabledCode = false;
       if (data != null) {
         this.windowName = '修改'
         this.ruleForm = data
+        this.disabledName = true;
+        this.disabledCode = true;
       }
     }
   }

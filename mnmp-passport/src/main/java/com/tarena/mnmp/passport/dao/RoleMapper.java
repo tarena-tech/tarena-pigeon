@@ -15,32 +15,8 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.domain.task;
+package com.tarena.mnmp.passport.dao;
 
-import io.swagger.annotations.ApiModel;
-import java.util.Map;
-
-/**
- * 通知人群
- */
-@ApiModel(value = "通知人群")
-
-public class NoticeTargetData {
-    private String target;
-    private Map<String, Object> templateParams;
-    public String getTarget() {
-        return target;
-    }
-
-    public void setTarget(String target) {
-        this.target = target;
-    }
-
-    public Map<String, Object> getTemplateParams() {
-        return templateParams;
-    }
-
-    public void setTemplateParams(Map<String, Object> templateParams) {
-        this.templateParams = templateParams;
-    }
+public interface RoleMapper {
+    int save(RoleDO aDo);
 }

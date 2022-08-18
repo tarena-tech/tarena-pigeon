@@ -23,6 +23,14 @@
         id, app_code, task_id, target, content, `status`, trigger_time, push_time, push_receive_time,
         biz_id, send_result, create_time, update_time
     </sql>
+
+    <sql id="nsrt_column_list">
+        nsrt.id,nsrt.app_code,nsrt.task_id,nsrt.target,nsrt.content,nsrt.`status`,nsrt.trigger_time,nsrt.push_time,nsrt.push_receive_time,
+        nsrt.biz_id,nsrt.send_result,nsrt.create_time,nsrt.update_time
+    </sql>
+
+
+
     <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         <!--@mbg.generated-->
         select
@@ -157,53 +165,74 @@
 
     <select id="queryList" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from notice_sms_record_target
+        <include refid="nsrt_column_list" />
+        from notice_sms_record_target as nsrt
+        <if test="createUserId != null">
+            left join notice_app na on na.code = nsrt.app_code and na.create_user_id = #{createUserId,jdbcType=BIGINT}
+        </if>
         <where>
             <if test="eqTarget != null and eqTarget != ''">
-                target = #{eqTarget,jdbcType=VARCHAR}
+                nsrt.target = #{eqTarget,jdbcType=VARCHAR}
             </if>
             <if test="target != null and target != ''">
-                and target like concat('%', #{target,jdbcType=VARCHAR}, '%')
+                and nsrt.target like concat('%', #{target,jdbcType=VARCHAR}, '%')
             </if>
             <if test="taskId != null">
-                and task_id = #{taskId,jdbcType=BIGINT}
+                and nsrt.task_id = #{taskId,jdbcType=BIGINT}
             </if>
             <if test="bizId != null and bizId != ''">
-                and biz_id = #{bizId,jdbcType=VARCHAR}
+                and nsrt.biz_id = #{bizId,jdbcType=VARCHAR}
             </if>
             <if test="appCode != null and appCode != ''">
-                and app_code = #{appCode,jdbcType=VARCHAR}
+                and nsrt.app_code = #{appCode,jdbcType=VARCHAR}
             </if>
             <if test="startTriggerTime != null and endTriggerTime != null">
-                and trigger_time between  DATE_FORMAT(#{startTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s') and DATE_FORMAT(#{endTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s')
+                and nsrt.trigger_time between  DATE_FORMAT(#{startTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s') and DATE_FORMAT(#{endTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="appCodes != null and appCodes.size() != 0">
+                and app_code in
+                <foreach collection="appCodes" index="index" item="item" open="(" close=")" separator=",">
+                    #{item,jdbcType=VARCHAR}
+                </foreach>
             </if>
         </where>
+        <if test="desc != null and desc == true">
+            order by nsrt.id desc
+        </if>
         ${limitClause}
     </select>
 
     <select id="queryCount" resultType="java.lang.Long">
         select
             count(1)
-        from notice_sms_record_target
+        from notice_sms_record_target as nsrt
+        <if test="createUserId != null">
+            left join notice_app na on na.code = nsrt.app_code and na.create_user_id = #{createUserId,jdbcType=BIGINT}
+        </if>
         <where>
             <if test="eqTarget != null and eqTarget != ''">
-                target = #{eqTarget,jdbcType=VARCHAR}
+                nsrt.target = #{eqTarget,jdbcType=VARCHAR}
             </if>
             <if test="target != null and target != ''">
-                and target like concat('%', #{target,jdbcType=VARCHAR}, '%')
+                and nsrt.target like concat('%', #{target,jdbcType=VARCHAR}, '%')
             </if>
             <if test="taskId != null">
-                and task_id = #{taskId,jdbcType=BIGINT}
+                and nsrt.task_id = #{taskId,jdbcType=BIGINT}
             </if>
             <if test="bizId != null and bizId != ''">
-                and biz_id = #{bizId,jdbcType=VARCHAR}
+                and nsrt.biz_id = #{bizId,jdbcType=VARCHAR}
             </if>
             <if test="appCode != null and appCode != ''">
-                and app_code = #{appCode,jdbcType=VARCHAR}
+                and nsrt.app_code = #{appCode,jdbcType=VARCHAR}
             </if>
             <if test="startTriggerTime != null and endTriggerTime != null">
-                and trigger_time between  DATE_FORMAT(#{startTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s') and DATE_FORMAT(#{endTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s')
+                and nsrt.trigger_time between  DATE_FORMAT(#{startTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s') and DATE_FORMAT(#{endTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="appCodes != null and appCodes.size() != 0">
+                and app_code in
+                <foreach collection="appCodes" index="index" item="item" open="(" close=")" separator=",">
+                    #{item,jdbcType=VARCHAR}
+                </foreach>
             </if>
         </where>
     </select>

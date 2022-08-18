@@ -35,7 +35,7 @@
         <el-input v-model="form.appName" :disabled="true"></el-input>
       </el-form-item>
 
-      <el-form-item label="周期类型">
+      <el-form-item label="周期类型" v-if="cycleShow">
         <el-input v-if="form.cycleLevel === 1" value="小时" :disabled="true"></el-input>
         <el-input v-if="form.cycleLevel === 2" value="日" :disabled="true"></el-input>
         <el-input v-if="form.cycleLevel === 3" value="周</" :disabled="true"></el-input>
@@ -43,7 +43,7 @@
         <el-input v-if="form.cycleLevel === 5" value="年" :disabled="true"></el-input>
       </el-form-item>
 
-      <el-form-item label="周期数">
+      <el-form-item label="周期数" v-if="cycleShow">
         <el-input v-model="form.cycleNum" :disabled="true"></el-input>
       </el-form-item>
 
@@ -100,16 +100,19 @@
   </dev>
 </template>
 <script>
-import { detail } from '@/api/task.js'
+import {detail, downExcel} from '@/api/task.js'
+import {downloadFileByBlob} from "@/utils/download-file";
 export default {
   data() {
     return {
+      cycleShow: false,
       form: {
         id: null
       }
     }
   },
   mounted() {
+    this.cycleShow = false
     this.getDetail(this.$route.query.id)
   },
   methods: {
@@ -117,17 +120,18 @@ export default {
       detail({ id: _id })
         .then(res => {
           this.form = res
+          if (res.taskType == 2) {
+            this.cycleShow = true
+          }
         })
         .catch(err => {
           console.dir(err)
         })
     },
     downExcel(path) {
-      let url = process.env.VUE_APP_BASE_API + '/task/excel'
-      if (path) {
-        url += '?path=' + path
-      }
-      window.open(url)
+      downExcel({ path: path }, { responseType: 'blob' }).then(res => {
+        downloadFileByBlob(res.data, res.headers['content-excelname'], res.data.type)
+      })
     },
     pre() {
       this.$router.push({ name: 'task' })

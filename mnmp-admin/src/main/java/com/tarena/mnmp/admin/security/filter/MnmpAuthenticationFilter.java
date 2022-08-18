@@ -18,7 +18,7 @@
 package com.tarena.mnmp.admin.security.filter;
 
 import com.tarena.mnmp.admin.utils.IPUtils;
-import com.tarena.mnmp.security.LoginToken;
+import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.mnmp.security.authentication.Authenticator;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,9 +74,9 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
         log.info("ip: {}", deviceIp);
         log.info("请求地址：{}", request.getRequestURL());
         LoginToken loginToken = authenticator.authenticate(token, deviceIp);
+        log.info("token: {}", loginToken);
         if (ObjectUtils.isEmpty(loginToken)) {
             log.info("认证失败 客户端ip:{}", deviceIp);
-            log.info("token中的ip: {}", loginToken.getDeviceIp());
             filterChain.doFilter(request, response);
         } else {
             log.info("认证成功 客户端ip:{}", deviceIp);

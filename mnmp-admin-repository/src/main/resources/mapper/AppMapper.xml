@@ -18,6 +18,7 @@
 
     <sql id="AppAllFields">
         id,
+        create_user_id,
         code,
         name,
         leader,
@@ -63,6 +64,9 @@
             <if test="auditResult != null">
                 audit_result,
             </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="code != null">
@@ -95,6 +99,9 @@
             <if test="auditResult != null">
                 #{auditResult,jdbcType=VARCHAR},
             </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=BIGINT},
+            </if>
         </trim>
     </insert>
 
@@ -118,8 +125,11 @@
             <if test="excludeId != null">
                 and id != #{excludeId,jdbcType=BIGINT}
             </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
+            </if>
         </where>
-        <if test="orderBy != null and orderBy == true">
+        <if test="desc != null and desc == true">
             order by id desc
         </if>
         ${limitClause}
@@ -144,6 +154,9 @@
             </if>
             <if test="excludeId != null">
                 and id != #{excludeId,jdbcType=BIGINT}
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
             </if>
         </where>
     </select>
@@ -199,6 +212,12 @@
         where id=#{id}
     </update>
 
+    <select id="findAppCodesByCreateUserId" resultType="java.lang.String">
+        select code
+        from notice_app
+        where create_user_id = #{userId,jdbcType=BIGINT}
 
+
+    </select>
 </mapper>
 

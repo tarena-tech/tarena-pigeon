@@ -48,6 +48,12 @@ instance.interceptors.response.use(
    */
   response => {
     const res = response.data
+    console.log(response)
+    if (response.request.responseType === 'blob' || response.headers['content-excelname']) {
+      console.log('ress', response)
+      return response
+    }
+
     if (res.succeed !== true) { // 全局业务异常信息提示
       if (!response.config.hideGlobalMsg) {
         Message.warning(res.error)
