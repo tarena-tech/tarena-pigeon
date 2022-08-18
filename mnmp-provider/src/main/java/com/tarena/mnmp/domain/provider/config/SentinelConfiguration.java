@@ -17,14 +17,23 @@
 package com.tarena.mnmp.domain.provider.config;
 
 import com.alibaba.csp.sentinel.adapter.servlet.CommonFilter;
+import com.alibaba.csp.sentinel.annotation.aspectj.SentinelResourceAspect;
 import javax.servlet.Filter;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SentinelFilterConfig {
+public class SentinelConfiguration implements ApplicationContextAware {
 
+
+    public static ApplicationContext applicationContext;
 
     @Bean
     public FilterRegistrationBean sentinelFilterRegistration() {
@@ -34,5 +43,14 @@ public class SentinelFilterConfig {
         registration.setName("sentinelFilter");
         registration.setOrder(1);
         return registration;
+    }
+
+    @Bean
+    public SentinelResourceAspect sentinelResourceAspect() {
+        return new SentinelResourceAspect();
+    }
+
+    @Override public void setApplicationContext(ApplicationContext context) throws BeansException {
+        SentinelConfiguration.applicationContext = context;
     }
 }

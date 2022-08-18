@@ -48,6 +48,11 @@ mybatis:
 json:
   provider: fastJson
 
+alibaba:
+  sentinel:
+    config:
+      path: '/Users/yang/home/files/tarena/sentinel/'
+
 dispatcher:
   mock: true
   assembler_sms: true

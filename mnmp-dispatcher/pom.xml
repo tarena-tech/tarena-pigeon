@@ -64,5 +64,10 @@
             <version>2.5.12</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-parameter-flow-control</artifactId>
+        </dependency>
     </dependencies>
 </project>
