@@ -146,9 +146,7 @@ public class AliSmsSender implements SmsSender {
             .setSignName(smsTarget.getSignName())
             .setTemplateCode(this.aliTemplateCode)
             .setTemplateParam("{\"code\":\"" + smsTarget.getContent() + "\"}");
-//        SendSmsResponse sendResp = this.aliSmsClient.sendSms(sendReq);
-        SendSmsResponse sendResp = new SendSmsResponse();
-        sendResp.setBody(new SendSmsResponseBody().setCode("OK"));
+        SendSmsResponse sendResp = this.aliSmsClient.sendSms(sendReq);
         if (!Constant.OK.equals(sendResp.body.code)) {
             logger.error("错误信息: " + sendResp.body.message + "");
             throw new BusinessException(ErrorCode.SEND_ALI_SMS_ERROR, sendResp.body.message);
@@ -160,9 +158,7 @@ public class AliSmsSender implements SmsSender {
         Entry entry = null;
         try {
             entry = SphU.entry(name, EntryType.IN, 1, str);
-            // Your logic here.
         } catch (BlockException ex) {
-            // Handle request rejection.
             throw ex;
         } finally {
             if (entry != null) {
