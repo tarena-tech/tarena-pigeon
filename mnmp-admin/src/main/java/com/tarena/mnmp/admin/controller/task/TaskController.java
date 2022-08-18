@@ -147,9 +147,11 @@ public class TaskController implements TaskApi {
         return new Result<>(dir + name);
     }
 
-    @Override public Result<Void> addTask(TaskParam taskParam, HttpServletResponse response) throws IOException, BusinessException {
+    @Override public Result<Void> addTask(TaskParam taskParam, HttpServletResponse response, LoginToken token)
+        throws IOException, BusinessException {
         TaskDO bo = new TaskDO();
         BeanUtils.copyProperties(taskParam, bo);
+        bo.setCreateUserId(token.getId());
         List<TargetExcelData> fial = taskService.addTask(bo, taskParam.getFilePath());
         if (!CollectionUtils.isEmpty(fial)) {
             response.setContentType("application/octet-stream");

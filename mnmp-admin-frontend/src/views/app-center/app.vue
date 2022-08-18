@@ -62,9 +62,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="enabled" label="应用状态">
-          <templat slot-scope="scope">
+          <template slot-scope="scope">
             <span>{{scope.row.enabled === 1 ? '启用' : '禁用'}}</span>
-          </templat>
+          </template>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column prop="updateTime" label="修改时间"   />

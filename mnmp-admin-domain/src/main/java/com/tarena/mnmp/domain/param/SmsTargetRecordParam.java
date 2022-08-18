@@ -17,15 +17,22 @@
 package com.tarena.mnmp.domain.param;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
+import java.util.List;
 import lombok.Data;
 
 @Data
 @ApiModel("任务发送记录查询模型")
 public class SmsTargetRecordParam extends PagerResult {
+
+    public SmsTargetRecordParam() {
+        super();
+        this.desc = true;
+    }
 
     @ApiModelProperty("手机号，该字段为精确搜索")
     private String eqTarget;
@@ -52,4 +59,13 @@ public class SmsTargetRecordParam extends PagerResult {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty("任务执行时间 时间格式 yyyy-MM-dd HH:mm:ss ")
     private Date endTriggerTime;
+
+    @ApiModelProperty("true: 降序, false:正序")
+    private Boolean desc;
+
+    @JsonIgnore
+    private Long createUserId;
+
+    @JsonIgnore
+    private List<String> appCodes;
 }

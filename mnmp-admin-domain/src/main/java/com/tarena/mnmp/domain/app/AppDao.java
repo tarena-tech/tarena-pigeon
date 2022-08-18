@@ -36,4 +36,6 @@ public interface AppDao {
     void enable(Long appId);
 
     Integer modify(AppDO appDO);
+
+    List<String> findAppCodesByCreateUserId(Long UserId);
 }

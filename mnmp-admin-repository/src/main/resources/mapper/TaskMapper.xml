@@ -226,6 +226,9 @@
             <if test="mock != null">
                 mock,
             </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null">
@@ -305,6 +308,9 @@
             </if>
             <if test="mock != null">
                 #{mock,jdbcType=INTEGER},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=BIGINT}
             </if>
         </trim>
     </insert>

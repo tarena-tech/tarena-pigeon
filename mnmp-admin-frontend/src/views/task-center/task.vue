@@ -110,13 +110,13 @@
           </template>
         </el-table-column>
         <el-table-column prop="taskStatus" label="当前状态">
-          <templat slot-scope="scope">
+          <template slot-scope="scope">
             <span v-if="scope.row.taskStatus === 0">未开启</span>
             <span v-if="scope.row.taskStatus === 1">推送中</span>
             <span v-if="scope.row.taskStatus === 2">终止</span>
             <span v-if="scope.row.taskStatus === 3">已结束</span>
             <span v-if="scope.row.taskStatus === 4">失败</span>
-          </templat>
+          </template>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="updateTime" label="更新时间"/>

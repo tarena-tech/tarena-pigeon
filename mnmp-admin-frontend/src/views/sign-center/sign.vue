@@ -44,9 +44,9 @@
         <el-table-column prop="appCode" label="应用编码" />
         <el-table-column prop="remarks" label="应用简介" />
         <el-table-column prop="enabled" label="应用状态">
-          <templat slot-scope="scope">
+          <template slot-scope="scope">
             <span>{{scope.row.enabled === 1 ? '启用' : '禁用'}}</span>
-          </templat>
+          </template>
         </el-table-column>
 
         <el-table-column prop="auditStatus" label="审核状态">

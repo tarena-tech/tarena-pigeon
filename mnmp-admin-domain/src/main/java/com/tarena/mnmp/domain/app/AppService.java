@@ -59,7 +59,6 @@ public class AppService {
             throw new BusinessException("100", "无权限");
         }
 
-
         if (Objects.equals(AuditStatus.WAITING.getStatus(), app.getAuditStatus())) {
             throw new BusinessException("100", "待审核状态下禁止修改");
         }
@@ -71,8 +70,6 @@ public class AppService {
 
         appDao.modify(save);
     }
-
-
 
     @Deprecated
     public void editApp(AppSaveParam appSaveParam) {
@@ -133,7 +130,7 @@ public class AppService {
         String name = app.getName();
 
         Asserts.isTrue(!Objects.equals(AuditStatus.PASS.getStatus(), app.getAuditStatus()),
-            new BusinessException("100","[" + name + "]应用审核未通过"));
+            new BusinessException("100", "[" + name + "]应用审核未通过"));
 
         Asserts.isTrue(!Objects.equals(Enabled.YES.getVal(), app.getEnabled()),
             new BusinessException("100", "[" + name + "]应用未启用"));
@@ -144,7 +141,7 @@ public class AppService {
         AppQueryParam param = new AppQueryParam();
         param.setName(save.getName());
         param.setExcludeId(appSaveParam.getId());
-        Long count  = appDao.queryCount(param);
+        Long count = appDao.queryCount(param);
         if (count > 0) {
             throw new BusinessException("100", "[" + save.getName() + "]应用名称重复");
         }
@@ -155,5 +152,9 @@ public class AppService {
         if (count > 0) {
             throw new BusinessException("100", "[" + save.getName() + "]应用编码重复");
         }
+    }
+
+    public List<String> appCodesByCreateUserId(Long userId) {
+        return appDao.findAppCodesByCreateUserId(userId);
     }
 }
