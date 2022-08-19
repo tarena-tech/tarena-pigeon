@@ -45,6 +45,7 @@
         hide-on-single-page
         @callback="getTabelData"
         :fit="true"
+        style="width: 100%"
       >
 
         <el-table-column prop="name" label="内务名称" />
@@ -67,20 +68,17 @@
         <el-table-column prop="cycleLvel" label="周期类型">
           <template slot-scope="scope">
             <span v-if="scope.row.cycleLevel === 0">分钟</span>
-            <span v-if="scope.row.cycleLevel === 1">小时</span>
-            <span v-if="scope.row.cycleLevel === 2">日</span>
-            <span v-if="scope.row.cycleLevel === 3">周</span>
-            <span v-if="scope.row.cycleLevel === 4">月</span>
-            <span v-if="scope.row.cycleLevel === 5">年</span>
-            <scan v-else>--</scan>
+            <span v-else-if="scope.row.cycleLevel === 1">小时</span>
+            <span v-else-if="scope.row.cycleLevel === 2">日</span>
+            <span v-else-if="scope.row.cycleLevel === 3">周</span>
+            <span v-else-if="scope.row.cycleLevel === 4">月</span>
+            <span v-else-if="scope.row.cycleLevel === 5">年</span>
+            <span v-else>--</span>
           </template>
         </el-table-column>
         <el-table-column prop="cycleNum" label="周期数">
           <template slot-scope="scope">
-            <span v-if="scope.row.cycleNum !== null">scope.row.cycleNum</span>
-            <span v-else>--</span>
-
-            <scan v-else>--</scan>
+            {{scope.row.cycleLevel || '--'}}
           </template>
         </el-table-column>
 <!--        <el-table-column prop="targetFileUrl" label="文件地址">-->
