@@ -31,7 +31,7 @@
         </el-form-item>
 
         <el-form-item label="拒绝意见" prop="auditResult" v-if="ruleForm.auditStatus === -1" :aria-disabled="true">
-          <el-input v-model="ruleForm.auditResult" type="textarea" />
+          <el-input v-model="ruleForm.auditResult" type="textarea" disabled />
         </el-form-item>
       </el-form>
       <div class="cus-drawer__footer">
