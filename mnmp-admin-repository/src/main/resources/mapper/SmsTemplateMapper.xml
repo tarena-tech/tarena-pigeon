@@ -247,8 +247,8 @@
                 and audit_status = #{auditStatus,jdbcType=INTEGER}
             </if>
 
-            <if test="enabled != null">
-                and enabled = #{enabled, jdbcType=TINYINT}
+            <if test="enable != null">
+                and enabled = #{enable, jdbcType=TINYINT}
             </if>
 
             <if test="templateCode != null and templateCode != ''">

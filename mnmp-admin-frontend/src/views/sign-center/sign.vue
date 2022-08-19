@@ -69,8 +69,12 @@
                        @click="showAudit(scope.row)" type="text" size="small" >
               审核
             </el-button>
-            <el-button  type="text" size="small" @click="save(scope.row)" v-if="scope.row.auditStatus !== 0">
+            <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role === 'ROLE_user' && scope.row.auditStatus !== 0">
               修改
+            </el-button>
+
+            <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role !== 'ROLE_user'">
+              查看
             </el-button>
           </template>
         </el-table-column>
