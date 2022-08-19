@@ -134,7 +134,9 @@ public class TemplateService {
     }
 
     public void doAuditSmsTemplate(SmsTemplateAuditParam param) throws BusinessException {
-        providerService.checkStatus(param.getProviderId());
+        if (Objects.equals(AuditStatus.PASS.getStatus(), param.getAuditStatus())) {
+            providerService.checkStatus(param.getProviderId());
+        }
 
         SmsTemplateDO bo = new SmsTemplateDO();
         bo.setId(param.getId());
