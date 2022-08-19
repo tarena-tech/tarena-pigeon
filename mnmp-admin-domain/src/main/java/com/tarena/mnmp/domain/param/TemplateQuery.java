@@ -39,7 +39,7 @@ public class TemplateQuery extends SimplePager {
     private Integer auditStatus;
 
     @ApiModelProperty(value = "是否可用 (0否 1是）")
-    private Integer enable;
+    private Integer enabled;
 
     @ApiModelProperty(value = "模板编码")
     private String templateCode;

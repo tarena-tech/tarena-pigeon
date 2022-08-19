@@ -253,7 +253,7 @@ export default {
     queryTemplates(param) {
       const params = {
         templateName: param,
-        enable: 1,
+        enabled: 1,
         auditStatus: 1,
         appendId: this.ruleForm.templateId
       }
