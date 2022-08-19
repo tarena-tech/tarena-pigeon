@@ -36,9 +36,10 @@
       </el-form-item>
 
       <el-form-item label="周期类型" v-if="cycleShow">
+        <el-input v-if="form.cycleLevel === 0" value="分钟" :disabled="true"></el-input>
         <el-input v-if="form.cycleLevel === 1" value="小时" :disabled="true"></el-input>
         <el-input v-if="form.cycleLevel === 2" value="日" :disabled="true"></el-input>
-        <el-input v-if="form.cycleLevel === 3" value="周</" :disabled="true"></el-input>
+        <el-input v-if="form.cycleLevel === 3" value="周" :disabled="true"></el-input>
         <el-input v-if="form.cycleLevel === 4" value="月" :disabled="true"></el-input>
         <el-input v-if="form.cycleLevel === 5" value="年" :disabled="true"></el-input>
       </el-form-item>
@@ -93,7 +94,7 @@
 
       <el-form-item>
         <el-button type="danger" size="small" @click="pre()">
-          关闭
+          返回
         </el-button>
       </el-form-item>
     </el-form>
@@ -120,7 +121,7 @@ export default {
       detail({ id: _id })
         .then(res => {
           this.form = res
-          if (res.taskType == 2) {
+          if (res.taskType === 2) {
             this.cycleShow = true
           }
         })

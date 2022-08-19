@@ -31,10 +31,10 @@
       </el-form-item>
 
       <el-form-item label="模板内容" prop="content">
-        <el-input v-model="ruleForm.content" type="textarea"/>
+        <el-input v-model="ruleForm.content" type="textarea" disabled/>
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input v-model="ruleForm.remark" type="textarea" :disabled="true"/>
+        <el-input v-model="ruleForm.remark" type="textarea" :disabled="true" disabled/>
       </el-form-item>
       <el-form-item label="审核描述" prop="auditResult">
         <el-input v-model="ruleForm.auditResult" autocomplete="on" type="textarea"></el-input>

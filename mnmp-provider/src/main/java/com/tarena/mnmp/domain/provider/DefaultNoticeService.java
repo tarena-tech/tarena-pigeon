@@ -18,7 +18,6 @@
 package com.tarena.mnmp.domain.provider;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
 import com.tarena.dispatcher.impl.DispatcherRegistry;

@@ -17,7 +17,6 @@
 
 package com.tarena.mnmp.api;
 
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.tarena.mnmp.protocol.BusinessException;
 
 public interface NoticeService {

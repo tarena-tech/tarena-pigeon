@@ -60,6 +60,10 @@ public class AppView {
     @ApiModelProperty(value = "应用更新时间")
     private Date updateTime;
 
+    @ApiModelProperty(value = "审核意见")
+    private String auditResult;
+
+
     @Ignore
     public static List<AppView> convert(List<AppDO> source) {
         List<AppView> list = new ArrayList<>();

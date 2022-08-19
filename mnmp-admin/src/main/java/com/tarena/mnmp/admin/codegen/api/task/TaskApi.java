@@ -129,6 +129,6 @@ public interface TaskApi {
     @PreAuthorize("hasAnyRole('admin','root','user')")
     void modify(@ApiParam(value = "更新任务", required = true) @Valid @RequestBody TaskParam taskParam);
 
-    @PutMapping("change/task/status")
+    @PostMapping("change/task/status")
     void changeTaskStatus(Long id) throws BusinessException;
 }

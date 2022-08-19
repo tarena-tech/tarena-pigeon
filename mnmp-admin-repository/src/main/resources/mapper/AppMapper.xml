@@ -17,17 +17,9 @@
     </resultMap>
 
     <sql id="AppAllFields">
-        id,
-        create_user_id,
-        code,
-        name,
-        leader,
-        team_members,
-        remarks,
-        audit_status,
-        enabled,
-        create_time,
-        update_time
+        notice_app.id,notice_app.create_user_id,notice_app.code,notice_app.`name`,notice_app.leader,notice_app.team_members,
+        notice_app.remarks,notice_app.enabled,notice_app.create_time,notice_app.update_time,notice_app.audit_status,
+        notice_app.audit_result
     </sql>
 
     <insert id="save" keyColumn="id" keyProperty="id" parameterType="com.tarena.mnmp.domain.AppDO" useGeneratedKeys="true">

@@ -53,7 +53,5 @@ public class AppDO {
         this.auditResult = null;
         this.auditStatus = null;
         this.enabled = null;
-        this.name = null;
-        this.code = null;
     }
 }

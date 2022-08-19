@@ -36,21 +36,18 @@ public class SentinelDataSourceInitFunc implements InitFunc {
     @Override public void init() throws Exception {
 
         String property = SentinelConfiguration.applicationContext.getEnvironment().getProperty("alibaba.sentinel.config.path");
-        System.out.println(property);
         Resource resource = new PathResource(property);
         File[] files = resource.getFile().listFiles();
         for (File file : files) {
             if ("FlowRule.json".equals(file.getName())) {
                 FileRefreshableDataSource<List<FlowRule>> sourceData = new FileRefreshableDataSource<>(
-                    file, source -> JSON.parseObject(source, new TypeReference<List<FlowRule>>() {
-                }));
+                    file, source -> JSON.parseObject(source, new TypeReference<List<FlowRule>>() { }));
 
                 FlowRuleManager.register2Property(sourceData.getProperty());
             }
             if ("ParamFlowRule.json".equals(file.getName())) {
                 FileRefreshableDataSource<List<ParamFlowRule>> sourceData = new FileRefreshableDataSource<>(
-                    file, source -> JSON.parseObject(source, new TypeReference<List<ParamFlowRule>>() {
-                }));
+                    file, source -> JSON.parseObject(source, new TypeReference<List<ParamFlowRule>>() { }));
                 ParamFlowRuleManager.register2Property(sourceData.getProperty());
             }
         }

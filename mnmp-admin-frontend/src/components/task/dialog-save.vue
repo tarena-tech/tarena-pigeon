@@ -122,7 +122,7 @@
 
         </el-form>
       </el-scrollbar>
-      <div class="cus-drawer__footer">
+      <div class="cus-drawer__footer" v-if="button">
         <el-button @click="cancelForm()">取 消</el-button>
         <el-button type="primary" :loading="loading" @click="submitForm()">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
       </div>
@@ -145,6 +145,7 @@ export default {
       dialogVisible: false,
       windowName: '创建',
       loading: false,
+      button: true,
       cycleShow: false,
       headers: {
         'Authorization': 'Bearer ' + store.getters.token
@@ -237,7 +238,11 @@ export default {
       })
     },
     querySigns(param) {
-      querySignList({name: param})
+      querySignList({
+        name: param,
+        enable: 1,
+        auditStatus: 1
+      })
         .then(res => {
           this.signs = res
         })
@@ -311,9 +316,11 @@ export default {
     },
     show(data) {
       this.dialogVisible = true
+      this.button = true
       this.ruleForm = {}
       if (data != null) {
         this.windowName = '修改'
+        this.button = false
         this.ruleForm = data
         if (this.ruleForm.taskType === 2) {
           this.cycleShow = true

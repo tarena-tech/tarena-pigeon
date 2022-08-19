@@ -77,21 +77,22 @@ public class TaskService {
     private String excelPath;
 
     public void doAudit(Long id, Integer status, String result) throws BusinessException {
-        TaskDO taskDO = taskDao.queryById(id);
-        if (null == taskDO) {
+        TaskDO task = taskDao.queryById(id);
+        if (null == task) {
             throw new BusinessException("100", "任务不存在");
         }
-        taskDO.setId(id);
-        taskDO.setAuditStatus(status);
-        taskDO.setAuditResult(result);
+        task.setId(id);
+        task.setAuditStatus(status);
+        task.setAuditResult(result);
         if (AuditStatus.REJECT.getStatus().intValue() == status) {
-            taskDao.update(taskDO);
+            taskDao.update(task);
             return;
         }
-
-        Date date = DateUtils.generateNextTriggerTime(taskDO.getCycleLevel(), taskDO.getCycleNum(), new Date());
-        taskDO.setNextTriggerTime(date);
-        taskDao.update(taskDO);
+        if (Objects.equals(SendType.CYCLE.getType(), task.getTaskType())) {
+            Date date = DateUtils.generateNextTriggerTime(task.getCycleLevel(), task.getCycleNum(), new Date());
+            task.setNextTriggerTime(date);
+        }
+        taskDao.update(task);
     }
 
     public List<TargetExcelData> addTask(TaskDO taskDO, String filePath) throws BusinessException {

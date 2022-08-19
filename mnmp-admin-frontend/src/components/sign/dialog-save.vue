@@ -42,6 +42,7 @@
 <script>
 import { save } from '@/api/sign'
 import { queryAppList } from '@/api/app'
+import store from "@/store";
 
 export default {
   name: 'DialogSignSave',
@@ -113,6 +114,12 @@ export default {
         this.windowName = '修改'
         this.ruleForm = data
         this.disabled = true
+        if (this.ruleForm.auditStatus === -1) {
+          this.disabled = false
+        }
+        if (store.state.user.role !== 'ROLE_user') {
+          this.disabled = true
+        }
       }
     },
     queryApps(param) {
