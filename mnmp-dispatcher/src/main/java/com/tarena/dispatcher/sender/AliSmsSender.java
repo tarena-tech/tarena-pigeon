@@ -26,7 +26,6 @@ import com.aliyun.dysmsapi20170525.models.QuerySendDetailsResponse;
 import com.aliyun.dysmsapi20170525.models.QuerySendDetailsResponseBody;
 import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
-import com.aliyun.dysmsapi20170525.models.SendSmsResponseBody;
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.bo.PhoneBizIdReceiptBO;
 import com.tarena.dispatcher.respository.TaskRepository;
