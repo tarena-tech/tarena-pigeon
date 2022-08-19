@@ -96,7 +96,7 @@ public class TemplateServiceTest {
         TemplateQuery query = new TemplateQuery();
         query.setAppCode("tmtc");
         query.setAuditStatus(1);
-        query.setEnabled(1);
+        query.setEnable(1);
         query.setTemplateCode("");
         query.setTemplateName("");
         query.setPageSize(10);
