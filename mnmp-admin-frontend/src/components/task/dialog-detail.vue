@@ -94,7 +94,7 @@
 
       <el-form-item>
         <el-button type="danger" size="small" @click="pre()">
-          关闭
+          返回
         </el-button>
       </el-form-item>
     </el-form>
