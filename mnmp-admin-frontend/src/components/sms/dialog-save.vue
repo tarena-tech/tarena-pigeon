@@ -35,7 +35,7 @@
             </template>
           </el-form-item>
 
-          <el-form-item label="供应商" prop="" v-if="$store.state.user.role !== 'ROLE_user'" :disabled="disabled">
+          <el-form-item label="供应商" prop="" v-if="false" :disabled="disabled">
             <template>
               <el-select :disabled="disabled" v-model="ruleForm.providerId" filterable placeholder="请选择" :filter-method="queryProviders">
                 <el-option v-for="item in providers" :key="item.id" :label="item.name" :value="item.id" />
@@ -48,6 +48,10 @@
           </el-form-item>
           <el-form-item label="备注" prop="remark">
             <el-input v-model="ruleForm.remark" type="textarea" />
+          </el-form-item>
+
+          <el-form-item label="审核意见" prop="auditResult" v-if="ruleForm.auditStatus === -1">
+            <el-input v-model="ruleForm.auditResult" type="textarea" disabled />
           </el-form-item>
 
         </el-form>
@@ -152,7 +156,11 @@ export default {
       if (data != null) {
         this.windowName = '修改'
         this.ruleForm = data
-        this.disabled = true
+        if (this.ruleForm.auditStatus === -1) {
+          this.disabled = false
+        } else {
+          this.disabled = true
+        }
       }
     },
     queryApps(param) {

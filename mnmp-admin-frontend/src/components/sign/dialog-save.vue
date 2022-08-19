@@ -113,6 +113,9 @@ export default {
         this.windowName = '修改'
         this.ruleForm = data
         this.disabled = true
+        if (this.ruleForm.auditStatus === -1) {
+          this.disabled = false
+        }
       }
     },
     queryApps(param) {

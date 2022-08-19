@@ -66,6 +66,9 @@ public class AppService {
 
         if (Objects.equals(AuditStatus.REJECT.getStatus(), app.getAuditStatus())) {
             save.setAuditStatus(AuditStatus.WAITING.getStatus());
+        } else {
+            save.setName(null);
+            save.setCode(null);
         }
 
         appDao.modify(save);

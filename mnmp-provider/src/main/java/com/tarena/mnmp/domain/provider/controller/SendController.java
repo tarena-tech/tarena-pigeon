@@ -18,7 +18,6 @@ package com.tarena.mnmp.domain.provider.controller;
 
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.NoticeService;
-import com.tarena.mnmp.domain.provider.DefaultNoticeService;
 import com.tarena.mnmp.enums.NoticeType;
 import com.tarena.mnmp.enums.SendType;
 import com.tarena.mnmp.protocol.BusinessException;
