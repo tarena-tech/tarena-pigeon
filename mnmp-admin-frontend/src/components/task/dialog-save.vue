@@ -238,7 +238,11 @@ export default {
       })
     },
     querySigns(param) {
-      querySignList({name: param})
+      querySignList({
+        name: param,
+        enable: 1,
+        auditStatus: 1
+      })
         .then(res => {
           this.signs = res
         })
