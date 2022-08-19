@@ -67,6 +67,11 @@ public class SignService {
         }
 
         sign.noChangeParam();
+
+        if (Objects.equals(AuditStatus.REJECT.getStatus(), signDetail.getAuditStatus())) {
+            sign.setAuditStatus(AuditStatus.WAITING.getStatus());
+        }
+
         signDao.modify(sign);
     }
 
