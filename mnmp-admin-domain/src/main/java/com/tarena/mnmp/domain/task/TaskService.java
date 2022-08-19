@@ -88,9 +88,13 @@ public class TaskService {
             taskDao.update(task);
             return;
         }
+        Date now = new Date();
         if (Objects.equals(SendType.CYCLE.getType(), task.getTaskType())) {
-            Date date = DateUtils.generateNextTriggerTime(task.getCycleLevel(), task.getCycleNum(), new Date());
+            Date date = DateUtils.generateNextTriggerTime(task.getCycleLevel(), task.getCycleNum(), now);
             task.setNextTriggerTime(date);
+        }
+        if (Objects.equals(SendType.IMMEDIATELY.getType(), task.getTaskType())) {
+            task.setNextTriggerTime(now);
         }
         taskDao.update(task);
     }
@@ -99,6 +103,9 @@ public class TaskService {
         if (Objects.equals(SendType.CYCLE.getType(), taskDO.getTaskType())) {
             Asserts.isTrue(null == taskDO.getCycleLevel(), new BusinessException("-1", "周期类型不能为空"));
             Asserts.isTrue(null == taskDO.getCycleNum(), new BusinessException("-1", "周期数量不能为空"));
+        }
+        if (Objects.equals(SendType.DELAY.getType(), taskDO.getTaskType())) {
+            Asserts.isTrue(null == taskDO.getNextTriggerTime(), new BusinessException("-1", "周期类型不能为空"));
         }
         // check
         appService.checkStatus(taskDO.getAppId());
