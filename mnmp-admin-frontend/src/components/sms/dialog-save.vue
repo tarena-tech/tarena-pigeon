@@ -58,7 +58,7 @@
       </el-scrollbar>
       <div class="cus-drawer__footer">
         <el-button @click="cancelForm()">取 消</el-button>
-        <el-button type="primary" :loading="loading" @click="submitForm()">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
+        <el-button v-if="!disabled" type="primary" :loading="loading" @click="submitForm()">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
       </div>
     </div>
   </el-drawer>

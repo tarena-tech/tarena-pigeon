@@ -57,6 +57,6 @@ public enum Role {
     }
 
     public static boolean executable(String role, Long ownId, Long curId) {
-        return manager(role) && Objects.equals(ownId, curId);
+        return manager(role) || Objects.equals(ownId, curId);
     }
 }
