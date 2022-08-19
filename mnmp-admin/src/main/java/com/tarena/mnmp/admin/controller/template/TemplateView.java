@@ -110,7 +110,7 @@ public class TemplateView {
     @ApiModelProperty(
         value = "创建人 id",
         name = "creator")
-    private Integer createUserId;
+    private Long createUserId;
 
     @ApiModelProperty(
         value = "创建用户名",

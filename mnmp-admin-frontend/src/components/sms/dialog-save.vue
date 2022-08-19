@@ -77,6 +77,7 @@ export default {
       windowName: '创建',
       loading: false,
       disabled: false,
+      createUserId: null,
       ruleForm: {
         name: null,
         code: null,
@@ -116,8 +117,8 @@ export default {
   mounted() {
     this.ruleForm = {}
     this.disabled = false
-    this.queryApps()
-    this.queryProviders()
+
+    // this.queryProviders()
   },
   methods: {
     handleClose(done) {
@@ -153,6 +154,7 @@ export default {
       this.dialogVisible = true
       this.ruleForm = {}
       this.disabled = false
+      this.createUserId = null
       if (data != null) {
         this.windowName = '修改'
         this.ruleForm = data
@@ -161,14 +163,19 @@ export default {
         } else {
           this.disabled = true
         }
+        this.createUserId = data.createUserId
       }
+      this.queryApps()
+
     },
     queryApps(param) {
+      console.log('111111111--', this.createUserId)
       queryAppList({
         name: param,
         enable: 1,
         auditStatus: 1,
-        appendId: this.ruleForm.appId
+        appendId: this.ruleForm.appId,
+        createUserId: this.createUserId
       }).then(res => {
         this.apps = res
       }).catch(err => {
