@@ -28,7 +28,7 @@
           </template>
         </el-form-item>
         <el-form-item label="描述" prop="remark">
-          <el-input v-model="ruleForm.remarks" type="textarea" />
+          <el-input v-model="ruleForm.remarks" type="textarea" :disabled="disabled" />
         </el-form-item>
       </el-form>
       <div class="cus-drawer__footer">
