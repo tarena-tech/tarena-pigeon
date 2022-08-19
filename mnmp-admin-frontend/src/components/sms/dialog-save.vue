@@ -117,8 +117,7 @@ export default {
   mounted() {
     this.ruleForm = {}
     this.disabled = false
-
-    // this.queryProviders()
+    this.queryApps()
   },
   methods: {
     handleClose(done) {
@@ -126,7 +125,7 @@ export default {
     },
     cancelForm() {
       this.loading = false
-      // this.dialogVisible = false
+      this.dialogVisible = false
       this.$refs.drawer.closeDrawer()
       this.$emit('refresh')
     },
@@ -163,19 +162,14 @@ export default {
         } else {
           this.disabled = true
         }
-        this.createUserId = data.createUserId
       }
-      this.queryApps()
-
     },
     queryApps(param) {
-      console.log('111111111--', this.createUserId)
       queryAppList({
         name: param,
         enable: 1,
         auditStatus: 1,
         appendId: this.ruleForm.appId,
-        createUserId: this.createUserId
       }).then(res => {
         this.apps = res
       }).catch(err => {
