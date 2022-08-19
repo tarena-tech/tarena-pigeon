@@ -44,15 +44,16 @@
         show-size
         hide-on-single-page
         @callback="getTabelData"
+        :fit="true"
       >
 
         <el-table-column prop="name" label="内务名称" />
-        <el-table-column prop="taskStatus" label="任务类型">
+        <el-table-column prop="taskType" label="任务类型">
           <template slot-scope="scope">
-            <span v-if="scope.row.taskStatus === 0">立即</span>
-            <span v-if="scope.row.taskStatus === 1">定时</span>
-            <span v-if="scope.row.taskStatus === 2">周期</span>
-            <span v-if="scope.row.taskStatus === 3">条件规则触发</span>
+            <span v-if="scope.row.taskType === 0">立即</span>
+            <span v-if="scope.row.taskType === 1">定时</span>
+            <span v-if="scope.row.taskType === 2">周期</span>
+            <span v-if="scope.row.taskType === 3">条件规则触发</span>
           </template>
         </el-table-column>
         <el-table-column prop="noticeType" label="消息类型">
@@ -71,36 +72,44 @@
             <span v-if="scope.row.cycleLevel === 3">周</span>
             <span v-if="scope.row.cycleLevel === 4">月</span>
             <span v-if="scope.row.cycleLevel === 5">年</span>
+            <scan v-else>--</scan>
           </template>
         </el-table-column>
-        <el-table-column prop="cycleNum" label="周期数" />
-        <el-table-column prop="targetFileUrl" label="文件地址">
-          <template slot-scope="scope" v-if="scope.row.targetFileUrl">
-            <i class="el-icon-download"  @click="downExcel(scope.row.targetFileUrl)"></i>
-          </template>
-        </el-table-column>
-
-        <el-table-column prop="error" label="描述">
+        <el-table-column prop="cycleNum" label="周期数">
           <template slot-scope="scope">
-            <el-popover v-if="scope.row.remark" trigger="hover" placement="top">
-              <p>{{ scope.row.remark }}</p>
-              <div slot="reference" class="name-wrapper">
-                <el-tag size="medium">描述</el-tag>
-              </div>
-            </el-popover>
-          </template>
-        </el-table-column>
+            <span v-if="scope.row.cycleNum !== null">scope.row.cycleNum</span>
+            <span v-else>--</span>
 
-        <el-table-column prop="error" label="错误日志">
-          <template slot-scope="scope">
-            <el-popover v-if="scope.row.error" trigger="hover" placement="top">
-              <p>{{ scope.row.error }}</p>
-              <div slot="reference" class="name-wrapper">
-                <el-tag size="medium">错误日志</el-tag>
-              </div>
-            </el-popover>
+            <scan v-else>--</scan>
           </template>
         </el-table-column>
+<!--        <el-table-column prop="targetFileUrl" label="文件地址">-->
+<!--          <template slot-scope="scope" v-if="scope.row.targetFileUrl">-->
+<!--            <i class="el-icon-download"  @click="downExcel(scope.row.targetFileUrl)"></i>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+
+<!--        <el-table-column prop="error" label="描述">-->
+<!--          <template slot-scope="scope">-->
+<!--            <el-popover v-if="scope.row.remark" trigger="hover" placement="top">-->
+<!--              <p>{{ scope.row.remark }}</p>-->
+<!--              <div slot="reference" class="name-wrapper">-->
+<!--                <el-tag size="medium">描述</el-tag>-->
+<!--              </div>-->
+<!--            </el-popover>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+
+<!--        <el-table-column prop="error" label="错误日志">-->
+<!--          <template slot-scope="scope">-->
+<!--            <el-popover v-if="scope.row.error" trigger="hover" placement="top">-->
+<!--              <p>{{ scope.row.error }}</p>-->
+<!--              <div slot="reference" class="name-wrapper">-->
+<!--                <el-tag size="medium">错误日志</el-tag>-->
+<!--              </div>-->
+<!--            </el-popover>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
 
         <el-table-column prop="auditStatus" label="审核状态">
           <template slot-scope="scope">
@@ -118,8 +127,10 @@
             <span v-if="scope.row.taskStatus === 4">失败</span>
           </template>
         </el-table-column>
+        <el-table-column prop="nextTriggerTime" label="下次触发时间"/>
+
         <el-table-column prop="createTime" label="创建时间"/>
-        <el-table-column prop="updateTime" label="更新时间"/>
+<!--        <el-table-column prop="updateTime" label="更新时间"/>-->
 
         <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">

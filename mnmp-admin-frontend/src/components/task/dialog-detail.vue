@@ -13,9 +13,9 @@
       </el-form-item>
 
       <el-form-item label="消息类型">
-        <el-input v-if="form.noticeType === 0" value="SMS" :disabled="true"></el-input>
-        <el-input v-if="form.noticeType === 1" value="EMAIL" :disabled="true"></el-input>
-        <el-input v-if="form.noticeType === 2" value="WECHAT" :disabled="true"></el-input>
+        <el-input v-if="form.noticeType === 1" value="SMS" :disabled="true"></el-input>
+        <el-input v-if="form.noticeType === 2" value="EMAIL" :disabled="true"></el-input>
+        <el-input v-if="form.noticeType === 3" value="WECHAT" :disabled="true"></el-input>
       </el-form-item>
 
       <el-form-item label="mock">

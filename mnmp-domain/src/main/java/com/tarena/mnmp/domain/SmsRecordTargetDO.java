@@ -49,7 +49,7 @@ public class SmsRecordTargetDO {
     /**
      * 消息发送状态 0发送给供应商失败 1发送给供应商成功 2发送给目标失败 3发送给目标成功
      */
-    private Byte status;
+    private Integer status;
 
     /**
      * 任务执行时间

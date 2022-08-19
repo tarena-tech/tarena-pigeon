@@ -76,7 +76,7 @@
             <el-popover v-if="scope.row.sendResult" trigger="hover" placement="top">
               <p>{{ scope.row.sendResult }}</p>
               <div slot="reference" class="name-wrapper">
-                <el-tag size="medium">目标参数</el-tag>
+                <el-tag size="medium">响应描述</el-tag>
               </div>
             </el-popover>
           </template>
@@ -87,7 +87,7 @@
             <el-popover v-if="scope.row.content" trigger="hover" placement="top">
               <p>{{ scope.row.content }}</p>
               <div slot="reference" class="name-wrapper">
-                <el-tag size="medium">目标参数</el-tag>
+                <el-tag size="medium">短信内容</el-tag>
               </div>
             </el-popover>
           </template>
