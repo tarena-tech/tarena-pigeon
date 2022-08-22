@@ -33,7 +33,7 @@ public class DollarPlaceholderReplacerTest {
         param.put("time", "2021");
         param.put("courseName", "语言");
 
-        String content = dollarPlaceholderReplacer.buildContent("hello hello  ${name} ", param);
+        String content = dollarPlaceholderReplacer.buildContent("{\"code\":hello:${name},time:${time}}", param);
         System.out.println(content);
     }
 }
