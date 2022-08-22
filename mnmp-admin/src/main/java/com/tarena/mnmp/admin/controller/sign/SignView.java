@@ -64,6 +64,9 @@ public class SignView {
     @ApiModelProperty("更新时间")
     private Date updateTime;
 
+    @ApiModelProperty("审核意见")
+    private String auditResult;
+
     @Ignore
     public static List<SignView> convert(List<SignDO> sources) {
         List<SignView> list = new ArrayList<>();

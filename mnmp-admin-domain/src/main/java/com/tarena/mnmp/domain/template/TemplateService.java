@@ -75,9 +75,12 @@ public class TemplateService {
         if (!Role.executable(token, detail.getCreateUserId())) {
             throw new BusinessException("100", "无权限");
         }
-
-
         template.noChangeParam();
+
+        if (Objects.equals(AuditStatus.REJECT.getStatus(), detail.getAuditStatus())) {
+            template.setAuditStatus(AuditStatus.WAITING.getStatus());
+        }
+
         smsTemplateDao.modify(template);
     }
 
@@ -134,7 +137,9 @@ public class TemplateService {
     }
 
     public void doAuditSmsTemplate(SmsTemplateAuditParam param) throws BusinessException {
-        providerService.checkStatus(param.getProviderId());
+        if (Objects.equals(AuditStatus.PASS.getStatus(), param.getAuditStatus())) {
+            providerService.checkStatus(param.getProviderId());
+        }
 
         SmsTemplateDO bo = new SmsTemplateDO();
         bo.setId(param.getId());

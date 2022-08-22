@@ -73,5 +73,8 @@ public class TaskParam {
     @ApiModelProperty(value = "是否是mock接口， 0：否， 1：是", required = true)
     private Integer mock;
 
+    @ApiModelProperty(value = "发送时间")
+    private Date nextTriggerTime;
+
 
 }

@@ -39,6 +39,21 @@
           <el-form-item label="任务类型" prop="taskType">
             <com-dict :val.sync="ruleForm.taskType" dict-name="taskType" :is-all="false" @change="taskType"/>
           </el-form-item>
+
+          <el-form-item label="发送时间" prop="nextTriggerTime" v-if="showSendTriggerTime">
+            <template>
+              <div class="block">
+                <el-date-picker
+                  v-model="ruleForm.nextTriggerTime"
+                  type="datetime"
+                  format="yyyy-MM-dd HH:mm:ss"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  placeholder="选择日期时间">
+                </el-date-picker>
+              </div>
+            </template>
+          </el-form-item>
+
           <el-form-item label="模板类型" prop="templateType">
             <com-dict :val.sync="ruleForm.templateType" dict-name="templateType" :is-all="false"/>
           </el-form-item>
@@ -147,6 +162,7 @@ export default {
       loading: false,
       button: true,
       cycleShow: false,
+      showSendTriggerTime: false,
       headers: {
         'Authorization': 'Bearer ' + store.getters.token
       },
@@ -192,18 +208,10 @@ export default {
         templateId: [
           {required: true, message: '请选择短信模板', trigger: 'blur'}
         ],
-        // cycleLevel: [
-        //   { required: true, message: '请选择周期类型', trigger: 'blur' }
-        // ],
-        // cycleNum: [
-        //   { required: true, message: '请选择周期数', trigger: 'blur' }
-        // ],
+
         filePath: [
           {required: true, message: '请选择上传文件', trigger: 'blur'}
         ],
-        // triggerEndTime: [
-        //   { required: true, message: '请选择结束时间', trigger: 'blur' }
-        // ],
         taskType: [
           {required: true, message: '请选择任务类型', trigger: 'blur'}
         ]
@@ -325,13 +333,21 @@ export default {
         if (this.ruleForm.taskType === 2) {
           this.cycleShow = true
         }
+        if (this.ruleForm.taskType === 1) {
+          this.showSendTriggerTime = true
+        }
       }
     },
     taskType(e) {
       if (e.value === 2) {
         this.cycleShow = true
-      } else {
+        this.showSendTriggerTime = false
+      } else if(e.value === 1) {
+        this.showSendTriggerTime = true
         this.cycleShow = false
+      }else {
+        this.cycleShow = false
+        this.showSendTriggerTime = false
       }
     }
   }

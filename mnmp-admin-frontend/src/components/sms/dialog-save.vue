@@ -47,7 +47,7 @@
             <el-input v-model="ruleForm.content" type="textarea" :disabled="disabled" />
           </el-form-item>
           <el-form-item label="备注" prop="remark">
-            <el-input v-model="ruleForm.remark" type="textarea" />
+            <el-input v-model="ruleForm.remark" type="textarea" :disabled="disabled" />
           </el-form-item>
 
           <el-form-item label="审核意见" prop="auditResult" v-if="ruleForm.auditStatus === -1">
@@ -58,7 +58,7 @@
       </el-scrollbar>
       <div class="cus-drawer__footer">
         <el-button @click="cancelForm()">取 消</el-button>
-        <el-button type="primary" :loading="loading" @click="submitForm()">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
+        <el-button v-if="!disabled" type="primary" :loading="loading" @click="submitForm()">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
       </div>
     </div>
   </el-drawer>
@@ -162,6 +162,9 @@ export default {
         } else {
           this.disabled = true
         }
+      }
+      if (store.state.user.role !== 'ROLE_user') {
+        this.disabled = true
       }
     },
     queryApps(param) {

@@ -36,7 +36,7 @@
       <el-form-item label="备注" prop="remark">
         <el-input v-model="ruleForm.remark" type="textarea" :disabled="true" disabled/>
       </el-form-item>
-      <el-form-item label="审核描述" prop="auditResult">
+      <el-form-item label="审核意见" prop="auditResult">
         <el-input v-model="ruleForm.auditResult" autocomplete="on" type="textarea"></el-input>
       </el-form-item>
     </el-form>

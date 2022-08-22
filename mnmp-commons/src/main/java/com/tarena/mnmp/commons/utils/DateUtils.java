@@ -27,7 +27,7 @@ public class DateUtils {
 
 
     public static Date generateNextTriggerTime(int cl, int clNum, Date nextTriggerTime) {
-        if (cl == 0) {
+        if (cl < 0) {
             return null;
         }
         final GregorianCalendar cal = new GregorianCalendar();

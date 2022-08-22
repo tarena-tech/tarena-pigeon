@@ -23,7 +23,7 @@
             <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
           </el-form-item>
         </div>
-        <div class="form-right-box">
+        <div class="form-right-box" v-if="$store.state.user.role === 'ROLE_user'">
           <el-button type="success" icon="el-icon-plus" @click="save(null)">新建</el-button>
         </div>
       </div>
@@ -69,8 +69,12 @@
                        @click="showAudit(scope.row)" type="text" size="small" >
               审核
             </el-button>
-            <el-button  type="text" size="small" @click="save(scope.row)" v-if="scope.row.auditStatus !== 0">
+            <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role === 'ROLE_user' && scope.row.auditStatus !== 0">
               修改
+            </el-button>
+
+            <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role !== 'ROLE_user'">
+              查看
             </el-button>
           </template>
         </el-table-column>

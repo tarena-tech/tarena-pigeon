@@ -57,7 +57,7 @@ public class SmsRecordTargetDO {
      *
      * 3发送给目标成功
      */
-    private Byte status;
+    private Integer status;
 
     /**
      * 任务执行时间

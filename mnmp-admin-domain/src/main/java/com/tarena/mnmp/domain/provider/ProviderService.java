@@ -122,7 +122,7 @@ public class ProviderService {
     public ProviderDO checkStatus(Long providerId) throws BusinessException {
         ProviderDO provider = queryProviderDetail(providerId);
         if (null == provider) {
-            throw new BusinessException("100", "提供商不存在");
+            throw new BusinessException("100", "请选择供应商");
         }
         String name = provider.getName();
         if (!Objects.equals(AuditStatus.PASS.getStatus(), provider.getAuditStatus())) {

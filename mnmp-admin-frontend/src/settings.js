@@ -136,10 +136,6 @@ module.exports = {
         value: 2,
         label: '周期'
       },
-      {
-        value: 3,
-        label: '条件规则触发'
-      }
     ],
     sendStatus: [
       {

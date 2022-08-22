@@ -24,7 +24,7 @@
             <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
           </el-form-item>
         </div>
-        <div class="form-right-box">
+        <div class="form-right-box" v-if="$store.state.user.role === 'ROLE_user'">
           <el-button type="success" icon="el-icon-plus"  @click="save(null)">新建</el-button>
         </div>
       </div>
@@ -77,8 +77,12 @@
             <el-button v-if="scope.row.auditStatus === 0 && $store.state.user.role !== 'ROLE_user'" @click="showAudit(scope.row.id)" type="text" size="small">
               审核
             </el-button>
-            <el-button  type="text" size="small" @click="save(scope.row)" v-if="scope.row.auditStatus !== 0">
+            <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role === 'ROLE_user' && scope.row.auditStatus !== 0">
               修改
+            </el-button>
+
+            <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role !== 'ROLE_user'">
+              查看
             </el-button>
           </template>
         </el-table-column>
@@ -159,7 +163,7 @@ export default {
     },
     changeStatus(_data) {
       const msg = _data.enabled === 1 ? '禁用' : '启用'
-      const str = '是否要' + msg + '【' + _data.name + '】'
+      const str = '是否要' + msg + '【' + _data.name + '】应用被禁用后,对应的模版,签名也会被禁用,对应的任务会随之结束'
       this.$confirm(str, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
