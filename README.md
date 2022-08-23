@@ -98,11 +98,35 @@ sh build
 
 ### 短信模版使用
 
-1. 在使用短信模版时,会存在模版内容配置一般是 ${code},当然模版内容一般是跟供应商申请的模版一致
-2. 举个例子我们跟供应商申请的短信验证码模版为: 你好,您的验证码为: 1234 其中这个1234就为 ${code}
-3. 所以我们在创建短信模版时模版内容写入${code}
-4. 然后就是发短信流程,我们需要新建个任务
-5. 新建任务时会下载个模版excel,target为目标手机号,第二个param就填写json形式的内容,我们此处举例为code,所以param内容为{"code":"1234"},当然我们这个例子不是很恰当,但是也应该可以说明使用的规则
+1. 例如用户在一些短信平台申请了一个通用模版
+
+2. 我们要发送的短信内容如下
+
+    `hello:${name},您于${time},有${courseName}课`
+
+3. 我们新建短信模版,模版内容如上
+
+4. 然后就是发短信流程,我们新建task任务
+
+5. 新建任务时会下载个模版excel,target为目标手机号,第二个param就填写json形式的内容
+
+6. json内容对应短信内容的三个字段, `{"name":"zhangsan","time":"2022-03-03 11:30","courseName":"语文课"}`
+
+7. 具体实现代码如下
+
+8. ```java
+    DollarPlaceholderReplacer dollarPlaceholderReplacer = new DollarPlaceholderReplacer();
+    Json json = new FastJson();
+    dollarPlaceholderReplacer.setJsonProvider(json);
+    Map<String, Object> param = new HashMap<>();
+    param.put("name", "zhangsan");
+    param.put("time", "2021-11-11");
+    param.put("courseName", "语文");
+    // content 是发个供应商的具体内容
+    String content = dollarPlaceholderReplacer.buildContent("{\"content\":\"hello:${name},您于${time}有					${courseName}课\"}", param);
+    ```
+
+    
 
 
 ### 分层领域模型规约定义
