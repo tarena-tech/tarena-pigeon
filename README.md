@@ -89,7 +89,15 @@ sh build
 2. 手机号每天发送次数限制
 3. QPS流控
 4. 并发流控
-##分层领域模型规约定义
+
+### 限流支持-[sentinel](https://github.com/alibaba/Sentinel)
+1. 项目采用sentinel流控框架,考虑成本因素,该系统默认使用json文件形式配置接口限流,使用者可自行扩展
+1. **provider**工程中使用限流,配置在application.yaml中的alibaba.sentinel.config.path配置
+1. 目前仅实现qps,并发和对手机号限流,限流文件可见**FlowRule.json**,**ParamFlowRule.json**
+1. 具体使用可见sentinel使用说明
+
+
+### 分层领域模型规约定义
 根据阿里工程架构规范，并结合实际应用场景，考虑代码的可读性，可维护性并满足迪米特原则的前提下，兼顾开发维护成本。将请求响应参数定义区分，详细明确分层模型定义。
 - 结果实体
   - service层以DO BO(DTO)结尾  

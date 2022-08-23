@@ -1,0 +1,18 @@
+[
+  {
+    "resource": "sendSms",
+    "controlBehavior": 0,
+    "count": 10000.0,
+    "grade": 1,
+    "strategy": 0,
+    "clusterMode": false
+  },
+  {
+    "resource": "sendSms",
+    "controlBehavior": 0,
+    "count": 10000.0,
+    "grade": 0,
+    "strategy": 0,
+    "clusterMode": false
+  }
+]
