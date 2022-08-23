@@ -144,7 +144,8 @@ public class AliSmsSender implements SmsSender {
             //"阿里云短信测试"
             .setSignName(smsTarget.getSignName())
             .setTemplateCode(this.aliTemplateCode)
-            .setTemplateParam("{\"code\":\"" + smsTarget.getContent() + "\"}");
+            .setTemplateParam("{\"content\":\"" + smsTarget.getContent() + "\"}");
+            //.setTemplateParam("{\"code\":\"" + smsTarget.getContent() + "\"}");
         SendSmsResponse sendResp = this.aliSmsClient.sendSms(sendReq);
         if (!Constant.OK.equals(sendResp.body.code)) {
             logger.error("错误信息: " + sendResp.body.message + "");

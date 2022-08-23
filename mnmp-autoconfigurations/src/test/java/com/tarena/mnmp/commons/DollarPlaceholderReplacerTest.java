@@ -30,10 +30,11 @@ public class DollarPlaceholderReplacerTest {
         dollarPlaceholderReplacer.setJsonProvider(json);
         Map<String, Object> param = new HashMap<>();
         param.put("name", "zhangsan");
-        param.put("time", "2021");
-        param.put("courseName", "语言");
+        param.put("time", "2021-11-11");
+        param.put("courseName", "语文");
+        System.out.println("template-parameters "+json.toString(param));
 
-        String content = dollarPlaceholderReplacer.buildContent("{\"code\":hello:${name},time:${time}}", param);
+        String content = dollarPlaceholderReplacer.buildContent("{\"content\":\"hello:${name},您于${time}有${courseName}课\"}", param);
         System.out.println(content);
     }
 }
