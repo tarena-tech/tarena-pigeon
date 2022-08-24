@@ -33,9 +33,11 @@ import com.tarena.mnmp.domain.sign.SignService;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.enums.AuditStatus;
 import com.tarena.mnmp.enums.Deleted;
+import com.tarena.mnmp.enums.Role;
 import com.tarena.mnmp.enums.SendType;
 import com.tarena.mnmp.enums.TaskStatus;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -75,27 +77,35 @@ public class TaskService {
     private String excelPath;
 
     public void doAudit(Long id, Integer status, String result) throws BusinessException {
-        TaskDO taskDO = taskDao.queryById(id);
-        if (null == taskDO) {
+        TaskDO task = taskDao.queryById(id);
+        if (null == task) {
             throw new BusinessException("100", "任务不存在");
         }
-        taskDO.setId(id);
-        taskDO.setAuditStatus(status);
-        taskDO.setAuditResult(result);
+        task.setId(id);
+        task.setAuditStatus(status);
+        task.setAuditResult(result);
         if (AuditStatus.REJECT.getStatus().intValue() == status) {
-            taskDao.update(taskDO);
+            taskDao.update(task);
             return;
         }
-
-        Date date = DateUtils.generateNextTriggerTime(taskDO.getCycleLevel(), taskDO.getCycleNum(), new Date());
-        taskDO.setNextTriggerTime(date);
-        taskDao.update(taskDO);
+        Date now = new Date();
+        if (Objects.equals(SendType.CYCLE.getType(), task.getTaskType())) {
+            Date date = DateUtils.generateNextTriggerTime(task.getCycleLevel(), task.getCycleNum(), now);
+            task.setNextTriggerTime(date);
+        }
+        if (Objects.equals(SendType.IMMEDIATELY.getType(), task.getTaskType())) {
+            task.setNextTriggerTime(now);
+        }
+        taskDao.update(task);
     }
 
     public List<TargetExcelData> addTask(TaskDO taskDO, String filePath) throws BusinessException {
         if (Objects.equals(SendType.CYCLE.getType(), taskDO.getTaskType())) {
             Asserts.isTrue(null == taskDO.getCycleLevel(), new BusinessException("-1", "周期类型不能为空"));
             Asserts.isTrue(null == taskDO.getCycleNum(), new BusinessException("-1", "周期数量不能为空"));
+        }
+        if (Objects.equals(SendType.DELAY.getType(), taskDO.getTaskType())) {
+            Asserts.isTrue(null == taskDO.getNextTriggerTime(), new BusinessException("-1", "周期类型不能为空"));
         }
         // check
         appService.checkStatus(taskDO.getAppId());
@@ -180,8 +190,10 @@ public class TaskService {
         taskDao.update(task);
     }
 
-    public PagerResult<TaskDO> queryListByPage(TaskQuery query) {
-
+    public PagerResult<TaskDO> queryListByPage(TaskQuery query, LoginToken token) {
+        if (!Role.manager(token.getRole())) {
+            query.setCreateUserId(token.getId());
+        }
         List<TaskDO> list = taskDao.queryList(query);
         Long count = taskDao.queryCount(query);
 

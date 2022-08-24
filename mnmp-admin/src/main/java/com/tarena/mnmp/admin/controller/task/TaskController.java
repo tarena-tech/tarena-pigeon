@@ -36,21 +36,21 @@ import com.tarena.mnmp.domain.task.TaskService;
 import com.tarena.mnmp.domain.task.TaskStatistics;
 import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.mnmp.protocol.Result;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.util.Streams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,6 +62,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @RestController
 public class TaskController implements TaskApi {
 
@@ -87,7 +88,7 @@ public class TaskController implements TaskApi {
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
-        response.setContentLength(is.available());
+        response.setHeader("Content-excelname", fileName);
         OutputStream os = response.getOutputStream();
         byte[] buff = new byte[1024];
         int i;
@@ -103,6 +104,7 @@ public class TaskController implements TaskApi {
                 ClassPathResource classPathResource = new ClassPathResource("target.xlsx");
                 InputStream stream = classPathResource.getInputStream();
                 export(response, stream, "target.xlsx");
+                log.info("file name: {}", classPathResource.getFilename());
                 return;
             } catch (IOException e) {
                 logger.error("读取resource文件异常", e);
@@ -145,33 +147,32 @@ public class TaskController implements TaskApi {
         return new Result<>(dir + name);
     }
 
-    @Override public void addTask(TaskParam taskParam, HttpServletResponse response) throws IOException, BusinessException {
+    @Override public Result<Void> addTask(TaskParam taskParam, HttpServletResponse response, LoginToken token)
+        throws IOException, BusinessException {
         TaskDO bo = new TaskDO();
         BeanUtils.copyProperties(taskParam, bo);
+        bo.setCreateUserId(token.getId());
+
+
         List<TargetExcelData> fial = taskService.addTask(bo, taskParam.getFilePath());
         if (!CollectionUtils.isEmpty(fial)) {
-            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setContentType("application/octet-stream");
             response.setCharacterEncoding("utf-8");
-            String fileName = URLEncoder.encode("非法数据", "UTF-8").replaceAll("\\+", "%20");
-            response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+            String fileName = "非法数据.xlsx";
+            response.setHeader("Content-excelname", fileName);
             EasyExcel.write(response.getOutputStream(), TargetExcelData.class).sheet().doWrite(fial);
         }
+        return Result.success();
     }
 
     @Override public void doAudit(AuditParam param) throws BusinessException {
         taskService.doAudit(param.getId(), param.getAuditStatus(), param.getAuditResult());
     }
 
-    @Override public PagerResult<TaskView> queryListByPage(TaskQuery taskQuery) {
-        PagerResult<TaskDO> res = taskService.queryListByPage(taskQuery);
-        List<TaskView> list = new ArrayList<>();
-        res.getList().forEach(task -> {
-            TaskView tv = new TaskView();
-            BeanUtils.copyProperties(task, tv);
-            list.add(tv);
-        });
+    @Override public PagerResult<TaskView> queryListByPage(TaskQuery taskQuery, LoginToken token) {
+        PagerResult<TaskDO> res = taskService.queryListByPage(taskQuery, token);
         PagerResult<TaskView> result = new PagerResult<>(taskQuery.getPageSize(), taskQuery.getCurrentPageIndex());
-        result.setList(list);
+        result.setList(TaskView.convert(res.getList()));
         result.setRecordCount(res.getRecordCount());
         return result;
     }

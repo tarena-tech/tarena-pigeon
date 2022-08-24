@@ -42,7 +42,9 @@ public class SignDO {
     private Integer auditStatus;
 
     private String auditResult;
+
     private Date createTime;
+
     private Date updateTime;
 
     public void noChangeParam() {

@@ -114,14 +114,11 @@ public class MnmpAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.setContext(securityContext);
             filterChain.doFilter(request, response);
         }
-
     }
 
     private boolean isLoginRequest(HttpServletRequest request) {
         return DEFAULT_PASS_LOGIN_REQUEST.matches(request);
     }
-
-    ;
 
     public String getRequestToken(HttpServletRequest request) {
         //从Authorization头里获得

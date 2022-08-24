@@ -16,6 +16,10 @@
  */
 package com.tarena.dispatcher.sender;
 
+import com.alibaba.csp.sentinel.Entry;
+import com.alibaba.csp.sentinel.EntryType;
+import com.alibaba.csp.sentinel.SphU;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.QuerySendDetailsRequest;
 import com.aliyun.dysmsapi20170525.models.QuerySendDetailsResponse;
@@ -132,17 +136,34 @@ public class AliSmsSender implements SmsSender {
     }
 
     @Override public String send(SmsTarget smsTarget) throws Exception {
+        limit(smsTarget.getAppCode(), "sendAppCodeLimit");
+        limit(smsTarget.getTarget(), "sendPhoneLimit");
+
         SendSmsRequest sendReq = new SendSmsRequest()
             .setPhoneNumbers(smsTarget.getTarget())
             //"阿里云短信测试"
             .setSignName(smsTarget.getSignName())
             .setTemplateCode(this.aliTemplateCode)
-            .setTemplateParam("{\"code\":\"" + smsTarget.getContent() + "\"}");
+            .setTemplateParam("{\"content\":\"" + smsTarget.getContent() + "\"}");
+            //.setTemplateParam("{\"code\":\"" + smsTarget.getContent() + "\"}");
         SendSmsResponse sendResp = this.aliSmsClient.sendSms(sendReq);
         if (!Constant.OK.equals(sendResp.body.code)) {
             logger.error("错误信息: " + sendResp.body.message + "");
             throw new BusinessException(ErrorCode.SEND_ALI_SMS_ERROR, sendResp.body.message);
         }
         return sendResp.body.bizId;
+    }
+
+    private void limit(String str, String name) throws BlockException {
+        Entry entry = null;
+        try {
+            entry = SphU.entry(name, EntryType.IN, 1, str);
+        } catch (BlockException ex) {
+            throw ex;
+        } finally {
+            if (entry != null) {
+                entry.exit(1, str);
+            }
+        }
     }
 }

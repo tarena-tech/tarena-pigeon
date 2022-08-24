@@ -104,5 +104,4 @@ public class Knife4jConfiguration {
             .version(version)
             .build();
     }
-
 }

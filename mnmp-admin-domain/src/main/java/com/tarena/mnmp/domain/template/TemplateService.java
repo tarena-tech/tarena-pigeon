@@ -35,7 +35,6 @@ import java.util.Optional;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 @Service
 public class TemplateService {
@@ -58,10 +57,10 @@ public class TemplateService {
 
         AppDO app = appService.checkStatus(template.getAppId());
         template.setAppCode(app.getCode());
-        providerService.checkStatus(template.getProviderId());
 
         Date now = new Date();
         if (null == template.getId()) {
+            template.setCreateUserId(token.getId());
             template.setDeleted(Deleted.NO.getVal());
             template.setEnabled(Enabled.YES.getVal());
             template.setAuditStatus(AuditStatus.WAITING.getStatus());
@@ -76,9 +75,12 @@ public class TemplateService {
         if (!Role.executable(token, detail.getCreateUserId())) {
             throw new BusinessException("100", "无权限");
         }
-
-
         template.noChangeParam();
+
+        if (Objects.equals(AuditStatus.REJECT.getStatus(), detail.getAuditStatus())) {
+            template.setAuditStatus(AuditStatus.WAITING.getStatus());
+        }
+
         smsTemplateDao.modify(template);
     }
 
@@ -134,7 +136,11 @@ public class TemplateService {
         return "ok";
     }
 
-    public void doAuditSmsTemplate(SmsTemplateAuditParam param) {
+    public void doAuditSmsTemplate(SmsTemplateAuditParam param) throws BusinessException {
+        if (Objects.equals(AuditStatus.PASS.getStatus(), param.getAuditStatus())) {
+            providerService.checkStatus(param.getProviderId());
+        }
+
         SmsTemplateDO bo = new SmsTemplateDO();
         bo.setId(param.getId());
         bo.setAuditStatus(param.getAuditStatus());

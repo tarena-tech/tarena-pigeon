@@ -17,9 +17,11 @@
 package com.tarena.mnmp.admin.codegen.api.record;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.controller.record.SmsTargetRecordView;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.param.SmsTargetRecordParam;
+import com.tarena.mnmp.protocol.LoginToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
@@ -44,5 +46,5 @@ public interface SmsTargetRecordApi {
     )
     @PostMapping(value = {"/query/page"})
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    PagerResult<SmsTargetRecordView> queryPage(@Valid @RequestBody SmsTargetRecordParam data);
+    PagerResult<SmsTargetRecordView> queryPage(@Valid @RequestBody SmsTargetRecordParam data, @User LoginToken token);
 }

@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.domain.provider;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
 import com.tarena.dispatcher.impl.DispatcherRegistry;
@@ -26,7 +27,9 @@ import com.tarena.mnmp.monitor.Monitor;
 import com.tarena.mnmp.protocol.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DefaultNoticeService implements NoticeService {
     private static Logger logger = LoggerFactory.getLogger(DefaultNoticeService.class);
     private Monitor monitor = new Monitor() {
@@ -36,8 +39,9 @@ public class DefaultNoticeService implements NoticeService {
         this.monitor = monitor;
     }
 
+
+    @SentinelResource(value = "sendSms", blockHandler = "exceptionHandler")
     @Override public void send(NoticeDTO notice) throws BusinessException {
-        this.monitor.noticeRequest(notice);
         NoticeEventGetter noticeEvent = TargetAssemblerRegistry.getInstance().assemble(notice);
         if (noticeEvent == null) {
             logger.error("notice event getter can't found taskId:{}", notice.getTaskId());
@@ -45,4 +49,5 @@ public class DefaultNoticeService implements NoticeService {
         }
         DispatcherRegistry.getInstance().dispatcher(noticeEvent);
     }
+
 }

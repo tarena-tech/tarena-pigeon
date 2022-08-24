@@ -18,6 +18,8 @@
 package com.tarena.mnmp.admin.codegen.api.task;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.github.xiaoymin.knife4j.annotations.Ignore;
+import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.controller.task.TaskParam;
 import com.tarena.mnmp.admin.controller.task.TaskView;
 import com.tarena.mnmp.domain.param.AuditParam;
@@ -25,6 +27,7 @@ import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.task.TaskQuery;
 import com.tarena.mnmp.domain.task.TaskStatistics;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.mnmp.protocol.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -73,7 +76,8 @@ public interface TaskApi {
         value = {"add"}
     )
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    void addTask(@Valid @RequestBody TaskParam taskParam, HttpServletResponse response) throws IOException, BusinessException;
+    Result<Void> addTask(@Valid @RequestBody TaskParam taskParam, @Ignore HttpServletResponse response,
+        @User LoginToken token) throws IOException, BusinessException;
 
     @ApiOperationSupport(order = 5003)
     @ApiOperation(
@@ -91,7 +95,7 @@ public interface TaskApi {
         value = {"/query/page"}
     )
     @PreAuthorize("hasAnyRole('admin','root','user')")
-    PagerResult<TaskView> queryListByPage(TaskQuery taskQuery);
+    PagerResult<TaskView> queryListByPage(TaskQuery taskQuery, @Ignore @User LoginToken token);
 
     @ApiOperationSupport(order = 5005)
     @ApiOperation(
@@ -125,6 +129,6 @@ public interface TaskApi {
     @PreAuthorize("hasAnyRole('admin','root','user')")
     void modify(@ApiParam(value = "更新任务", required = true) @Valid @RequestBody TaskParam taskParam);
 
-    @PutMapping("change/task/status")
+    @PostMapping("change/task/status")
     void changeTaskStatus(Long id) throws BusinessException;
 }

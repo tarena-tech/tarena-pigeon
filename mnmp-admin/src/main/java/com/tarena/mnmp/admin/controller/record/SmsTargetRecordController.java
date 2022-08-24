@@ -19,8 +19,11 @@ package com.tarena.mnmp.admin.controller.record;
 import com.tarena.mnmp.admin.codegen.api.record.SmsTargetRecordApi;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.domain.SmsRecordTargetDO;
+import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.domain.param.SmsTargetRecordParam;
 import com.tarena.mnmp.domain.record.SmsTargetRecordService;
+import com.tarena.mnmp.enums.Role;
+import com.tarena.mnmp.protocol.LoginToken;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,9 +34,16 @@ public class SmsTargetRecordController implements SmsTargetRecordApi {
     @Resource
     private  SmsTargetRecordService smsTargetRecordService;
 
-    @Override public PagerResult<SmsTargetRecordView> queryPage(SmsTargetRecordParam param) {
-        List<SmsRecordTargetDO> sources = smsTargetRecordService.queryList(param);
-        Long count = smsTargetRecordService.count(param);
+    @Resource
+    private AppService appService;
+
+    @Override public PagerResult<SmsTargetRecordView> queryPage(SmsTargetRecordParam param, LoginToken token) {
+        if (!Role.manager(token.getRole())) {
+            List<String> codes = appService.appCodesByCreateUserId(token.getId());
+            param.setAppCodes(codes);
+        }
+        List<SmsRecordTargetDO> sources = smsTargetRecordService.queryList(param, token);
+        Long count = smsTargetRecordService.count(param, token);
 
         PagerResult<SmsTargetRecordView> result = new PagerResult<>(param.getPageSize(), param.getCurrentPageIndex());
         result.setList(SmsTargetRecordView.convert(sources));

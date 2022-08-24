@@ -1,0 +1,12 @@
+[
+  {
+    "resource": "sendPhoneLimit",
+    "count": 1.0,
+    "paramIdx": 0
+  },
+  {
+    "resource": "sendAppCodeLimit",
+    "count": 1.0,
+    "paramIdx": 0
+  }
+]

@@ -91,7 +91,7 @@ public interface TemplateApi {
     )
     @PostMapping({"/sms/doAudit"})
     @PreAuthorize("hasAnyRole('admin','root')")
-    void doAuditSmsTemplate(@RequestBody SmsTemplateAuditParam param);
+    void doAuditSmsTemplate(@RequestBody SmsTemplateAuditParam param) throws BusinessException;
 
 //    @ApiOperationSupport(order = 4101)
 //    @ApiOperation(

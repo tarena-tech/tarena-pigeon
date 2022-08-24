@@ -23,7 +23,7 @@
             <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
           </el-form-item>
         </div>
-        <div class="form-right-box">
+        <div class="form-right-box" v-if="$store.state.user.role === 'ROLE_user'">
           <el-button type="success" icon="el-icon-plus" @click="save(null)">新建</el-button>
         </div>
       </div>
@@ -80,32 +80,34 @@
         </el-table-column>
 
         <el-table-column prop="enabled" label="应用状态">
-          <templat slot-scope="scope">
+          <template slot-scope="scope">
             <span>{{ scope.row.enabled === 1 ? '启用' : '禁用' }}</span>
-          </templat>
+          </template>
         </el-table-column>
 
         <el-table-column prop="createTime" label="创建时间" />
 
         <el-table-column label="操作" fixed="right">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="changeStatus(scope.row)">
+            <el-button type="text" size="small" @click="changeStatus(scope.row)" v-if="scope.row.auditStatus === 1">
               {{ scope.row.enabled === 1 ? '禁用' : '启用' }}
             </el-button>
             <el-button v-if="scope.row.auditStatus === 0 && $store.state.user.role !== 'ROLE_user'"
                        @click="showAudit(scope.row)" type="text" size="small">
               审核
             </el-button>
-            <el-button type="text" size="mini" @click="save(scope.row)" v-if="scope.row.auditStatus !== 0">
+
+            <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role === 'ROLE_user' && scope.row.auditStatus !== 0">
               修改
+            </el-button>
+
+            <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role !== 'ROLE_user'">
+              查看
             </el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
     </div>
-    <!-- 详情弹窗 -->
-    <dialog-sms-info ref="dialogSmsInfo"/>
-    <dialog-sms-info ref="dialogSmsInfo"/>
     <!-- 创建弹窗 -->
     <dialog-sms-save ref="DialogSmsSave" @refresh="refresh" />
     <dialog-sms-audit ref="DialogSmsAudit" @refresh="refresh" />

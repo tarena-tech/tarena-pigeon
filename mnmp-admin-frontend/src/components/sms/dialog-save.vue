@@ -35,7 +35,7 @@
             </template>
           </el-form-item>
 
-          <el-form-item label="供应商" prop="" v-if="$store.state.user.role !== 'ROLE_user'" :disabled="disabled">
+          <el-form-item label="供应商" prop="" v-if="false" :disabled="disabled">
             <template>
               <el-select :disabled="disabled" v-model="ruleForm.providerId" filterable placeholder="请选择" :filter-method="queryProviders">
                 <el-option v-for="item in providers" :key="item.id" :label="item.name" :value="item.id" />
@@ -44,17 +44,21 @@
           </el-form-item>
 
           <el-form-item label="模板内容" prop="content">
-            <el-input v-model="ruleForm.content" type="textarea" />
+            <el-input v-model="ruleForm.content" type="textarea" :disabled="disabled" />
           </el-form-item>
           <el-form-item label="备注" prop="remark">
-            <el-input v-model="ruleForm.remark" type="textarea" />
+            <el-input v-model="ruleForm.remark" type="textarea" :disabled="disabled" />
+          </el-form-item>
+
+          <el-form-item label="审核意见" prop="auditResult" v-if="ruleForm.auditStatus === -1">
+            <el-input v-model="ruleForm.auditResult" type="textarea" disabled />
           </el-form-item>
 
         </el-form>
       </el-scrollbar>
       <div class="cus-drawer__footer">
         <el-button @click="cancelForm()">取 消</el-button>
-        <el-button type="primary" :loading="loading" @click="submitForm()">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
+        <el-button v-if="!disabled" type="primary" :loading="loading" @click="submitForm()">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
       </div>
     </div>
   </el-drawer>
@@ -73,6 +77,7 @@ export default {
       windowName: '创建',
       loading: false,
       disabled: false,
+      createUserId: null,
       ruleForm: {
         name: null,
         code: null,
@@ -113,7 +118,6 @@ export default {
     this.ruleForm = {}
     this.disabled = false
     this.queryApps()
-    this.queryProviders()
   },
   methods: {
     handleClose(done) {
@@ -121,7 +125,7 @@ export default {
     },
     cancelForm() {
       this.loading = false
-      // this.dialogVisible = false
+      this.dialogVisible = false
       this.$refs.drawer.closeDrawer()
       this.$emit('refresh')
     },
@@ -149,9 +153,17 @@ export default {
       this.dialogVisible = true
       this.ruleForm = {}
       this.disabled = false
+      this.createUserId = null
       if (data != null) {
         this.windowName = '修改'
         this.ruleForm = data
+        if (this.ruleForm.auditStatus === -1) {
+          this.disabled = false
+        } else {
+          this.disabled = true
+        }
+      }
+      if (store.state.user.role !== 'ROLE_user') {
         this.disabled = true
       }
     },
@@ -160,7 +172,7 @@ export default {
         name: param,
         enable: 1,
         auditStatus: 1,
-        appendId: this.ruleForm.appId
+        appendId: this.ruleForm.appId,
       }).then(res => {
         this.apps = res
       }).catch(err => {

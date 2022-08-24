@@ -23,7 +23,7 @@
             <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
           </el-form-item>
         </div>
-        <div class="form-right-box">
+        <div class="form-right-box" v-if="$store.state.user.role === 'ROLE_user'">
           <el-button type="success" icon="el-icon-plus" @click="save(null)">新建</el-button>
         </div>
       </div>
@@ -44,9 +44,9 @@
         <el-table-column prop="appCode" label="应用编码" />
         <el-table-column prop="remarks" label="应用简介" />
         <el-table-column prop="enabled" label="应用状态">
-          <templat slot-scope="scope">
+          <template slot-scope="scope">
             <span>{{scope.row.enabled === 1 ? '启用' : '禁用'}}</span>
-          </templat>
+          </template>
         </el-table-column>
 
         <el-table-column prop="auditStatus" label="审核状态">
@@ -69,8 +69,12 @@
                        @click="showAudit(scope.row)" type="text" size="small" >
               审核
             </el-button>
-            <el-button  type="text" size="small" @click="save(scope.row)" v-if="scope.row.auditStatus !== 0">
+            <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role === 'ROLE_user' && scope.row.auditStatus !== 0">
               修改
+            </el-button>
+
+            <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role !== 'ROLE_user'">
+              查看
             </el-button>
           </template>
         </el-table-column>

@@ -130,7 +130,7 @@ public class TaskServiceTest {
         query.setPageSize(10);
         query.setCurrentPageIndex(1);
 
-        PagerResult<TaskDO> result = taskService.queryListByPage(query);
+        PagerResult<TaskDO> result = taskService.queryListByPage(query, null);
         logger.info("size:{}", result.getRecordCount());
     }
 

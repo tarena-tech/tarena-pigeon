@@ -16,10 +16,14 @@
  */
 package com.tarena.mnmp.admin.controller.task;
 
+import com.tarena.mnmp.domain.TaskDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 @Data
 @ApiModel("任务数据模型")
@@ -179,5 +183,19 @@ public class TaskView {
 
     @ApiModelProperty(value = "是否是mock，0：否， 1：是", required = true)
     private Integer mock;
+
+    public static List<TaskView> convert(List<TaskDO> sources) {
+        if (null == sources) {
+            return new ArrayList<>();
+        }
+
+        List<TaskView> list = new ArrayList<>(sources.size());
+        for (TaskDO source : sources) {
+            TaskView tv = new TaskView();
+            BeanUtils.copyProperties(source, tv);
+            list.add(tv);
+        }
+        return list;
+    }
 
 }

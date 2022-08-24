@@ -22,16 +22,18 @@ import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.dispatcher.impl.DispatcherRegistry;
 import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.TargetDTO;
+import com.tarena.mnmp.constant.Constant;
 import com.tarena.mnmp.enums.NoticeType;
 import com.tarena.mnmp.enums.Provider;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -41,12 +43,14 @@ public class DispatcherTest {
     private static SmsNoticeEvent assemble() throws Exception {
         NoticeDTO notice = new NoticeDTO();
         notice.setNoticeType(NoticeType.SMS);
+        notice.setTriggerTime(new SimpleDateFormat(Constant.DATE_FORMAT_MIN).format(new Date()));
         notice.setSignName("阿里云测试短信");
         notice.setTemplateCode("SMS_154950909");
         notice.setTemplateContent("1656");
         notice.setAppCode("TCTM");
+        notice.setMock(1);
         notice.setProviderCode(Provider.ALI_SMS.name());
-        List<String> strings = Arrays.asList("18510273063");
+        List<String> strings = Arrays.asList("18510273063","18510273066","18510273068");
         Map<String, Object> params = new HashMap<>();
         params.put("code", "1656");
         List<TargetDTO> targetDTOS = new ArrayList<>();

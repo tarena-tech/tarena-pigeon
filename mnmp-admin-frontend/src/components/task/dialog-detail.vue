@@ -6,16 +6,17 @@
       </el-form-item>
 
       <el-form-item label="任务状态">
-        <el-input v-if="form.taskStatus === 0" value="立即" :disabled="true"></el-input>
-        <el-input v-if="form.taskStatus === 1" value="定时" :disabled="true"></el-input>
-        <el-input v-if="form.taskStatus === 2" value="周期" :disabled="true"></el-input>
-        <el-input v-if="form.taskStatus === 3" value="条件规则触发" :disabled="true"></el-input>
+        <el-input v-if="form.taskStatus === 0" value="未开启" :disabled="true"></el-input>
+        <el-input v-if="form.taskStatus === 1" value="推送中" :disabled="true"></el-input>
+        <el-input v-if="form.taskStatus === 2" value="终止" :disabled="true"></el-input>
+        <el-input v-if="form.taskStatus === 3" value="已结束" :disabled="true"></el-input>
+        <el-input v-if="form.taskStatus === 4" value="失败" :disabled="true"></el-input>
       </el-form-item>
 
       <el-form-item label="消息类型">
-        <el-input v-if="form.noticeType === 0" value="SMS" :disabled="true"></el-input>
-        <el-input v-if="form.noticeType === 1" value="EMAIL" :disabled="true"></el-input>
-        <el-input v-if="form.noticeType === 2" value="WECHAT" :disabled="true"></el-input>
+        <el-input v-if="form.noticeType === 1" value="SMS" :disabled="true"></el-input>
+        <el-input v-if="form.noticeType === 2" value="EMAIL" :disabled="true"></el-input>
+        <el-input v-if="form.noticeType === 3" value="WECHAT" :disabled="true"></el-input>
       </el-form-item>
 
       <el-form-item label="mock">
@@ -35,15 +36,16 @@
         <el-input v-model="form.appName" :disabled="true"></el-input>
       </el-form-item>
 
-      <el-form-item label="周期类型">
+      <el-form-item label="周期类型" v-if="cycleShow">
+        <el-input v-if="form.cycleLevel === 0" value="分钟" :disabled="true"></el-input>
         <el-input v-if="form.cycleLevel === 1" value="小时" :disabled="true"></el-input>
         <el-input v-if="form.cycleLevel === 2" value="日" :disabled="true"></el-input>
-        <el-input v-if="form.cycleLevel === 3" value="周</" :disabled="true"></el-input>
+        <el-input v-if="form.cycleLevel === 3" value="周" :disabled="true"></el-input>
         <el-input v-if="form.cycleLevel === 4" value="月" :disabled="true"></el-input>
         <el-input v-if="form.cycleLevel === 5" value="年" :disabled="true"></el-input>
       </el-form-item>
 
-      <el-form-item label="周期数">
+      <el-form-item label="周期数" v-if="cycleShow">
         <el-input v-model="form.cycleNum" :disabled="true"></el-input>
       </el-form-item>
 
@@ -59,6 +61,15 @@
         <el-input v-model="form.triggerEndTime" :disabled="true"></el-input>
       </el-form-item>
 
+
+      <el-form-item label="描述" prop="remark">
+        <el-input v-model="form.remark" type="textarea" disabled/>
+      </el-form-item>
+
+      <el-form-item label="错误日志" prop="error">
+        <el-input v-model="form.error" type="textarea" disabled/>
+      </el-form-item>
+
       <el-form-item label="目标文件名称">
         <el-input v-model="form.targetFileName" :disabled="true"></el-input>
       </el-form-item>
@@ -69,47 +80,28 @@
         </template>
       </el-form-item>
 
-      <el-form-item label="描述">
-        <template slot-scope="scope">
-          <el-popover v-if="scope.row.remark" trigger="hover" placement="top">
-            <p>{{ scope.row.remark }}</p>
-            <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">描述</el-tag>
-            </div>
-          </el-popover>
-        </template>
-      </el-form-item>
-
-      <el-form-item label="错误日志">
-        <template slot-scope="scope">
-          <el-popover v-if="scope.row.error" trigger="hover" placement="top">
-            <p>{{ scope.row.error }}</p>
-            <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">错误日志</el-tag>
-            </div>
-          </el-popover>
-        </template>
-      </el-form-item>
-
       <el-form-item>
         <el-button type="danger" size="small" @click="pre()">
-          关闭
+          返回
         </el-button>
       </el-form-item>
     </el-form>
   </dev>
 </template>
 <script>
-import { detail } from '@/api/task.js'
+import {detail, downExcel} from '@/api/task.js'
+import {downloadFileByBlob} from "@/utils/download-file";
 export default {
   data() {
     return {
+      cycleShow: false,
       form: {
         id: null
       }
     }
   },
   mounted() {
+    this.cycleShow = false
     this.getDetail(this.$route.query.id)
   },
   methods: {
@@ -117,17 +109,18 @@ export default {
       detail({ id: _id })
         .then(res => {
           this.form = res
+          if (res.taskType === 2) {
+            this.cycleShow = true
+          }
         })
         .catch(err => {
           console.dir(err)
         })
     },
     downExcel(path) {
-      let url = process.env.VUE_APP_BASE_API + '/task/excel'
-      if (path) {
-        url += '?path=' + path
-      }
-      window.open(url)
+      downExcel({ path: path }, { responseType: 'blob' }).then(res => {
+        downloadFileByBlob(res.data, res.headers['content-excelname'], res.data.type)
+      })
     },
     pre() {
       this.$router.push({ name: 'task' })

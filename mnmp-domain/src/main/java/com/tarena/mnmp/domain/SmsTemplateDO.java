@@ -77,6 +77,7 @@ public class SmsTemplateDO {
         this.createUserId = null;
         this.createUserName = null;
         this.providerId = null;
+        this.content = null;
     }
 
 

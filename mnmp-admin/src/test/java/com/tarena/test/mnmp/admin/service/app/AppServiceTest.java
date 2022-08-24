@@ -25,6 +25,7 @@ import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.commons.utils.Asserts;
 import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.test.mnmp.admin.sql.app.AppSqlScript;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -78,7 +79,7 @@ public class AppServiceTest {
         appSaveParam.setLeader("ceshiwang");
         appSaveParam.setCode("CODE_TEST_001");
         assertDoesNotThrow(() -> {
-                appService.save(appSaveParam);
+                appService.save(appSaveParam, new LoginToken());
             }
         );
         logger.info("新增app应用测试业务层service成功");
@@ -144,7 +145,7 @@ public class AppServiceTest {
         param.setLeader("lisi");
         param.setTeamMembers("sadfsf,sfd,sfd");
         param.setRemarks("胜多负少");
-        appService.save(param);
+        appService.save(param, new LoginToken());
 
     }
 

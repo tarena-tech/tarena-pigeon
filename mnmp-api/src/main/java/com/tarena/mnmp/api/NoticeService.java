@@ -20,5 +20,6 @@ package com.tarena.mnmp.api;
 import com.tarena.mnmp.protocol.BusinessException;
 
 public interface NoticeService {
+
     void send(NoticeDTO notice) throws BusinessException;
 }

@@ -76,6 +76,7 @@ public class SmsTargetRecordView {
     @ApiModelProperty("修改时间")
     private Date updateTime;
 
+
     @Ignore
     public static List<SmsTargetRecordView> convert(List<SmsRecordTargetDO> sources) {
         if (null == sources) {
