@@ -28,7 +28,6 @@
         <module>mnmp-consumer</module>
         <module>mnmp-monitor</module>
         <module>mnmp-admin-domain</module>
-        <module>mnmp-admin-repository</module>
         <module>mnmp-protocol</module>
         <module>mnmp-rocketmq</module>
         <module>mnmp-autoconfigurations</module>
