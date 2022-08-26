@@ -18,10 +18,10 @@
 package com.tarena.dispatcher.impl;
 
 import com.tarena.dispatcher.NoticeDispatcher;
-import com.tarena.dispatcher.NoticeEvent;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.mnmp.constant.ErrorCode;
 import com.tarena.mnmp.protocol.BusinessException;
+import com.tarena.mnmp.protocol.NoticeEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +46,8 @@ public class DispatcherRegistry {
 
     public <T extends NoticeEventGetter> void dispatcher(T noticeEventWrap) throws BusinessException {
         NoticeEvent noticeEvent = noticeEventWrap.getNoticeEvent();
-        NoticeDispatcher noticeDispatcher = this.noticeDispatcherContainer.get(noticeEvent.getNoticeType().name().toLowerCase() + noticeEvent.getProvider());
+        String dispatcherKey = noticeEvent.getProvider();
+        NoticeDispatcher noticeDispatcher = this.noticeDispatcherContainer.get(dispatcherKey);
         if (noticeDispatcher == null) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "Notice Dispatcher not found. notice type=" + noticeEvent.getNoticeType().name() + "provider =" + noticeEvent.getProvider());
         }

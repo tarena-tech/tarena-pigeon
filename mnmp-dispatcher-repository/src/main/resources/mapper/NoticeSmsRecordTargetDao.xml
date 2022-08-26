@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tarena.dispatcher.storage.mapper.NoticeSmsRecordTargetDao">
+
+    <resultMap type="com.tarena.mnmp.domain.NoticeSmsRecordTargetDO" id="NoticeSmsRecordTargetMap">
+        <!--@Table notice_sms_record_target-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="appCode" column="app_code" jdbcType="VARCHAR"/>
+        <result property="taskId" column="task_id" jdbcType="BIGINT"/>
+        <result property="target" column="target" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="triggerTime" column="trigger_time" jdbcType="TIMESTAMP"/>
+        <result property="pushTime" column="push_time" jdbcType="TIMESTAMP"/>
+        <result property="bizId" column="biz_id" jdbcType="VARCHAR"/>
+        <result property="sendResult" column="send_result" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, app_code, task_id, target, content, `status`, trigger_time, push_time, push_receive_time,
+        biz_id, send_result, create_time, update_time
+    </sql>
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="NoticeSmsRecordTargetMap">
+        select
+        <include refid="Base_Column_List"/>
+        from notice_sms_record_target
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="taskId != null">
+                and task_id = #{taskId}
+            </if>
+            <if test="target != null and target != ''">
+                and target = #{target}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="triggerTime != null and triggerTime != ''">
+                and trigger_time = #{triggerTime}
+            </if>
+            <if test="pushTime != null">
+                and push_time = #{pushTime}
+            </if>
+            <if test="bizId != null and bizId != ''">
+                and biz_id = #{bizId}
+            </if>
+            <if test="sendResult != null and sendResult != ''">
+                and send_result = #{sendResult}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into notice_sms_record_target
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appCode != null">
+                app_code,
+            </if>
+            <if test="taskId != null">
+                task_id,
+            </if>
+            <if test="target != null">
+                target,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="triggerTime != null">
+                trigger_time,
+            </if>
+            <if test="pushTime != null">
+                push_time,
+            </if>
+            <if test="pushReceiveTime != null">
+                push_receive_time,
+            </if>
+            <if test="bizId != null">
+                biz_id,
+            </if>
+            <if test="sendResult != null">
+                send_result,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appCode != null">
+                #{appCode,jdbcType=VARCHAR},
+            </if>
+            <if test="taskId != null">
+                #{taskId,jdbcType=BIGINT},
+            </if>
+            <if test="target != null">
+                #{target,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="triggerTime != null">
+                #{triggerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pushTime != null">
+                #{pushTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pushReceiveTime != null">
+                #{pushReceiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bizId != null">
+                #{bizId,jdbcType=VARCHAR},
+            </if>
+            <if test="sendResult != null">
+                #{sendResult,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="batchUpdate">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update notice_sms_record_target
+            <set>
+                <if test="item.status != null">
+                    status = #{item.status},
+                </if>
+                <if test="item.receiveTime != null">
+                    push_receive_time = #{item.receiveTime},
+                </if>
+                <if test="item.sendResult != null">
+                    send_result = #{item.sendResult},
+                </if>
+                update_time =now()
+            </set>
+            where biz_id = #{item.bizId}
+        </foreach>
+    </update>
+
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update notice_sms_record_target
+        <set>
+            <if test="taskId != null">
+                task_id = #{taskId},
+            </if>
+            <if test="target != null and target != ''">
+                target = #{target},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="triggerTime != null and triggerTime != ''">
+                trigger_time = #{triggerTime},
+            </if>
+            <if test="pushTime != null">
+                push_time = #{pushTime},
+            </if>
+            <if test="bizId != null and bizId != ''">
+                biz_id = #{bizId},
+            </if>
+            <if test="sendResult != null and sendResult != ''">
+                send_result = #{sendResult},
+            </if>
+            update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
+

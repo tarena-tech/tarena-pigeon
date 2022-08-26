@@ -17,11 +17,16 @@
 
 package com.tarena.mnmp.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum TaskStatus {
     TASK_NO_OPEN(0, "PREPARING"),
     TASK_DOING(1, "PUSHING"),
     TASK_STOP(2, "STOP"),
-    TASK_END(3, "END");
+    TASK_END(3, "END"),
+    TASK_ERROR(4, "ERROR");
+
 
     private int status;
     private String description;
@@ -39,6 +44,13 @@ public enum TaskStatus {
             }
         }
         return null;
+    }
+
+    public static List<Integer> operable() {
+        List<Integer> list = new ArrayList<>();
+        list.add(TaskStatus.TASK_NO_OPEN.status());
+        list.add(TaskStatus.TASK_DOING.status());
+        return list;
     }
 
     public int status() {

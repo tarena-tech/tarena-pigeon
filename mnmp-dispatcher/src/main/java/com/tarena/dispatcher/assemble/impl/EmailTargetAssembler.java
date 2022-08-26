@@ -21,7 +21,9 @@ import com.tarena.dispatcher.DefaultNoticeEvent;
 import com.tarena.dispatcher.EmailTarget;
 import com.tarena.dispatcher.event.EmailNoticeEvent;
 import com.tarena.mnmp.api.NoticeDTO;
+import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.enums.NoticeType;
+import com.tarena.mnmp.enums.Provider;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,13 +36,20 @@ public class EmailTargetAssembler extends AbstractTargetAssembler<EmailNoticeEve
     @Override
     public EmailNoticeEvent assemble(NoticeDTO notice, Integer batchIndex) {
         EmailNoticeEvent emailNoticeWap = new EmailNoticeEvent();
-        DefaultNoticeEvent noticeEvent = new DefaultNoticeEvent(notice.getTaskId(), notice.getTriggerTime(), notice.getNoticeType(), "Ali", batchIndex, notice.getTargets().size());
+        DefaultNoticeEvent noticeEvent = new DefaultNoticeEvent(
+            notice.getTaskId(),
+            notice.getTriggerTime(),
+            notice.getNoticeType(),
+            Provider.ALI_EMAIL.name(),
+            batchIndex,
+            notice.getTargets().size(),
+            notice.getMock());
         emailNoticeWap.setNoticeEvent(noticeEvent);
-        List<String> targets = notice.getTargets();
+        List<TargetDTO> targets = notice.getTargets();
         List<EmailTarget> targetList = new ArrayList<>();
-        for (String target : targets) {
+        for (TargetDTO targetDto : targets) {
             EmailTarget emailTarget = new EmailTarget();
-            emailTarget.setTarget(target);
+            emailTarget.setTarget(targetDto.getTarget());
             targetList.add(emailTarget);
         }
         emailNoticeWap.setTargets(targetList);

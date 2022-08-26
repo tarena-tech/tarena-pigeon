@@ -17,25 +17,24 @@
 
 package com.tarena.dispatcher.respository;
 
-import com.tarena.dispatcher.event.EmailNoticeEvent;
 import com.tarena.dispatcher.SmsTarget;
+import com.tarena.dispatcher.bo.PhoneBizIdReceiptBO;
+import com.tarena.dispatcher.event.SmsNoticeEvent;
+import com.tarena.mnmp.enums.Provider;
 import com.tarena.mnmp.enums.TargetStatus;
+import com.tarena.mnmp.protocol.NoticeEvent;
+import java.util.List;
 
 public interface TargetLogRepository {
 
-    TargetStatus getSmsStatus(Integer taskId, String target);
+    TargetStatus getSmsStatus(NoticeEvent noticeEvent, String target);
 
-    TargetStatus getEmailStatus(Integer taskId, String target);
+    void newSuccessSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus, String bizId);
 
-    TargetStatus getWechatStatus(Integer taskId, String target);
+    void newFailSmsTarget(SmsNoticeEvent event, SmsTarget target, TargetStatus targetStatus, String errorMsg);
 
-    Integer modifySmsStatus(Integer taskId, String target, TargetStatus targetStatus);
+    List<PhoneBizIdReceiptBO> queryNotReceiptBizIds(Provider provider);
 
-    Integer modifyEmailStatus(Integer taskId, String target, TargetStatus targetStatus);
+    void modifyTargetReceiptStatus(Provider provider,List<PhoneBizIdReceiptBO> receiptedList);
 
-    Integer modifyWechatStatus(Integer taskId, String target, TargetStatus targetStatus);
-
-    void saveSmsTargetLog(Integer taskId, SmsTarget smsNoticeTarget);
-
-    void saveEmailTargetLog(Integer taskId, EmailNoticeEvent emailNoticeTarget);
 }

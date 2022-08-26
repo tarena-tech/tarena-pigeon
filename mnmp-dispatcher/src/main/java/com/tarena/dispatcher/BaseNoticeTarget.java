@@ -17,20 +17,15 @@
 
 package com.tarena.dispatcher;
 
-public class BaseNoticeTarget {
+import java.io.Serializable;
+
+public class BaseNoticeTarget implements Serializable {
     private String appCode;
-    private Long templateId;
     private String templateCode;
     private String templateParam;
     private String target;
-    private String clientIp;
-    private String serverIp;
-    private Long signId;
     private String signName;
-    private Long appId;
-    private Integer sendType;
-    private Long recordId;
-    private Long sendTimeAt;
+    private String content;
 
     public String getAppCode() {
         return appCode;
@@ -38,14 +33,6 @@ public class BaseNoticeTarget {
 
     public void setAppCode(String appCode) {
         this.appCode = appCode;
-    }
-
-    public Long getTemplateId() {
-        return templateId;
-    }
-
-    public void setTemplateId(Long templateId) {
-        this.templateId = templateId;
     }
 
     public String getTemplateCode() {
@@ -72,30 +59,6 @@ public class BaseNoticeTarget {
         this.target = target;
     }
 
-    public String getClientIp() {
-        return clientIp;
-    }
-
-    public void setClientIp(String clientIp) {
-        this.clientIp = clientIp;
-    }
-
-    public String getServerIp() {
-        return serverIp;
-    }
-
-    public void setServerIp(String serverIp) {
-        this.serverIp = serverIp;
-    }
-
-    public Long getSignId() {
-        return signId;
-    }
-
-    public void setSignId(Long signId) {
-        this.signId = signId;
-    }
-
     public String getSignName() {
         return signName;
     }
@@ -104,35 +67,11 @@ public class BaseNoticeTarget {
         this.signName = signName;
     }
 
-    public Long getAppId() {
-        return appId;
+    public String getContent() {
+        return content;
     }
 
-    public void setAppId(Long appId) {
-        this.appId = appId;
-    }
-
-    public Integer getSendType() {
-        return sendType;
-    }
-
-    public void setSendType(Integer sendType) {
-        this.sendType = sendType;
-    }
-
-    public Long getRecordId() {
-        return recordId;
-    }
-
-    public void setRecordId(Long recordId) {
-        this.recordId = recordId;
-    }
-
-    public Long getSendTimeAt() {
-        return sendTimeAt;
-    }
-
-    public void setSendTimeAt(Long sendTimeAt) {
-        this.sendTimeAt = sendTimeAt;
+    public void setContent(String content) {
+        this.content = content;
     }
 }

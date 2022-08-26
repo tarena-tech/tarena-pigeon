@@ -18,11 +18,11 @@
 package com.tarena.schedule.utils;
 
 import com.tarena.mnmp.enums.CycleLevel;
-import com.tarena.mnmp.enums.SendType;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 public class NoticeTaskTrigger implements Serializable {
     private static final long serialVersionUID = 514888347075282419L;
@@ -31,9 +31,13 @@ public class NoticeTaskTrigger implements Serializable {
      */
     private Long taskId;
     /**
+     * 消息类型
+     */
+    private Integer noticeType;
+    /**
      * 任务 发送类型
      */
-    private SendType sendType;
+    private Integer taskType;
     /**
      * 周期类型
      */
@@ -42,7 +46,10 @@ public class NoticeTaskTrigger implements Serializable {
      * 周期数
      */
     private Integer cycleNum;
-
+    /**
+     * 任务开始时间
+     */
+    private Date firstTriggerTime;
     /**
      * 任务结束时间
      */
@@ -51,6 +58,21 @@ public class NoticeTaskTrigger implements Serializable {
      * 下次任务触发时间
      */
     private Date nextTriggerTime;
+
+    /**
+     * 消息模板主表ID
+     */
+    private Long templateId;
+    /**
+     * 签名ID
+     */
+    private Long signId;
+    /**
+     * 所属应用
+     */
+    private Long appId;
+
+    private Integer mock;
 
     public Integer getCycleLevel() {
         return cycleLevel;
@@ -78,7 +100,7 @@ public class NoticeTaskTrigger implements Serializable {
 
     public boolean isFinish(Date nextTriggerTime) {
         //下次执行时间大于任务结束时间则任务结束
-        return this.triggerEndTime != null && this.nextTriggerTime.after(this.triggerEndTime);
+        return nextTriggerTime == null || nextTriggerTime.after(this.triggerEndTime);
     }
 
     public Long getTaskId() {
@@ -89,12 +111,52 @@ public class NoticeTaskTrigger implements Serializable {
         this.taskId = taskId;
     }
 
-    public SendType getSendType() {
-        return sendType;
+    public Integer getNoticeType() {
+        return noticeType;
     }
 
-    public void setSendType(SendType sendType) {
-        this.sendType = sendType;
+    public void setNoticeType(Integer noticeType) {
+        this.noticeType = noticeType;
+    }
+
+    public Integer getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(Integer taskType) {
+        this.taskType = taskType;
+    }
+
+    public Date getFirstTriggerTime() {
+        return firstTriggerTime;
+    }
+
+    public void setFirstTriggerTime(Date firstTriggerTime) {
+        this.firstTriggerTime = firstTriggerTime;
+    }
+
+    public Long getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(Long templateId) {
+        this.templateId = templateId;
+    }
+
+    public Long getSignId() {
+        return signId;
+    }
+
+    public void setSignId(Long signId) {
+        this.signId = signId;
+    }
+
+    public Long getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Long appId) {
+        this.appId = appId;
     }
 
     public Date getTriggerEndTime() {
@@ -105,7 +167,18 @@ public class NoticeTaskTrigger implements Serializable {
         this.triggerEndTime = triggerEndTime;
     }
 
+    public Integer getMock() {
+        return mock;
+    }
+
+    public void setMock(Integer mock) {
+        this.mock = mock;
+    }
+
     public Date generateNextTriggerTime() {
+        if (Objects.isNull(this.cycleLevel)) {
+            return null;
+        }
         final GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(this.nextTriggerTime);
         CycleLevel cycleLevel = CycleLevel.getInstance(this.cycleLevel);

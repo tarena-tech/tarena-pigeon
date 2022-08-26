@@ -26,9 +26,32 @@ public enum StatusRecord {
     /**
      * 被屏蔽(0)
      */
-    DISABLE,
+    DISABLE(0, "不启用"),
     /**
      * 可用(1)
      */
-    ENABLE
+    ENABLE(1, "启用");
+    private Integer status;
+    private String description;
+
+    StatusRecord(Integer status, String description) {
+        this.status = status;
+        this.description = description;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

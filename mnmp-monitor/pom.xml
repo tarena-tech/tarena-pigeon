@@ -31,7 +31,16 @@
         <dependency>
             <artifactId>mnmp-api</artifactId>
             <groupId>com.tarena.mnmp</groupId>
-            <version>1.0.0-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <artifactId>mnmp-commons</artifactId>
+            <groupId>com.tarena.mnmp</groupId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
     </dependencies>
 </project>

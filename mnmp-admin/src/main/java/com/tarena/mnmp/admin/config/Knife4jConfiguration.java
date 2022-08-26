@@ -40,43 +40,43 @@ public class Knife4jConfiguration {
     /**
      * 【重要】指定Controller包路径
      */
-    private String basePackage = "com.tarena.mnmp.admin.controller";
+    private final String basePackage = "com.tarena.mnmp.admin.controller";
     /**
      * 分组名称
      */
-    private String groupName = "admin";
+    private final String groupName = "admin";
     /**
      * 主机名
      */
-    private String host = "http://www.tedu.cn";
+    private final String host = "http://www.tedu.cn";
     /**
      * 标题
      */
-    private String title = "信鸽-达内集团开源消息中台(Message Notify Middle Platform)-后台管理";
+    private final String title = "信鸽-达内集团开源消息中台(Message Notify Middle Platform)-后台管理";
     /**
      * 简介
      */
-    private String description = "信鸽消息中台后台管理平台";
+    private final String description = "信鸽消息中台后台管理平台";
     /**
      * 服务条款URL
      */
-    private String termsOfServiceUrl = "http://www.apache.org/licenses/LICENSE-2.0";
+    private final String termsOfServiceUrl = "http://www.apache.org/licenses/LICENSE-2.0";
     /**
      * 联系人
      */
-    private String contactName = "Charlie Show";
+    private final String contactName = "Charlie Show";
     /**
      * 联系网址
      */
-    private String contactUrl = "http://www.tedu.cn";
+    private final String contactUrl = "http://www.tedu.cn";
     /**
      * 联系邮箱
      */
-    private String contactEmail = "xiaoxw@tedu.cn";
+    private final String contactEmail = "xiaoxw@tedu.cn";
     /**
      * 版本号
      */
-    private String version = "1.0.0-SNAPSHOT";
+    private final String version = "1.0.0-SNAPSHOT";
 
     @Autowired
     private OpenApiExtensionResolver openApiExtensionResolver;
@@ -104,5 +104,4 @@ public class Knife4jConfiguration {
             .version(version)
             .build();
     }
-
 }

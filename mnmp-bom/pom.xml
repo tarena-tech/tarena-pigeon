@@ -29,6 +29,20 @@
         <mnmp_commons_version>1.0.0-SNAPSHOT</mnmp_commons_version>
         <mnmp_api_version>1.0.0-SNAPSHOT</mnmp_api_version>
         <mnmp_dispacher_version>1.0.0-SNAPSHOT</mnmp_dispacher_version>
+        <mnmp_dispacher_repository_version>1.0.0-SNAPSHOT</mnmp_dispacher_repository_version>
+        <mnmp_admin_domin_version>1.0.0-SNAPSHOT</mnmp_admin_domin_version>
+        <mnmp_admin_repository_version>1.0.0-SNAPSHOT</mnmp_admin_repository_version>
+        <mnmp_api_version>1.0.0-SNAPSHOT</mnmp_api_version>
+        <mnmp_monitor_version>1.0.0-SNAPSHOT</mnmp_monitor_version>
+        <mnmp_protocol_version>1.0.0-SNAPSHOT</mnmp_protocol_version>
+        <mnmp_provider_version>1.0.0-SNAPSHOT</mnmp_provider_version>
+        <mnmp_rocketmq_version>1.0.0-SNAPSHOT</mnmp_rocketmq_version>
+        <mnmp_schedule_version>1.0.0-SNAPSHOT</mnmp_schedule_version>
+        <mnmp_configuration_version>1.0.0-SNAPSHOT</mnmp_configuration_version>
+        <mnmp_consumer_version>1.0.0-SNAPSHOT</mnmp_consumer_version>
+        <mnmp_domain_version>1.0.0-SNAPSHOT</mnmp_domain_version>
+
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Build Environment -->
         <maven.compile.source>1.8</maven.compile.source>
@@ -46,9 +60,12 @@
         <tomcat.plugin.version>2.2</tomcat.plugin.version>
         <jna.version>5.3.1</jna.version>
         <logback.version>1.2.9</logback.version>
-        <spring.framework.version>4.2.6.RELEASE</spring.framework.version>
+        <spring.framework.version>5.3.9</spring.framework.version>
+        <spring.boot.version>2.5.4</spring.boot.version>
+        <easyexcel.version>3.1.1</easyexcel.version>
+        <sentinel.version>1.8.5</sentinel.version>
+        <apache.commons.io.version>2.4</apache.commons.io.version>
     </properties>
-
 
 
     <licenses>
@@ -72,19 +89,69 @@
         <dependencies>
             <dependency>
                 <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-domain</artifactId>
+                <version>${mnmp_domain_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
                 <artifactId>mnmp-commons</artifactId>
                 <version>${mnmp_commons_version}</version>
             </dependency>
             <dependency>
-                    <artifactId>mnmp-api</artifactId>
-                    <groupId>com.tarena.mnmp</groupId>
-                    <version>${mnmp_api_version}</version>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-admin-domain</artifactId>
+                <version>${mnmp_admin_domin_version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-admin-repository</artifactId>
+                <version>${mnmp_admin_repository_version}</version>
+            </dependency>
+            <dependency>
+                <artifactId>mnmp-api</artifactId>
+                <groupId>com.tarena.mnmp</groupId>
+                <version>${mnmp_api_version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.tarena.mnmp</groupId>
                 <artifactId>mnmp-dispatcher</artifactId>
                 <version>${mnmp_dispacher_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-dispatcher-repository</artifactId>
+                <version>${mnmp_dispacher_repository_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-monitor</artifactId>
+                <version>${mnmp_monitor_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-protocol</artifactId>
+                <version>${mnmp_protocol_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-provider</artifactId>
+                <version>${mnmp_provider_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-rocketmq</artifactId>
+                <version>${mnmp_rocketmq_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-autoconfigurations</artifactId>
+                <version>${mnmp_configuration_version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tarena.mnmp</groupId>
+                <artifactId>mnmp-security</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
@@ -143,14 +210,156 @@
             </dependency>
 
             <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-            <version>2.4.3</version>
-        </dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.12.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.directory.studio</groupId>
+                <artifactId>org.apache.commons.io</artifactId>
+                <version>${apache.commons.io.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>2.4.3</version>
+            </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.framework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${spring.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-autoconfigure</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring.boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>2.0.8</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>2.2.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>3.4.5</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>2.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-validation</artifactId>
+                <version>2.5.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-core</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-web-servlet</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-transport-simple-http</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-annotation-aspectj</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-datasource-extension</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-parameter-flow-control</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.20</version>
+                <scope>compile</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

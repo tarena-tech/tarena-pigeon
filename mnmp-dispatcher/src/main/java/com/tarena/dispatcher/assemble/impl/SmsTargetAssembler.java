@@ -21,6 +21,7 @@ import com.tarena.dispatcher.DefaultNoticeEvent;
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.event.SmsNoticeEvent;
 import com.tarena.mnmp.api.NoticeDTO;
+import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.enums.NoticeType;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,13 +35,25 @@ public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> 
     @Override
     public SmsNoticeEvent assemble(NoticeDTO notice, Integer batchIndex) {
         SmsNoticeEvent smsNoticeEvent = new SmsNoticeEvent();
-        DefaultNoticeEvent noticeEvent = new DefaultNoticeEvent(notice.getTaskId(), notice.getTriggerTime(), notice.getNoticeType(), "Ali", batchIndex, notice.getTargets().size());
+        DefaultNoticeEvent noticeEvent = new DefaultNoticeEvent(
+            notice.getTaskId(),
+            notice.getTriggerTime(),
+            notice.getNoticeType(),
+            notice.getProviderCode(),
+            batchIndex,
+            notice.getTargets().size(),
+            notice.getMock());
         smsNoticeEvent.setNoticeEvent(noticeEvent);
-        List<String> targets = notice.getTargets();
+        List<TargetDTO> targets = notice.getTargets();
         List<SmsTarget> targetList = new ArrayList<>();
-        for (String target : targets) {
+        for (TargetDTO targetDto : targets) {
             SmsTarget smsTarget = new SmsTarget();
-            smsTarget.setTarget(target);
+            smsTarget.setTarget(targetDto.getTarget());
+            smsTarget.setSignName(notice.getSignName());
+            smsTarget.setAppCode(notice.getAppCode());
+            smsTarget.setTemplateCode(notice.getTemplateCode());
+            smsTarget.setTemplateParam("{\"code\":\"" + notice.getTemplateContent() + "\"}");
+            smsTarget.setContent(this.dollarPlaceholderReplacer.buildContent(notice.getTemplateContent(), targetDto.getParams()));
             targetList.add(smsTarget);
         }
         smsNoticeEvent.setTargets(targetList);

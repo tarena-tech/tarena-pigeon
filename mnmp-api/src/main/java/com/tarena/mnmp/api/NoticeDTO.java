@@ -17,21 +17,25 @@
 
 package com.tarena.mnmp.api;
 
+import com.tarena.mnmp.constant.Constant;
 import com.tarena.mnmp.enums.NoticeType;
 import com.tarena.mnmp.enums.SendType;
+import java.io.Serializable;
 import java.util.List;
 
-public class NoticeDTO {
-    private Long taskId;
+public class NoticeDTO implements Serializable {
+    private Long taskId = Constant.CLIENT_NOTICE_TYPE;
     private String triggerTime;
     private SendType sendType;
     private NoticeType noticeType;
     private String appCode;
     private String templateCode;
-    private String templateParam;
-    private List<String> targets;
+    private String templateContent;
+    private List<TargetDTO> targets;
     private String signCode;
     private String signName;
+    private String providerCode;
+    private Integer mock = 0;
 
     public SendType getSendType() {
         return sendType;
@@ -65,19 +69,19 @@ public class NoticeDTO {
         this.templateCode = templateCode;
     }
 
-    public String getTemplateParam() {
-        return templateParam;
+    public String getTemplateContent() {
+        return templateContent;
     }
 
-    public void setTemplateParam(String templateParam) {
-        this.templateParam = templateParam;
+    public void setTemplateContent(String templateContent) {
+        this.templateContent = templateContent;
     }
 
-    public List<String> getTargets() {
+    public List<TargetDTO> getTargets() {
         return targets;
     }
 
-    public void setTargets(List<String> targets) {
+    public void setTargets(List<TargetDTO> targets) {
         this.targets = targets;
     }
 
@@ -112,4 +116,22 @@ public class NoticeDTO {
     public void setTriggerTime(String triggerTime) {
         this.triggerTime = triggerTime;
     }
+
+    public Integer getMock() {
+        return mock;
+    }
+
+    public void setMock(Integer mock) {
+        this.mock = mock;
+    }
+
+    public String getProviderCode() {
+        return providerCode;
+    }
+
+    public void setProviderCode(String providerCode) {
+        this.providerCode = providerCode;
+    }
+
+
 }

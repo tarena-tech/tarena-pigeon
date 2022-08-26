@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tarena.mnmp.passport.dao.UserMapper">
+
+
+    <resultMap id="PassportResultMap" type="com.tarena.mnmp.passport.domain.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <collection property="authorities" ofType="String">
+            <result column="name"/>
+        </collection>
+    </resultMap>
+    <select id="findByUsername" resultMap="PassportResultMap">
+        select tu.id,tu.username,tu.password,tu.create_time,tu.update_time,tr.name from notice_user tu
+        inner join notice_user_role tur on tur.user_id=tu.id
+        inner join notice_role tr on tur.role_id=tr.id
+        where tu.username=#{username}
+    </select>
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.tarena.mnmp.passport.dao.UserDO">
+        insert into notice_user (username,password,create_time,update_time)
+        values (#{username},#{password},now(),now());
+    </insert>
+    <select id="countByUsername" resultType="int">
+        select count(*) from notice_user
+        where username=#{username}
+    </select>
+
+</mapper>
+

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tarena.mnmp.domain.sign.SignDao">
+
+    <resultMap type="com.tarena.mnmp.domain.SignDO" id="SignMap">
+        <!--@mbg.generated-->
+        <!--@Table notice_sms_sign-->
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="audit_status" jdbcType="BIGINT" property="auditStatus" />
+        <result column="app_id" jdbcType="INTEGER" property="appId" />
+        <result column="app_code" jdbcType="VARCHAR" property="appCode" />
+        <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+        <result column="enabled" jdbcType="BOOLEAN" property="enabled" />
+        <result column="creator" jdbcType="VARCHAR" property="creator" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="audit_result" jdbcType="VARCHAR" property="auditResult" />
+        <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+    </resultMap>
+    <sql id="SignAllFields">
+        <!--@mbg.generated-->
+        id, `name`, code, audit_status, app_id, app_code, remarks, enabled, creator, create_time,
+        update_time, audit_result,create_user_id
+    </sql>
+    <insert id="save">
+        <!--@mbg.generated-->
+        insert into notice_sms_sign
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="auditStatus != null">
+                audit_status,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="appCode != null">
+                app_code,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="true">
+                update_time,
+            </if>
+            <if test="auditResult != null">
+                audit_result,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="auditStatus != null">
+                #{auditStatus,jdbcType=BIGINT},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=INTEGER},
+            </if>
+            <if test="appCode != null">
+                #{appCode,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=BOOLEAN},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="true">
+                now(),
+            </if>
+            <if test="auditResult != null">
+                #{auditResult,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=BIGINT},
+            </if>
+        </trim>
+     </insert>
+    <select id="querySigns" resultMap="SignMap">
+        select
+            <include refid="SignAllFields"/>
+        from notice_sms_sign
+        <where>
+            <if test="auditStatus!=null">
+                audit_status=#{auditStatus}
+            </if>
+            <if test="name!=null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="appCode!=null">
+                and app_code like concat('%',#{appCode},'%')
+            </if>
+            <if test="enable != null">
+                and enabled = #{enable,jdbcType=INTEGER}
+            </if>
+            <if test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
+            </if>
+        </where>
+        <if test="desc != null and desc == true">
+            order by id desc
+        </if>
+        ${limitClause}
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Long">
+        select
+        count(1)
+        from notice_sms_sign
+        <where>
+            <if test="auditStatus!=null">
+                audit_status=#{auditStatus}
+            </if>
+            <if test="name!=null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="appCode!=null">
+                and app_code like concat('%',#{appCode},'%')
+            </if>
+            <if test="enable != null">
+                and enabled = #{enable,jdbcType=INTEGER}
+            </if>
+            <if test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAllApps" resultMap="SignMap">
+        select
+        <include refid="SignAllFields"/>
+        from notice_sms_sign
+    </select>
+    <select id="findById" resultMap="SignMap">
+        select
+        <include refid="SignAllFields"/>
+        from notice_sms_sign
+        where id=#{id}
+    </select>
+    <update id="disable">
+        update notice_sms_sign
+        set enabled=0,update_time=now()
+        where id = #{id}
+    </update>
+    <update id="enable">
+        update notice_sms_sign
+        set enabled=1,update_time=now()
+        where id = #{id}
+    </update>
+    <update id="modify">
+        <!--@mbg.generated-->
+        update notice_sms_sign
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="auditStatus != null">
+                audit_status = #{auditStatus,jdbcType=BIGINT},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=INTEGER},
+            </if>
+            <if test="appCode != null">
+                app_code = #{appCode,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=BOOLEAN},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="true">
+                update_time = now(),
+            </if>
+            <if test="auditResult != null">
+                audit_result = #{auditResult,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="changeEnableByAppId">
+        update  notice_sms_sign
+        set enabled = #{enable,jdbcType=INTEGER} , create_time = now()
+        where app_id = #{id,jdbcType=BIGINT} and enabled != #{enable,jdbcType=INTEGER}
+    </update>
+</mapper>
+

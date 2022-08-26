@@ -21,4 +21,10 @@ public class ErrorCode {
 
     public static final String SYSTEM_ERROR = "00000";
 
+    public static final String SEND_ALI_SMS_ERROR = "00001";
+
+    public static final String DISPATCHER_TASK_ERROR = "00002";
+
+    public static final String SCHEDULE_ERROR = "00003";
+
 }

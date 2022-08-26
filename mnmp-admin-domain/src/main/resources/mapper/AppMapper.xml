@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tarena.mnmp.domain.app.AppDao">
+
+    <resultMap type="com.tarena.mnmp.domain.AppDO" id="AppMap">
+        <!--@Table notice_app-->
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="leader" property="leader"/>
+        <result column="team_members" property="teamMembers"/>
+        <result column="remarks" property="remarks"/>
+        <result column="enabled" property="enabled"/>
+        <result column="audit_status" property="auditStatus"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="AppAllFields">
+        notice_app.id,notice_app.create_user_id,notice_app.code,notice_app.`name`,notice_app.leader,notice_app.team_members,
+        notice_app.remarks,notice_app.enabled,notice_app.create_time,notice_app.update_time,notice_app.audit_status,
+        notice_app.audit_result
+    </sql>
+
+    <insert id="save" keyColumn="id" keyProperty="id" parameterType="com.tarena.mnmp.domain.AppDO" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into notice_app
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="leader != null">
+                leader,
+            </if>
+            <if test="teamMembers != null">
+                team_members,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="true">
+                create_time,
+            </if>
+            <if test="true">
+                update_time,
+            </if>
+            <if test="auditStatus != null">
+                audit_status,
+            </if>
+            <if test="auditResult != null">
+                audit_result,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="leader != null">
+                #{leader,jdbcType=VARCHAR},
+            </if>
+            <if test="teamMembers != null">
+                #{teamMembers,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=TINYINT},
+            </if>
+            <if test="true">
+                now(),
+            </if>
+            <if test="true">
+                now(),
+            </if>
+            <if test="auditStatus != null">
+                #{auditStatus,jdbcType=BIGINT},
+            </if>
+            <if test="auditResult != null">
+                #{auditResult,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="queryByParam" resultMap="AppMap">
+        select
+        <include refid="AppAllFields"/>
+        from notice_app
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="enable != null">
+                and enabled = #{enable,jdbcType=INTEGER}
+            </if>
+            <if test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
+            </if>
+            <if test="excludeId != null">
+                and id != #{excludeId,jdbcType=BIGINT}
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
+            </if>
+        </where>
+        <if test="desc != null and desc == true">
+            order by id desc
+        </if>
+        ${limitClause}
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Long">
+        select
+        count(1)
+        from notice_app
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="enable != null">
+                and enabled = #{enable,jdbcType=INTEGER}
+            </if>
+            <if test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
+            </if>
+            <if test="excludeId != null">
+                and id != #{excludeId,jdbcType=BIGINT}
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="findById" resultMap="AppMap">
+        select
+        <include refid="AppAllFields"/>
+        from notice_app
+        where id=#{id}
+    </select>
+    <update id="disable">
+        update notice_app
+        set enabled=0,update_time=now()
+        where id = #{id}
+    </update>
+    <update id="enable">
+        update notice_app
+        set enabled=1,update_time=now()
+        where id = #{id}
+    </update>
+    <update id="modify">
+        update notice_app
+        <set>
+            <if test="code!=null">
+                code=#{code},
+            </if>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="leader!=null">
+                leader=#{leader},
+            </if>
+            <if test="teamMembers!=null">
+                team_members=#{teamMembers},
+            </if>
+            <if test="remarks!=null">
+                remarks=#{remarks},
+            </if>
+            <if test="auditStatus!=null">
+                audit_status=#{auditStatus},
+            </if>
+            <if test="auditResult != null and auditResult != ''">
+                audit_result = #{auditResult,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=INTEGER},
+            </if>
+            <if test="true">
+                update_time = now()
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="findAppCodesByCreateUserId" resultType="java.lang.String">
+        select code
+        from notice_app
+        where create_user_id = #{userId,jdbcType=BIGINT}
+
+
+    </select>
+</mapper>
+

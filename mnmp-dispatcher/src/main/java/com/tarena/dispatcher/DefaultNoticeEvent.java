@@ -18,6 +18,7 @@
 package com.tarena.dispatcher;
 
 import com.tarena.mnmp.enums.NoticeType;
+import com.tarena.mnmp.protocol.NoticeEvent;
 
 public class DefaultNoticeEvent implements NoticeEvent {
     private Long taskId;
@@ -26,15 +27,22 @@ public class DefaultNoticeEvent implements NoticeEvent {
     private String provider;
     private Integer batch;
     private Integer size;
+    private Integer mock;
 
-    public DefaultNoticeEvent(Long taskId, String triggerTime, NoticeType noticeType, String provider, Integer batch,
-        Integer size) {
+    public DefaultNoticeEvent(Long taskId,
+        String triggerTime,
+        NoticeType noticeType,
+        String provider,
+        Integer batch,
+        Integer size,
+        Integer mock) {
         this.taskId = taskId;
         this.triggerTime = triggerTime;
         this.noticeType = noticeType;
         this.provider = provider;
         this.batch = batch;
         this.size = size;
+        this.mock = mock;
     }
 
     public Integer batchIndex() {
@@ -59,5 +67,21 @@ public class DefaultNoticeEvent implements NoticeEvent {
 
     @Override public String getProvider() {
         return this.provider;
+    }
+
+    @Override public Integer getMock() {
+        return mock;
+    }
+
+    @Override public String toString() {
+        return "DefaultNoticeEvent{" +
+            "taskId=" + taskId +
+            ", triggerTime='" + triggerTime + '\'' +
+            ", noticeType=" + noticeType +
+            ", provider='" + provider + '\'' +
+            ", batch=" + batch +
+            ", size=" + size +
+            ", mock=" + mock +
+            '}';
     }
 }

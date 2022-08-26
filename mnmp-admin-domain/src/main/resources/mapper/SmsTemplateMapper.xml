@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tarena.mnmp.domain.template.SmsTemplateDao">
+    <resultMap id="BaseResultMap" type="com.tarena.mnmp.domain.SmsTemplateDO">
+        <!--@mbg.generated-->
+        <!--@Table notice_sms_template-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="template_type" jdbcType="TINYINT" property="templateType"/>
+        <result column="notice_type" jdbcType="TINYINT" property="noticeType"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="app_id" jdbcType="INTEGER" property="appId"/>
+        <result column="app_code" jdbcType="VARCHAR" property="appCode"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="audit_status" jdbcType="TINYINT" property="auditStatus"/>
+        <result column="audit_result" jdbcType="VARCHAR" property="auditResult"/>
+        <result column="enabled" jdbcType="TINYINT" property="enabled"/>
+        <result column="deleted" jdbcType="TINYINT" property="deleted"/>
+        <result column="use_count" jdbcType="INTEGER" property="useCount"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_user_id" jdbcType="BIGINT" property="createUserId"/>
+        <result column="create_user_name" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="provider_id" jdbcType="BIGINT" property="providerId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        code,
+        `name`,
+        template_type,
+        notice_type,
+        content,
+        app_id,
+        app_code,
+        remark,
+        audit_status,
+        audit_result,
+        enabled,
+        deleted,
+        use_count,
+        create_time,
+        update_time,
+        create_user_id,
+        create_user_name,
+        provider_id
+    </sql>
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from notice_sms_template
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <insert id="save">
+        <!--@mbg.generated-->
+        insert into notice_sms_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="templateType != null">
+                template_type,
+            </if>
+            <if test="noticeType != null">
+                notice_type,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="appCode != null">
+                app_code,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="auditStatus != null">
+                audit_status,
+            </if>
+            <if test="auditResult != null">
+                audit_result,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="useCount != null">
+                use_count,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+            <if test="createUserName != null">
+                create_user_name,
+            </if>
+            <if test="providerId != null">
+                provider_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="templateType != null">
+                #{templateType,jdbcType=TINYINT},
+            </if>
+            <if test="noticeType != null">
+                #{noticeType,jdbcType=TINYINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=INTEGER},
+            </if>
+            <if test="appCode != null">
+                #{appCode,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="auditStatus != null">
+                #{auditStatus,jdbcType=TINYINT},
+            </if>
+            <if test="auditResult != null">
+                #{auditResult,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=TINYINT},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="useCount != null">
+                #{useCount,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=BIGINT},
+            </if>
+            <if test="createUserName != null">
+                #{createUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="providerId != null">
+                #{providerId,jdbcType=BIGINT}
+            </if>
+        </trim>
+    </insert>
+    <update id="modify">
+        <!--@mbg.generated-->
+        update notice_sms_template
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="templateType != null">
+                template_type = #{templateType,jdbcType=TINYINT},
+            </if>
+            <if test="noticeType != null">
+                notice_type = #{noticeType,jdbcType=TINYINT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=INTEGER},
+            </if>
+            <if test="appCode != null">
+                app_code = #{appCode,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="auditStatus != null">
+                audit_status = #{auditStatus,jdbcType=TINYINT},
+            </if>
+            <if test="auditResult != null">
+                audit_result = #{auditResult,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=TINYINT},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="useCount != null">
+                use_count = #{useCount,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId,jdbcType=INTEGER},
+            </if>
+            <if test="createUserName != null">
+                create_user_name = #{createUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="providerId != null">
+                provider_id = #{providerId,jdbcType=BIGINT},
+            </if>
+            update_time = now()
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="queryTemplates" resultMap="BaseResultMap" parameterType="com.tarena.mnmp.domain.param.TemplateQuery">
+        select
+        <include refid="Base_Column_List"/>
+        from notice_sms_template
+        <where>
+            <if test="appCode != null and appCode != ''">
+                and app_code = #{appCode,jdbcType=VARCHAR}
+            </if>
+
+            <if test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
+            </if>
+
+            <if test="enable != null">
+                and enabled = #{enable, jdbcType=INTEGER}
+            </if>
+
+            <if test="templateCode != null and templateCode != ''">
+                and code = #{templateCode,jdbcType=VARCHAR}
+            </if>
+
+            <if test="templateName != null and templateName != ''">
+                and name like concat('%', #{templateName,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="true">
+                and deleted = 0
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
+            </if>
+        </where>
+        <if test="desc != null and desc == true">
+            group by id desc
+        </if>
+        ${limitClause};
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Long">
+        select
+        count(1)
+        from notice_sms_template
+        <where>
+            <if test="appCode != null and appCode != ''">
+                and app_code = #{appCode,jdbcType=VARCHAR}
+            </if>
+
+            <if test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
+            </if>
+
+            <if test="enable != null">
+                and enabled = #{enable, jdbcType=INTEGER}
+            </if>
+
+            <if test="templateCode != null and templateCode != ''">
+                and code = #{templateCode,jdbcType=VARCHAR}
+            </if>
+
+            <if test="templateName != null and templateName != ''">
+                and name = #{templateName,jdbcType=VARCHAR}
+            </if>
+            <if test="excludeId != null">
+                and id != #{excludeId,jdbcType=BIGINT}
+            </if>
+            <if test="true">
+                and deleted = 0
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <update id="changeEnableByAppId">
+        update notice_sms_template
+        set enabled = #{enable,jdbcType=INTEGER}, update_time = now()
+        where app_id = #{appId,jdbcType=BIGINT} and enabled != #{enable,jdbcType=INTEGER}
+    </update>
+
+    <update id="changeEnableByProviderId">
+        update notice_sms_template
+        set enabled = #{enabled,jdbcType=INTEGER}, update_time = now()
+        where provider_id = #{providerId,jdbcType=BIGINT} and enabled != #{enabled,jdbcType=INTEGER}
+    </update>
+</mapper>

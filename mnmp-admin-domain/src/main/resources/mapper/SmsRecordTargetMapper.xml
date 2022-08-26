@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tarena.mnmp.domain.record.SmsTargetRecordDao">
+    <resultMap id="BaseResultMap" type="com.tarena.mnmp.domain.SmsRecordTargetDO">
+        <!--@mbg.generated-->
+        <!--@Table notice_sms_record_target-->
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="app_code" jdbcType="VARCHAR" property="appCode" />
+        <result column="task_id" jdbcType="BIGINT" property="taskId" />
+        <result column="target" jdbcType="VARCHAR" property="target" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="trigger_time" jdbcType="TIMESTAMP" property="triggerTime" />
+        <result column="push_time" jdbcType="TIMESTAMP" property="pushTime" />
+        <result column="push_receive_time" jdbcType="TIMESTAMP" property="pushReceiveTime" />
+        <result column="biz_id" jdbcType="VARCHAR" property="bizId" />
+        <result column="send_result" jdbcType="VARCHAR" property="sendResult" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, app_code, task_id, target, content, `status`, trigger_time, push_time, push_receive_time,
+        biz_id, send_result, create_time, update_time
+    </sql>
+
+    <sql id="nsrt_column_list">
+        nsrt.id,nsrt.app_code,nsrt.task_id,nsrt.target,nsrt.content,nsrt.`status`,nsrt.trigger_time,nsrt.push_time,nsrt.push_receive_time,
+        nsrt.biz_id,nsrt.send_result,nsrt.create_time,nsrt.update_time
+    </sql>
+
+
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List" />
+        from notice_sms_record_target
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="save" keyColumn="id" keyProperty="id" parameterType="com.tarena.mnmp.domain.SmsRecordTargetDO" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into notice_sms_record_target
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appCode != null">
+                app_code,
+            </if>
+            <if test="taskId != null">
+                task_id,
+            </if>
+            <if test="target != null">
+                target,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="triggerTime != null">
+                trigger_time,
+            </if>
+            <if test="pushTime != null">
+                push_time,
+            </if>
+            <if test="pushReceiveTime != null">
+                push_receive_time,
+            </if>
+            <if test="bizId != null">
+                biz_id,
+            </if>
+            <if test="sendResult != null">
+                send_result,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appCode != null">
+                #{appCode,jdbcType=VARCHAR},
+            </if>
+            <if test="taskId != null">
+                #{taskId,jdbcType=BIGINT},
+            </if>
+            <if test="target != null">
+                #{target,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="triggerTime != null">
+                #{triggerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pushTime != null">
+                #{pushTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pushReceiveTime != null">
+                #{pushReceiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bizId != null">
+                #{bizId,jdbcType=VARCHAR},
+            </if>
+            <if test="sendResult != null">
+                #{sendResult,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="modify" parameterType="com.tarena.mnmp.domain.SmsRecordTargetDO">
+        <!--@mbg.generated-->
+        update notice_sms_record_target
+        <set>
+            <if test="appCode != null">
+                app_code = #{appCode,jdbcType=VARCHAR},
+            </if>
+            <if test="taskId != null">
+                task_id = #{taskId,jdbcType=BIGINT},
+            </if>
+            <if test="target != null">
+                target = #{target,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="triggerTime != null">
+                trigger_time = #{triggerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pushTime != null">
+                push_time = #{pushTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pushReceiveTime != null">
+                push_receive_time = #{pushReceiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bizId != null">
+                biz_id = #{bizId,jdbcType=VARCHAR},
+            </if>
+            <if test="sendResult != null">
+                send_result = #{sendResult,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="queryList" resultMap="BaseResultMap">
+        select
+        <include refid="nsrt_column_list" />
+        from notice_sms_record_target as nsrt
+        <if test="createUserId != null">
+            left join notice_app na on na.code = nsrt.app_code and na.create_user_id = #{createUserId,jdbcType=BIGINT}
+        </if>
+        <where>
+            <if test="eqTarget != null and eqTarget != ''">
+                nsrt.target = #{eqTarget,jdbcType=VARCHAR}
+            </if>
+            <if test="target != null and target != ''">
+                and nsrt.target like concat('%', #{target,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="taskId != null">
+                and nsrt.task_id = #{taskId,jdbcType=BIGINT}
+            </if>
+            <if test="bizId != null and bizId != ''">
+                and nsrt.biz_id = #{bizId,jdbcType=VARCHAR}
+            </if>
+            <if test="appCode != null and appCode != ''">
+                and nsrt.app_code = #{appCode,jdbcType=VARCHAR}
+            </if>
+            <if test="startTriggerTime != null and endTriggerTime != null">
+                and nsrt.trigger_time between  DATE_FORMAT(#{startTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s') and DATE_FORMAT(#{endTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="appCodes != null and appCodes.size() != 0">
+                and app_code in
+                <foreach collection="appCodes" index="index" item="item" open="(" close=")" separator=",">
+                    #{item,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+        </where>
+        <if test="desc != null and desc == true">
+            order by nsrt.id desc
+        </if>
+        ${limitClause}
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Long">
+        select
+            count(1)
+        from notice_sms_record_target as nsrt
+        <if test="createUserId != null">
+            left join notice_app na on na.code = nsrt.app_code and na.create_user_id = #{createUserId,jdbcType=BIGINT}
+        </if>
+        <where>
+            <if test="eqTarget != null and eqTarget != ''">
+                nsrt.target = #{eqTarget,jdbcType=VARCHAR}
+            </if>
+            <if test="target != null and target != ''">
+                and nsrt.target like concat('%', #{target,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="taskId != null">
+                and nsrt.task_id = #{taskId,jdbcType=BIGINT}
+            </if>
+            <if test="bizId != null and bizId != ''">
+                and nsrt.biz_id = #{bizId,jdbcType=VARCHAR}
+            </if>
+            <if test="appCode != null and appCode != ''">
+                and nsrt.app_code = #{appCode,jdbcType=VARCHAR}
+            </if>
+            <if test="startTriggerTime != null and endTriggerTime != null">
+                and nsrt.trigger_time between  DATE_FORMAT(#{startTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s') and DATE_FORMAT(#{endTriggerTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="appCodes != null and appCodes.size() != 0">
+                and app_code in
+                <foreach collection="appCodes" index="index" item="item" open="(" close=")" separator=",">
+                    #{item,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>

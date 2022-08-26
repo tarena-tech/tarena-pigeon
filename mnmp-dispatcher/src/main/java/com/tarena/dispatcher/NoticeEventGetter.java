@@ -17,6 +17,9 @@
 
 package com.tarena.dispatcher;
 
-public interface NoticeEventGetter {
+import com.tarena.mnmp.commons.mq.MQEvent;
+import com.tarena.mnmp.protocol.NoticeEvent;
+
+public interface NoticeEventGetter extends MQEvent {
     NoticeEvent getNoticeEvent();
 }
