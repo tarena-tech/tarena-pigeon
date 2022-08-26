@@ -149,3 +149,8 @@ sh build
   - service层Query结尾  
   - mananger层Query结尾  
   - dao层Query结尾  
+
+
+协作流程
+---
+![协作流程](document/flow.png)
