@@ -98,8 +98,7 @@ public class AliSmsSender implements SmsSender {
                 querySendDetailsRequest.setCurrentPage(1L);
                 querySendDetailsRequest.setPageSize(1L);
                 querySendDetailsRequest.setSendDate(DateFormatUtils.format(new Date(), Constant.DATE_FORMAT_YYYYMMDD));
-                QuerySendDetailsResponse querySendDetailsResponse =
-                    this.aliSmsClient.querySendDetails(querySendDetailsRequest);
+                QuerySendDetailsResponse querySendDetailsResponse = this.aliSmsClient.querySendDetails(querySendDetailsRequest);
                 QuerySendDetailsResponseBody querySendDetailsResponseBody = querySendDetailsResponse.getBody();
                 if (Constant.OK.equals(querySendDetailsResponseBody.getCode())) {
                     QuerySendDetailsResponseBody.QuerySendDetailsResponseBodySmsSendDetailDTOs querySendDetailsResponseBodySmsSendDetailDTOs = querySendDetailsResponseBody.getSmsSendDetailDTOs();
@@ -135,7 +134,7 @@ public class AliSmsSender implements SmsSender {
         return receiptedList;
     }
 
-    @Override public String send(SmsTarget smsTarget) throws BlockException, Exception {
+    @Override public String send(SmsTarget smsTarget) throws Exception {
 
         Entry appEntry = null;
         Entry phoneEntry = null;
@@ -155,16 +154,12 @@ public class AliSmsSender implements SmsSender {
                 phoneEntry.exit(1, smsTarget.getAppCode());
             }
         }
-
     }
 
     private SendSmsResponse doSend(SmsTarget smsTarget) throws Exception {
-        SendSmsRequest sendReq = new SendSmsRequest()
-            .setPhoneNumbers(smsTarget.getTarget())
+        SendSmsRequest sendReq = new SendSmsRequest().setPhoneNumbers(smsTarget.getTarget())
             //"阿里云短信测试"
-            .setSignName(smsTarget.getSignName())
-            .setTemplateCode(this.aliTemplateCode)
-            .setTemplateParam("{\"content\":\"" + smsTarget.getContent() + "\"}");
+            .setSignName(smsTarget.getSignName()).setTemplateCode(this.aliTemplateCode).setTemplateParam("{\"content\":\"" + smsTarget.getContent() + "\"}");
         SendSmsResponse sendResp = this.aliSmsClient.sendSms(sendReq);
         if (!Constant.OK.equals(sendResp.body.code)) {
             logger.error("错误信息: {}", sendResp.body.message);
@@ -172,6 +167,5 @@ public class AliSmsSender implements SmsSender {
         }
         return sendResp;
     }
-
 
 }
