@@ -1,5 +1,5 @@
 # tarena-pigeon
-信鸽-达内集团开源消息中台(Message Notify Middle Platform)
+信鸽-与非科技开源消息中台(Message Notify Middle Platform)
 
 # quick start
 ## maven build 
@@ -149,3 +149,8 @@ sh build
   - service层Query结尾  
   - mananger层Query结尾  
   - dao层Query结尾  
+
+
+协作流程
+---
+![协作流程](document/flow.png)

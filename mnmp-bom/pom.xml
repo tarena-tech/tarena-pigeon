@@ -31,7 +31,6 @@
         <mnmp_dispacher_version>1.0.0-SNAPSHOT</mnmp_dispacher_version>
         <mnmp_dispacher_repository_version>1.0.0-SNAPSHOT</mnmp_dispacher_repository_version>
         <mnmp_admin_domin_version>1.0.0-SNAPSHOT</mnmp_admin_domin_version>
-        <mnmp_admin_repository_version>1.0.0-SNAPSHOT</mnmp_admin_repository_version>
         <mnmp_api_version>1.0.0-SNAPSHOT</mnmp_api_version>
         <mnmp_monitor_version>1.0.0-SNAPSHOT</mnmp_monitor_version>
         <mnmp_protocol_version>1.0.0-SNAPSHOT</mnmp_protocol_version>
@@ -101,11 +100,6 @@
                 <groupId>com.tarena.mnmp</groupId>
                 <artifactId>mnmp-admin-domain</artifactId>
                 <version>${mnmp_admin_domin_version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.tarena.mnmp</groupId>
-                <artifactId>mnmp-admin-repository</artifactId>
-                <version>${mnmp_admin_repository_version}</version>
             </dependency>
             <dependency>
                 <artifactId>mnmp-api</artifactId>
@@ -355,7 +349,12 @@
                 <artifactId>sentinel-parameter-flow-control</artifactId>
                 <version>${sentinel.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.20</version>
+                <scope>compile</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <profiles>

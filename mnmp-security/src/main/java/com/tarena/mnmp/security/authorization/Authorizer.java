@@ -25,7 +25,7 @@ public interface Authorizer {
      * permitted somebody to access some resource
      *
      * @param user     current user
-     * @param resource  request resource (manu or command)
+     * @param resource request resource (manu or command)
      * @return
      * @throws
      */

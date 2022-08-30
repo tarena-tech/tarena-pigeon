@@ -36,20 +36,20 @@ public class JwtUtils {
     private static final String CLAIM_KEY_USERNAME = "SUB";
     private static final String CLAIM_KEY_CREATED = "CREATED";
 
-    public static LoginToken getLoginFromToken(String token,String secret,Long expiration){
+    public static LoginToken getLoginFromToken(String token, String secret, Long expiration) {
         //先解析荷载
         Claims claims = Jwts.parser()
             .setSigningKey(secret)
             .parseClaimsJws(token)
             .getBody();
-        String loginTokenJson=(String)claims.get(CLAIM_KEY_USERNAME);
-        if(isTokenExpired(claims)){
+        String loginTokenJson = (String) claims.get(CLAIM_KEY_USERNAME);
+        if (isTokenExpired(claims)) {
             return null;
-        };
+        }
         //对比ip地址
-        if(!StringUtils.isEmpty(loginTokenJson)){
-            return JSON.parseObject(loginTokenJson,LoginToken.class);
-        }else{
+        if (!StringUtils.isEmpty(loginTokenJson)) {
+            return JSON.parseObject(loginTokenJson, LoginToken.class);
+        } else {
             return null;
         }
     }
@@ -60,25 +60,27 @@ public class JwtUtils {
         return new Date().after(expiration);
     }
 
-    public static String generateToken(LoginToken loginToken,String secret,Long expiration){
+    public static String generateToken(LoginToken loginToken, String secret, Long expiration) {
         //准备jwt荷载对象claims,本质就是map,我们可以在里面自定义任意key和value
         Map<String, Object> claims = new HashMap<>();
         //存放日期时间
         claims.put(CLAIM_KEY_CREATED, new Date());
         //存放user对象
-        claims.put(CLAIM_KEY_USERNAME,JSON.toJSONString(loginToken));
-        return generateTokenFromClaim(claims,secret,expiration);
+        claims.put(CLAIM_KEY_USERNAME, JSON.toJSONString(loginToken));
+        return generateTokenFromClaim(claims, secret, expiration);
     }
-    private static String generateTokenFromClaim(Map<String, Object> claims,String secret,Long expiration) {
+
+    private static String generateTokenFromClaim(Map<String, Object> claims, String secret, Long expiration) {
         JwtBuilder builder = Jwts.builder().setClaims(claims).setExpiration(generateExpirationDate(claims, expiration))
             .signWith(SignatureAlgorithm.HS512, secret);
         return builder.compact();
     }
-    public static Date generateExpirationDate(Map<String, Object> claims,Long expiration){
+
+    public static Date generateExpirationDate(Map<String, Object> claims, Long expiration) {
         Date createTime = (Date) claims.get(CLAIM_KEY_CREATED);
-        Long createTimeMili=createTime.getTime();
-        Date expiredTime=new Date(createTimeMili+expiration);
-        logger.info("荷载生成过期时间:{}",expiredTime.toGMTString());
+        Long createTimeMili = createTime.getTime();
+        Date expiredTime = new Date(createTimeMili + expiration);
+        logger.info("荷载生成过期时间:{}", expiredTime.toGMTString());
         return expiredTime;
     }
 }
