@@ -41,7 +41,6 @@ import com.tarena.mnmp.monitor.Monitor;
 import com.tarena.mnmp.protocol.ProviderClientConfig;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.function.Function;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -66,12 +65,12 @@ public class DispatcherConfiguration {
     }
 
     @Bean
-    public LimitProperties limitProperties () {
+    public LimitProperties limitProperties() {
         return new LimitProperties();
     }
 
     @Bean
-    @ConditionalOnMissingBean({ RestOperations.class, RestTemplate.class })
+    @ConditionalOnMissingBean({RestOperations.class, RestTemplate.class})
     public RestTemplate restTemplate() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setReadTimeout(3000);
@@ -82,7 +81,6 @@ public class DispatcherConfiguration {
         restTemplate.getMessageConverters().add(wxMessageConverter);
         return restTemplate;
     }
-
 
     @Bean
     @ConditionalOnMissingBean(DollarPlaceholderReplacer.class)
@@ -180,7 +178,8 @@ public class DispatcherConfiguration {
     @Bean("aliSmsSender")
     @ConditionalOnMissingBean(AliSmsSender.class)
     @ConditionalOnBean({Client.class, TaskRepository.class, ProviderRepository.class})
-    public SmsSender aliSmsSender(Client smsAliClient, TaskRepository taskRepository, ProviderRepository providerRepository) {
+    public SmsSender aliSmsSender(Client smsAliClient, TaskRepository taskRepository,
+        ProviderRepository providerRepository) {
         ProviderClientConfig providerClientConfig = providerRepository.getClientConfig(this.dispatcherConfig.getSmsAliPigeonProviderCode());
         AliSmsSender sender = new AliSmsSender();
         sender.setAliTemplateCode(providerClientConfig.getDefaultTemplate());
@@ -192,7 +191,8 @@ public class DispatcherConfiguration {
     @Bean("hwSmsSender")
     @ConditionalOnMissingBean(HuaWeiSender.class)
     @ConditionalOnBean({HuanWeiSmsClient.class, TaskRepository.class, ProviderRepository.class})
-    public SmsSender hwSmsSender(HuanWeiSmsClient huanWeiSmsClient, TaskRepository taskRepository, ProviderRepository providerRepository) {
+    public SmsSender hwSmsSender(HuanWeiSmsClient huanWeiSmsClient, TaskRepository taskRepository,
+        ProviderRepository providerRepository) {
         ProviderClientConfig providerClientConfig = providerRepository.getClientConfig(this.dispatcherConfig.getSmsHwPigeonProviderCode());
         HuaWeiSender sender = new HuaWeiSender();
         sender.setHwTemplateCode(providerClientConfig.getDefaultTemplate());
@@ -200,6 +200,5 @@ public class DispatcherConfiguration {
         sender.setTaskRepository(taskRepository);
         return sender;
     }
-
 
 }

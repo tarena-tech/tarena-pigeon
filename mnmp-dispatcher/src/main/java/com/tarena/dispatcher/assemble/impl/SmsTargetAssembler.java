@@ -24,10 +24,7 @@ import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.enums.NoticeType;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
 public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> {
 
