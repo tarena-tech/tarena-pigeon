@@ -9,7 +9,6 @@ server:
       force: true
       charset: UTF-8
 spring:
-
   profiles:
     active: test
   jackson:
@@ -23,6 +22,24 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     hikari:
       minimum-idle: 1
+  redis:
+    host: dev-redis.tctm.life
+    port: 6379
+    password: "teduPMNlzjfDiaK"
+    database: 8
+    jedis:
+      pool:
+        max-active: 8
+        min-idle: 5
+        max-idle: 8
+        max-wait: PT15M
+        time-between-eviction-runs: PT15M
+
+
+limit:
+  app_day_count: 10
+  phone_count: 10
+
 knife4j:
   # 开启增强配置
   enable: true

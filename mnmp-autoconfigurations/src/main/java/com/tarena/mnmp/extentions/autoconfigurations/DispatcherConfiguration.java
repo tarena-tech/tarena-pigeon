@@ -27,6 +27,7 @@ import com.tarena.dispatcher.impl.HuanWeiSmsClient;
 import com.tarena.dispatcher.impl.SmsAliNoticeDispatcher;
 import com.tarena.dispatcher.impl.SmsHwNoticeDispatcher;
 import com.tarena.dispatcher.properties.DispatcherConfig;
+import com.tarena.dispatcher.properties.LimitProperties;
 import com.tarena.dispatcher.respository.ProviderRepository;
 import com.tarena.dispatcher.respository.TargetLogRepository;
 import com.tarena.dispatcher.respository.TaskRepository;
@@ -64,6 +65,10 @@ public class DispatcherConfiguration {
         this.dispatcherConfig = dispatcherConfig;
     }
 
+    @Bean
+    public LimitProperties limitProperties () {
+        return new LimitProperties();
+    }
 
     @Bean
     @ConditionalOnMissingBean({ RestOperations.class, RestTemplate.class })

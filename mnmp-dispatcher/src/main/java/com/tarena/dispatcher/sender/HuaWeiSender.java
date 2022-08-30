@@ -27,7 +27,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HuaWeiSender implements SmsSender {
+public class HuaWeiSender extends AroundSender implements SmsSender {
 
     private static Logger logger = LoggerFactory.getLogger(AliSmsSender.class);
 
@@ -49,6 +49,14 @@ public class HuaWeiSender implements SmsSender {
     }
 
     @Override public String send(SmsTarget smsTarget) throws Exception {
+        return super.aroundSend(smsTarget);
+    }
+
+    @Override public List<PhoneBizIdReceiptBO> fetchReceipt(List<PhoneBizIdReceiptBO> receipts) {
+        return new ArrayList<>();
+    }
+
+    @Override public String doSend(SmsTarget smsTarget) throws Exception {
         HwSmsReq req = new HwSmsReq();
         req.setTemplateCode(smsTarget.getTemplateCode());
         req.setTemplateParam(smsTarget.getTemplateParam());
@@ -62,7 +70,4 @@ public class HuaWeiSender implements SmsSender {
         throw new BusinessException("100", "短信发送失败");
     }
 
-    @Override public List<PhoneBizIdReceiptBO> fetchReceipt(List<PhoneBizIdReceiptBO> receipts) {
-        return new ArrayList<>();
-    }
 }
