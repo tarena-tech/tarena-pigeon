@@ -4,9 +4,9 @@ my:
 spring:
   # 数据源配置
   datasource:
-    url: jdbc:mysql://${my.server.addr}:3316/tarena_pigeon?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
-    username: pigeon_user
-    password: PigeonPas$8x
+    url: jdbc:mysql://10.0.0.43:3306/tarena_pigeon?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: root
+    password: tarena2017Up;
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 1
@@ -18,7 +18,7 @@ jwt:
   expiration: 60000000
 
 rocket:
-  name_server_address: 192.168.195.203:9876
+  name_server_address: 10.0.0.43:9876
   message_charset: UTF-8
   publish_debug: true
   topic: mnmp_test
