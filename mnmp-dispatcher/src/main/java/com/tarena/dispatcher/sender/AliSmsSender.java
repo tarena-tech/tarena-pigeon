@@ -98,8 +98,7 @@ public class AliSmsSender implements SmsSender {
                 querySendDetailsRequest.setCurrentPage(1L);
                 querySendDetailsRequest.setPageSize(1L);
                 querySendDetailsRequest.setSendDate(DateFormatUtils.format(new Date(), Constant.DATE_FORMAT_YYYYMMDD));
-                QuerySendDetailsResponse querySendDetailsResponse =
-                    this.aliSmsClient.querySendDetails(querySendDetailsRequest);
+                QuerySendDetailsResponse querySendDetailsResponse = this.aliSmsClient.querySendDetails(querySendDetailsRequest);
                 QuerySendDetailsResponseBody querySendDetailsResponseBody = querySendDetailsResponse.getBody();
                 if (Constant.OK.equals(querySendDetailsResponseBody.getCode())) {
                     QuerySendDetailsResponseBody.QuerySendDetailsResponseBodySmsSendDetailDTOs querySendDetailsResponseBodySmsSendDetailDTOs = querySendDetailsResponseBody.getSmsSendDetailDTOs();
@@ -136,34 +135,37 @@ public class AliSmsSender implements SmsSender {
     }
 
     @Override public String send(SmsTarget smsTarget) throws Exception {
-        limit(smsTarget.getAppCode(), "sendAppCodeLimit");
-        limit(smsTarget.getTarget(), "sendPhoneLimit");
 
-        SendSmsRequest sendReq = new SendSmsRequest()
-            .setPhoneNumbers(smsTarget.getTarget())
-            //"阿里云短信测试"
-            .setSignName(smsTarget.getSignName())
-            .setTemplateCode(this.aliTemplateCode)
-            .setTemplateParam("{\"content\":\"" + smsTarget.getContent() + "\"}");
-            //.setTemplateParam("{\"code\":\"" + smsTarget.getContent() + "\"}");
-        SendSmsResponse sendResp = this.aliSmsClient.sendSms(sendReq);
-        if (!Constant.OK.equals(sendResp.body.code)) {
-            logger.error("错误信息: " + sendResp.body.message + "");
-            throw new BusinessException(ErrorCode.SEND_ALI_SMS_ERROR, sendResp.body.message);
-        }
-        return sendResp.body.bizId;
-    }
-
-    private void limit(String str, String name) throws BlockException {
-        Entry entry = null;
+        Entry appEntry = null;
+        Entry phoneEntry = null;
         try {
-            entry = SphU.entry(name, EntryType.IN, 1, str);
-        } catch (BlockException ex) {
-            throw ex;
+            appEntry = SphU.entry("sendAppCodeLimit", EntryType.IN, 1, smsTarget.getAppCode());
+            phoneEntry = SphU.entry("sendPhoneLimit", EntryType.IN, 1, smsTarget.getTarget());
+            SendSmsResponse sendSmsResponse = doSend(smsTarget);
+            return sendSmsResponse.getBody().bizId;
+        } catch (BlockException exception) {
+            logger.error("触发限流: ", exception);
+            throw exception;
         } finally {
-            if (entry != null) {
-                entry.exit(1, str);
+            if (null != appEntry) {
+                appEntry.exit(1, smsTarget.getAppCode());
+            }
+            if (null != phoneEntry) {
+                phoneEntry.exit(1, smsTarget.getAppCode());
             }
         }
     }
+
+    private SendSmsResponse doSend(SmsTarget smsTarget) throws Exception {
+        SendSmsRequest sendReq = new SendSmsRequest().setPhoneNumbers(smsTarget.getTarget())
+            //"阿里云短信测试"
+            .setSignName(smsTarget.getSignName()).setTemplateCode(this.aliTemplateCode).setTemplateParam("{\"content\":\"" + smsTarget.getContent() + "\"}");
+        SendSmsResponse sendResp = this.aliSmsClient.sendSms(sendReq);
+        if (!Constant.OK.equals(sendResp.body.code)) {
+            logger.error("错误信息: {}", sendResp.body.message);
+            throw new BusinessException(ErrorCode.SEND_ALI_SMS_ERROR, sendResp.body.message);
+        }
+        return sendResp;
+    }
+
 }
