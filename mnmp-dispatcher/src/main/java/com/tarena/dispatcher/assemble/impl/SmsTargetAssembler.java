@@ -24,9 +24,13 @@ import com.tarena.mnmp.api.NoticeDTO;
 import com.tarena.mnmp.api.TargetDTO;
 import com.tarena.mnmp.enums.NoticeType;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> {
+
     @Override
     public String getNoticeType() {
         return NoticeType.SMS.toString();
@@ -53,7 +57,9 @@ public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> 
             smsTarget.setAppCode(notice.getAppCode());
             smsTarget.setTemplateCode(notice.getTemplateCode());
             smsTarget.setTemplateParam("{\"code\":\"" + notice.getTemplateContent() + "\"}");
-            smsTarget.setContent(this.dollarPlaceholderReplacer.buildContent(notice.getTemplateContent(), targetDto.getParams()));
+            String content = this.dollarPlaceholderReplacer.buildContent(notice.getTemplateContent(), targetDto.getParams());
+            String apply = this.contentConvert.getOrDefault(notice.getProviderCode(), c -> c).apply(content);
+            smsTarget.setContent(apply);
             targetList.add(smsTarget);
         }
         smsNoticeEvent.setTargets(targetList);

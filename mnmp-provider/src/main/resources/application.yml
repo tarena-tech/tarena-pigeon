@@ -57,7 +57,9 @@ dispatcher:
   mock: true
   assembler_sms: true
   notice_sms_ali: true
+  notice_sms_hw: true
   sms_ali_pigeon_provider_code: ALI_SMS
+  sms_hw_pigeon_provider_code: HW_SMS
   enableReceipt: false
 
 monitor:

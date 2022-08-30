@@ -23,8 +23,13 @@ public class DispatcherConfig {
     private Boolean assemblerEmail;
     private Boolean assemblerSms;
     private Boolean noticeSmsAli;
+
+    private Boolean noticeSmsHw;
+
     private Boolean noticeEmailAli;
     private String smsAliPigeonProviderCode;
+
+    private String smsHwPigeonProviderCode;
     private Boolean enableReceipt;
 
     public Boolean getAssemblerEmail() {
@@ -73,5 +78,21 @@ public class DispatcherConfig {
 
     public void setEnableReceipt(Boolean enableReceipt) {
         this.enableReceipt = enableReceipt;
+    }
+
+    public Boolean getNoticeSmsHw() {
+        return noticeSmsHw;
+    }
+
+    public void setNoticeSmsHw(Boolean noticeSmsHw) {
+        this.noticeSmsHw = noticeSmsHw;
+    }
+
+    public String getSmsHwPigeonProviderCode() {
+        return smsHwPigeonProviderCode;
+    }
+
+    public void setSmsHwPigeonProviderCode(String smsHwPigeonProviderCode) {
+        this.smsHwPigeonProviderCode = smsHwPigeonProviderCode;
     }
 }
