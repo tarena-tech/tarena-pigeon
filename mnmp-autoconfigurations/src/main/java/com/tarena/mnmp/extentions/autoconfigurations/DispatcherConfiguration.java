@@ -47,6 +47,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -56,6 +57,8 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableConfigurationProperties(DispatcherConfig.class)
+// 临时解决方案 该方案违背spring设计初衷 不优雅将来改下 先实现
+@ComponentScan("com.tarena.dispatcher.sender.check")
 public class DispatcherConfiguration {
 
     private DispatcherConfig dispatcherConfig;
@@ -64,10 +67,13 @@ public class DispatcherConfiguration {
         this.dispatcherConfig = dispatcherConfig;
     }
 
+
+
     @Bean
     public LimitProperties limitProperties() {
         return new LimitProperties();
     }
+
 
     @Bean
     @ConditionalOnMissingBean({RestOperations.class, RestTemplate.class})
