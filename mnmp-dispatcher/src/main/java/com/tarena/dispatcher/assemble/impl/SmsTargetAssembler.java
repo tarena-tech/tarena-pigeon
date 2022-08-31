@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> {
+
     @Override
     public String getNoticeType() {
         return NoticeType.SMS.toString();
@@ -53,7 +54,9 @@ public class SmsTargetAssembler extends AbstractTargetAssembler<SmsNoticeEvent> 
             smsTarget.setAppCode(notice.getAppCode());
             smsTarget.setTemplateCode(notice.getTemplateCode());
             smsTarget.setTemplateParam("{\"code\":\"" + notice.getTemplateContent() + "\"}");
-            smsTarget.setContent(this.dollarPlaceholderReplacer.buildContent(notice.getTemplateContent(), targetDto.getParams()));
+            String content = this.dollarPlaceholderReplacer.buildContent(notice.getTemplateContent(), targetDto.getParams());
+            String apply = this.contentConvert.getOrDefault(notice.getProviderCode(), c -> c).apply(content);
+            smsTarget.setContent(apply);
             targetList.add(smsTarget);
         }
         smsNoticeEvent.setTargets(targetList);

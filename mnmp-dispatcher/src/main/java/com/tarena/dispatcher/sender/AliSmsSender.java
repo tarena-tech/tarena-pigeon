@@ -16,10 +16,6 @@
  */
 package com.tarena.dispatcher.sender;
 
-import com.alibaba.csp.sentinel.Entry;
-import com.alibaba.csp.sentinel.EntryType;
-import com.alibaba.csp.sentinel.SphU;
-import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.QuerySendDetailsRequest;
 import com.aliyun.dysmsapi20170525.models.QuerySendDetailsResponse;
@@ -45,7 +41,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AliSmsSender implements SmsSender {
+public class AliSmsSender extends AroundSender implements SmsSender  {
 
     private static Logger logger = LoggerFactory.getLogger(AliSmsSender.class);
 
@@ -135,28 +131,10 @@ public class AliSmsSender implements SmsSender {
     }
 
     @Override public String send(SmsTarget smsTarget) throws Exception {
-
-        Entry appEntry = null;
-        Entry phoneEntry = null;
-        try {
-            appEntry = SphU.entry("sendAppCodeLimit", EntryType.IN, 1, smsTarget.getAppCode());
-            phoneEntry = SphU.entry("sendPhoneLimit", EntryType.IN, 1, smsTarget.getTarget());
-            SendSmsResponse sendSmsResponse = doSend(smsTarget);
-            return sendSmsResponse.getBody().bizId;
-        } catch (BlockException exception) {
-            logger.error("触发限流: ", exception);
-            throw exception;
-        } finally {
-            if (null != appEntry) {
-                appEntry.exit(1, smsTarget.getAppCode());
-            }
-            if (null != phoneEntry) {
-                phoneEntry.exit(1, smsTarget.getAppCode());
-            }
-        }
+        return super.aroundSend(smsTarget);
     }
 
-    private SendSmsResponse doSend(SmsTarget smsTarget) throws Exception {
+    @Override public String doSend(SmsTarget smsTarget) throws Exception {
         SendSmsRequest sendReq = new SendSmsRequest().setPhoneNumbers(smsTarget.getTarget())
             //"阿里云短信测试"
             .setSignName(smsTarget.getSignName()).setTemplateCode(this.aliTemplateCode).setTemplateParam("{\"content\":\"" + smsTarget.getContent() + "\"}");
@@ -165,7 +143,7 @@ public class AliSmsSender implements SmsSender {
             logger.error("错误信息: {}", sendResp.body.message);
             throw new BusinessException(ErrorCode.SEND_ALI_SMS_ERROR, sendResp.body.message);
         }
-        return sendResp;
+        return sendResp.getBody().bizId;
     }
 
 }
