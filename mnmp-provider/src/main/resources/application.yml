@@ -9,12 +9,37 @@ server:
       force: true
       charset: UTF-8
 spring:
-
   profiles:
     active: test
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://${my.server.addr}:3316/tarena_pigeon?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: pigeon_user
+    password: PigeonPas$8x
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      minimum-idle: 1
+  redis:
+    host: dev-redis.tctm.life
+    port: 6379
+    password: "teduPMNlzjfDiaK"
+    database: 8
+    jedis:
+      pool:
+        max-active: 8
+        min-idle: 5
+        max-idle: 8
+        max-wait: PT15M
+        time-between-eviction-runs: PT15M
+
+
+limit:
+  app_day_count: 10
+  phone_count: 10
+
 knife4j:
   # 开启增强配置
   enable: true
@@ -49,9 +74,17 @@ dispatcher:
   mock: true
   assembler_sms: true
   notice_sms_ali: true
+  notice_sms_hw: true
   sms_ali_pigeon_provider_code: ALI_SMS
+  sms_hw_pigeon_provider_code: HW_SMS
   enableReceipt: false
 
 monitor:
   impl: default
-
+rocket:
+  name_server_address: 192.168.195.244:9876
+  message_charset: UTF-8
+  publish_debug: true
+  topic: mnmp_test
+  publish_group: publish_group
+  retry_times_when_send_failed: 5

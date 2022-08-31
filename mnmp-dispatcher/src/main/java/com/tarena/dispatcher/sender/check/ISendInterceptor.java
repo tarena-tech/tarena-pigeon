@@ -15,22 +15,21 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.enums;
+package com.tarena.dispatcher.sender.check;
 
-public enum Provider {
-    ALI_EMAIL("阿里Email"),
+import com.tarena.dispatcher.SmsTarget;
+import com.tarena.mnmp.protocol.BusinessException;
 
-    ALI_SMS("阿里短信"),
+public interface ISendInterceptor {
 
-    HW_SMS("华为短信");
+    String LIMIT_REDIS_PRE = "pigeon:";
 
-    private String description;
 
-    Provider(String description) {
-        this.description = description;
+    default void before(SmsTarget smsTarget) throws BusinessException {
+
     }
 
-    public String getDescription() {
-        return description;
+    default void after(SmsTarget smsTarget) {
+
     }
 }

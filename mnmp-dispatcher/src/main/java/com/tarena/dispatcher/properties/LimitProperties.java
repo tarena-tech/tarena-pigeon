@@ -15,22 +15,30 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.enums;
+package com.tarena.dispatcher.properties;
 
-public enum Provider {
-    ALI_EMAIL("阿里Email"),
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-    ALI_SMS("阿里短信"),
+@ConfigurationProperties("limit")
+public class LimitProperties {
 
-    HW_SMS("华为短信");
+    private Long appDayCount;
 
-    private String description;
+    private Long phoneCount;
 
-    Provider(String description) {
-        this.description = description;
+    public Long getAppDayCount() {
+        return appDayCount;
     }
 
-    public String getDescription() {
-        return description;
+    public void setAppDayCount(Long appDayCount) {
+        this.appDayCount = appDayCount;
+    }
+
+    public Long getPhoneCount() {
+        return phoneCount;
+    }
+
+    public void setPhoneCount(Long phoneCount) {
+        this.phoneCount = phoneCount;
     }
 }
