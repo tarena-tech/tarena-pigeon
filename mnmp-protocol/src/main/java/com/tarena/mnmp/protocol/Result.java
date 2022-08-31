@@ -47,10 +47,10 @@ public class Result<T> implements Serializable {
 
     private T data;
 
-    private static Result success = new Result();
+    private static final Result<Void> SUCCESS = new Result<>();
 
-    public static Result success() {
-        return success;
+    public static Result<Void> success() {
+        return SUCCESS;
     }
 
     public static Result fail(String errorCode, String message) {
