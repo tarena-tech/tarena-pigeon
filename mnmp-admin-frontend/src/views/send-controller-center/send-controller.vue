@@ -37,7 +37,7 @@
             :headers=headers
             :limit="1"
             :auto-upload="false">
-            <el-button slot="trigger" size="small" type="primary">下载模版</el-button>
+            <el-button slot="trigger" size="small" type="primary" @click="getExcel">下载模版</el-button>
             <el-button slot="trigger" size="small" type="primary">选取Excel文件</el-button>
             <el-button prop="filePath" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">
               上传到服务器
