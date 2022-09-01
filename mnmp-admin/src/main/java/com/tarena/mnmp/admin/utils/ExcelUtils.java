@@ -109,7 +109,7 @@ public class ExcelUtils {
     }
 
     public static void getExcel(String path, String name, HttpServletResponse response) throws BusinessException {
-        if (StringUtils.isNotBlank(name)) {
+        if (StringUtils.isBlank(path)) {
             try {
                 ClassPathResource classPathResource = new ClassPathResource(name);
                 InputStream stream = classPathResource.getInputStream();
