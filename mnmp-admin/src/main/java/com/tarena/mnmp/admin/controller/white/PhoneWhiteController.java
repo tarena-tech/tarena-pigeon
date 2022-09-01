@@ -36,6 +36,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -84,6 +85,7 @@ public class PhoneWhiteController implements PhoneWhiteApi {
             response.setCharacterEncoding("utf-8");
             response.setHeader("Content-Disposition", "attachment;filename=" + "error_data.xlsx");
             response.setHeader("Content-excelname", "error_data.xlsx");
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
             EasyExcelFactory.write(response.getOutputStream(), PhoneWhiteExcelData.class).sheet("失败数据").doWrite(data);
         }
         return Result.success();

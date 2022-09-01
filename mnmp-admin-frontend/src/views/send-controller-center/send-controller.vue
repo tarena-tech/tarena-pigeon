@@ -37,6 +37,7 @@
             :before-remove="removeFile"
             :on-preview="prevView"
             :on-success="uploadSuccess"
+            :on-error="uploadError"
             :multiple="false"
             :headers=headers
             :limit="1"
@@ -150,7 +151,16 @@ export default {
     },
     uploadSuccess(response, file, fileList) {
       console.log('success, response', response)
+      if (response.succeed) {
+        console.log('success.......')
+      } else {
+        downloadFileByBlob(res.data, res.headers['content-excelname'], response)
+      }
     },
+    uploadError(err, file, fileList) {
+
+    },
+
     queryApps(param) {
       queryAppList({
         name: param,
