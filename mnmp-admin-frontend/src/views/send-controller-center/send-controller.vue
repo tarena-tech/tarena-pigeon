@@ -24,8 +24,12 @@
           </el-form-item>
         </div>
 
+        <div class="form-right-box">
+          <el-button type="success" icon="el-icon-plus" @click="getExcel()">下载模版</el-button>
+        </div>
 
         <div class="form-right-box">
+
         <el-form-item>
           <el-upload
             ref="upload"
@@ -37,7 +41,7 @@
             :headers=headers
             :limit="1"
             :auto-upload="false">
-            <el-button slot="trigger" size="small" type="primary" @click="getExcel">下载模版</el-button>
+
             <el-button slot="trigger" size="small" type="primary">选取Excel文件</el-button>
             <el-button prop="filePath" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">
               上传到服务器
