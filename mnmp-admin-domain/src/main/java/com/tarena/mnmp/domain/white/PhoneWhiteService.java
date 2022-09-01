@@ -17,12 +17,9 @@
 
 package com.tarena.mnmp.domain.white;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
-import com.alibaba.excel.util.BeanMapUtils;
 import com.alibaba.excel.util.StringUtils;
 import com.tarena.mnmp.commons.utils.RegexUtils;
 import com.tarena.mnmp.domain.AppDO;
@@ -31,7 +28,6 @@ import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.domain.param.AppQueryParam;
 import com.tarena.mnmp.domain.param.PhoneWhiteParam;
 import com.tarena.mnmp.domain.param.PhoneWhiteQueryParam;
-import com.tarena.mnmp.domain.task.TargetExcelData;
 import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.LoginToken;
 import java.io.IOException;
@@ -42,8 +38,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -63,8 +57,7 @@ public class PhoneWhiteService {
         return phoneWhiteListDao.queryList(param);
     }
 
-
-    public PhoneWhiteListDO detail (Long id, LoginToken token) {
+    public PhoneWhiteListDO detail(Long id, LoginToken token) {
         return phoneWhiteListDao.selectByPrimaryKey(id);
     }
 
@@ -88,7 +81,7 @@ public class PhoneWhiteService {
 
             public static final int BATCH_COUNT = 100;
 
-            private List<PhoneWhiteListDO> targets =  new ArrayList<>(BATCH_COUNT);
+            private List<PhoneWhiteListDO> targets = new ArrayList<>(BATCH_COUNT);
 
             @Override public void invoke(PhoneWhiteExcelData data, AnalysisContext context) {
                 if (phone.contains(data.getPhone())) {
@@ -169,8 +162,6 @@ public class PhoneWhiteService {
     }
 
     public void update(PhoneWhiteParam param, LoginToken token) {
-
-
 
     }
 

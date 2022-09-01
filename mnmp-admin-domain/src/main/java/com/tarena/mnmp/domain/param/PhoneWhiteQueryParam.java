@@ -18,7 +18,6 @@
 package com.tarena.mnmp.domain.param;
 
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.enums.Enabled;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

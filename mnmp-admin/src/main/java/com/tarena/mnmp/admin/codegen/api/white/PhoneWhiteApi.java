@@ -17,7 +17,6 @@
 
 package com.tarena.mnmp.admin.codegen.api.white;
 
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.Ignore;
 import com.tarena.mnmp.admin.annotation.User;
 import com.tarena.mnmp.admin.controller.white.PhoneWhiteView;
@@ -29,7 +28,6 @@ import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.mnmp.protocol.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
