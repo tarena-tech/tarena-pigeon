@@ -64,11 +64,11 @@ public class PhoneWhiteController implements PhoneWhiteApi {
         return new Result<>(result);
     }
 
-    @Override public Result<String> saveByFile(MultipartFile file, LoginToken token, HttpServletResponse response) throws IOException {
+    @Override public Result<String> saveByFile(MultipartFile file, LoginToken token, HttpServletResponse response) throws IOException, BusinessException {
         List<PhoneWhiteExcelData> data = phoneWhiteService.saveByFile(file, token);
         if (!CollectionUtils.isEmpty(data)) {
-            String name = ExcelUtils.fileName("xlsx");
-            EasyExcel.write(whiteExcelPath + name, PhoneWhiteExcelData.class).sheet("非法数据").doWrite(data);
+            String name = ExcelUtils.fileName(whiteExcelPath, "xlsx", true);
+            EasyExcel.write(name, PhoneWhiteExcelData.class).sheet("非法数据").doWrite(data);
             return new Result<>(name);
         }
         return new Result<>(null);

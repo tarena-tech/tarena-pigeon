@@ -63,7 +63,7 @@ public interface PhoneWhiteApi {
     @ApiOperation(value = "上传文件")
     @PostMapping("save/file")
     @PreAuthorize("hasAnyRole('admin','root')")
-    Result<String> saveByFile(@RequestParam("file") MultipartFile file, @User LoginToken token, HttpServletResponse response) throws IOException;
+    Result<String> saveByFile(@RequestParam("file") MultipartFile file, @User LoginToken token, HttpServletResponse response) throws IOException, BusinessException;
 
     @ApiOperation(value = "更新")
     @PostMapping("update")

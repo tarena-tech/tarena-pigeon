@@ -63,10 +63,20 @@ public class ExcelUtils {
         return name.substring(name.indexOf(".") + 1);
     }
 
-    public static String fileName(String suffix) {
+    public static String fileName(String prefixPath, String suffix, boolean mkdirs) throws BusinessException {
+        StringBuilder path = new StringBuilder();
         String dir = DateUtils.dateStr(new Date(), "yyyy/MM/dd/");
+        path.append(prefixPath).append(dir);
+
+        if (mkdirs) {
+            File f = new File(path.toString());
+            if (!f.exists() && !f.mkdirs()) {
+                throw new BusinessException("203", "目录创建失败，请检查权限");
+            }
+        }
         String name = UUID.randomUUID() + "." + suffix;
-        return dir + name;
+        path.append(name);
+        return path.toString();
     }
 
     public static String saveLocal(String path, MultipartFile file) throws BusinessException, IOException {
@@ -77,7 +87,7 @@ public class ExcelUtils {
             throw new BusinessException("202", "上传文件不是excel格式");
         }
         String dir = DateUtils.dateStr(new Date(), "yyyy/MM/dd/");
-        String name = UUID.randomUUID() + "." + ExcelUtils.suffixName(file.getOriginalFilename());
+        String name = UUID.randomUUID() + "." + suffixName(file.getOriginalFilename());
         StringBuilder newPath = new StringBuilder();
         newPath.append(path).append(dir);
         File f = new File(newPath.toString());
