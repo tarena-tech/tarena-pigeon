@@ -151,8 +151,8 @@ export default {
     },
     uploadSuccess(response, file, fileList) {
       console.log('uploadSuccess resp', response)
-      if (response) {
-        this.getExcel(response);
+      if (!response.data) {
+        this.getExcel(response.data);
       }
 
     },

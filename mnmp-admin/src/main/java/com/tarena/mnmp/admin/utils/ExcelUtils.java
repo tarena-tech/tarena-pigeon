@@ -63,20 +63,34 @@ public class ExcelUtils {
         return name.substring(name.indexOf(".") + 1);
     }
 
-    public static String fileName(String prefixPath, String suffix, boolean mkdirs) throws BusinessException {
-        StringBuilder path = new StringBuilder();
-        String dir = DateUtils.dateStr(new Date(), "yyyy/MM/dd/");
-        path.append(prefixPath).append(dir);
+    public static String fileName(String suffix) throws BusinessException {
+        return UUID.randomUUID() + "." + suffix;
+    }
 
-        if (mkdirs) {
-            File f = new File(path.toString());
-            if (!f.exists() && !f.mkdirs()) {
-                throw new BusinessException("203", "目录创建失败，请检查权限");
-            }
+    public static String preFix(String path, boolean mkdir) throws BusinessException {
+        String pre = path + DateUtils.dateStr(new Date(), "yyyy/MM/dd/");
+        if (mkdir) {
+            mkdir(pre);
         }
-        String name = UUID.randomUUID() + "." + suffix;
-        path.append(name);
-        return path.toString();
+        return pre;
+    }
+
+    public static String midPath() {
+        return DateUtils.dateStr(new Date(), "yyyy/MM/dd/");
+    }
+
+
+
+
+
+
+
+    public static String mkdir(String path) throws BusinessException {
+        File f = new File(path);
+        if (!f.exists() && !f.mkdirs()) {
+            throw new BusinessException("203", "目录创建失败，请检查权限");
+        }
+        return path;
     }
 
     public static String saveLocal(String path, MultipartFile file) throws BusinessException, IOException {
@@ -86,17 +100,12 @@ public class ExcelUtils {
         if (!ExcelUtils.checkExcel(file.getOriginalFilename())) {
             throw new BusinessException("202", "上传文件不是excel格式");
         }
-        String dir = DateUtils.dateStr(new Date(), "yyyy/MM/dd/");
-        String name = UUID.randomUUID() + "." + suffixName(file.getOriginalFilename());
-        StringBuilder newPath = new StringBuilder();
-        newPath.append(path).append(dir);
-        File f = new File(newPath.toString());
-        if (!f.exists() && !f.mkdirs()) {
-            throw new BusinessException("203", "目录创建失败，请检查权限");
-        }
-        newPath.append(name);
-        Streams.copy(file.getInputStream(), Files.newOutputStream(Paths.get(newPath.toString())), true);
-        return dir + name;
+        String mid = midPath();
+        String name = fileName(suffixName(file.getOriginalFilename()));
+        String dir = path + mid;
+        mkdir(dir);
+        Streams.copy(file.getInputStream(), Files.newOutputStream(Paths.get(dir + name)), true);
+        return mid + name;
     }
 
     public static void getExcel(String path, String name, HttpServletResponse response) throws BusinessException {
