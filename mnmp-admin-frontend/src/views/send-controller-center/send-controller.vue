@@ -1,4 +1,3 @@
-<!-- 签名 -->
 <template>
   <div class="app-container">
     <el-form
@@ -8,13 +7,13 @@
     >
       <div class="form-container">
         <div class="form-left-box">
-          <el-form-item prop="name" label="手机号">
-            <el-input v-model.trim="claForm.name" placeholder="" style="width: 120px" />
+          <el-form-item prop="phone" label="手机号">
+            <el-input v-model.trim="claForm.phone" placeholder="" style="width: 120px" />
           </el-form-item>
-          <el-form-item label="应用" prop="appId">
+          <el-form-item label="应用" prop="appCode">
             <template>
-              <el-select v-model="claForm.appId" filterable placeholder="请选择" :filter-method="queryApps">
-                <el-option v-for="item in apps" :key="item.id" :label="item.name" :value="item.id" />
+              <el-select v-model="claForm.appCode" filterable placeholder="请选择" :filter-method="queryApps">
+                <el-option v-for="item in apps" :key="item.code" :label="item.name" :value="item.code" />
               </el-select>
             </template>
           </el-form-item>
@@ -24,9 +23,7 @@
             <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
           </el-form-item>
         </div>
-        <div class="form-right-box">
-          <el-button type="success" icon="el-icon-plus" @click="getExcel()">下载模版</el-button>
-        </div>
+
 
         <div class="form-right-box">
         <el-form-item>
@@ -34,15 +31,13 @@
             ref="upload"
             class="upload-demo"
             :action=uploadUrl
-            :before-remove="removeFile"
-            :on-preview="prevView"
             :on-success="uploadSuccess"
             :on-error="uploadError"
             :multiple="false"
             :headers=headers
             :limit="1"
             :auto-upload="false">
-
+            <el-button slot="trigger" size="small" type="primary">下载模版</el-button>
             <el-button slot="trigger" size="small" type="primary">选取Excel文件</el-button>
             <el-button prop="filePath" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">
               上传到服务器
@@ -80,7 +75,7 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button  type="text" size="small" @click="changeStatus(scope.row)">
-              {{scope.row.enabled === 1 ? '禁用' : '启用'}}
+              {{scope.row.isEnabled === 1 ? '禁用' : '启用'}}
             </el-button>
             <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role === 'ROLE_user' && scope.row.auditStatus !== 0">
               修改
@@ -95,7 +90,7 @@
 </template>
 
 <script>
-import { queryPage, changeEnable, downExcel } from '@/api/send-controller.js'
+import { queryPage, save, downExcel } from '@/api/send-controller.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogSignSave from '@/components/sign/dialog-save'
 import DialogSignAudit from '@/components/sign/dialog-audit'
@@ -142,19 +137,27 @@ export default {
       this.$message('点击了按钮！')
       console.log('click-row-data:', row)
     },
-    removeFile(file, fileLis) {
-      this.uploadShow = false
-    },
-    prevView(file) {
-      console.log('preView')
-      this.uploadShow = true
-    },
+
     uploadSuccess(response, file, fileList) {
-      console.log('uploadSuccess resp', response)
       if (response.data != null) {
         this.getExcel({path: response.data});
-      }
 
+        this.$notify({
+          title: '存在非法数据',
+          message: '文件中存在非法数据,已自动下载,请查收',
+          offset: 100
+        });
+
+      } else {
+        this.successMsg()
+      }
+    },
+    uploadError(err, file, fileList) {
+      this.$notify({
+        title: '上传失败',
+        message: '请稍后再试',
+        offset: 100
+      });
     },
 
 
@@ -194,16 +197,21 @@ export default {
       this.getTabelData()
     },
     changeStatus(_data) {
-      const msg = _data.enabled === 1 ? '禁用' : '启用'
-      const str = '是否要' + msg + '【' + _data.name + '】'
+      const msg = _data.isEnabled === 1 ? '禁用' : '启用'
+      const str = '是否要' + msg + '【' + _data.phone + '】'
+      let ena = _data.isEnabled === 1 ? 0 : 1;
       this.$confirm(str, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        changeEnable(_data.id).then(res => {
+        save({
+          id: _data.id,
+          isEnabled: ena
+        }).then(res => {
           this.successMsg()
-          this.getTabelData()
+          // this.getTabelData()
+          _data.isEnabled = ena
         }).catch(err => {
           console.log('list-err:', err)
           this.$refs.tmp_table.loadingState(false)

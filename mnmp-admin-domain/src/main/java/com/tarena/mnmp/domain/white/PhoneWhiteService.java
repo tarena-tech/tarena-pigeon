@@ -20,6 +20,7 @@ package com.tarena.mnmp.domain.white;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
+import com.alibaba.excel.util.BeanMapUtils;
 import com.alibaba.excel.util.StringUtils;
 import com.tarena.mnmp.commons.utils.RegexUtils;
 import com.tarena.mnmp.domain.AppDO;
@@ -29,6 +30,7 @@ import com.tarena.mnmp.domain.param.AppQueryParam;
 import com.tarena.mnmp.domain.param.PhoneWhiteParam;
 import com.tarena.mnmp.domain.param.PhoneWhiteQueryParam;
 import com.tarena.mnmp.enums.Enabled;
+import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.LoginToken;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -155,8 +157,14 @@ public class PhoneWhiteService {
         return fails;
     }
 
-    public void update(PhoneWhiteParam param, LoginToken token) {
+    public void update(PhoneWhiteParam param, LoginToken token) throws BusinessException {
+        PhoneWhiteListDO phoneWhite = phoneWhiteListDao.selectByPrimaryKey(param.getId());
+        if (null == phoneWhite) {
+            throw new BusinessException("100", "数据不存在");
+        }
 
+        BeanUtils.copyProperties(param, phoneWhite);
+        phoneWhiteListDao.updateByPrimaryKeySelective(phoneWhite);
     }
 
     public Long queryCount(PhoneWhiteQueryParam param, LoginToken token) {

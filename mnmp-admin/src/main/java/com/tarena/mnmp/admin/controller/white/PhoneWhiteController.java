@@ -76,7 +76,7 @@ public class PhoneWhiteController implements PhoneWhiteApi {
         return new Result<>(null);
     }
 
-    @Override public Result<Void> update(PhoneWhiteParam param, LoginToken token) {
+    @Override public Result<Void> update(PhoneWhiteParam param, LoginToken token) throws BusinessException {
         phoneWhiteService.update(param, token);
         return Result.success();
     }

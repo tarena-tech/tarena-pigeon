@@ -36,7 +36,7 @@ public class PhoneWhiteView {
     @ApiModelProperty(value = "手机号")
     private String phone;
 
-    @JsonIgnore
+    @ApiModelProperty(value = "app编码")
     private String appCode;
 
     @ApiModelProperty(value = "app名称")

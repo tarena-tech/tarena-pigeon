@@ -37,10 +37,6 @@ public class PhoneWhiteParam {
     @ApiModelProperty(value = "主键id,修改必传", required = true)
     private Long id;
 
-
-    @Min(1)
-    private Integer sendLimit;
-
     @ApiModelProperty(value = "开始时间")
     private Date startTime;
 

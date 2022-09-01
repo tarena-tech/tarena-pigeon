@@ -68,7 +68,7 @@ public interface PhoneWhiteApi {
     @ApiOperation(value = "更新")
     @PostMapping("update")
     @PreAuthorize("hasAnyRole('admin','root')")
-    Result<Void> update(@Valid @RequestBody PhoneWhiteParam param, @User LoginToken token);
+    Result<Void> update(@Valid @RequestBody PhoneWhiteParam param, @User LoginToken token) throws BusinessException;
 
 
 
