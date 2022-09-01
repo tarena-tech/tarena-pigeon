@@ -53,18 +53,18 @@ public class Result<T> implements Serializable {
         return SUCCESS;
     }
 
-    public static Result fail(String errorCode, String message) {
-        return new Result(errorCode, message);
+    public static Result<Void> fail(String errorCode, String message) {
+        return new Result<>(errorCode, message);
     }
 
-    public static Result fail(BusinessException business) {
-        return new Result(business.getCode(), business.getMessage());
+    public static Result<Void> fail(BusinessException business) {
+        return new Result<>(business.getCode(), business.getMessage());
     }
 
-    public static Result fail() {
+    public static Result<Void> fail() {
         String code = "-1";
         String msg = "system error";
-        return new Result(code, msg);
+        return new Result<>(code, msg);
     }
 
     public T getData() {

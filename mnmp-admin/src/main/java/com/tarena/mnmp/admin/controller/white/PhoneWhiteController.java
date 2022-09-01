@@ -79,6 +79,11 @@ public class PhoneWhiteController implements PhoneWhiteApi {
     @Override public Result<Void> saveByFile(MultipartFile file, LoginToken token, HttpServletResponse response) throws IOException {
         List<PhoneWhiteExcelData> data = phoneWhiteService.saveByFile(file, token);
         if (!CollectionUtils.isEmpty(data)) {
+            response.reset();
+            response.setContentType("application/octet-stream");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-Disposition", "attachment;filename=" + "error_data.xlsx");
+            response.setHeader("Content-excelname", "error_data.xlsx");
             EasyExcelFactory.write(response.getOutputStream(), PhoneWhiteExcelData.class).sheet("失败数据").doWrite(data);
         }
         return Result.success();

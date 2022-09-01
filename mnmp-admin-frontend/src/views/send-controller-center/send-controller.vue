@@ -36,7 +36,7 @@
             :action=uploadUrl
             :before-remove="removeFile"
             :on-preview="prevView"
-            :on-error="uploadError"
+            :on-success="uploadSuccess"
             :multiple="false"
             :headers=headers
             :limit="1"
@@ -147,6 +147,9 @@ export default {
     prevView(file) {
       console.log('preView')
       this.uploadShow = true
+    },
+    uploadSuccess(response, file, fileList) {
+      console.log('success, response', response)
     },
     queryApps(param) {
       queryAppList({
