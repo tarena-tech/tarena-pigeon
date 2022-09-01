@@ -60,7 +60,7 @@ public interface PhoneWhiteApi {
     @ApiOperation(value = "查询白名单")
     @GetMapping("query/page")
     @PreAuthorize("hasAnyRole('admin','root')")
-    Result<PagerResult<PhoneWhiteView>> queryPage(@RequestBody PhoneWhiteQueryParam param, @User LoginToken token);
+    Result<PagerResult<PhoneWhiteView>> queryPage(PhoneWhiteQueryParam param, @User LoginToken token);
 
     @ApiOperation(value = "上传文件")
     @PostMapping("save/file")

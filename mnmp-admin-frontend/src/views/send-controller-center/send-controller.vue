@@ -40,42 +40,20 @@
         @callback="getTabelData"
       >
 
-        <el-table-column prop="name" label="签名名称" />
-        <el-table-column prop="code" label="签名编码" />
-        <el-table-column prop="appCode" label="应用编码" />
-        <el-table-column prop="remarks" label="应用简介" />
-        <el-table-column prop="enabled" label="应用状态">
-          <template slot-scope="scope">
-            <span>{{scope.row.enabled === 1 ? '启用' : '禁用'}}</span>
-          </template>
-        </el-table-column>
-
-        <el-table-column prop="auditStatus" label="审核状态">
-          <template slot-scope="scope">
-            <span v-if="scope.row.auditStatus === 1">通过</span>
-            <span v-if="scope.row.auditStatus === 0">待审核</span>
-            <span v-if="scope.row.auditStatus === -1">拒绝</span>
-          </template>
-        </el-table-column>
-
-        <el-table-column prop="createTime" label="创建时间" />
-        <el-table-column prop="updateTime" label="修改时间"   />
-
+        <el-table-column prop="phone" label="手机号" />
+        <el-table-column prop="appName" label="应用编码" />
+        <el-table-column prop="appName" label="应用名称" />
+        <el-table-column prop="start" label="生效开始时间" />
+        <el-table-column prop="end" label="生效结束次数" />
+        <el-table-column prop="isEnable" label="启用" />
+        <el-table-column prop="createTime" label="创建时间"   />
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button  type="text" size="small" @click="changeStatus(scope.row)" v-if="scope.row.auditStatus === 1">
               {{scope.row.enabled === 1 ? '禁用' : '启用'}}
             </el-button>
-            <el-button v-if="scope.row.auditStatus === 0 && $store.state.user.role !== 'ROLE_user'"
-                       @click="showAudit(scope.row)" type="text" size="small" >
-              审核
-            </el-button>
             <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role === 'ROLE_user' && scope.row.auditStatus !== 0">
               修改
-            </el-button>
-
-            <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role !== 'ROLE_user'">
-              查看
             </el-button>
           </template>
         </el-table-column>
@@ -87,7 +65,7 @@
 </template>
 
 <script>
-import { queryPage, changeEnable } from '@/api/sign.js'
+import { queryPage, changeEnable } from '@/api/send-controller.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogSignSave from '@/components/sign/dialog-save'
 import DialogSignAudit from '@/components/sign/dialog-audit'
