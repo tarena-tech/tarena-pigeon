@@ -13,4 +13,4 @@ spring:
 excel:
   path:
     task: "F:/excel/"
-    white-list:
+    white-list: "F:/excel/"

@@ -71,7 +71,7 @@ public class TaskController implements TaskApi {
     @Resource
     private TemplateService templateService;
 
-    @Value("${excel.task.path}")
+    @Value("${excel.path.task}")
     private String excelPath;
 
     private void export(HttpServletResponse response, InputStream is, String fileName) throws IOException {
