@@ -17,7 +17,6 @@
 
 package com.tarena.mnmp.admin.controller.white;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.xiaoymin.knife4j.annotations.Ignore;
 import com.tarena.mnmp.domain.PhoneWhiteListDO;
 import io.swagger.annotations.ApiModelProperty;

@@ -20,7 +20,6 @@ package com.tarena.mnmp.domain.white;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
-import com.alibaba.excel.util.BeanMapUtils;
 import com.alibaba.excel.util.StringUtils;
 import com.tarena.mnmp.commons.utils.RegexUtils;
 import com.tarena.mnmp.domain.AppDO;
