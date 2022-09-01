@@ -25,9 +25,6 @@ import org.apache.ibatis.annotations.Param;
 public interface PhoneWhiteListDao {
     int deleteByPrimaryKey(Long id);
 
-    int insert(PhoneWhiteListDO record);
-
-    int insertSelective(PhoneWhiteListDO record);
 
     PhoneWhiteListDO selectByPrimaryKey(Long id);
 

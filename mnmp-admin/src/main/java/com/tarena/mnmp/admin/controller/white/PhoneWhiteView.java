@@ -36,9 +36,6 @@ public class PhoneWhiteView {
     @ApiModelProperty(value = "手机号")
     private String phone;
 
-    @ApiModelProperty(value = "发送最大限制")
-    private Integer sendLimit;
-
     @JsonIgnore
     private String appCode;
 

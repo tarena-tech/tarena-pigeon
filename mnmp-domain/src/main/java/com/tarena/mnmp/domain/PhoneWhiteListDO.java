@@ -33,11 +33,6 @@ public class PhoneWhiteListDO {
     private String phone;
 
     /**
-    * 同一个电话号发送短信上限
-    */
-    private Integer sendLimit;
-
-    /**
     * 班级名称,搜索筛选
     */
     private String appCode;
