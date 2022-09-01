@@ -24,9 +24,32 @@
             <el-button type="default" icon="el-icon-delete" @click="resetForm">重置</el-button>
           </el-form-item>
         </div>
-        <div class="form-right-box" v-if="$store.state.user.role !== 'ROLE_user'">
-          <el-button type="success" icon="el-icon-plus" @click="save(null)">新建</el-button>
+        <div class="form-right-box">
+          <el-button type="success" icon="el-icon-plus" @click="getExcel()">下载模版</el-button>
         </div>
+
+        <div class="form-right-box">
+        <el-form-item>
+          <el-upload
+            ref="upload"
+            class="upload-demo"
+            :action=uploadUrl
+            :before-remove="removeFile"
+            :on-preview="prevView"
+            :on-error="uploadError"
+            :multiple="false"
+            :headers=headers
+            :limit="1"
+            :auto-upload="false">
+
+            <el-button slot="trigger" size="small" type="primary">选取Excel文件</el-button>
+            <el-button prop="filePath" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">
+              上传到服务器
+            </el-button>
+          </el-upload>
+        </el-form-item>
+        </div>
+
       </div>
     </el-form>
     <div class="cus-main-wrap">
@@ -41,15 +64,21 @@
       >
 
         <el-table-column prop="phone" label="手机号" />
-        <el-table-column prop="appName" label="应用编码" />
+        <el-table-column prop="appCode" label="应用编码" />
         <el-table-column prop="appName" label="应用名称" />
-        <el-table-column prop="start" label="生效开始时间" />
-        <el-table-column prop="end" label="生效结束次数" />
-        <el-table-column prop="isEnable" label="启用" />
+        <el-table-column prop="startTime" label="生效开始时间" />
+        <el-table-column prop="endTime" label="生效结束次数" />
+
+        <el-table-column prop="isEnabled" label="白名单状态">
+          <template slot-scope="scope">
+            <span>{{ scope.row.isEnabled === 1 ? '启用' : '禁用' }}</span>
+          </template>
+        </el-table-column>
+
         <el-table-column prop="createTime" label="创建时间"   />
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button  type="text" size="small" @click="changeStatus(scope.row)" v-if="scope.row.auditStatus === 1">
+            <el-button  type="text" size="small" @click="changeStatus(scope.row)">
               {{scope.row.enabled === 1 ? '禁用' : '启用'}}
             </el-button>
             <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role === 'ROLE_user' && scope.row.auditStatus !== 0">
@@ -65,11 +94,13 @@
 </template>
 
 <script>
-import { queryPage, changeEnable } from '@/api/send-controller.js'
+import { queryPage, changeEnable, downExcel } from '@/api/send-controller.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogSignSave from '@/components/sign/dialog-save'
 import DialogSignAudit from '@/components/sign/dialog-audit'
 import { queryAppList } from "@/api/app";
+import {downloadFileByBlob} from "@/utils/download-file";
+import store from "@/store";
 export default {
   name: 'DemoTable',
   components: {
@@ -79,11 +110,16 @@ export default {
   },
   data() {
     return {
+      uploadUrl: process.env.VUE_APP_BASE_API + '/white/phone/save/file',
+      headers: {
+        'Authorization': 'Bearer ' + store.getters.token
+      },
       claForm: {
         appName: null, // 应用名称
         appCode: null, // 应用code
         auditStatus: null// 审核状态
       },
+      uploadShow: false,
       apps: {},
       tableData: { recordCount: 0, list: [] },
       pagination: {
@@ -104,6 +140,13 @@ export default {
     handleClick(row) {
       this.$message('点击了按钮！')
       console.log('click-row-data:', row)
+    },
+    removeFile(file, fileLis) {
+      this.uploadShow = false
+    },
+    prevView(file) {
+      console.log('preView')
+      this.uploadShow = true
     },
     queryApps(param) {
       queryAppList({
@@ -164,12 +207,17 @@ export default {
       })
     },
 
-    showAudit(data) {
-      this.$refs.DialogSignAudit.show(data)
+    getExcel() {
+      downExcel( { responseType: 'blob' }).then(res => {
+        console.log(res)
+        downloadFileByBlob(res.data, res.headers['content-excelname'], res.data.type)
+      })
     },
-    save(data) {
-      this.$refs.DialogSignSave.show(data)
+
+    submitUpload() {
+      this.$refs.upload.submit()
     },
+
     refresh() {
       this.toResetPageForList()
     }

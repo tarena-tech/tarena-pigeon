@@ -25,8 +25,6 @@ public class PhoneWhiteExcelData {
 
     private String phone;
 
-    private Integer sendLimit;
-
     private String appCode;
 
     private Date startTime;

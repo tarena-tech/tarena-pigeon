@@ -51,6 +51,9 @@ public class PhoneWhiteView {
     @ApiModelProperty(value = "1:启用, 0:禁用")
     private Integer isEnabled;
 
+    @ApiModelProperty(value = "创建时间")
+    private Date createTime;
+
 
     @Ignore
     public static List<PhoneWhiteView> convert(List<PhoneWhiteListDO> sources) {
