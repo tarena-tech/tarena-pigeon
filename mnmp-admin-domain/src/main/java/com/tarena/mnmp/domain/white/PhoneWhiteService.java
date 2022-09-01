@@ -101,12 +101,6 @@ public class PhoneWhiteService {
                     return;
                 }
 
-                if (null == data.getSendLimit() || data.getSendLimit() < 0) {
-                    data.setRemark("发送流控不能小于0");
-                    fails.add(data);
-                    return;
-                }
-
                 if (null == data.getStartTime() || null == data.getEndTime()) {
                     data.setRemark("生效起止时间不能为空");
                     fails.add(data);
