@@ -52,7 +52,7 @@ public interface PhoneWhiteApi {
     @ApiOperation(value = "获取excel模版文件")
     @GetMapping("excel")
     @PreAuthorize("hasAnyRole('admin','root')")
-    void getExcel(@Ignore HttpServletResponse response) throws BusinessException, IOException;
+    void getExcel(String path, @Ignore HttpServletResponse response) throws BusinessException, IOException;
 
 
     @ApiOperation(value = "查询白名单")
@@ -63,7 +63,7 @@ public interface PhoneWhiteApi {
     @ApiOperation(value = "上传文件")
     @PostMapping("save/file")
     @PreAuthorize("hasAnyRole('admin','root')")
-    Result<Void> saveByFile(@RequestParam("file") MultipartFile file, @User LoginToken token, HttpServletResponse response) throws IOException;
+    Result<String> saveByFile(@RequestParam("file") MultipartFile file, @User LoginToken token, HttpServletResponse response) throws IOException;
 
     @ApiOperation(value = "更新")
     @PostMapping("update")

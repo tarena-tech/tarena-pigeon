@@ -150,16 +150,13 @@ export default {
       this.uploadShow = true
     },
     uploadSuccess(response, file, fileList) {
-      console.log('success, response', response)
-      if (response.succeed) {
-        console.log('success.......')
-      } else {
-        downloadFileByBlob(res.data, res.headers['content-excelname'], response)
+      console.log('uploadSuccess resp', response)
+      if (response) {
+        this.getExcel(response);
       }
-    },
-    uploadError(err, file, fileList) {
 
     },
+
 
     queryApps(param) {
       queryAppList({
@@ -220,8 +217,8 @@ export default {
       })
     },
 
-    getExcel() {
-      downExcel( { responseType: 'blob' }).then(res => {
+    getExcel(params) {
+      downExcel( params, { responseType: 'blob' }).then(res => {
         console.log(res)
         downloadFileByBlob(res.data, res.headers['content-excelname'], res.data.type)
       })

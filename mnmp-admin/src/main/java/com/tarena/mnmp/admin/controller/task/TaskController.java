@@ -18,12 +18,10 @@
 package com.tarena.mnmp.admin.controller.task;
 
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.util.StringUtils;
 import com.tarena.mnmp.admin.codegen.api.task.TaskApi;
 import com.tarena.mnmp.domain.param.AuditParam;
 import com.tarena.mnmp.commons.pager.PagerResult;
-import com.tarena.mnmp.commons.utils.DateUtils;
-import com.tarena.mnmp.commons.utils.ExcelUtils;
+import com.tarena.mnmp.admin.utils.ExcelUtils;
 import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.SignDO;
 import com.tarena.mnmp.domain.SmsTemplateDO;
@@ -38,26 +36,19 @@ import com.tarena.mnmp.domain.template.TemplateService;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.mnmp.protocol.Result;
-import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.util.Streams;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -80,7 +71,7 @@ public class TaskController implements TaskApi {
     @Resource
     private TemplateService templateService;
 
-    @Value("${excel.path}")
+    @Value("${excel.task.path}")
     private String excelPath;
 
     private void export(HttpServletResponse response, InputStream is, String fileName) throws IOException {
@@ -99,52 +90,12 @@ public class TaskController implements TaskApi {
     }
 
     @Override public void getExcel(String path, HttpServletResponse response) throws BusinessException {
-        if (StringUtils.isBlank(path)) {
-            try {
-                ClassPathResource classPathResource = new ClassPathResource("target.xlsx");
-                InputStream stream = classPathResource.getInputStream();
-                export(response, stream, "target.xlsx");
-                log.info("file name: {}", classPathResource.getFilename());
-                return;
-            } catch (IOException e) {
-                logger.error("读取resource文件异常", e);
-                throw new BusinessException("201", "读取文件异常，请稍后再试");
-            }
-        }
-
-        String filePath = excelPath + path;
-        File file = new File(filePath);
-        if (!file.exists() || file.length() == 0) {
-            logger.error("找不到文件");
-            throw new BusinessException("202", "文件不存在！！！");
-        }
-        try {
-            export(response, new BufferedInputStream(Files.newInputStream(file.toPath())), file.getName());
-        } catch (IOException e) {
-            logger.error("读取流异常", e);
-            throw new BusinessException("201", "读取文件异常，请稍后再试");
-        }
-
+        ExcelUtils.getExcel(StringUtils.isEmpty(path) ? null : excelPath + path, response);
     }
 
     @Override public Result<String> uploadFile(MultipartFile file) throws IOException, BusinessException {
-        if (null == file) {
-            throw new BusinessException("201", "上传文件不能为空");
-        }
-        if (!ExcelUtils.checkExcel(file.getOriginalFilename())) {
-            throw new BusinessException("202", "上传文件不是excel格式");
-        }
-        String dir = DateUtils.dateStr(new Date(), "yyyy/MM/dd/");
-        String name = UUID.randomUUID() + "." + ExcelUtils.suffixName(file.getOriginalFilename());
-        StringBuilder newPath = new StringBuilder();
-        newPath.append(excelPath).append(dir);
-        File f = new File(newPath.toString());
-        if (!f.exists() && !f.mkdirs()) {
-            throw new BusinessException("203", "目录创建失败，请检查权限");
-        }
-        newPath.append(name);
-        Streams.copy(file.getInputStream(), Files.newOutputStream(Paths.get(newPath.toString())), true);
-        return new Result<>(dir + name);
+        String path = ExcelUtils.saveLocal(excelPath, file);
+        return new Result<>(path);
     }
 
     @Override public Result<Void> addTask(TaskParam taskParam, HttpServletResponse response, LoginToken token)

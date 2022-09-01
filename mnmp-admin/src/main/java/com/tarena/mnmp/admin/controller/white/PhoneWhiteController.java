@@ -17,9 +17,10 @@
 
 package com.tarena.mnmp.admin.controller.white;
 
-import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.EasyExcel;
 import com.tarena.mnmp.admin.codegen.api.white.PhoneWhiteApi;
 import com.tarena.mnmp.commons.pager.PagerResult;
+import com.tarena.mnmp.admin.utils.ExcelUtils;
 import com.tarena.mnmp.domain.PhoneWhiteListDO;
 import com.tarena.mnmp.domain.param.PhoneWhiteParam;
 import com.tarena.mnmp.domain.param.PhoneWhiteQueryParam;
@@ -29,14 +30,12 @@ import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.mnmp.protocol.Result;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpStatus;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,23 +47,11 @@ public class PhoneWhiteController implements PhoneWhiteApi {
     @Resource
     private PhoneWhiteService phoneWhiteService;
 
-    @Override public void getExcel(HttpServletResponse response) throws BusinessException, IOException {
-        String phoneWhite = "phone_white.xlsx";
-        ClassPathResource classPathResource = new ClassPathResource(phoneWhite);
-        InputStream stream = classPathResource.getInputStream();
-        response.reset();
-        response.setContentType("application/octet-stream");
-        response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-Disposition", "attachment;filename=" + phoneWhite);
-        response.setHeader("Content-excelname", phoneWhite);
-        OutputStream os = response.getOutputStream();
-        byte[] buff = new byte[1024];
-        int i;
-        while ((i = stream.read(buff)) != -1) {
-            os.write(buff, 0, i);
-            os.flush();
-        }
-        log.info("file name: {}", classPathResource.getFilename());
+    @Value("${excel.path.white-list}")
+    private String whiteExcelPath;
+
+    @Override public void getExcel(String path, HttpServletResponse response) throws BusinessException, IOException {
+        ExcelUtils.getExcel(StringUtils.isEmpty(path) ? null : whiteExcelPath + path, response);
     }
 
     @Override public Result<PagerResult<PhoneWhiteView>> queryPage(PhoneWhiteQueryParam param, LoginToken token) {
@@ -77,18 +64,14 @@ public class PhoneWhiteController implements PhoneWhiteApi {
         return new Result<>(result);
     }
 
-    @Override public Result<Void> saveByFile(MultipartFile file, LoginToken token, HttpServletResponse response) throws IOException {
+    @Override public Result<String> saveByFile(MultipartFile file, LoginToken token, HttpServletResponse response) throws IOException {
         List<PhoneWhiteExcelData> data = phoneWhiteService.saveByFile(file, token);
         if (!CollectionUtils.isEmpty(data)) {
-            response.reset();
-            response.setContentType("application/octet-stream");
-            response.setCharacterEncoding("utf-8");
-            response.setHeader("Content-Disposition", "attachment;filename=" + "error_data.xlsx");
-            response.setHeader("Content-excelname", "error_data.xlsx");
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
-            EasyExcelFactory.write(response.getOutputStream(), PhoneWhiteExcelData.class).sheet("失败数据").doWrite(data);
+            String name = ExcelUtils.fileName("xlsx");
+            EasyExcel.write(whiteExcelPath + name, PhoneWhiteExcelData.class).sheet("非法数据").doWrite(data);
+            return new Result<>(name);
         }
-        return Result.success();
+        return new Result<>(null);
     }
 
     @Override public Result<Void> update(PhoneWhiteParam param, LoginToken token) {

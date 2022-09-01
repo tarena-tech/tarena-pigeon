@@ -14,7 +14,9 @@ spring:
     hikari:
       minimum-idle: 1
 excel:
-  path: "/home/op/pigeon/excel/"
+  path:
+    task: "/home/op/pigeon/excel/task/"
+    white-list: '/home/op/pigeon/excel/white/'
 
 jwt:
   secret: tarena-pigeon
