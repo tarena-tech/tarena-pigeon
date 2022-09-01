@@ -51,7 +51,7 @@ public class PhoneWhiteController implements PhoneWhiteApi {
     private String whiteExcelPath;
 
     @Override public void getExcel(String path, HttpServletResponse response) throws BusinessException, IOException {
-        ExcelUtils.getExcel(StringUtils.isEmpty(path) ? null : whiteExcelPath + path, response);
+        ExcelUtils.getExcel(StringUtils.isEmpty(path) ? null : whiteExcelPath + path, "phone_white.xlsx", response);
     }
 
     @Override public Result<PagerResult<PhoneWhiteView>> queryPage(PhoneWhiteQueryParam param, LoginToken token) {

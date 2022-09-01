@@ -74,23 +74,8 @@ public class TaskController implements TaskApi {
     @Value("${excel.path.task}")
     private String excelPath;
 
-    private void export(HttpServletResponse response, InputStream is, String fileName) throws IOException {
-        response.reset();
-        response.setContentType("application/octet-stream");
-        response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
-        response.setHeader("Content-excelname", fileName);
-        OutputStream os = response.getOutputStream();
-        byte[] buff = new byte[1024];
-        int i;
-        while ((i = is.read(buff)) != -1) {
-            os.write(buff, 0, i);
-            os.flush();
-        }
-    }
-
     @Override public void getExcel(String path, HttpServletResponse response) throws BusinessException {
-        ExcelUtils.getExcel(StringUtils.isEmpty(path) ? null : excelPath + path, response);
+        ExcelUtils.getExcel(StringUtils.isEmpty(path) ? null : excelPath + path, "target.xlsx", response);
     }
 
     @Override public Result<String> uploadFile(MultipartFile file) throws IOException, BusinessException {

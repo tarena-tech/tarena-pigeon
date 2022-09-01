@@ -89,12 +89,12 @@ public class ExcelUtils {
         return dir + name;
     }
 
-    public static void getExcel(String path, HttpServletResponse response) throws BusinessException {
-        if (StringUtils.isEmpty(path)) {
+    public static void getExcel(String path, String name, HttpServletResponse response) throws BusinessException {
+        if (StringUtils.isNotBlank(name)) {
             try {
-                ClassPathResource classPathResource = new ClassPathResource("target.xlsx");
+                ClassPathResource classPathResource = new ClassPathResource(name);
                 InputStream stream = classPathResource.getInputStream();
-                export(response, stream, "target.xlsx");
+                export(response, stream, name);
                 log.info("file name: {}", classPathResource.getFilename());
                 return;
             } catch (IOException e) {
