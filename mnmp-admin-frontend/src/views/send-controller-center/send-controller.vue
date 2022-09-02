@@ -67,7 +67,7 @@
         <el-table-column prop="appCode" label="应用编码" />
         <el-table-column prop="appName" label="应用名称" />
         <el-table-column prop="startTime" label="生效开始时间" />
-        <el-table-column prop="endTime" label="生效结束次数" />
+        <el-table-column prop="endTime" label="生效结束时间" />
 
         <el-table-column prop="isEnabled" label="白名单状态">
           <template slot-scope="scope">
@@ -81,32 +81,29 @@
             <el-button  type="text" size="small" @click="changeStatus(scope.row)">
               {{scope.row.isEnabled === 1 ? '禁用' : '启用'}}
             </el-button>
-            <el-button  type="text" size="small" @click="save(scope.row)" v-if="$store.state.user.role === 'ROLE_user' && scope.row.auditStatus !== 0">
+            <el-button  type="text" size="small" @click="save(scope.row)">
               修改
             </el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
     </div>
-    <dialog-sign-save ref="DialogSignSave"  @refresh="refresh"/>
-    <dialog-sign-audit ref="DialogSignAudit" @refresh="refresh"/>
+    <dialog-send-controller-save ref="DialogSendControllerSave"  @refresh="refresh"/>
   </div>
 </template>
 
 <script>
 import { queryPage, save, downExcel } from '@/api/send-controller.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
-import DialogSignSave from '@/components/sign/dialog-save'
-import DialogSignAudit from '@/components/sign/dialog-audit'
+import DialogSendControllerSave from '@/components/send-controller/dialog-save'
 import { queryAppList } from "@/api/app";
-import {downloadFileByBlob} from "@/utils/download-file";
+import { downloadFileByBlob } from "@/utils/download-file";
 import store from "@/store";
 export default {
   name: 'DemoTable',
   components: {
     TmpTablePagination,
-    DialogSignSave,
-    DialogSignAudit
+    DialogSendControllerSave,
   },
   data() {
     return {
@@ -221,6 +218,9 @@ export default {
           this.$refs.tmp_table.loadingState(false)
         })
       })
+    },
+    save(_data) {
+      this.$refs.DialogSendControllerSave.show(_data)
     },
     successMsg() {
       this.$message({
