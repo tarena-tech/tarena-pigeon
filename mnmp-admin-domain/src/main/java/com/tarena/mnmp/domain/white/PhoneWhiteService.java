@@ -155,7 +155,7 @@ public class PhoneWhiteService {
                 if (!CollectionUtils.isEmpty(targets)) {
                     Map<String, PhoneWhiteListDO> map = new HashMap<>((int) (targets.size() / 0.75 + 1));
                     for (PhoneWhiteListDO target : targets) {
-                        map.put(target.getPhone() + target.getAppCode(), target);
+                        map.put(target.getAppCode() + "-" + target.getPhone(), target);
                     }
                     phoneWhiteListDao.batchInsert(targets);
                     redisTemplate.opsForHash().putAll(Constant.WHITE_PHONE, map);
