@@ -57,4 +57,6 @@ public class Constant {
     public static final String ACCESS_DENIED = "Access Denied";
     public static final String DEFAULT_LANGUAGE = "zh_cn";
     public static final String RESULT_OK_CODE = "0";
+
+    public static final String WHITE_PHONE = "pigeo:white:phone";
 }

@@ -22,6 +22,7 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.util.StringUtils;
 import com.tarena.mnmp.commons.utils.RegexUtils;
+import com.tarena.mnmp.constant.Constant;
 import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.PhoneWhiteListDO;
 import com.tarena.mnmp.domain.app.AppService;
@@ -32,6 +33,7 @@ import com.tarena.mnmp.enums.Enabled;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.LoginToken;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,6 +43,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,6 +57,8 @@ public class PhoneWhiteService {
     @Resource
     private AppService appService;
 
+    @Resource
+    private RedisTemplate<String, Serializable> redisTemplate;
     public List<PhoneWhiteListDO> queryList(PhoneWhiteQueryParam param, LoginToken token) {
         return phoneWhiteListDao.queryList(param);
     }
@@ -148,7 +153,12 @@ public class PhoneWhiteService {
 
             private void save() {
                 if (!CollectionUtils.isEmpty(targets)) {
+                    Map<String, PhoneWhiteListDO> map = new HashMap<>((int) (targets.size() / 0.75 + 1));
+                    for (PhoneWhiteListDO target : targets) {
+                        map.put(target.getPhone() + target.getAppCode(), target);
+                    }
                     phoneWhiteListDao.batchInsert(targets);
+                    redisTemplate.opsForHash().putAll(Constant.WHITE_PHONE, map);
                     targets = new ArrayList<>(BATCH_COUNT);
                 }
             }
