@@ -17,7 +17,6 @@
 
 package com.tarena.mnmp.domain.white;
 
-import com.tarena.mnmp.commons.bo.PhoneWhiteListBO;
 import com.tarena.mnmp.domain.PhoneWhiteListDO;
 import com.tarena.mnmp.domain.param.PhoneWhiteQueryParam;
 import java.util.List;

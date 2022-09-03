@@ -26,10 +26,8 @@ import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.PhoneWhiteListDO;
 import com.tarena.mnmp.domain.app.AppService;
 import com.tarena.mnmp.domain.param.AppQueryParam;
-import com.tarena.mnmp.domain.param.PhoneWhiteParam;
 import com.tarena.mnmp.domain.param.PhoneWhiteQueryParam;
 import com.tarena.mnmp.enums.Enabled;
-import com.tarena.mnmp.enums.Role;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.LoginToken;
 import java.io.IOException;
@@ -60,16 +58,6 @@ public class PhoneWhiteService {
     @Resource
     private RedisTemplate<String, Serializable> redisTemplate;
     public List<PhoneWhiteListDO> queryList(PhoneWhiteQueryParam param, LoginToken token) {
-        if (!Role.manager(token.getRole())) {
-            AppQueryParam query = new AppQueryParam();
-            query.setCreateUserId(token.getId());
-            List<AppDO> dos = appService.queryList(query);
-            List<String> appcdoes = new ArrayList<>();
-            for (AppDO app : dos) {
-                appcdoes.add(app.getCode());
-                param.setAppCodes(appcdoes);
-            }
-        }
         return phoneWhiteListDao.queryList(param);
     }
 

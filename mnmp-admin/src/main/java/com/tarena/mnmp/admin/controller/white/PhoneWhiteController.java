@@ -21,15 +21,19 @@ import com.alibaba.excel.EasyExcel;
 import com.tarena.mnmp.admin.codegen.api.white.PhoneWhiteApi;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import com.tarena.mnmp.admin.utils.ExcelUtils;
+import com.tarena.mnmp.domain.AppDO;
 import com.tarena.mnmp.domain.PhoneWhiteListDO;
-import com.tarena.mnmp.domain.param.PhoneWhiteParam;
+import com.tarena.mnmp.domain.app.AppService;
+import com.tarena.mnmp.domain.param.AppQueryParam;
 import com.tarena.mnmp.domain.param.PhoneWhiteQueryParam;
 import com.tarena.mnmp.domain.white.PhoneWhiteExcelData;
 import com.tarena.mnmp.domain.white.PhoneWhiteService;
+import com.tarena.mnmp.enums.Role;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.LoginToken;
 import com.tarena.mnmp.protocol.Result;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +51,9 @@ public class PhoneWhiteController implements PhoneWhiteApi {
     @Resource
     private PhoneWhiteService phoneWhiteService;
 
+    @Resource
+    private AppService appService;
+
     @Value("${excel.path.white-list}")
     private String whiteExcelPath;
 
@@ -55,6 +62,16 @@ public class PhoneWhiteController implements PhoneWhiteApi {
     }
 
     @Override public Result<PagerResult<PhoneWhiteView>> queryPage(PhoneWhiteQueryParam param, LoginToken token) {
+        if (!Role.manager(token.getRole())) {
+            AppQueryParam query = new AppQueryParam();
+            query.setCreateUserId(token.getId());
+            List<AppDO> dos = appService.queryList(query);
+            List<String> appcdoes = new ArrayList<>();
+            for (AppDO app : dos) {
+                appcdoes.add(app.getCode());
+                param.setAppCodes(appcdoes);
+            }
+        }
         List<PhoneWhiteListDO> sources = phoneWhiteService.queryList(param, token);
         Long count = phoneWhiteService.queryCount(param, token);
         PagerResult<PhoneWhiteView> result = new PagerResult<>(param.getPageSize(), param.getCurrentPageIndex());
