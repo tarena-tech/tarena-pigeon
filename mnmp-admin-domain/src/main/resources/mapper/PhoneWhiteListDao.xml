@@ -100,11 +100,11 @@
     <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
         <!--@mbg.generated-->
         insert into notice_phone_white_list
-            (phone, app_code, app_name, create_time)
+            (phone, app_code, app_name, create_time, create_user_id)
         values
         <foreach collection="list" item="item" separator=",">
             (#{item.phone,jdbcType=VARCHAR}, #{item.appCode,jdbcType=VARCHAR},
-             #{item.appName,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP})
+             #{item.appName,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.createUserId,jdbcType=BIGINT})
         </foreach>
     </insert>
 
