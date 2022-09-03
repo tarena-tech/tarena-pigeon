@@ -17,9 +17,11 @@
 
 package com.tarena.mnmp.domain.param;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tarena.mnmp.commons.pager.PagerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -33,7 +35,7 @@ public class PhoneWhiteQueryParam extends PagerResult {
     @ApiModelProperty("app编码")
     private String appCode;
 
-    @ApiModelProperty("是否启用, 0:禁用, 1:启用(默认)")
-    private Integer isEnabled;
+    @JsonIgnore
+    private List<String> appCodes;
 
 }

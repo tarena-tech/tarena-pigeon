@@ -20,7 +20,6 @@ package com.tarena.mnmp.domain.white;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
-import com.alibaba.excel.util.StringUtils;
 import com.tarena.mnmp.commons.utils.RegexUtils;
 import com.tarena.mnmp.constant.Constant;
 import com.tarena.mnmp.domain.AppDO;
@@ -30,6 +29,7 @@ import com.tarena.mnmp.domain.param.AppQueryParam;
 import com.tarena.mnmp.domain.param.PhoneWhiteParam;
 import com.tarena.mnmp.domain.param.PhoneWhiteQueryParam;
 import com.tarena.mnmp.enums.Enabled;
+import com.tarena.mnmp.enums.Role;
 import com.tarena.mnmp.protocol.BusinessException;
 import com.tarena.mnmp.protocol.LoginToken;
 import java.io.IOException;
@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Resource;
-import org.springframework.beans.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -60,6 +60,16 @@ public class PhoneWhiteService {
     @Resource
     private RedisTemplate<String, Serializable> redisTemplate;
     public List<PhoneWhiteListDO> queryList(PhoneWhiteQueryParam param, LoginToken token) {
+        if (!Role.manager(token.getRole())) {
+            AppQueryParam query = new AppQueryParam();
+            query.setCreateUserId(token.getId());
+            List<AppDO> dos = appService.queryList(query);
+            List<String> appcdoes = new ArrayList<>();
+            for (AppDO app : dos) {
+                appcdoes.add(app.getCode());
+                param.setAppCodes(appcdoes);
+            }
+        }
         return phoneWhiteListDao.queryList(param);
     }
 
@@ -67,18 +77,21 @@ public class PhoneWhiteService {
         return phoneWhiteListDao.selectByPrimaryKey(id);
     }
 
-    public List<PhoneWhiteExcelData> saveByFile(MultipartFile file, LoginToken token) throws IOException {
-
+    public List<PhoneWhiteExcelData> saveByFile(MultipartFile file, LoginToken token) throws IOException, BusinessException {
         List<PhoneWhiteExcelData> fails = new ArrayList<>();
-        Map<String, AppDO> appCache = new HashMap<>();
-        AppDO app = new AppDO();
-        app.setId(-1L);
 
         AppQueryParam queryParam = new AppQueryParam();
         queryParam.setEnable(Enabled.YES.getVal());
         queryParam.setDesc(false);
         queryParam.setCurrentPageIndex(1);
         queryParam.setPageSize(1);
+        queryParam.setCreateUserId(token.getId());
+        List<AppDO> dos = appService.queryList(queryParam);
+        if (CollectionUtils.isEmpty(dos)) {
+            throw new BusinessException("100", "请先创建应用");
+        }
+
+        AppDO app = dos.get(0);
         Date now = new Date();
 
         EasyExcel.read(file.getInputStream(), PhoneWhiteExcelData.class, new ReadListener<PhoneWhiteExcelData>() {
@@ -100,48 +113,14 @@ public class PhoneWhiteService {
                     fails.add(data);
                     return;
                 }
+                PhoneWhiteListDO phone = new PhoneWhiteListDO();
+                phone.setPhone(data.getPhone());
+                phone.setAppCode(app.getCode());
+                phone.setAppName(app.getName());
+                phone.setCreateTime(now);
+                phone.setCreateUserId(token.getId());
 
-                if (StringUtils.isEmpty(data.getAppCode())) {
-                    data.setRemark("app编码不能为空");
-                    fails.add(data);
-                    return;
-                }
-
-                if (null == data.getStartTime() || null == data.getEndTime()) {
-                    data.setRemark("生效起止时间不能为空");
-                    fails.add(data);
-                    return;
-                }
-
-                if (data.getStartTime().after(data.getEndTime())) {
-                    data.setRemark("生效时间不能早于结束时间");
-                    fails.add(data);
-                    return;
-                }
-
-                PhoneWhiteListDO pw = new PhoneWhiteListDO();
-                BeanUtils.copyProperties(data, pw);
-
-                AppDO curApp = appCache.computeIfAbsent(data.getAppCode(), appCode -> {
-                    queryParam.setCode(appCode);
-                    List<AppDO> dos = appService.queryList(queryParam);
-                    if (CollectionUtils.isEmpty(dos)) {
-                        return app;
-                    }
-                    return dos.get(0);
-                });
-
-                if (curApp.getId() < 0) {
-                    data.setRemark("根据app编码查询不到有效的app");
-                    fails.add(data);
-                    return;
-                }
-
-                pw.setAppName(curApp.getName());
-                pw.setIsEnabled(Enabled.YES.getVal());
-                pw.setCreateTime(now);
-                pw.setUpdateTime(now);
-                targets.add(pw);
+                targets.add(phone);
                 if (targets.size() >= BATCH_COUNT) {
                     save();
                 }
@@ -153,12 +132,14 @@ public class PhoneWhiteService {
 
             private void save() {
                 if (!CollectionUtils.isEmpty(targets)) {
-                    Map<String, PhoneWhiteListDO> map = new HashMap<>((int) (targets.size() / 0.75 + 1));
-                    for (PhoneWhiteListDO target : targets) {
-                        map.put(target.getAppCode() + "-" + target.getPhone(), target);
-                    }
+
                     phoneWhiteListDao.batchInsert(targets);
-                    redisTemplate.opsForHash().putAll(Constant.WHITE_PHONE, map);
+                    Map<String, String> m = new HashMap<>();
+                    for (PhoneWhiteListDO target : targets) {
+                        m.put(target.getPhone(), target.getId().toString());
+                    }
+
+                    redisTemplate.opsForHash().putAll(Constant.WHITE_PHONE + app.getCode() , m);
                     targets = new ArrayList<>(BATCH_COUNT);
                 }
             }
@@ -166,14 +147,23 @@ public class PhoneWhiteService {
         return fails;
     }
 
-    public void update(PhoneWhiteParam param, LoginToken token) throws BusinessException {
-        PhoneWhiteListDO phoneWhite = phoneWhiteListDao.selectByPrimaryKey(param.getId());
-        if (null == phoneWhite) {
-            throw new BusinessException("100", "数据不存在");
+    public void del(Long id, String appCode, LoginToken token) throws BusinessException {
+        if (null != id) {
+            PhoneWhiteListDO phoneWhite = phoneWhiteListDao.selectByPrimaryKey(id);
+            if (null == phoneWhite) {
+                throw new BusinessException("100", "数据不存在");
+            }
+            redisTemplate.opsForHash().delete(Constant.WHITE_PHONE + phoneWhite.getAppCode(), phoneWhite.getPhone());
+            phoneWhiteListDao.deleteByPrimaryKey(id);
+            return;
         }
 
-        BeanUtils.copyProperties(param, phoneWhite);
-        phoneWhiteListDao.updateByPrimaryKeySelective(phoneWhite);
+        if (StringUtils.isNotBlank(appCode)) {
+            phoneWhiteListDao.deleteByAppCode(appCode);
+            redisTemplate.delete(Constant.WHITE_PHONE + appCode);
+        }
+
+
     }
 
     public Long queryCount(PhoneWhiteQueryParam param, LoginToken token) {

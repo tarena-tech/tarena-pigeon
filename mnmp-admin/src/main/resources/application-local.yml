@@ -10,6 +10,19 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 1
+  # redis
+  redis:
+    host: dev-redis.tctm.life
+    port: 6379
+    password: "teduPMNlzjfDiaK"
+    database: 8
+    jedis:
+      pool:
+        max-active: 8
+        min-idle: 5
+        max-idle: 8
+        max-wait: PT15M
+        time-between-eviction-runs: PT15M
 excel:
   path:
     task: "F:/excel/"

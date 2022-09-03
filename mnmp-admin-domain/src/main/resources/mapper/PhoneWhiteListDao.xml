@@ -9,15 +9,10 @@
     <result column="app_code" jdbcType="VARCHAR" property="appCode" />
     <result column="app_name" jdbcType="VARCHAR" property="appName" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
-    <result column="is_enabled" jdbcType="INTEGER" property="isEnabled" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, phone, app_code, app_name, create_time, start_time, update_time,
-    end_time, is_enabled
+    id, phone, app_code, app_name, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -48,18 +43,6 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="startTime != null">
-        start_time = #{startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
-        end_time = #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isEnabled != null">
-        is_enabled = #{isEnabled,jdbcType=INTEGER},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -77,8 +60,11 @@
         and app_code = #{appCode,jdbcType=VARCHAR}
       </if>
 
-      <if test="isEnabled != null">
-        and is_enabled = #{isEnabled,jdbcType=INTEGER}
+      <if test="appCodes != null and appCodes.size() != 0">
+        and app_code in
+        <foreach collection="appCodes" item="value" separator="," open="(" close=")">
+          #{value,jdbcType=VARCHAR}
+        </foreach>
       </if>
     </where>
     ${limitClause}
@@ -95,24 +81,22 @@
       <if test="appCode != null and appCode != ''">
         and app_code = #{appCode,jdbcType=VARCHAR}
       </if>
-
-      <if test="isEnabled != null">
-        and is_enabled = #{isEnabled,jdbcType=INTEGER}
-      </if>
     </where>
   </select>
 
   <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into notice_phone_white_list
-    (phone, app_code, app_name, create_time, start_time, update_time, end_time,
-    is_enabled)
+    (phone, app_code, app_name, create_time)
     values
     <foreach collection="list" item="item" separator=",">
       (#{item.phone,jdbcType=VARCHAR}, #{item.appCode,jdbcType=VARCHAR},
-      #{item.appName,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.startTime,jdbcType=TIMESTAMP},
-      #{item.updateTime,jdbcType=TIMESTAMP}, #{item.endTime,jdbcType=TIMESTAMP}, #{item.isEnabled,jdbcType=INTEGER}
-      )
+      #{item.appName,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
+
+  <delete id="deleteByAppCode">
+    delete from notice_phone_white_list
+    where app_code = #{appCode,jdbcType=VARCHAR}
+    </delete>
 </mapper>

@@ -15,33 +15,12 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.domain;
+package com.tarena.mnmp.commons.utils;
 
-import java.util.Date;
-import lombok.Data;
+public class RedisKeyUtils {
 
-@Data
-public class PhoneWhiteListDO {
-    /**
-    * 表格主键
-    */
-    private Long id;
-
-    /**
-    * 电话号码
-    */
-    private String phone;
-
-    /**
-    * 班级名称,搜索筛选
-    */
-    private String appCode;
-
-    private String appName;
-
-    private Date createTime;
-
-    private Long createUserId;
-
+    public static String phoneWhiteHashKey(String appCode, String phone) {
+        return appCode + '-' + phone;
+    }
 
 }

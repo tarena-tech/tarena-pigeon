@@ -65,10 +65,10 @@ public interface PhoneWhiteApi {
     @PreAuthorize("hasAnyRole('admin','root')")
     Result<String> saveByFile(@RequestParam("file") MultipartFile file, @User LoginToken token, HttpServletResponse response) throws IOException, BusinessException;
 
-    @ApiOperation(value = "更新")
-    @PostMapping("update")
+    @ApiOperation(value = "删除")
+    @PostMapping("del")
     @PreAuthorize("hasAnyRole('admin','root')")
-    Result<Void> update(@Valid @RequestBody PhoneWhiteParam param, @User LoginToken token) throws BusinessException;
+    Result<Void> dels(Long id, String appCode, @User LoginToken token) throws BusinessException;
 
 
 

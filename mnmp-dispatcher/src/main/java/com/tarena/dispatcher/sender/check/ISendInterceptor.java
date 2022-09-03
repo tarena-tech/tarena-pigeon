@@ -25,9 +25,7 @@ public interface ISendInterceptor {
     String LIMIT_REDIS_PRE = "pigeon:";
 
 
-    default void before(SmsTarget smsTarget) throws BusinessException {
-
-    }
+    void before(SmsTarget smsTarget) throws BusinessException;
 
     default void after(SmsTarget smsTarget) {
 

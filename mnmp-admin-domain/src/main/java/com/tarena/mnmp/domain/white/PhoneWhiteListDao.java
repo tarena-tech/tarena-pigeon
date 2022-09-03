@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.domain.white;
 
+import com.tarena.mnmp.commons.bo.PhoneWhiteListBO;
 import com.tarena.mnmp.domain.PhoneWhiteListDO;
 import com.tarena.mnmp.domain.param.PhoneWhiteQueryParam;
 import java.util.List;
@@ -30,11 +31,12 @@ public interface PhoneWhiteListDao {
 
     int updateByPrimaryKeySelective(PhoneWhiteListDO record);
 
-    int updateByPrimaryKey(PhoneWhiteListDO record);
 
     List<PhoneWhiteListDO> queryList(PhoneWhiteQueryParam param);
 
     Long count(PhoneWhiteQueryParam param);
 
     int batchInsert(@Param("list") List<PhoneWhiteListDO> list);
+
+    void deleteByAppCode(String appCode);
 }
