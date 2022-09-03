@@ -25,6 +25,10 @@
         </div>
 
         <div class="form-right-box">
+          <el-button type="danger" icon="el-icon-delete" @click="deleteAll()">删除当前应用下所有</el-button>
+        </div>
+
+        <div class="form-right-box">
           <el-button type="success" icon="el-icon-plus" @click="getExcel()">下载模版</el-button>
         </div>
 
@@ -66,24 +70,11 @@
         <el-table-column prop="phone" label="手机号" />
         <el-table-column prop="appCode" label="应用编码" />
         <el-table-column prop="appName" label="应用名称" />
-        <el-table-column prop="startTime" label="生效开始时间" />
-        <el-table-column prop="endTime" label="生效结束时间" />
-
-        <el-table-column prop="isEnabled" label="白名单状态">
-          <template slot-scope="scope">
-            <span>{{ scope.row.isEnabled === 1 ? '启用' : '禁用' }}</span>
-          </template>
-        </el-table-column>
 
         <el-table-column prop="createTime" label="创建时间"   />
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button  type="text" size="small" @click="changeStatus(scope.row)">
-              {{scope.row.isEnabled === 1 ? '禁用' : '启用'}}
-            </el-button>
-            <el-button  type="text" size="small" @click="save(scope.row)">
-              修改
-            </el-button>
+            <el-button  type="text" size="small" @click="removeById(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </tmp-table-pagination>
@@ -93,7 +84,7 @@
 </template>
 
 <script>
-import { queryPage, save, downExcel } from '@/api/send-controller.js'
+import { queryPage, deleteById, deleteAll, downExcel } from '@/api/send-controller.js'
 import TmpTablePagination from '@/components/table-pagination/table-pagination.vue'
 import DialogSendControllerSave from '@/components/send-controller/dialog-save'
 import { queryAppList } from "@/api/app";
@@ -197,24 +188,18 @@ export default {
       this.pagination.currentPageIndex = 1
       this.getTabelData()
     },
-    changeStatus(_data) {
-      const msg = _data.isEnabled === 1 ? '禁用' : '启用'
-      const str = '是否要' + msg + '【' + _data.phone + '】'
-      let ena = _data.isEnabled === 1 ? 0 : 1;
+    removeById(_data) {
+      const str = '是否要删除【' + _data.phone + '】'
       this.$confirm(str, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        save({
+        deleteById({
           id: _data.id,
-          isEnabled: ena
         }).then(res => {
           this.successMsg()
-          // this.getTabelData()
-          _data.isEnabled = ena
         }).catch(err => {
-          console.log('list-err:', err)
           this.$refs.tmp_table.loadingState(false)
         })
       })
@@ -234,6 +219,25 @@ export default {
         console.log(res)
         downloadFileByBlob(res.data, res.headers['content-excelname'], res.data.type)
       })
+    },
+
+    deleteAll() {
+      if (null == this.claForm.appCode) {
+        const h = this.$createElement;
+        this.$notify({
+          title: '操作错误',
+          message: h('i', { style: 'color: teal'}, '请选择应用,在左侧搜索栏中选中要删除的应用!!!')
+        });
+        return
+      }
+      console.log('delete...', this.claForm.appCode)
+      deleteAll({appCode: this.claForm.appCode})
+        .then(res => {
+        this.successMsg()
+      }).catch(err => {
+
+      })
+      this.toResetPageForList()
     },
 
     submitUpload() {

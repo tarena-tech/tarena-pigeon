@@ -64,7 +64,7 @@ public interface PhoneWhiteApi {
 
     @ApiOperation(value = "删除")
     @PostMapping("del")
-    @PreAuthorize("hasAnyRole('admin','root')")
+    @PreAuthorize("hasAnyRole('user', 'admin','root')")
     Result<Void> dels(Long id, String appCode, @User LoginToken token) throws BusinessException;
 
 
