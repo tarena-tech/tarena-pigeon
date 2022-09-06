@@ -158,3 +158,4 @@ sh build
 RELEASE-NODE
 ---
 [1.0.1](document/release/1.0.1.md)
+[1.0.2](document/release/1.0.2.md)
