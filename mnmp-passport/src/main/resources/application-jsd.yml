@@ -1,0 +1,18 @@
+my:
+  server:
+    addr:  192.168.195.203
+spring:
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://10.0.0.43:3306/tarena_pigeon?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: root
+    password: tarena2017Up;
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 1
+excel:
+  path: "/home/op/pigeon/excel/"
+
+jwt:
+  secret: tarena-pigeon
+  expiration: 60000000
