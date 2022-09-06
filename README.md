@@ -154,3 +154,7 @@ sh build
 协作流程
 ---
 ![协作流程](document/flow.png)
+
+RELEASE-NODE
+---
+[1.0.1](document/release/1.0.1.md)

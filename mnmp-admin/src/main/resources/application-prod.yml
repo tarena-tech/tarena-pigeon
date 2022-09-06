@@ -11,16 +11,4 @@ spring:
     hikari:
       minimum-idle: 1
 excel:
-  path: "/home/op/pigeon/excel/"
-
-jwt:
-  secret: tarena-pigeon
-  expiration: 60000000
-
-rocket:
-  name_server_address: 192.168.195.203:9876
-  message_charset: UTF-8
-  publish_debug: true
-  topic: mnmp_test
-  publish_group: publish_group
-  retry_times_when_send_failed: 5
+  path: "F:/excel/"
