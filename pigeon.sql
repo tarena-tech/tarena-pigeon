@@ -243,3 +243,23 @@ create table notice_user_role
     update_time timestamp null
 );
 
+
+
+INSERT INTO notice_role (id, name, create_time, update_time) VALUES (1, 'ROLE_root', '2022-08-08 17:37:51', '2022-08-08 17:37:51');
+INSERT INTO notice_role (id, name, create_time, update_time) VALUES (2, 'ROLE_admin', '2022-08-08 17:37:51', '2022-08-08 17:37:51');
+INSERT INTO notice_role (id, name, create_time, update_time) VALUES (3, 'ROLE_user', '2022-08-08 17:37:51', '2022-08-08 17:37:51');
+
+
+INSERT INTO notice_user (id, username, password, create_time, update_time) VALUES (1, 'root', '$2a$10$CKYuNVLTZrxItObnUj/Vs.EdtoCQ/koC2M79m0uCxvvffhsu5uMf2', '2022-08-08 17:36:34', '2022-08-08 17:36:34');
+INSERT INTO notice_user (id, username, password, create_time, update_time) VALUES (2, 'admin', '$2a$10$CKYuNVLTZrxItObnUj/Vs.EdtoCQ/koC2M79m0uCxvvffhsu5uMf2', '2022-08-08 17:36:34', '2022-08-08 17:36:34');
+INSERT INTO notice_user (id, username, password, create_time, update_time) VALUES (3, 'user', '$2a$10$CKYuNVLTZrxItObnUj/Vs.EdtoCQ/koC2M79m0uCxvvffhsu5uMf2', '2022-08-08 17:36:34', '2022-08-08 17:36:34');
+
+
+
+INSERT INTO notice_user_role (id, role_id, user_id, create_time, update_time) VALUES (1, 1, 1, '2022-08-08 17:36:34', '2022-08-08 17:36:34');
+INSERT INTO notice_user_role (id, role_id, user_id, create_time, update_time) VALUES (2, 2, 2, '2022-08-08 17:36:34', '2022-08-08 17:36:34');
+INSERT INTO notice_user_role (id, role_id, user_id, create_time, update_time) VALUES (3, 3, 3, '2022-08-08 17:36:34', '2022-08-08 17:36:34');
+
+
+INSERT INTO notice_provider (id, name, code, notice_type, official_website, contacts, phone, client_config, remarks, enabled, create_time, update_time, audit_status, audit_result) VALUES (1, '阿里短信', 'ALI_SMS', 1, 'http://www.aliyun.com', '张三', '17610209982', '{"accessKeyId":"*****","accessKeySecret":"******","defaultTemplate":"***************"}', '短信供应商', 1, '2022-08-19 14:01:53', '2022-08-19 14:11:21', 1, '通过');
+INSERT INTO notice_provider (id, name, code, notice_type, official_website, contacts, phone, client_config, remarks, enabled, create_time, update_time, audit_status, audit_result) VALUES (2, '华为短信', 'HW_SMS', 1, 'http://www.aliyun.com', '张三', '17610209982', '{"accessKeyId":"*****","accessKeySecret":"*****","defaultTemplate":"*****"}', '短信供应商', 1, '2022-08-30 15:16:46', null, 0, null);
