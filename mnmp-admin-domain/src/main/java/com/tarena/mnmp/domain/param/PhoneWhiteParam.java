@@ -14,4 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-insert  into `notice_sms_sign`(`id`,`name`,`audit_status`,`app_id`,`app_code`,`remarks`,`enabled`,`creator`,`create_time`,`update_time`) values (1,'xxx',1,1,'tctm','xxx',0,'100110313','2021-08-18 18:44:12','2021-10-21 18:58:03');
+
+package com.tarena.mnmp.domain.param;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import lombok.Data;
+
+
+@Data
+@ApiModel("手机白名单修改模型")
+public class PhoneWhiteParam {
+
+    /**
+     * 表格主键
+     */
+    @Min(1)
+    @NotNull(message = "主键id不能为空")
+    @ApiModelProperty(value = "主键id,修改必传", required = true)
+    private Long id;
+
+    @ApiModelProperty(value = "开始时间")
+    private Date startTime;
+
+    @ApiModelProperty(value = "结束时间")
+    private Date endTime;
+
+    @ApiModelProperty(value = "1:启用, 0:禁用")
+    private Integer isEnabled;
+}

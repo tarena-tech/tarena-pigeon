@@ -75,7 +75,7 @@ public class AppServiceTest {
 //        appSaveParam.setAuditStatus(0);
         appSaveParam.setEnabled(0);
         appSaveParam.setRemarks("测试程序");
-        appSaveParam.setName("达内测试");
+        appSaveParam.setName("测试");
         appSaveParam.setLeader("ceshiwang");
         appSaveParam.setCode("CODE_TEST_001");
         assertDoesNotThrow(() -> {
@@ -128,7 +128,7 @@ public class AppServiceTest {
 //        appSaveParam.setAuditStatus(0);
         appSaveParam.setEnabled(0);
         appSaveParam.setRemarks("测试程序");
-        appSaveParam.setName("达内测试");
+        appSaveParam.setName("测试");
         appSaveParam.setLeader("ceshiwang");
         appSaveParam.setCode("CODE_TEST_001");
         assertDoesNotThrow(() -> {
@@ -141,7 +141,7 @@ public class AppServiceTest {
     public void saveTest() throws BusinessException {
         AppSaveParam param = new AppSaveParam();
         param.setCode("app_002");
-        param.setName("童程童美");
+        param.setName("xxxx");
         param.setLeader("lisi");
         param.setTeamMembers("sadfsf,sfd,sfd");
         param.setRemarks("胜多负少");

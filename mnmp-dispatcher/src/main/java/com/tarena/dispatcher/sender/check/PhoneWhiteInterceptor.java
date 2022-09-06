@@ -14,4 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-insert  into `notice_sms_sign`(`id`,`name`,`audit_status`,`app_id`,`app_code`,`remarks`,`enabled`,`creator`,`create_time`,`update_time`) values (1,'xxx',1,1,'tctm','xxx',0,'100110313','2021-08-18 18:44:12','2021-10-21 18:58:03');
+
+package com.tarena.dispatcher.sender.check;
+
+import com.tarena.dispatcher.SmsTarget;
+import com.tarena.mnmp.protocol.BusinessException;
+import java.io.Serializable;
+import org.springframework.data.redis.core.RedisTemplate;
+
+public class PhoneWhiteInterceptor implements ISendInterceptor {
+
+
+    private RedisTemplate<String, Serializable> redisTemplate;
+
+    @Override public void before(SmsTarget smsTarget) throws BusinessException {
+        String hashKey = smsTarget.getAppCode() + "-" + smsTarget.getTarget();
+    }
+
+    @Override public void after(SmsTarget smsTarget) {
+        ISendInterceptor.super.after(smsTarget);
+    }
+}

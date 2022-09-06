@@ -18,16 +18,26 @@
 package com.tarena.dispatcher.sender.check;
 
 import com.tarena.dispatcher.SmsTarget;
+import com.tarena.mnmp.constant.Constant;
 import com.tarena.mnmp.protocol.BusinessException;
+import java.io.Serializable;
+import javax.annotation.Resource;
+import org.springframework.core.annotation.Order;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
-public interface ISendInterceptor {
+@Order(Integer.MIN_VALUE)
+@Service
+public class WhitePhoneInterceptor implements ISendInterceptor {
 
-    String LIMIT_REDIS_PRE = "pigeon:";
+    @Resource
+    private RedisTemplate<String, Serializable> redisTemplate;
 
-
-    void before(SmsTarget smsTarget) throws BusinessException;
-
-    default void after(SmsTarget smsTarget) {
+    @Override public void before(SmsTarget smsTarget) throws BusinessException {
+        Boolean b = redisTemplate.opsForHash().hasKey(Constant.WHITE_PHONE + smsTarget.getAppCode(), smsTarget.getTarget());
+        if (!Boolean.TRUE.equals(b)) {
+            throw new BusinessException("100", "该手机号未在白名单中");
+        }
 
     }
 }

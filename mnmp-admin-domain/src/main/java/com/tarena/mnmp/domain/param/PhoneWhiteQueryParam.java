@@ -14,4 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-insert  into `notice_sms_sign`(`id`,`name`,`audit_status`,`app_id`,`app_code`,`remarks`,`enabled`,`creator`,`create_time`,`update_time`) values (1,'xxx',1,1,'tctm','xxx',0,'100110313','2021-08-18 18:44:12','2021-10-21 18:58:03');
+
+package com.tarena.mnmp.domain.param;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tarena.mnmp.commons.pager.PagerResult;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.List;
+import lombok.Data;
+
+@Data
+@ApiModel("手机号白名单入参")
+public class PhoneWhiteQueryParam extends PagerResult {
+
+
+    @ApiModelProperty("手机号")
+    private String phone;
+
+    @ApiModelProperty("app编码")
+    private String appCode;
+
+    @JsonIgnore
+    private List<String> appCodes;
+
+}

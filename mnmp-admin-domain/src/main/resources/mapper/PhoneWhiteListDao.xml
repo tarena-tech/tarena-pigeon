@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tarena.mnmp.domain.white.PhoneWhiteListDao">
+    <resultMap id="BaseResultMap" type="com.tarena.mnmp.domain.PhoneWhiteListDO">
+        <!--@mbg.generated-->
+        <!--@Table notice_phone_white_list-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="app_code" jdbcType="VARCHAR" property="appCode"/>
+        <result column="app_name" jdbcType="VARCHAR" property="appName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_user_id" jdbcType="BIGINT" property="createUserId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        phone,
+        app_code,
+        app_name,
+        create_time,
+        create_user_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from notice_phone_white_list
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete
+        from notice_phone_white_list
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.tarena.mnmp.domain.PhoneWhiteListDO">
+        <!--@mbg.generated-->
+        update notice_phone_white_list
+        <set>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="appCode != null">
+                app_code = #{appCode,jdbcType=VARCHAR},
+            </if>
+            <if test="appName != null">
+                app_name = #{appName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="queryList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from notice_phone_white_list
+        <where>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone,jdbcType=VARCHAR}
+            </if>
+
+            <if test="appCode != null and appCode != ''">
+                and app_code = #{appCode,jdbcType=VARCHAR}
+            </if>
+
+            <if test="appCodes != null and appCodes.size() != 0">
+                and app_code in
+                <foreach collection="appCodes" item="value" separator="," open="(" close=")">
+                    #{value,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+        </where>
+        ${limitClause}
+    </select>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from notice_phone_white_list
+        <where>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone,jdbcType=VARCHAR}
+            </if>
+
+            <if test="appCode != null and appCode != ''">
+                and app_code = #{appCode,jdbcType=VARCHAR}
+            </if>
+            <if test="appCodes != null and appCodes.size() != 0">
+                and app_code in
+                <foreach collection="appCodes" item="value" separator="," open="(" close=")">
+                    #{value,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into notice_phone_white_list
+            (phone, app_code, app_name, create_time, create_user_id)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.phone,jdbcType=VARCHAR}, #{item.appCode,jdbcType=VARCHAR},
+             #{item.appName,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.createUserId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByAppCode">
+        delete
+        from notice_phone_white_list
+        where app_code = #{appCode,jdbcType=VARCHAR}
+    </delete>
+</mapper>

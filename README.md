@@ -155,6 +155,17 @@ sh build
 ---
 ![协作流程](document/flow.png)
 
+开发文档
+---
+http://localhost:8080/doc.html#/home
+
+SQL脚本
+---
+./pigeon.sql
+
+注意申请阿里及华为云短信，修改access key 相关配置
+
 RELEASE-NODE
 ---
 [1.0.1](document/release/1.0.1.md)
+[1.0.2](document/release/1.0.2.md)

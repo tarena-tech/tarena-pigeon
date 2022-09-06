@@ -64,6 +64,7 @@
         <easyexcel.version>3.1.1</easyexcel.version>
         <sentinel.version>1.8.5</sentinel.version>
         <apache.commons.io.version>2.4</apache.commons.io.version>
+        <msgpack.version>0.8.21</msgpack.version>
     </properties>
 
 
@@ -355,6 +356,17 @@
                 <artifactId>lombok</artifactId>
                 <version>1.18.20</version>
                 <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.msgpack</groupId>
+                <artifactId>msgpack-core</artifactId>
+                <version>${msgpack.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.msgpack</groupId>
+                <artifactId>jackson-dataformat-msgpack</artifactId>
+                <version>${msgpack.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

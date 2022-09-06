@@ -48,11 +48,11 @@ public class Knife4jConfiguration {
     /**
      * 主机名
      */
-    private final String host = "http://www.tedu.cn";
+    private final String host = "localhost";
     /**
      * 标题
      */
-    private final String title = "信鸽-达内集团开源消息中台(Message Notify Middle Platform)-用户中台";
+    private final String title = "信鸽-与非科技开源消息中台(Message Notify Middle Platform)-用户中台";
     /**
      * 简介
      */
@@ -68,7 +68,7 @@ public class Knife4jConfiguration {
     /**
      * 联系网址
      */
-    private final String contactUrl = "http://www.tedu.cn";
+    private final String contactUrl = "https://github.com/tarena-tech/tarena-pigeon";
     /**
      * 联系邮箱
      */

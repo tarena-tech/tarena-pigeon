@@ -4,7 +4,8 @@ com.tarena.mnmp.mq.rocketmq.configurations.RocketMqConsumerConfiguration,\
 com.tarena.mnmp.mq.rocketmq.configurations.RocketMqPublisherConfiguration,\
 com.tarena.mnmp.extentions.autoconfigurations.FastJsonAutoConfiguration,\
 com.tarena.mnmp.extentions.autoconfigurations.DispatcherConfiguration,\
-com.tarena.mnmp.extentions.autoconfigurations.MonitorAutoConfiguration
+com.tarena.mnmp.extentions.autoconfigurations.MonitorAutoConfiguration,\
+com.tarena.mnmp.extentions.autoconfigurations.RedisTemplateConfiguration
 
 
 

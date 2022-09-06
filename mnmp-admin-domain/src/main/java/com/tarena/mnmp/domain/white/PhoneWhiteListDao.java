@@ -14,4 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-insert  into `notice_sms_sign`(`id`,`name`,`audit_status`,`app_id`,`app_code`,`remarks`,`enabled`,`creator`,`create_time`,`update_time`) values (1,'xxx',1,1,'tctm','xxx',0,'100110313','2021-08-18 18:44:12','2021-10-21 18:58:03');
+
+package com.tarena.mnmp.domain.white;
+
+import com.tarena.mnmp.domain.PhoneWhiteListDO;
+import com.tarena.mnmp.domain.param.PhoneWhiteQueryParam;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface PhoneWhiteListDao {
+    int deleteByPrimaryKey(Long id);
+
+
+    PhoneWhiteListDO selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(PhoneWhiteListDO record);
+
+
+    List<PhoneWhiteListDO> queryList(PhoneWhiteQueryParam param);
+
+    Long count(PhoneWhiteQueryParam param);
+
+    int batchInsert(@Param("list") List<PhoneWhiteListDO> list);
+
+    void deleteByAppCode(String appCode);
+}

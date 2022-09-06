@@ -59,7 +59,14 @@ public abstract class AroundSender {
             if (null != appEntry) {
                 appEntry.exit(1, smsTarget.getAppCode());
             }
-            sendInterceptors.forEach(interceptor -> interceptor.after(smsTarget));
+            for (ISendInterceptor interceptor : sendInterceptors) {
+                try {
+                    interceptor.after(smsTarget);
+                } catch (Exception e) {
+                    // ignore
+                    logger.error("error:", e);
+                }
+            }
         }
 
     }

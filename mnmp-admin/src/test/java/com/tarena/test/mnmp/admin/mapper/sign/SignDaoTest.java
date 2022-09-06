@@ -56,7 +56,7 @@ public class SignDaoTest {
     )
     public void queryAllProvidersTest() throws BusinessException {
         SignQuery signQuery = new SignQuery();
-        signQuery.setName("童程");
+        signQuery.setName("xxx");
         signQuery.setAppCode("tc");
         signQuery.setAuditStatus(1);
         List<SignDO> signDOs = signDao.querySigns(signQuery);
@@ -78,10 +78,10 @@ public class SignDaoTest {
         signDO.setAppCode("tctm");
         signDO.setAuditStatus(0);
         signDO.setEnabled(0);
-        signDO.setName("童程童美");
+        signDO.setName("xxxx");
         signDO.setCreator("100011");
         signDO.setAppId(1L);
-        signDO.setRemarks("童程童美签名");
+        signDO.setRemarks("xxxx");
         Integer result = signDao.save(signDO);
         Asserts.isTrue(result == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "新增签名测试持久层mapper失败"));
         logger.info("新增签名测试持久层mapper成功");
@@ -129,10 +129,10 @@ public class SignDaoTest {
         updateSignDO.setAppCode("tctm");
         updateSignDO.setAuditStatus(0);
         updateSignDO.setEnabled(0);
-        updateSignDO.setName("童程童美");
+        updateSignDO.setName("xxxx");
         updateSignDO.setCreator("100011");
         updateSignDO.setAppId(1L);
-        updateSignDO.setRemarks("童程童美签名");
+        updateSignDO.setRemarks("xxxx");
         updateSignDO.setId(signDO.getId());
         Integer result = signDao.modify(updateSignDO);
         Asserts.isTrue(result == 0, new BusinessException(ErrorCode.SYSTEM_ERROR, "更新provider供应商测试持久层mapper失败"));

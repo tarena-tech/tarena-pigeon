@@ -73,7 +73,7 @@ public class TaskService {
     @Autowired
     private Json json;
 
-    @Value("${excel.path}")
+    @Value("${excel.path.task}")
     private String excelPath;
 
     public void doAudit(Long id, Integer status, String result) throws BusinessException {

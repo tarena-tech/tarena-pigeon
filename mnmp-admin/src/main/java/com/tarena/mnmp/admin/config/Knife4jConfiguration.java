@@ -18,6 +18,9 @@
 package com.tarena.mnmp.admin.config;
 
 import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
+import com.tarena.mnmp.protocol.LoginToken;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,7 +55,7 @@ public class Knife4jConfiguration {
     /**
      * 标题
      */
-    private final String title = "信鸽-达内集团开源消息中台(Message Notify Middle Platform)-后台管理";
+    private final String title = "信鸽-与非科技开源消息中台(Message Notify Middle Platform)-后台管理";
     /**
      * 简介
      */
@@ -91,6 +94,7 @@ public class Knife4jConfiguration {
             .apis(RequestHandlerSelectors.basePackage(basePackage))
             .paths(PathSelectors.any())
             .build()
+            .ignoredParameterTypes(LoginToken.class, HttpServletResponse.class, HttpServletRequest.class)
             .extensions(openApiExtensionResolver.buildExtensions(groupName));
         return docket;
     }
