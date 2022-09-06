@@ -55,7 +55,7 @@ public class Knife4jConfiguration {
     /**
      * 标题
      */
-    private final String title = "信鸽-达内集团开源消息中台(Message Notify Middle Platform)-后台管理";
+    private final String title = "信鸽-与非科技开源消息中台(Message Notify Middle Platform)-后台管理";
     /**
      * 简介
      */
