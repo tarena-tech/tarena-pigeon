@@ -243,3 +243,19 @@ create table notice_user_role
     update_time timestamp null
 );
 
+
+
+INSERT INTO notice_role (id, name, create_time, update_time) VALUES (1, 'ROLE_root', '2022-08-08 17:37:51', '2022-08-08 17:37:51');
+INSERT INTO notice_role (id, name, create_time, update_time) VALUES (2, 'ROLE_admin', '2022-08-08 17:37:51', '2022-08-08 17:37:51');
+INSERT INTO notice_role (id, name, create_time, update_time) VALUES (3, 'ROLE_user', '2022-08-08 17:37:51', '2022-08-08 17:37:51');
+
+
+INSERT INTO notice_user (id, username, password, create_time, update_time) VALUES (1, 'root', '$2a$10$CKYuNVLTZrxItObnUj/Vs.EdtoCQ/koC2M79m0uCxvvffhsu5uMf2', '2022-08-08 17:36:34', '2022-08-08 17:36:34');
+INSERT INTO notice_user (id, username, password, create_time, update_time) VALUES (2, 'admin', '$2a$10$CKYuNVLTZrxItObnUj/Vs.EdtoCQ/koC2M79m0uCxvvffhsu5uMf2', '2022-08-08 17:36:34', '2022-08-08 17:36:34');
+INSERT INTO notice_user (id, username, password, create_time, update_time) VALUES (3, 'user', '$2a$10$CKYuNVLTZrxItObnUj/Vs.EdtoCQ/koC2M79m0uCxvvffhsu5uMf2', '2022-08-08 17:36:34', '2022-08-08 17:36:34');
+
+
+
+INSERT INTO notice_user_role (id, role_id, user_id, create_time, update_time) VALUES (1, 1, 1, '2022-08-08 17:36:34', '2022-08-08 17:36:34');
+INSERT INTO notice_user_role (id, role_id, user_id, create_time, update_time) VALUES (2, 2, 2, '2022-08-08 17:36:34', '2022-08-08 17:36:34');
+INSERT INTO notice_user_role (id, role_id, user_id, create_time, update_time) VALUES (3, 3, 3, '2022-08-08 17:36:34', '2022-08-08 17:36:34');
