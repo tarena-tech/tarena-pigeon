@@ -20,6 +20,9 @@ package com.tarena.dispatcher.assemble.impl;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.TargetAssembler;
 import com.tarena.mnmp.commons.utils.DollarPlaceholderReplacer;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 import org.springframework.beans.factory.InitializingBean;
 
 public abstract class AbstractTargetAssembler<T extends NoticeEventGetter> implements TargetAssembler<T>, InitializingBean {
@@ -27,8 +30,14 @@ public abstract class AbstractTargetAssembler<T extends NoticeEventGetter> imple
 
     protected DollarPlaceholderReplacer dollarPlaceholderReplacer;
 
+    protected Map<String, Function<String, String>> contentConvert = new HashMap<>();
+
     public void setDollarPlaceholderReplacer(DollarPlaceholderReplacer dollarPlaceholderReplacer) {
         this.dollarPlaceholderReplacer = dollarPlaceholderReplacer;
+    }
+
+    public void contentConvertPut(String key, Function<String, String> func) {
+        contentConvert.put(key, func);
     }
 
     @Override
