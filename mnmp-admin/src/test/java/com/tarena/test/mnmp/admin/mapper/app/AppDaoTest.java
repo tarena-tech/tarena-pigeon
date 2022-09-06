@@ -70,7 +70,7 @@ public class AppDaoTest {
         appDO.setAuditStatus(0);
         appDO.setEnabled(0);
         appDO.setRemarks("测试程序");
-        appDO.setName("达内测试");
+        appDO.setName("测试");
         appDO.setLeader("ceshiwang");
         appDO.setCode("CODE_TEST_001");
         Integer result = appMapper.save(appDO);
@@ -120,7 +120,7 @@ public class AppDaoTest {
         appDO.setEnabled(0);
         appDO.setAuditStatus(0);
         appDO.setRemarks("测试程序");
-        appDO.setName("达内测试");
+        appDO.setName("测试");
         appDO.setLeader("ceshiwang");
         appDO.setCode("CODE_TEST_001");
         Integer result = appMapper.modify(appDO);
