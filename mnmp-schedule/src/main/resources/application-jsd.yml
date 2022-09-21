@@ -1,8 +1,11 @@
 dispatcher:
-  assembler_sms: true
   mock: true
+  assembler_sms: true
   notice_sms_ali: true
+  notice_sms_hw: true
   sms_ali_pigeon_provider_code: ALI_SMS
+  sms_hw_pigeon_provider_code: HW_SMS
+  enableReceipt: false
 json:
   provider: fastJson
 monitor:
@@ -21,7 +24,7 @@ rocket:
   retry_times_when_send_failed: 5
   topic: mnmp_test
 server:
-  port: 8000
+  port: 9081
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
