@@ -13,8 +13,22 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 1
+  redis:
+    host: 10.0.0.43
+    port: 6379
+    password:
+    database: 8
+    jedis:
+      pool:
+        max-active: 8
+        min-idle: 5
+        max-idle: 8
+        max-wait: PT15M
+        time-between-eviction-runs: PT15M
 excel:
-  path: "/home/op/pigeon/excel/"
+  path:
+    task: "/home/op/pigeon/excel/task/"
+    white-list: '/home/op/pigeon/excel/white/'
 
 jwt:
   secret: tarena-pigeon
