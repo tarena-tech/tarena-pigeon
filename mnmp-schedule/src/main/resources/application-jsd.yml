@@ -29,5 +29,5 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: tarena2017Up;
-    url: jdbc:mysql://10.0.0.43:3306/tarena_pigeon?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://10.0.0.43:3307/tarena_pigeon?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
     username: root
