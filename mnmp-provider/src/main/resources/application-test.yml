@@ -10,6 +10,18 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 1
+  redis:
+    host: dev-redis.tctm.life
+    port: 6379
+    password: "teduPMNlzjfDiaK"
+    database: 8
+    jedis:
+      pool:
+        max-active: 8
+        min-idle: 5
+        max-idle: 8
+        max-wait: PT15M
+        time-between-eviction-runs: PT15M
 excel:
   path: "/home/op/pigeon/excel/"
 
@@ -18,7 +30,7 @@ jwt:
   expiration: 60000000
 
 rocket:
-  name_server_address: 192.168.195.203:9876
+  name_server_address: 192.168.195.244:9876
   message_charset: UTF-8
   publish_debug: true
   topic: mnmp_test

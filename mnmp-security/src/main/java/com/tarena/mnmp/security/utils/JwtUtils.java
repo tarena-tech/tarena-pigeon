@@ -30,7 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
-public class JwtUtils {
+public class JwtUtils<T> {
     private static Logger logger = LoggerFactory.getLogger(JwtUtils.class);
     //自定义载荷的key值
     private static final String CLAIM_KEY_USERNAME = "SUB";
