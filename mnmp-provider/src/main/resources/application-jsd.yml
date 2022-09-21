@@ -23,7 +23,7 @@ spring:
         max-wait: PT15M
         time-between-eviction-runs: PT15M
 excel:
-  path: ""
+  path: "/home/op/pigeon/excel/"
 
 jwt:
   secret: tarena-pigeon
