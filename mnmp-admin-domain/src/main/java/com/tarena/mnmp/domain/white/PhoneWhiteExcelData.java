@@ -26,4 +26,6 @@ public class PhoneWhiteExcelData {
 
     private String remark;
 
+    private String appCode;
+
 }

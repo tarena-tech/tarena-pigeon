@@ -48,13 +48,13 @@ public interface PhoneWhiteApi {
 
     @ApiOperation(value = "获取excel模版文件")
     @GetMapping("excel")
-    @PreAuthorize("hasAnyRole('user','admin','root')")
+    @PreAuthorize("hasAnyRole('admin','root')")
     void getExcel(String path, @Ignore HttpServletResponse response) throws BusinessException, IOException;
 
 
     @ApiOperation(value = "查询白名单")
     @GetMapping("query/page")
-    @PreAuthorize("hasAnyRole('user','admin','root')")
+    @PreAuthorize("hasAnyRole('admin','root')")
     Result<PagerResult<PhoneWhiteView>> queryPage(PhoneWhiteQueryParam param, @User LoginToken token);
 
     @ApiOperation(value = "上传文件")

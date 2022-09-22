@@ -81,8 +81,18 @@ public class PhoneWhiteController implements PhoneWhiteApi {
         return new Result<>(result);
     }
 
+    /**
+     * 上传白名单
+     * @param file excel文件
+     * @param token 登录用户
+     * @param response
+     * @return
+     * @throws IOException
+     * @throws BusinessException
+     */
     @Override public Result<String> saveByFile(MultipartFile file, LoginToken token, HttpServletResponse response) throws IOException, BusinessException {
         List<PhoneWhiteExcelData> data = phoneWhiteService.saveByFile(file, token);
+        //返回不可以使用的电话号码
         if (!CollectionUtils.isEmpty(data)) {
             String mid = ExcelUtils.midPath();
             String dir = ExcelUtils.mkdir(whiteExcelPath + mid);

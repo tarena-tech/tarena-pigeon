@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Resource;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -66,36 +67,40 @@ public class PhoneWhiteService {
     }
 
     public List<PhoneWhiteExcelData> saveByFile(MultipartFile file, LoginToken token) throws IOException, BusinessException {
+        //准备返回的非法数据,当前为空
         List<PhoneWhiteExcelData> fails = new ArrayList<>();
-
-        AppQueryParam queryParam = new AppQueryParam();
-        queryParam.setEnable(Enabled.YES.getVal());
-        queryParam.setDesc(false);
-        queryParam.setCurrentPageIndex(1);
-        queryParam.setPageSize(1);
-        queryParam.setCreateUserId(token.getId());
-        List<AppDO> dos = appService.queryList(queryParam);
-        if (CollectionUtils.isEmpty(dos)) {
-            throw new BusinessException("100", "请先创建应用");
-        }
-
-        AppDO app = dos.get(0);
+        //查询是否存在应用参数
         Date now = new Date();
 
+        /**
+         * 读取excel中数据 存放到PhoneWhiteExceData对象里
+         */
         EasyExcel.read(file.getInputStream(), PhoneWhiteExcelData.class, new ReadListener<PhoneWhiteExcelData>() {
-
+            final List<AppDO> apps=new ArrayList<>();
             final Set<String> phone = new HashSet<>();
-
             public static final int BATCH_COUNT = 100;
-
             private List<PhoneWhiteListDO> targets = new ArrayList<>(BATCH_COUNT);
-
             @Override public void invoke(PhoneWhiteExcelData data, AnalysisContext context) {
+                //查看是否有appCode,以第一个非空appCode作为参照
+                if (CollectionUtils.isEmpty(apps)&&ObjectUtils.isNotEmpty(data.getAppCode())){
+                    AppQueryParam queryParam = new AppQueryParam();
+                    queryParam.setEnable(Enabled.YES.getVal());
+                    queryParam.setDesc(false);
+                    queryParam.setCurrentPageIndex(1);
+                    queryParam.setPageSize(1);
+                    queryParam.setCode(data.getAppCode());
+                    /*queryParam.setCreateUserId(token.getId());*/
+                    List<AppDO> dos = appService.queryList(queryParam);
+                    apps.add(dos.get(0));
+                    if (CollectionUtils.isEmpty(dos)) {
+                        data.setRemark("没有可用的app编码");
+                        return;
+                    }
+                }
                 if (phone.contains(data.getPhone())) {
                     data.setRemark("同一批次多个手机号,只录入一条");
                     return;
                 }
-
                 if (!RegexUtils.checkPhone(data.getPhone())) {
                     data.setRemark("手机号格式不正确");
                     fails.add(data);
@@ -103,8 +108,8 @@ public class PhoneWhiteService {
                 }
                 PhoneWhiteListDO phone = new PhoneWhiteListDO();
                 phone.setPhone(data.getPhone());
-                phone.setAppCode(app.getCode());
-                phone.setAppName(app.getName());
+                phone.setAppCode(apps.get(0).getCode());
+                phone.setAppName(apps.get(0).getName());
                 phone.setCreateTime(now);
                 phone.setCreateUserId(token.getId());
 
@@ -120,14 +125,12 @@ public class PhoneWhiteService {
 
             private void save() {
                 if (!CollectionUtils.isEmpty(targets)) {
-
                     phoneWhiteListDao.batchInsert(targets);
                     Map<String, String> m = new HashMap<>();
                     for (PhoneWhiteListDO target : targets) {
                         m.put(target.getPhone(), target.getId().toString());
                     }
-
-                    redisTemplate.opsForHash().putAll(Constant.WHITE_PHONE + app.getCode() , m);
+                    redisTemplate.opsForHash().putAll(Constant.WHITE_PHONE + apps.get(0).getCode() , m);
                     targets = new ArrayList<>(BATCH_COUNT);
                 }
             }
