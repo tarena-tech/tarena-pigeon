@@ -17,7 +17,7 @@ spring:
   # 数据源配置
 limit:
   app_day_count: 500
-  phone_count: 10
+  phone_count: 20
 knife4j:
   # 开启增强配置
   enable: true
