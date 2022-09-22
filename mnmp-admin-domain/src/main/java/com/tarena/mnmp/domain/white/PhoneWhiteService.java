@@ -113,6 +113,10 @@ public class PhoneWhiteService {
                     fails.add(data);
                     return;
                 }
+                if (CollectionUtils.isEmpty(apps)){
+                    data.setRemark("当前excel没有填写appCode");
+                    return;
+                }
                 PhoneWhiteListDO phone = new PhoneWhiteListDO();
                 phone.setPhone(data.getPhone());
                 phone.setAppCode(apps.get(0).getCode());

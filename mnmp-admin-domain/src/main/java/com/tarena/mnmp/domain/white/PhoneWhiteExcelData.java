@@ -23,9 +23,6 @@ import lombok.Data;
 public class PhoneWhiteExcelData {
 
     private String phone;
-
-    private String remark;
-
     private String appCode;
-
+    private String remark;
 }
