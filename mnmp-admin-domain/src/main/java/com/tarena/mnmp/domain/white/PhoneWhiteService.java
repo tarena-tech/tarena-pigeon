@@ -113,7 +113,7 @@ public class PhoneWhiteService {
                     fails.add(data);
                     return;
                 }
-                if (CollectionUtils.isEmpty(apps)){
+                if (CollectionUtils.isEmpty(apps)) {
                     data.setRemark("当前excel没有填写appCode");
                     return;
                 }
