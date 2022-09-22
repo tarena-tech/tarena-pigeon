@@ -58,6 +58,7 @@ public class PhoneWhiteService {
 
     @Resource
     private RedisTemplate<String, Serializable> redisTemplate;
+
     public List<PhoneWhiteListDO> queryList(PhoneWhiteQueryParam param, LoginToken token) {
         return phoneWhiteListDao.queryList(param);
     }
@@ -66,7 +67,8 @@ public class PhoneWhiteService {
         return phoneWhiteListDao.selectByPrimaryKey(id);
     }
 
-    public List<PhoneWhiteExcelData> saveByFile(MultipartFile file, LoginToken token) throws IOException, BusinessException {
+    public List<PhoneWhiteExcelData> saveByFile(MultipartFile file,
+        LoginToken token) throws IOException, BusinessException {
         //准备返回的非法数据,当前为空
         List<PhoneWhiteExcelData> fails = new ArrayList<>();
         //查询是否存在应用参数
@@ -76,13 +78,14 @@ public class PhoneWhiteService {
          * 读取excel中数据 存放到PhoneWhiteExceData对象里
          */
         EasyExcel.read(file.getInputStream(), PhoneWhiteExcelData.class, new ReadListener<PhoneWhiteExcelData>() {
-            final List<AppDO> apps=new ArrayList<>();
+            final List<AppDO> apps = new ArrayList<>();
             final Set<String> phone = new HashSet<>();
             public static final int BATCH_COUNT = 100;
             private List<PhoneWhiteListDO> targets = new ArrayList<>(BATCH_COUNT);
+
             @Override public void invoke(PhoneWhiteExcelData data, AnalysisContext context) {
                 //查看是否有appCode,以第一个非空appCode作为参照
-                if (CollectionUtils.isEmpty(apps)&&ObjectUtils.isNotEmpty(data.getAppCode())){
+                if (CollectionUtils.isEmpty(apps) && ObjectUtils.isNotEmpty(data.getAppCode())) {
                     AppQueryParam queryParam = new AppQueryParam();
                     queryParam.setEnable(Enabled.YES.getVal());
                     queryParam.setDesc(false);
@@ -130,7 +133,7 @@ public class PhoneWhiteService {
                     for (PhoneWhiteListDO target : targets) {
                         m.put(target.getPhone(), target.getId().toString());
                     }
-                    redisTemplate.opsForHash().putAll(Constant.WHITE_PHONE + apps.get(0).getCode() , m);
+                    redisTemplate.opsForHash().putAll(Constant.WHITE_PHONE + apps.get(0).getCode(), m);
                     targets = new ArrayList<>(BATCH_COUNT);
                 }
             }
@@ -153,7 +156,6 @@ public class PhoneWhiteService {
             phoneWhiteListDao.deleteByAppCode(appCode);
             redisTemplate.delete(Constant.WHITE_PHONE + appCode);
         }
-
 
     }
 
