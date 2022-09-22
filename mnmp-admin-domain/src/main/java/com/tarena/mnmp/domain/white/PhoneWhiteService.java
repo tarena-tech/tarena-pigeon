@@ -20,6 +20,7 @@ package com.tarena.mnmp.domain.white;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
+import com.alibaba.fastjson.JSON;
 import com.tarena.mnmp.commons.utils.RegexUtils;
 import com.tarena.mnmp.constant.Constant;
 import com.tarena.mnmp.domain.AppDO;
@@ -40,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -48,6 +50,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@Slf4j
 public class PhoneWhiteService {
 
     @Resource
@@ -84,6 +87,7 @@ public class PhoneWhiteService {
             private List<PhoneWhiteListDO> targets = new ArrayList<>(BATCH_COUNT);
 
             @Override public void invoke(PhoneWhiteExcelData data, AnalysisContext context) {
+                log.info(JSON.toJSONString(data));
                 //查看是否有appCode,以第一个非空appCode作为参照
                 if (CollectionUtils.isEmpty(apps) && ObjectUtils.isNotEmpty(data.getAppCode())) {
                     AppQueryParam queryParam = new AppQueryParam();
