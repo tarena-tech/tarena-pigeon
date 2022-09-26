@@ -139,9 +139,13 @@ public class HuanWeiSmsClient {
         if (!receiver.startsWith(P_PREFIX)) {
             receiver = P_PREFIX + receiver;
         }
+
         String body = buildRequestBody(sender, receiver, req.getTemplateCode(), req.getContent(),
+
             null, req.getSignName());
+        logger.info("send hw body:{}",body);
         HttpEntity<String> ectity = new HttpEntity<>(body, headers);
+        logger.info("send entity :{}",JSON.toJSONString(ectity));
         ResponseEntity<HuaWeiResult> exchange = restTemplate.exchange(URL, HttpMethod.POST, ectity, HuaWeiResult.class);
         if (!HttpStatus.OK.equals(exchange.getStatusCode())) {
             logger.error("短信发送失败, msg: {}", JSON.toJSONString(exchange));
