@@ -17,6 +17,7 @@
 
 package com.tarena.dispatcher.sender;
 
+import com.alibaba.fastjson.JSON;
 import com.tarena.dispatcher.SmsTarget;
 import com.tarena.dispatcher.bo.PhoneBizIdReceiptBO;
 import com.tarena.dispatcher.impl.HuanWeiSmsClient;
@@ -57,6 +58,7 @@ public class HuaWeiSender extends AroundSender implements SmsSender {
     }
 
     @Override public String doSend(SmsTarget smsTarget) throws Exception {
+        logger.info("dosend target: {}", JSON.toJSONString(smsTarget));
         HwSmsReq req = new HwSmsReq();
         req.setTemplateCode(smsTarget.getTemplateCode());
         req.setTemplateParam(smsTarget.getTemplateParam());
