@@ -134,7 +134,7 @@ public class HuanWeiSmsClient {
     }
 
     public HuaWeiResult send(HwSmsReq req) throws BusinessException {
-        String sender = "1069368924410003205";
+        String sender = "1069368924410003549";
         String receiver = req.getPhone();
         if (!receiver.startsWith(P_PREFIX)) {
             receiver = P_PREFIX + receiver;
