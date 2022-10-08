@@ -53,24 +53,49 @@ public class HuanWeiSmsClient {
 
     private static final String P_PREFIX = "+86";
 
+
+    private String KEY = "";
+
+    private String APP_SECRET = "";
+
     private RestTemplate restTemplate;
 
-    private HttpHeaders headers;
+//    private HttpHeaders headers;
 
     private HuanWeiSmsClient() {
         throw new RuntimeException("配置错误");
     }
 
     public HuanWeiSmsClient(String appKey, String appSecret, RestTemplate restTemplate) {
-        String wsseHeader = buildWsseHeader(appKey, appSecret);
+        // 暂时解决方案
+        KEY = appKey;
+        APP_SECRET = appSecret;
+//        String wsseHeader = buildWsseHeader(appKey, appSecret);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.put("Content-Type", Arrays.asList("application/x-www-form-urlencoded"));
+//        headers.put("Authorization", Arrays.asList(AUTH_HEADER_VALUE));
+//        headers.put("X-WSSE", Arrays.asList(wsseHeader));
+//        this.headers = headers;
+        this.restTemplate = restTemplate;
+    }
+
+    /**
+     * TODO 暂行解决方案
+     *
+     * @return {@link HttpHeaders}
+     */
+    private HttpHeaders buildHeader() {
+
+        String wsseHeader = buildWsseHeader(KEY, APP_SECRET);
 
         HttpHeaders headers = new HttpHeaders();
         headers.put("Content-Type", Arrays.asList("application/x-www-form-urlencoded"));
         headers.put("Authorization", Arrays.asList(AUTH_HEADER_VALUE));
         headers.put("X-WSSE", Arrays.asList(wsseHeader));
-        this.headers = headers;
-        this.restTemplate = restTemplate;
+        return headers;
     }
+
 
     private String buildWsseHeader(String appKey, String appSecret) {
         if (null == appKey || null == appSecret || appKey.isEmpty() || appSecret.isEmpty()) {
@@ -144,7 +169,7 @@ public class HuanWeiSmsClient {
 
             null, req.getSignName());
         logger.info("send hw body:{}",body);
-        HttpEntity<String> ectity = new HttpEntity<>(body, headers);
+        HttpEntity<String> ectity = new HttpEntity<>(body, buildHeader());
         logger.info("send entity :{}",JSON.toJSONString(ectity));
         ResponseEntity<HuaWeiResult> exchange = restTemplate.exchange(URL, HttpMethod.POST, ectity, HuaWeiResult.class);
         if (!HttpStatus.OK.equals(exchange.getStatusCode())) {
