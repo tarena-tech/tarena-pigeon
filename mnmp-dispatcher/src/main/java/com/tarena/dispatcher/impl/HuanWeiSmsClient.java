@@ -54,9 +54,9 @@ public class HuanWeiSmsClient {
     private static final String P_PREFIX = "+86";
 
 
-    private String KEY = "";
+    private String key = "";
 
-    private String APP_SECRET = "";
+    private String appSecret = "";
 
     private RestTemplate restTemplate;
 
@@ -68,8 +68,8 @@ public class HuanWeiSmsClient {
 
     public HuanWeiSmsClient(String appKey, String appSecret, RestTemplate restTemplate) {
         // 暂时解决方案
-        KEY = appKey;
-        APP_SECRET = appSecret;
+        key = appKey;
+        this.appSecret = appSecret;
 //        String wsseHeader = buildWsseHeader(appKey, appSecret);
 //
 //        HttpHeaders headers = new HttpHeaders();
@@ -87,7 +87,7 @@ public class HuanWeiSmsClient {
      */
     private HttpHeaders buildHeader() {
 
-        String wsseHeader = buildWsseHeader(KEY, APP_SECRET);
+        String wsseHeader = buildWsseHeader(key, appSecret);
 
         HttpHeaders headers = new HttpHeaders();
         headers.put("Content-Type", Arrays.asList("application/x-www-form-urlencoded"));
