@@ -17,19 +17,16 @@
 
 package com.tarena.mnmp.api.factory;
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import java.io.IOException;
 import java.util.Properties;
 
 public class SendParamFactory {
     private static final Properties PROP = new Properties();
-    private static Logger logger = LoggerFactory.getLogger(SendParamFactory.class);
     static {
         try {
             PROP.load(SendParamFactory.class.getClassLoader().getResourceAsStream("send.properties"));
         } catch (IOException e) {
-            logger.warn("cannot load send.properties file", e);
+            System.out.println("cannot load send.properties file");
         }
     }
 
