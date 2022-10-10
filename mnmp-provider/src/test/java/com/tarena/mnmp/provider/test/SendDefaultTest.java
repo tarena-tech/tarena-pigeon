@@ -17,7 +17,7 @@
 
 package com.tarena.mnmp.provider.test;
 
-import com.tarena.mnmp.domain.provider.controller.SendParam;
+import com.tarena.mnmp.api.SendParam;
 import org.springframework.web.client.RestTemplate;
 
 public class SendDefaultTest {

@@ -14,11 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tarena.mnmp.domain.provider.controller;
+package com.tarena.mnmp.api;
 
-import com.tarena.mnmp.api.TargetDTO;
-import com.tarena.mnmp.domain.provider.factory.SendConstants;
-import com.tarena.mnmp.domain.provider.factory.SendParamFactory;
+import com.tarena.mnmp.api.factory.SendConstants;
+import com.tarena.mnmp.api.factory.SendParamFactory;
 import com.tarena.mnmp.enums.NoticeType;
 import com.tarena.mnmp.enums.SendType;
 import java.time.LocalDateTime;
@@ -28,9 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import lombok.Data;
 
-@Data
 public class SendParam {
 
     public SendParam() {
@@ -49,6 +46,102 @@ public class SendParam {
     private String providerCode;
     private Integer mock;
     private Long taskId;
+
+    public String getTriggerTime() {
+        return triggerTime;
+    }
+
+    public void setTriggerTime(String triggerTime) {
+        this.triggerTime = triggerTime;
+    }
+
+    public SendType getSendType() {
+        return sendType;
+    }
+
+    public void setSendType(SendType sendType) {
+        this.sendType = sendType;
+    }
+
+    public NoticeType getNoticeType() {
+        return noticeType;
+    }
+
+    public void setNoticeType(NoticeType noticeType) {
+        this.noticeType = noticeType;
+    }
+
+    public String getAppCode() {
+        return appCode;
+    }
+
+    public void setAppCode(String appCode) {
+        this.appCode = appCode;
+    }
+
+    public String getTemplateCode() {
+        return templateCode;
+    }
+
+    public void setTemplateCode(String templateCode) {
+        this.templateCode = templateCode;
+    }
+
+    public String getTemplateContent() {
+        return templateContent;
+    }
+
+    public void setTemplateContent(String templateContent) {
+        this.templateContent = templateContent;
+    }
+
+    public List<TargetDTO> getTargets() {
+        return targets;
+    }
+
+    public void setTargets(List<TargetDTO> targets) {
+        this.targets = targets;
+    }
+
+    public String getSignCode() {
+        return signCode;
+    }
+
+    public void setSignCode(String signCode) {
+        this.signCode = signCode;
+    }
+
+    public String getSignName() {
+        return signName;
+    }
+
+    public void setSignName(String signName) {
+        this.signName = signName;
+    }
+
+    public String getProviderCode() {
+        return providerCode;
+    }
+
+    public void setProviderCode(String providerCode) {
+        this.providerCode = providerCode;
+    }
+
+    public Integer getMock() {
+        return mock;
+    }
+
+    public void setMock(Integer mock) {
+        this.mock = mock;
+    }
+
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
+    }
 
     public static class DefaultSendParam {
         public SendParam defaultSendParam(String code, String phone) {

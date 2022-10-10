@@ -15,14 +15,25 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.domain.provider.factory;
+package com.tarena.mnmp.api.factory;
 
-public class SendConstants {
-    public static final String APP_CODE = "send.app.code";
-    public static final String SIGN_CODE = "send.sign.code";
-    public static final String SING_NAME = "send.sign.name";
-    public static final String TEMP_CODE = "send.temp.code";
-    public static final String TEMP_CONTENT = "send.temp.content";
-    public static final String PROV_CODE = "send.provider.code";
-    public static final String PATTERN = "send.trigger.pattern";
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
+import java.io.IOException;
+import java.util.Properties;
+
+public class SendParamFactory {
+    private static final Properties PROP = new Properties();
+    private static Logger logger = LoggerFactory.getLogger(SendParamFactory.class);
+    static {
+        try {
+            PROP.load(SendParamFactory.class.getClassLoader().getResourceAsStream("send.properties"));
+        } catch (IOException e) {
+            logger.warn("cannot load send.properties file", e);
+        }
+    }
+
+    public static Properties getProperties() {
+        return PROP;
+    }
 }

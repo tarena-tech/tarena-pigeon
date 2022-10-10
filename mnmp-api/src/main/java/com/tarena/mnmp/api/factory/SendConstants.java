@@ -15,25 +15,14 @@
  * limitations under the License.
  */
 
-package com.tarena.mnmp.domain.provider.factory;
+package com.tarena.mnmp.api.factory;
 
-import java.io.IOException;
-import java.util.Properties;
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
-public class SendParamFactory {
-    private static final Properties PROP = new Properties();
-
-    static {
-        try {
-            PROP.load(SendParamFactory.class.getClassLoader().getResourceAsStream("send.properties"));
-        } catch (IOException e) {
-            log.warn("cannot load send.properties file", e);
-        }
-    }
-
-    public static Properties getProperties() {
-        return PROP;
-    }
+public class SendConstants {
+    public static final String APP_CODE = "send.app.code";
+    public static final String SIGN_CODE = "send.sign.code";
+    public static final String SING_NAME = "send.sign.name";
+    public static final String TEMP_CODE = "send.temp.code";
+    public static final String TEMP_CONTENT = "send.temp.content";
+    public static final String PROV_CODE = "send.provider.code";
+    public static final String PATTERN = "send.trigger.pattern";
 }
