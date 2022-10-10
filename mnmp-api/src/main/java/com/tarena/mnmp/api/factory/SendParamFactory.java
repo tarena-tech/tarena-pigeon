@@ -22,6 +22,7 @@ import java.util.Properties;
 
 public class SendParamFactory {
     private static final Properties PROP = new Properties();
+
     static {
         try {
             PROP.load(SendParamFactory.class.getClassLoader().getResourceAsStream("send.properties"));
