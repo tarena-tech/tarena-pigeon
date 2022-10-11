@@ -17,6 +17,7 @@
 
 package com.tarena.schedule;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
@@ -99,6 +100,7 @@ public abstract class AbstractScheduler {
         while (!stop()) {
             try {
                 List<NoticeTaskTrigger> triggers = queryTriggers();
+                logger.info("schedule:{}", JSON.toJSONString(triggers));
                 if (!CollectionUtils.isEmpty(triggers)) {
                     for (NoticeTaskTrigger trigger : triggers) {
                         sendByTask(trigger);
