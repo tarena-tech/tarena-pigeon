@@ -30,9 +30,10 @@ jwt:
   expiration: 60000000
 
 rocket:
-  name_server_address: 10.0.0.43:9876
+  name_server_address: 192.168.195.244:9876
   message_charset: UTF-8
   publish_debug: true
   topic: mnmp_test
   publish_group: publish_group
+  consumer_group: msg_consumer
   retry_times_when_send_failed: 5
