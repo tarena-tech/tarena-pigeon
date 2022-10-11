@@ -17,6 +17,7 @@
 
 package com.tarena.mnmp.mq.rocketmq;
 
+import com.alibaba.fastjson.JSON;
 import com.tarena.mnmp.commons.mq.EventHandlerMappingContainer;
 import com.tarena.mnmp.commons.mq.MQClient;
 import com.tarena.mnmp.commons.mq.MQContainerProvider;
@@ -92,6 +93,7 @@ public class RocketMQMessageListener implements MessageListenerConcurrently {
                 if (this.duplicate(event, consumerKey, message.getKeys())) {
                     return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
                 }
+                logger.info("mq send message:{}", JSON.toJSONString(event));
                 handler.handle(event);
                 this.consumed(event, consumerKey, message.getKeys());
             } catch (Throwable e) {
