@@ -82,9 +82,10 @@ public class RocketMQMessageListener implements MessageListenerConcurrently {
                 if (logger.isInfoEnabled()) {
                     logger.info("receive msg:" + message.toString());
                 }
+                logger.info("................. type:{}", type);
                 MQHandler handler = queueHandlerMappingContainer.get(type);
                 if (handler == null) {
-                    logger.warn("handler of this type [{}] not found", type);
+                    logger.info("handler of this type [{}] not found", type);
                     return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
                 }
 
