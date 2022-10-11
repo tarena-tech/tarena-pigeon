@@ -37,3 +37,4 @@ rocket:
   publish_group: publish_group
   consumer_group: msg_consumer
   retry_times_when_send_failed: 5
+  subscribeTopicTags: 'mnmp_test:'
