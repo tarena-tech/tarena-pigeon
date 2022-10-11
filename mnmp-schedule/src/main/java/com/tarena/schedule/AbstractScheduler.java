@@ -17,7 +17,6 @@
 
 package com.tarena.schedule;
 
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.tarena.dispatcher.NoticeEventGetter;
 import com.tarena.dispatcher.assemble.impl.TargetAssemblerRegistry;
