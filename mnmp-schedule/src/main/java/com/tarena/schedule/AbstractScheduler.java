@@ -100,7 +100,6 @@ public abstract class AbstractScheduler {
         while (!stop()) {
             try {
                 List<NoticeTaskTrigger> triggers = queryTriggers();
-                logger.info("schedule:{}", JSON.toJSONString(triggers));
                 if (!CollectionUtils.isEmpty(triggers)) {
                     for (NoticeTaskTrigger trigger : triggers) {
                         sendByTask(trigger);

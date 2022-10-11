@@ -44,7 +44,6 @@ public class SpringBootSchedule extends AbstractScheduler {
                 logger.error("send event is null");
                 return;
             }
-            logger.info("发送mq:{}", JSON.toJSONString(event));
             this.mqPublisher.publish(event);
         } catch (Throwable e) {
             logger.error("发送mq失败, data:{}", JSON.toJSONString(event));
