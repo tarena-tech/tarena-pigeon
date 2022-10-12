@@ -60,7 +60,7 @@ public class HuaWeiSender extends AroundSender implements SmsSender {
     @Override public String doSend(SmsTarget smsTarget) throws Exception {
         logger.info("dosend target: {}", JSON.toJSONString(smsTarget));
         HwSmsReq req = new HwSmsReq();
-        req.setTemplateCode(smsTarget.getTemplateCode());
+        req.setTemplateCode(hwTemplateCode);
         req.setTemplateParam(smsTarget.getTemplateParam());
         req.setPhone(smsTarget.getTarget());
         req.setSignName(smsTarget.getSignName());
