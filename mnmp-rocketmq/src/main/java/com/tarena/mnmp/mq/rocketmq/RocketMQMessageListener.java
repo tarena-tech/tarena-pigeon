@@ -91,9 +91,10 @@ public class RocketMQMessageListener implements MessageListenerConcurrently {
 
                 MQEvent event = messageConverter.fromMessage(message);
                 String consumerKey = message.getProperties().get(MQClient.CONSUMER_KEY);
-//                if (this.duplicate(event, consumerKey, message.getKeys())) {
-//                    return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
-//                }
+                if (this.duplicate(event, consumerKey, message.getKeys())) {
+                    logger.info("已消费过,重复信息无需处理,data: {}", JSON.toJSONString(event));
+                    return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                }
                 logger.info("mq send message:{}", JSON.toJSONString(event));
                 handler.handle(event);
                 this.consumed(event, consumerKey, message.getKeys());
