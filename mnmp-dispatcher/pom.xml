@@ -28,8 +28,6 @@
             <artifactId>mnmp-monitor</artifactId>
             <groupId>com.tarena.mnmp</groupId>
         </dependency>
-
-
         <!--阿里云短信-->
         <dependency>
             <groupId>com.aliyun</groupId>
@@ -63,7 +61,6 @@
             <version>2.5.12</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-parameter-flow-control</artifactId>
@@ -72,11 +69,9 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-
     </dependencies>
 </project>

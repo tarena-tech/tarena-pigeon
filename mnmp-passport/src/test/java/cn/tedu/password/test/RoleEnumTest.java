@@ -17,12 +17,14 @@
 
 package cn.tedu.password.test;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class RoleEnumTest {
     public static void main(String[] args) {
-        String role="ROLE_admin";
-        String roleName="aldsjflsjasdlfls.aldjflsd.sadlfj";
-        System.out.println(role.indexOf("ROLE"));
-        System.out.println(roleName.lastIndexOf("."));
+        BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+        //填写密码
+        String encode = passwordEncoder.encode("123456");
+        //打印加密字符串,写入数据库
+        System.out.println(encode);
     }
 }

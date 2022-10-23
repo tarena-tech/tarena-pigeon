@@ -20,5 +20,4 @@ package com.tarena.mnmp.commons.mq;
 import java.io.Serializable;
 
 public interface MQEvent extends Serializable {
-
 }
