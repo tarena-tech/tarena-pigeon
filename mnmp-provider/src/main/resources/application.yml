@@ -16,7 +16,7 @@ spring:
     time-zone: Asia/Shanghai
   # 数据源配置
 limit:
-  app_day_count: 500
+  app_day_count: 5000
   phone_count: 20
 knife4j:
   # 开启增强配置
