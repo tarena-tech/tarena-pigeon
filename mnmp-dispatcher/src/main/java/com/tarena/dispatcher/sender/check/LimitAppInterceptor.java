@@ -49,7 +49,7 @@ public class LimitAppInterceptor implements ISendInterceptor {
 
     @Override public void before(SmsTarget smsTarget) throws BusinessException {
         String app = smsTarget.getAppCode();
-        String format = DateFormatUtils.format(new Date(), "yyyy:HH:dd");
+        String format = DateFormatUtils.format(new Date(), "yyyy:MM:dd");
         String key = LIMIT_REDIS_PRE + app + ":" + format;
 
         if (null != limitProperties.getAppDayCount() && limitProperties.getAppDayCount().compareTo(0L) > 0) {
