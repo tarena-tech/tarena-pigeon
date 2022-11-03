@@ -34,10 +34,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-@Service
-public class AppService {
-    @Autowired
-    private AppDao appDao;
+@Service public class AppService {
+    @Autowired private AppDao appDao;
 
     public void save(AppSaveParam appSaveParam, LoginToken token) throws BusinessException {
         AppDO save = new AppDO();
@@ -74,20 +72,17 @@ public class AppService {
         appDao.modify(save);
     }
 
-    @Deprecated
-    public void editApp(AppSaveParam appSaveParam) {
+    @Deprecated public void editApp(AppSaveParam appSaveParam) {
         AppDO appDO = new AppDO();
         BeanUtils.copyProperties(appSaveParam, appDO);
         appDao.modify(appDO);
     }
 
-    @Deprecated
-    public void closeApp(Long id) {
+    @Deprecated public void closeApp(Long id) {
         appDao.disable(id);
     }
 
-    @Deprecated
-    public void openApp(Long id) {
+    @Deprecated public void openApp(Long id) {
         appDao.enable(id);
     }
 
@@ -131,11 +126,9 @@ public class AppService {
         Asserts.isTrue(null == app, new BusinessException("100", "应用不存在"));
         String name = app.getName();
 
-        Asserts.isTrue(!Objects.equals(AuditStatus.PASS.getStatus(), app.getAuditStatus()),
-            new BusinessException("100", "[" + name + "]应用审核未通过"));
+        Asserts.isTrue(!Objects.equals(AuditStatus.PASS.getStatus(), app.getAuditStatus()), new BusinessException("100", "[" + name + "]应用审核未通过"));
 
-        Asserts.isTrue(!Objects.equals(Enabled.YES.getVal(), app.getEnabled()),
-            new BusinessException("100", "[" + name + "]应用未启用"));
+        Asserts.isTrue(!Objects.equals(Enabled.YES.getVal(), app.getEnabled()), new BusinessException("100", "[" + name + "]应用未启用"));
         return app;
     }
 

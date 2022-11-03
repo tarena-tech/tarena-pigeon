@@ -12,3 +12,7 @@ spring:
       minimum-idle: 1
 excel:
   path: "F:/excel/"
+
+jwt:
+  secret: tarena-pigeon
+  expiration: 60000000
