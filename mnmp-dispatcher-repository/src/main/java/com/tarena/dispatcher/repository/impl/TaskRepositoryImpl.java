@@ -138,10 +138,25 @@ public class TaskRepositoryImpl implements TaskRepository {
         return template;
     }
 
+    @Override public TemplateBO queryTemplate(String templateCode) {
+        TemplateBO template = new TemplateBO();
+        SmsTemplateDO templateDo = templateDao.selectByCode(templateCode);
+        BeanUtils.copyProperties(templateDo, template);
+        template.setProviderCode(this.providerDao.getCodeById(templateDo.getProviderId()));
+        return template;
+    }
+
     @Override public SmsSignBO querySign(Long signId) {
         SmsSignBO sign = new SmsSignBO();
         BeanUtils.copyProperties(
             smsSignDao.selectById(signId), sign);
+        return sign;
+    }
+
+    @Override public SmsSignBO querySign(String signCode) {
+        SmsSignBO sign = new SmsSignBO();
+        BeanUtils.copyProperties(
+            smsSignDao.selectByCode(signCode), sign);
         return sign;
     }
 }
