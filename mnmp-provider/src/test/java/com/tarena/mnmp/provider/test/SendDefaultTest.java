@@ -26,6 +26,6 @@ public class SendDefaultTest {
     public static void main(String[] args) {
         SendParam.DefaultSendParam param = new SendParam.DefaultSendParam();
         SendParam param1 = param.defaultSendParam("123456", "18510273063");
-        String s = REST_TEMPLATE.postForObject("http://localhost:8082/send/sms", param1, String.class);
+        String s = REST_TEMPLATE.postForObject("http://124.71.224.210:8082/send/sms", param1, String.class);
     }
 }
