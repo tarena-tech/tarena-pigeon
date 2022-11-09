@@ -26,5 +26,8 @@ import org.apache.ibatis.annotations.Select;
 public interface TemplateDao {
     @Select("select id,name,code,content,template_type,notice_type,app_id,app_code,provider_id from notice_sms_template where id = #{templateId}")
     SmsTemplateDO selectById(@Param("templateId") Long templateId);
+
+    @Select("select id,name,code,content,template_type,notice_type,app_id,app_code,provider_id from notice_sms_template where code = #{templateCode}")
+    SmsTemplateDO selectByCode(@Param("templateCode") String templateCode);
 }
 
