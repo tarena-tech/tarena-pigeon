@@ -55,7 +55,7 @@ public class SendController {
         dto.setSendType(SendType.IMMEDIATELY);
         dto.setNoticeType(NoticeType.SMS);
         try {
-            dto.setTaskId(id.addAndGet(1L));
+//            dto.setTaskId(id.addAndGet(1L));
             defaultNoticeService.send(dto);
         } catch (BusinessException e) {
             log.error("send error", e);

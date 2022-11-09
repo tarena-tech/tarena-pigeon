@@ -25,5 +25,8 @@ import org.apache.ibatis.annotations.Select;
 public interface SmsSignDao {
     @Select("select id,name,code from notice_sms_sign where id = #{signId}")
     SignDO selectById(@Param("signId") Long signId);
+
+    @Select("select id,name,code from notice_sms_sign where code = #{signCode}")
+    SignDO selectByCode(@Param("signCode") String signCode);
 }
 

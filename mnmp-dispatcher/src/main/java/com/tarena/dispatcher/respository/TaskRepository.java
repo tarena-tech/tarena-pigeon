@@ -42,6 +42,10 @@ public interface TaskRepository {
 
     TemplateBO queryTemplate(Long templateId);
 
+    TemplateBO queryTemplate(String templateCode);
+
     SmsSignBO querySign(Long signId);
+
+    SmsSignBO querySign(String signCode);
 
 }
